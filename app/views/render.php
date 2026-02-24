@@ -3,10 +3,8 @@
 <head>
     <link rel="stylesheet" href="/css/output.css">
 </head>
+<script type="module" src="/js/app.js"></script>
 <body>
-
     <?= $content ?>
-
-    <script type="module" src="/js/app.js"></script>
 </body>
 </html>
