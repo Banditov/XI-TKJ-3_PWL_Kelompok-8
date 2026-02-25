@@ -359,8 +359,14 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 ### 24/02/2026 - 0.0.0
 <details>
 
-   - Menginstall TtailwindCSS dan Anime.js
+   - Menginstall TailwindCSS dan Anime.js
    - Menambahkan TailwindCSS dan Anime.js ke arsitektur readme
+</details>
+
+### 26/02/2026 - 0.0.0
+<details>
+
+   - Created intro screen
 </details>
 </details>
 <br>
