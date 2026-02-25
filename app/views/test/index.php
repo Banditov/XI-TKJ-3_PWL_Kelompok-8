@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>TEST</title>
-        <link rel="stylesheet" href="/css/test.css">
+		<link rel="icon" type="image/x-icon" href="/assets/image/logo/logo.ico">
     </head>
 
-    <body class="flex h-screen items-center justify-center flex-col bg-blue-500">
-        <h1 id="title" class="text-white text-6xl font-bold">Hello World!</h1>
-        <p class="text-white text-2xl">This is a test page.</p>
+    <body class="bg-black flex items-center justify-center w-screen h-screen">
+        <h1 class="text-white text-4xl font-bold">TEST PAGE</h1>
     </body>
 </html>

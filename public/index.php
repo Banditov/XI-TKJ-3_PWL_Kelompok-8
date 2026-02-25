@@ -5,7 +5,8 @@
 
     $router = new Router();
 
-    $router->add('GET', '/test', 'ExtendController', 'index');
+    $router->add('GET', '/', 'ExtendController', 'intro');
+    $router->add('GET', '/test', 'ExtendController', 'test');
 
     $router->run();
 ?>

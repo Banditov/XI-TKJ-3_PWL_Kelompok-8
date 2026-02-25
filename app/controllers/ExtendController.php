@@ -2,8 +2,13 @@
 namespace App\Controllers;
 class ExtendController extends BaseController
 {
-    public function index()
+    public function test()
     {
         $this->render('test');
+    }
+
+    public function intro()
+    {
+        $this->render('intro');
     }
 }
