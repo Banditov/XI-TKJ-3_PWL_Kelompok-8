@@ -1,9 +1,10 @@
 import { animate } from './anime.esm.js';
 
-const splash = document.getElementById('splash');
 const canvas = document.getElementById('ballsCanvas');
 const ctx = canvas.getContext('2d');
 const logoContainer = document.getElementById('logoContainer');
+const introContainer = document.getElementById('introContainer');
+const body = document.body;
 
 let width, height, centerX, centerY;
 let balls = [];
@@ -19,7 +20,7 @@ constructor(angle, distance) {
     this.initialDistance = distance;
     this.x = centerX + Math.cos(angle) * distance;
     this.y = centerY + Math.sin(angle) * distance;
-    this.radius = Math.random() * 100 + 70; // 25–60px
+    this.radius = Math.random() * 100 + 70;
     this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
     this.opacity = 1;
     this.vx = 0;
@@ -117,18 +118,36 @@ sceneLoop();
 
 window.addEventListener('resize', initCanvas);
 
-setTimeout(() => {
-    balls.forEach(b => b.explode());
-    animate(logoContainer, {
-        scale: [
-            { to: 1, duration: 0 },
-            { to: 1.05, duration: 200 },
-            { to: 1, duration: 150 }
-        ],
-        ease: 'outElastic(1, .5)',
-        duration: 350
-    });
-}, 800);
+balls.forEach(b => b.explode());
+animate(logoContainer, {
+    opacity: [
+        { to: 0, duration: 0 },
+        { to: 0, duration: 400 },
+        { to: 1, duration: 600 }
+    ],
+    scale: [
+        { to: 1, duration: 0 },
+        { to: 1, duration: 400 },
+        { to: 1.1, duration: 100 },
+        { to: 1, duration: 100 },
+        { to: 1, duration: 400 }
+    ],
+    ease: 'outElastic(1, .5)',
+    duration: 1000
+});
+
+animate(body, {
+    opacity: [
+        { to: 1, duration: 0 },
+        { to: 0, duration: 1000 }
+    ],
+    backgroundColor: [
+        { to: '#1865a0', duration: 0 },
+        { to: '#ffffff', duration: 1000 }
+    ],
+    duration: 1000,
+    delay: 2000
+});
 
 function checkAllBallsGone() {
     if (balls.length === 0) {

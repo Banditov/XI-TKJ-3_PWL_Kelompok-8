@@ -9,4 +9,3 @@
     $router->add('GET', '/test', 'ExtendController', 'test');
 
     $router->run();
-?>

@@ -354,19 +354,30 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
    <summary>Click to Expand</summary>
 
 <details>
+   <summary>Maret</summary>
+
+### 06/03/2026 - 0.0.0
+<details>
+
+   - Mengupdate style halaman intro
+   - Menambahkan file untuk redirect
+</details>
+</details>
+<br>
+<details>
    <summary>Februari</summary>
-      
+
+### 26/02/2026 - 0.0.0
+<details>
+
+   - Implementasi intro screen
+</details>
+
 ### 24/02/2026 - 0.0.0
 <details>
 
    - Menginstall TailwindCSS dan Anime.js
    - Menambahkan TailwindCSS dan Anime.js ke arsitektur readme
-</details>
-
-### 26/02/2026 - 0.0.0
-<details>
-
-   - Created intro screen
 </details>
 </details>
 <br>
