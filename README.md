@@ -2,9 +2,9 @@
 <h1 align="center">ImmaSpark</h1>
 <!-- 
 <p align="center">Sebuah website untuk ATK sekolah khusus SMK Kristen Immanuel.</p> -->
-<!-- 
-<img src=".github/images/banner/github_banner.png"> -->
 
+<img src=".github/image/banner/banner.png">
+<br><br><br>
 <div align="center">
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
       <img src="https://img.shields.io/badge/GitHub Version-wip--0.0.0-red">
@@ -355,6 +355,13 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 
 <details>
    <summary>Maret</summary>
+
+### 13/03/2026 - 0.1.0
+<details>
+
+   - Implementasi home page
+   - Menambahkan banner di readme
+</details>
 
 ### 06/03/2026 - 0.0.0
 <details>
