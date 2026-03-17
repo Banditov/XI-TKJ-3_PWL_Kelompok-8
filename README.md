@@ -4,10 +4,10 @@
 <p align="center">Sebuah website untuk ATK sekolah khusus SMK Kristen Immanuel.</p> -->
 
 <img src=".github/image/banner/banner.png">
-<br><br><br>
+<br>
 <div align="center">
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
-      <img src="https://img.shields.io/badge/GitHub Version-wip--0.0.0-red">
+      <img src="https://img.shields.io/badge/GitHub Version-wip--0.2.0-red">
    </a>
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
       <img src="https://img.shields.io/badge/Latest Release-0.0.0-green">
@@ -356,10 +356,16 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 <details>
    <summary>Maret</summary>
 
-### 13/03/2026 - 0.1.0
+### 17/03/2026 - 0.1.0
 <details>
 
    - Implementasi home page
+   - Pembuatan komponen sidebar
+</details>
+
+### 13/03/2026 - 0.1.0
+<details>
+
    - Menambahkan banner di readme
 </details>
 
