@@ -363,7 +363,7 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
    - Pembuatan komponen sidebar
 </details>
 
-### 13/03/2026 - 0.1.0
+### 13/03/2026 - 0.0.0
 <details>
 
    - Menambahkan banner di readme
