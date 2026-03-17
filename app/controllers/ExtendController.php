@@ -11,4 +11,9 @@ class ExtendController extends BaseController
     {
         $this->render('intro');
     }
+
+    public function home()
+    {
+        $this->render('home');
+    }
 }
