@@ -361,6 +361,7 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 
    - Implementasi home page
    - Pembuatan komponen sidebar
+   - Implement login page
 </details>
 
 ### 13/03/2026 - 0.0.0
