@@ -5,30 +5,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Home | ImmaSpark</title>
 		<link rel="icon" type="image/x-icon" href="/assets/image/logo/logo.ico">
+        <link rel="stylesheet" href="/css/responsive.css">
     </head>
 
-    <body class="grow container mx-auto bg-[image:url('/assets/image/texture/background-l.png')] bg-cover bg-size-[150%]">
+    <body class="grow md:container m-0 md:mx-auto bg-[image:url('/assets/image/texture/background-l.png')] bg-cover bg-size-[150%] [&_*]:select-none">
+        <?php include __DIR__ . '/../../../app/views/component/error/error.php'; ?>
         <?php include __DIR__ . '/../../../app/views/component/header/header.php'; ?>
 
-        <main class="right-0 top-0 absolute w-[calc(100%-16rem)] p-10 flex flex-col gap-10">
-            <div class="z-2 sticky top-10 w-full">
-                <label>
-                    <svg xmlns="http://www.w3.org/2000/svg" version="1.0" class="w-8 absolute left-4 top-1/2 -translate-y-4 z-2" viewBox="100 100 700 700"><path fill="#FFF" stroke="#FFF" stroke-width="8" d="M384.8 206.1c-106 8.5-186.7 102-178.7 207.1 11.5 152.7 183.7 233.4 307.8 144.3l9.3-6.7 71.2 71c68.6 68.5 71.3 71 75.9 72 14.7 3 26.5-8.8 23.5-23.6-1-4.5-3.5-7.2-72-75.8l-71-71.2 6.7-9.3c96.3-134.2-8.4-321-172.7-307.8zm49.2 42.2c92.4 21.9 144.3 117.8 111.5 206.2-29.5 79.7-119.7 120.8-200 91-79.7-29.5-120.8-119.7-91-200 19.8-53.5 67.2-91.1 126-99.9 9.6-1.4 43.2.3 53.5 2.7z"/></svg>
-                </label>
+        <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10">
+            <div id="searchBar" class="z-2 sticky top-10 w-full md:block hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.0" id="searchBarIcon" class="w-8 absolute left-4 top-1/2 -translate-y-4 z-2" viewBox="100 100 700 700">
+                    <path fill="#FFF" stroke="#FFF" stroke-width="8" d="M384.8 206.1c-106 8.5-186.7 102-178.7 207.1 11.5 152.7 183.7 233.4 307.8 144.3l9.3-6.7 71.2 71c68.6 68.5 71.3 71 75.9 72 14.7 3 26.5-8.8 23.5-23.6-1-4.5-3.5-7.2-72-75.8l-71-71.2 6.7-9.3c96.3-134.2-8.4-321-172.7-307.8zm49.2 42.2c92.4 21.9 144.3 117.8 111.5 206.2-29.5 79.7-119.7 120.8-200 91-79.7-29.5-120.8-119.7-91-200 19.8-53.5 67.2-91.1 126-99.9 9.6-1.4 43.2.3 53.5 2.7z"/>
+                </svg>
                 <input type="text" placeholder="Search..." class="p-4 pl-14 w-full text-white rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
             </div>
 
-            <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg">
-                <div class="pt-10 pr-10 pl-10 pb-4 flex flex-col gap-3">
+            <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg post">
+                <div class="md:pt-10 md:pr-10 md:pl-10 pb-5 pt-7 pr-7 pl-7 flex flex-col md:gap-3 gap-5">
                     <div class="flex justify-between items-center">
                         <div class="flex gap-5 items-center">
                             <img src="/assets/image/account/phototest.jpg" class="w-15 h-15 object-cover rounded-full drop-shadow-lg">
                             <div>
-                                <p class="text-3xl font-bold">Christopher Vittorio Constantine</p>
+                                <p class="text-3xl font-bold">Christopher V. C.</p>
                                 <p>XI TKJ 3</p>
                             </div>
                         </div>
-                        <p class="text-3xl">16/03/2026</p>
+                        <p class="text-3xl font-bold">16/03/2026</p>
                     </div>
                     <div class="flex justify-between items-center">
                         <div class="flex gap-5">
@@ -66,24 +68,28 @@
                         </div>
                     </div>
                     <p class="text-4xl font-bold">POST TITLE</p>
-                    <p class="text-lg text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
+                    <p class="text-2xl md:text-lg text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
                 </div>
-                <div class="h-75">
-                    <button class="absolute left-10 top-110 p-4 rounded-full text-white drop-shadow-lg bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
+                <div class="h-75 max-h-75 relative">
+                    <button class="absolute left-10 top-30 p-4 rounded-full text-white drop-shadow-lg bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
                         <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="100 100 700 700" fill="#ffffff" stroke="#ffffff" class="w-7 h-7 transform rotate-90">
                             <path stroke-width="20" d="M270.1 356.2c-9.7 2.1-16.1 12.9-13.9 23.5 1.5 7.5 181.6 187.6 189.1 189.1 11.8 2.4 3.5 9.7 105.9-92.6 88.8-88.9 91.6-91.8 92.6-96.5 3-14.7-8.8-26.5-23.5-23.5-4.6 1-7.5 3.7-87.5 83.6L450 522.5l-82.7-82.7C297 369.6 284 357.1 281 356.5c-1.9-.3-4.2-.8-5-1-.8-.1-3.5.2-5.9.7z"/>
                         </svg>
                     </button>
                     <img src="/assets/image/post/posttest.png" class="rounded-4xl w-full h-full object-cover">
-                    <button class="absolute right-10 top-110 p-4 rounded-full text-white drop-shadow-lg bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
+                    <button class="absolute right-10 top-30 p-4 rounded-full text-white drop-shadow-lg bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
                         <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="100 100 700 700" fill="#ffffff" stroke="#ffffff" class="w-7 h-7 transform rotate-270">
                             <path stroke-width="20" d="M270.1 356.2c-9.7 2.1-16.1 12.9-13.9 23.5 1.5 7.5 181.6 187.6 189.1 189.1 11.8 2.4 3.5 9.7 105.9-92.6 88.8-88.9 91.6-91.8 92.6-96.5 3-14.7-8.8-26.5-23.5-23.5-4.6 1-7.5 3.7-87.5 83.6L450 522.5l-82.7-82.7C297 369.6 284 357.1 281 356.5c-1.9-.3-4.2-.8-5-1-.8-.1-3.5.2-5.9.7z"/>
                         </svg>
                     </button>
                     <div class="absolute left-1/2 bottom-8">
-                        <div class="w-5 h-5 bg-white rounded-full opacity-80"></div>
+                        <div class="w-4 h-4 bg-white rounded-full opacity-80"></div>
                     </div>
                 </div>
+            </div>
+
+            <div id="endMsg" class="w-full p-3 flex justify-center bg-white rounded-full drop-shadow-lg">
+                <p class="text-xl font-bold">End of the line!</p>
             </div>
         </main>
     </body>
