@@ -355,11 +355,17 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 
 <details>
    <summary>Maret</summary>
+   
+### 19/03/2026 - 0.1.1
+<details>
+
+   - Membuat main page responsif 
+</details>
 
 ### 17/03/2026 - 0.1.0
 <details>
 
-   - Implementasi home page
+   - Implementasi main page
    - Pembuatan komponen sidebar
    - Implement login page
 </details>
