@@ -1,0 +1,172 @@
+/* max dilakukan saat kurang */
+/* min dilakukan saat lebih */
+
+@media screen and (min-width: 5500px) {
+    .post, aside, #searchBar, #endMsg {
+        zoom: 4;
+    }
+
+    main {
+        width: calc(100% - 70rem /* 256px */);
+    }
+
+    #searchBar {
+        top: 0;
+    }
+}
+
+@media screen and (max-width: 5500px) {
+    .post, aside, #searchBar, #endMsg {
+        zoom: 2.4;
+    }
+
+    main {
+        width: calc(100% - 40rem /* 256px */);
+    }
+
+    #searchBar {
+        top: 0;
+    }
+}
+
+@media screen and (max-width: 3500px) {
+    .post, aside, #searchBar, #endMsg {
+        zoom: 1.6;
+    }
+
+    main {
+        width: calc(100% - 26rem /* 256px */);
+    }
+}
+
+@media screen and (max-width: 3000px) {
+    .post, aside, #searchBar, #endMsg {
+        zoom: 1.4;
+    }
+
+    main {
+        width: calc(100% - 23rem /* 256px */);
+    }
+}
+
+@media screen and (max-width: 2500px) {
+    .post, aside, #searchBar, #endMsg {
+        zoom: 1.2;
+    }
+
+    main {
+        width: calc(100% - 20rem /* 256px */);
+    }
+
+    #searchBar {
+        top: 40px;
+    }
+}
+
+@media screen and (max-width: 2200px) {
+    .post, aside, #searchBar, #endMsg {
+        zoom: 1.1;
+    }
+
+    main {
+        width: calc(100% - 18rem /* 256px */);
+    }
+}
+
+@media screen and (max-width: 2000px) {
+    .post, aside, #searchBar {
+        zoom: 1;
+    }
+
+    main {
+        width: calc(100% - 16rem /* 256px */);
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .post {
+        zoom: 0.9;
+    }
+
+    aside {
+        zoom: 0.85;
+    }
+
+    main {
+        width: calc(100% - 14rem /* 256px */);
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .post {
+        zoom: 0.7;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    aside {
+        zoom: 0.8;
+    }
+
+    main {
+        width: calc(100% - 13rem /* 256px */);
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .post {
+        zoom: 0.65;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .post {
+        zoom: 0.7;
+    }
+
+    aside {
+        zoom: 1;
+    }
+
+    main {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    #searchBarIcon {
+        left: 85px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .post {
+        zoom: 0.65;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    #searchBarIcon {
+        left: 80px;
+    }
+
+    .post {
+        zoom: 0.6;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    #searchBarIcon {
+        left: 75px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    #errScreenRatio {
+        display: flex;
+    }
+
+    main {
+        display: none;
+    }
+}
