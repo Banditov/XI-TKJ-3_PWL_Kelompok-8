@@ -1,0 +1,22 @@
+/* max dilakukan saat kurang */
+/* min dilakukan saat lebih */
+
+@media screen and (max-width: 320px) {
+    #errScreenRatio {
+        display: flex;
+    }
+
+    main {
+        display: none;
+    }
+}
+
+@media screen and (max-height: 768px) {
+    #errScreenRatio {
+        display: flex;
+    }
+
+    main {
+        display: none;
+    }
+}

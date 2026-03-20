@@ -115,9 +115,7 @@
     main {
         width: calc(100% - 13rem /* 256px */);
     }
-}
 
-@media screen and (max-width: 900px) {
     .post {
         zoom: 0.65;
     }
@@ -200,15 +198,5 @@
 @media screen and (max-width: 350px) {
     .post {
         zoom: 0.35;
-    }
-}
-
-@media screen and (max-width: 320px) {
-    #errScreenRatio {
-        display: flex;
-    }
-
-    main {
-        display: none;
     }
 }

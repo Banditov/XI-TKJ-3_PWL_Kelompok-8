@@ -1,1 +1,55 @@
 @import "tailwindcss";
+
+/* Global */
+* {
+    font-family: 'Anonymous Pro';
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: white;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #545F71;
+    border-radius: 3px;
+}
+
+/* Login */
+.name {
+    font-family: 'Source Serif Pro';
+}
+
+#keep {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #e2e8f0;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+
+#keep:checked {
+    background: #3b82f6;
+    border-color: #3b82f6;
+}
+
+#keep:checked::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}

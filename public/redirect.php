@@ -1,2 +1,2 @@
 <?php
-    header('Location: /test');
+    header('Location: /login');

@@ -1,10 +1,14 @@
 <?php
 namespace App\Core;
 
-use App\Controllers\BaseController;
-class Router //nama file harus sesuai dengan nama class
+class Router
 {
     private array $routes = [];
+    private static array $current_route = [
+        'controller' => null,
+        'action' => null,
+        'params' => []
+    ];
 
     public function add(string $method, string $uri, string $controller, string $function)
     {
@@ -14,6 +18,66 @@ class Router //nama file harus sesuai dengan nama class
             'controller' => $controller,
             'function' => $function
         ];
+    }
+
+    private function setCurrentRoute(string $controller, string $action, array $params = [])
+    {
+        self::$current_route = [
+            'controller' => strtolower($controller),
+            'action' => strtolower($action),
+            'params' => $params
+        ];
+    }
+
+    public static function is(string $controller, ?string $action = null): bool
+    {
+        if ($action === null) {
+            return self::$current_route['controller'] === strtolower($controller);
+        }
+        return self::$current_route['controller'] === strtolower($controller) && 
+               self::$current_route['action'] === strtolower($action);
+    }
+
+    public static function isAny(array $routes): bool
+    {
+        foreach ($routes as $route) {
+            if (is_array($route) && count($route) >= 2) {
+                $action = $route[1] ?? null;
+                if (self::is($route[0], $action)) {
+                    return true;
+                }
+            } elseif (is_string($route)) {
+                if (self::is($route)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static function getCurrentRoute(): array
+    {
+        return self::$current_route;
+    }
+
+    private function show404()
+    {
+        http_response_code(404);
+
+        $this->setCurrentRoute('ErrorController', 'error404', []);
+
+        $controllerFile = __DIR__ . '/../controllers/ErrorController.php';
+        
+        if (file_exists($controllerFile)) {
+            require_once $controllerFile;
+            $controllerClass = 'App\\Controllers\\ErrorController';
+            $controller = new $controllerClass();
+
+            call_user_func([$controller, 'error404']);
+        } else {
+            echo "<h1>404 - Page Not Found</h1>";
+        }
+        exit;
     }
 
     public function run()
@@ -32,6 +96,12 @@ class Router //nama file harus sesuai dengan nama class
             if (preg_match($pattern, $uri, $matches)) {
                 array_shift($matches);
 
+                $this->setCurrentRoute(
+                    $route['controller'], 
+                    $route['function'], 
+                    $matches
+                );
+
                 require_once __DIR__ . '/../controllers/' . $route['controller'] . '.php';
 
                 $controllerClass = 'App\\Controllers\\' . $route['controller'];
@@ -42,7 +112,6 @@ class Router //nama file harus sesuai dengan nama class
             }
         }
 
-        http_response_code(404);
-        echo "<h1>404 - Page Not Found</h1>";
+        $this->show404();
     }
 }

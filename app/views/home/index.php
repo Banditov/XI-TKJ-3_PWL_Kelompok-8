@@ -5,19 +5,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Home | ImmaSpark</title>
 		<link rel="icon" type="image/x-icon" href="/assets/image/logo/logo.ico">
-        <link rel="stylesheet" href="/css/responsive.css">
+        <link rel="stylesheet" href="/css/responsive/main.css">
     </head>
 
-    <body class="grow md:container m-0 md:mx-auto bg-[image:url('/assets/image/texture/background-l.png')] bg-cover bg-size-[150%] [&_*]:select-none">
-        <?php include __DIR__ . '/../../../app/views/component/error/error.php'; ?>
+    <body class="grow md:container m-0 md:mx-auto bg-[url('/assets/image/texture/background-l.png')] bg-cover bg-size-[150%] **:select-none">
         <?php include __DIR__ . '/../../../app/views/component/header/header.php'; ?>
 
         <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10">
             <div id="searchBar" class="z-2 sticky top-10 w-full md:block hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.0" class="w-8 absolute left-4 top-1/2 -translate-y-4 z-2" viewBox="100 100 700 700">
-                    <path fill="#FFF" stroke="#FFF" stroke-width="8" d="M384.8 206.1c-106 8.5-186.7 102-178.7 207.1 11.5 152.7 183.7 233.4 307.8 144.3l9.3-6.7 71.2 71c68.6 68.5 71.3 71 75.9 72 14.7 3 26.5-8.8 23.5-23.6-1-4.5-3.5-7.2-72-75.8l-71-71.2 6.7-9.3c96.3-134.2-8.4-321-172.7-307.8zm49.2 42.2c92.4 21.9 144.3 117.8 111.5 206.2-29.5 79.7-119.7 120.8-200 91-79.7-29.5-120.8-119.7-91-200 19.8-53.5 67.2-91.1 126-99.9 9.6-1.4 43.2.3 53.5 2.7z"/>
-                </svg>
-                <input type="text" placeholder="Search..." class="p-4 pl-14 w-full text-white rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
+                <label for="search">
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.0" class="w-8 absolute left-4 top-1/2 -translate-y-4 z-2" viewBox="100 100 700 700">
+                        <path fill="#FFF" stroke="#FFF" stroke-width="8" d="M384.8 206.1c-106 8.5-186.7 102-178.7 207.1 11.5 152.7 183.7 233.4 307.8 144.3l9.3-6.7 71.2 71c68.6 68.5 71.3 71 75.9 72 14.7 3 26.5-8.8 23.5-23.6-1-4.5-3.5-7.2-72-75.8l-71-71.2 6.7-9.3c96.3-134.2-8.4-321-172.7-307.8zm49.2 42.2c92.4 21.9 144.3 117.8 111.5 206.2-29.5 79.7-119.7 120.8-200 91-79.7-29.5-120.8-119.7-91-200 19.8-53.5 67.2-91.1 126-99.9 9.6-1.4 43.2.3 53.5 2.7z"/>
+                    </svg>
+                </label>
+                <input type="text" id="search" placeholder="Search..." class="p-4 pl-14 w-full text-white rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
             </div>
 
             <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg post">
@@ -34,7 +35,7 @@
                     </div>
                     <div class="flex justify-between items-center">
                         <div class="flex gap-5">
-                            <p class="px-6 py-3 bg-gradient-to-b from-stone-500 to-stone-700 text-white rounded-full drop-shadow-lg">TEMPLATE</p>
+                            <p class="px-6 py-3 bg-linear-to-b from-stone-500 to-stone-700 text-white rounded-full drop-shadow-lg">TEMPLATE</p>
                         </div>
                         <div class="flex items-center gap-5">
                             <div class="flex px-4 py-2 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
@@ -102,7 +103,7 @@
                     </div>
                     <div class="flex justify-between items-center">
                         <div class="flex gap-5">
-                            <p class="px-6 py-3 bg-gradient-to-b from-stone-500 to-stone-700 text-white rounded-full drop-shadow-lg">TEMPLATE</p>
+                            <p class="px-6 py-3 bg-linear-to-b from-stone-500 to-stone-700 text-white rounded-full drop-shadow-lg">TEMPLATE</p>
                         </div>
                         <div class="flex items-center gap-5">
                             <div class="flex px-4 py-2 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
