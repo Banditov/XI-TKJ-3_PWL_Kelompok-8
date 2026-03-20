@@ -1,0 +1,112 @@
+/* max dilakukan saat kurang */
+/* min dilakukan saat lebih */
+
+@media screen and (min-width: 5500px) {
+    #form, #decor {
+        zoom: 4;
+    }
+
+    #decorBox {
+        padding: 250px;
+    }
+}
+
+@media screen and (max-width: 5500px) {
+    #form, #decor {
+        zoom: 2.4;
+    }
+
+    #decorBox {
+        padding: 200px;
+    }
+}
+
+@media screen and (max-width: 3500px) {
+    #form, #decor {
+        zoom: 1.6;
+    }
+
+    #decorBox {
+        padding: 150px;
+    }
+}
+
+@media screen and (max-width: 3000px) {
+    #form, #decor {
+        zoom: 1.4;
+    }
+
+    #decorBox {
+        padding: 100px;
+    }
+}
+
+@media screen and (max-width: 2500px) {
+    #form, #decor {
+        zoom: 1.2;
+    }
+}
+
+@media screen and (max-width: 2200px) {
+    #form, #decor {
+        zoom: 1.1;
+    }
+
+    #decorBox {
+        padding: 50px;
+    }
+}
+
+@media screen and (max-width: 2000px) {
+    #form, #decor {
+        zoom: 1;
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    #form, #decor {
+        zoom: 0.9;
+    }
+}
+
+@media screen and (max-width: 1150px) {
+    #form, #decor {
+        zoom: 0.8;
+    }
+}
+
+@media screen and (max-width: 1050px) {
+    #form, #decor {
+        zoom: 0.7;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    #form, #decor {
+        zoom: 0.6;
+    }
+}
+
+@media screen and (max-width: 775px) {
+    #form {
+        zoom: 0.9;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    #form {
+        zoom: 0.8;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #form {
+        zoom: 0.7;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    #form {
+        zoom: 0.65;
+    }
+}

@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="refresh" content="3;url=redirect.php">
         <title>Welcome to ImmaSpark!</title>
-        <link rel="stylesheet" href="/css/responsive.css">
+        <link rel="stylesheet" href="/css/responsive/main.css">
     </head>
 
     <script type="module" src="/js/intro.js"></script>

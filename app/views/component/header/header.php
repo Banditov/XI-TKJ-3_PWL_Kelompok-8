@@ -1,8 +1,8 @@
-<aside class="fixed top-0 left-0 w-64 h-full bg-white overflow-y-scroll drop-shadow-lg [&_*]:transition-all [&_*]:duration-200 hidden md:block">
+<aside class="fixed top-0 left-0 w-64 h-full bg-white overflow-y-scroll drop-shadow-lg **:transition-all **:duration-200 hidden md:block">
     <header class="text-[#545F71] flex items-center p-6 flex-col gap-5">
         <div>
             <img src="/assets/image/logo/logo.png" class="object-contain">
-            <div class="w-full h-[3px] bg-[#545F71] rounded-full"></div>
+            <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
         </div>
 
         <div class="flex flex-col gap-1 w-full">
@@ -32,7 +32,7 @@
             </a>
         </div>
         
-        <div class="w-full h-[3px] bg-[#545F71] rounded-full"></div>
+        <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
 
         <div class="flex flex-col gap-1 w-full">
             <a href="/create" class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent">
@@ -55,7 +55,7 @@
             </a>
         </div>
 
-        <div class="w-full h-[3px] bg-[#545F71] rounded-full"></div>
+        <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
 
         <div class="flex flex-col gap-1 w-full">
             <div class="font-bold text-lg rounded-2xl flex items-center">
@@ -66,8 +66,8 @@
             </div>
             <div class="flex flex-col gap-1">
                 <div class="flex flex-col gap-1">
-                    <label>Tag</label>
-                    <select class="w-full p-2 rounded-lg border-2 border-[#545F71]">
+                    <p>Tag</p>
+                    <select id="filter" class="w-full p-2 rounded-lg border-2 border-[#545F71]">
                         <option value="">All Tags</option>
                         <option value="technology">Technology</option>
                         <option value="design">Design</option>
@@ -75,23 +75,23 @@
                     </select>
                 </div>
                 <div>
-                    <label>Votes</label>
+                    <p>Votes</p>
                     <div class="flex gap-2">
-                        <input type="number" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Min">
-                        <input type="number" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Max">
+                        <input type="number" id="votesMin" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Min">
+                        <input type="number" id="votesMax" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Max">
                     </div>
                 </div>
                 <div>
-                    <label>Views</label>
+                    <p>Views</p>
                     <div class="flex gap-2">
-                        <input type="number" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Min">
-                        <input type="number" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Max">
+                        <input type="number" id="viewsMin" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Min">
+                        <input type="number" id="viewsMax" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Max">
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="w-full h-[3px] bg-[#545F71] rounded-full"></div>
+        <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
 
         <div class="flex items-start flex-col w-full gap-2 font-bold">
             <div class="flex items-center gap-2 w-full">
@@ -125,7 +125,7 @@
             </div>
         </div>
 
-        <div class="w-full h-[3px] bg-[#545F71] rounded-full"></div>
+        <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
 
         <div class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent w-full">
             <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="100 100 700 700" fill="#545F71" class="w-8 mr-2">
@@ -138,7 +138,7 @@
     </header>
 </aside>
 
-<aside class="w-full h-25 text-white bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border-b border-gray-100 drop-shadow-lg [&_*]:transition-all [&_*]:duration-200 flex justify-center items-center md:hidden sticky top-0 z-10">
+<aside class="w-full h-25 text-white bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border-b border-gray-100 drop-shadow-lg **:transition-all **:duration-200 flex justify-center items-center md:hidden sticky top-0 z-10">
     <header class="text-[#545F71] flex items-center p-10 flex-col gap-5 w-full">
         <div class="flex items-center gap-3 w-full">
             <svg xmlns="http://www.w3.org/2000/svg" id="mobileNavBtn" version="1.0" viewBox="100 100 700 700" fill="#ffffff" class="w-12">
@@ -148,7 +148,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" version="1.0" id="searchBarIcon" class="w-8 absolute left-25 top-1/2 -translate-y-4 z-2" viewBox="100 100 700 700">
                     <path fill="#545F71" stroke="#545F71" stroke-width="8" d="M384.8 206.1c-106 8.5-186.7 102-178.7 207.1 11.5 152.7 183.7 233.4 307.8 144.3l9.3-6.7 71.2 71c68.6 68.5 71.3 71 75.9 72 14.7 3 26.5-8.8 23.5-23.6-1-4.5-3.5-7.2-72-75.8l-71-71.2 6.7-9.3c96.3-134.2-8.4-321-172.7-307.8zm49.2 42.2c92.4 21.9 144.3 117.8 111.5 206.2-29.5 79.7-119.7 120.8-200 91-79.7-29.5-120.8-119.7-91-200 19.8-53.5 67.2-91.1 126-99.9 9.6-1.4 43.2.3 53.5 2.7z"/>
                 </svg>
-                <input type="text" placeholder="Search..." class="p-3 pl-13 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white">
+                <input type="text" id="search" placeholder="Search..." class="p-3 pl-13 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white">
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" id="mobileStngBtn" version="1.0" viewBox="100 100 700 700" fill="#ffffff" class="w-12">
                 <g stroke-width="8">
@@ -170,7 +170,7 @@
     <div class="text-[#545F71] flex items-center p-6 flex-col gap-8 bg-white overflow-scroll w-80 rounded-3xl drop-shadow-lg">
         <div>
             <img src="/assets/image/logo/logo.png" class="object-contain">
-            <div class="w-full h-[3px] bg-[#545F71] rounded-full"></div>
+            <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
         </div>
 
         <div class="flex flex-col gap-1 w-full">
@@ -230,8 +230,8 @@
             </div>
             <div class="flex flex-col gap-1">
                 <div class="flex flex-col gap-1">
-                    <label>Tag</label>
-                    <select class="w-full p-2 rounded-lg border-2 border-[#545F71]">
+                    <p>Tag</p>
+                    <select id="filter" class="w-full p-2 rounded-lg border-2 border-[#545F71]">
                         <option value="">All Tags</option>
                         <option value="technology">Technology</option>
                         <option value="design">Design</option>
@@ -239,17 +239,17 @@
                     </select>
                 </div>
                 <div>
-                    <label>Votes</label>
+                    <p>Votes</p>
                     <div class="flex gap-2">
-                        <input type="number" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Min">
-                        <input type="number" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Max">
+                        <input type="number" id="votesMin" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Min">
+                        <input type="number" id="votesMax" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Max">
                     </div>
                 </div>
                 <div>
-                    <label>Views</label>
+                    <p>Views</p>
                     <div class="flex gap-2">
-                        <input type="number" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Min">
-                        <input type="number" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Max">
+                        <input type="number" id="viewsMin" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Min">
+                        <input type="number" id="viewsMax" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Max">
                     </div>
                 </div>
             </div>
@@ -263,7 +263,7 @@
     <div class="text-[#545F71] flex items-center p-6 flex-col gap-8 bg-white w-80 rounded-3xl drop-shadow-lg">
         <div>
             <img src="/assets/image/logo/logo.png" class="object-contain">
-            <div class="w-full h-[3px] bg-[#545F71] rounded-full"></div>
+            <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
         </div>
 
         <div class="flex items-start flex-col w-full gap-2 font-bold">

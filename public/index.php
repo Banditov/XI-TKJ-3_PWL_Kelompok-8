@@ -7,6 +7,7 @@
 
     $router->add('GET', '/', 'ExtendController', 'intro');
     $router->add('GET', '/home', 'ExtendController', 'home');
+    $router->add('GET', '/login', 'ExtendController', 'login');
     $router->add('GET', '/test', 'ExtendController', 'test');
 
     $router->run();
