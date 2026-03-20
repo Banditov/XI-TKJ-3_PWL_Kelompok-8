@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="/css/responsive/login.css">
     </head>
 
-    <body class="m-0 h-screen bg-[url('/assets/image/texture/background-l.png')] bg-cover bg-size-[150%] **:select-none">
+    <body class="m-0 h-screen bg-[url('/assets/image/texture/background-l.png')] bg-size-[150%] **:select-none">
         <main class="w-full h-full flex">
             <div id="decorBox" class="p-10 hidden md:flex w-[60%] h-full justify-center items-center">
                 <div id="decor" class="**:text-center **:drop-shadow-lg p-4 w-full h-[70%] text-white rounded-3xl bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100 flex flex-col items-center justify-between">
