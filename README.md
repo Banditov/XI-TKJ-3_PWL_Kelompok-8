@@ -10,7 +10,7 @@
       <img src="https://img.shields.io/badge/GitHub Version-wip--0.4.0-red">
    </a>
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
-      <img src="https://img.shields.io/badge/Latest Release-0.0.0-green">
+      <img src="https://img.shields.io/badge/Latest Release-None-green">
    </a><br>
    <a href="http://unlicense.org/">
       <img src="https://img.shields.io/badge/License-Unlicense-blue.svg">
