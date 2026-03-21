@@ -356,7 +356,7 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 <details>
    <summary>Maret</summary>
 
-### 20/03/2026 - 0.3.0
+### 21/03/2026 - 0.3.0
 <details>
 
    - Implementasi halaman post detail
