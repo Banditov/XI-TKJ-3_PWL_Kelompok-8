@@ -68,8 +68,10 @@
                             </svg>
                         </div>
                     </div>
-                    <p class="text-4xl font-bold">POST TITLE</p>
-                    <p class="text-2xl md:text-lg text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
+                    <a href="/post/1" class="flex flex-col gap-3">
+                        <p class="text-4xl font-bold">POST TITLE</p>
+                        <p class="text-2xl md:text-lg text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
+                    </a>
                 </div>
                 <div class="h-75 max-h-75 relative">
                     <button class="absolute left-10 top-30 p-4 rounded-full text-white drop-shadow-lg bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
@@ -136,8 +138,10 @@
                             </svg>
                         </div>
                     </div>
-                    <p class="text-4xl font-bold">POST TITLE</p>
-                    <p class="text-2xl md:text-lg text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
+                    <a href="/post/1" class="flex flex-col gap-3">
+                        <p class="text-4xl font-bold">POST TITLE</p>
+                        <p class="text-2xl md:text-lg text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
+                    </a>
                 </div>
                 <div class="h-75 max-h-75 relative">
                     <button class="absolute left-10 top-30 p-4 rounded-full text-white drop-shadow-lg bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
