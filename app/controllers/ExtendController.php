@@ -38,4 +38,13 @@ class ExtendController extends BaseController
         
         $this->render('home', $data ?? []);
     }
+
+    public function post()
+    {
+        if ($this->isPage('ExtendController', 'post')) {
+            // Code specific to home page
+        }
+        
+        $this->render('post', $data ?? []);
+    }
 }
