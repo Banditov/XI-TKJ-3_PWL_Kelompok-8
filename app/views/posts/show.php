@@ -109,7 +109,8 @@
                     <p class="text-2xl">3</p>
                 </div>
 
-                <div id="comment1" class="flex flex-col border-2 border-[#545F71] rounded-4xl">
+<!-- Comment desktop -->
+                <div id="comment1" class="hidden md:flex flex-col border-2 border-[#545F71] rounded-4xl">
                     <div class="flex items-center justify-between p-5 border-b-2 border-[#545F71]">
                         <div class="flex gap-5 items-center">
                             <div class="flex gap-5 items-center">
@@ -221,7 +222,124 @@
                                     </div>
                                 </div>
                                 <div class="p-5">
-                                    <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
+                                    <p class="text-justify text-2xl md:text-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<!-- Comment mobile -->
+                <div id="comment1" class="flex md:hidden flex-col border-2 border-[#545F71] rounded-4xl">
+                    <div class="p-5 border-b-2 border-[#545F71]">
+                        <div class="flex gap-5 items-center justify-between w-full">
+                            <div class="flex gap-5 items-center">
+                                <img src="/assets/image/account/phototest.jpg" class="w-14 h-14 object-cover rounded-full drop-shadow-lg">
+                                <div>
+                                    <p class="text-2xl font-bold">Christopher V. C.</p>
+                                    <p class="text-lg">XI TKJ 3</p>
+                                </div>
+                            </div>
+                            <p class="text-3xl font-bold">16/03/2026</p>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <p class="text-justify text-2xl md:text-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
+                    </div>
+                    <div class="flex gap-5 items-center justify-end p-5 pt-0">
+                        <label id="replyBtnC1" for="replyC1" class="flex items-center gap-2" onclick="replyComment()">
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="100 100 700 700" fill="#545F71" stroke="#545F71" class="w-8 h-8">
+                                <path stroke-width="8" d="M370 231.2c-7.2 1.5-162.3 156.8-163.8 164-2.4 11.9-8.2 5.1 80.1 93.5 76.6 76.6 79.4 79.1 83.9 80.1 14.8 3 26.6-8.8 23.6-23.6-1-4.5-3.3-7-61.2-65l-60.1-60.3 114 .4c114 .3 114 .3 124 2.5 73.4 16.7 125.7 69 141.6 141.7 1.9 9 2.2 14 2.8 50 .7 44.6.7 44.5 7.9 50.5 11 9 28.1 3 31.1-10.9 2.7-12.7.9-71.5-2.9-92.7-15-84.3-78.9-153.1-161.6-174-27.5-6.9-23.1-6.7-145.8-7.1l-110.9-.4 60-60.2c57.8-57.9 60.1-60.4 61.1-65 3-14.8-8.9-26.6-23.8-23.5z"/>
+                            </svg>
+                            <p class="text-2xl">Reply</p>
+                        </label>
+                        <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="100 100 700 700" fill="#ffffff" stroke="#ffffff" class="w-7 h-7 transform rotate-180">
+                                <path stroke-width="20" d="M270.1 356.2c-9.7 2.1-16.1 12.9-13.9 23.5 1.5 7.5 181.6 187.6 189.1 189.1 11.8 2.4 3.5 9.7 105.9-92.6 88.8-88.9 91.6-91.8 92.6-96.5 3-14.7-8.8-26.5-23.5-23.5-4.6 1-7.5 3.7-87.5 83.6L450 522.5l-82.7-82.7C297 369.6 284 357.1 281 356.5c-1.9-.3-4.2-.8-5-1-.8-.1-3.5.2-5.9.7z"/>
+                            </svg>
+                            <p class="text-2xl">1</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="100 100 700 700" fill="#ffffff" stroke="#ffffff" class="w-7 h-7">
+                                <path stroke-width="20" d="M270.1 356.2c-9.7 2.1-16.1 12.9-13.9 23.5 1.5 7.5 181.6 187.6 189.1 189.1 11.8 2.4 3.5 9.7 105.9-92.6 88.8-88.9 91.6-91.8 92.6-96.5 3-14.7-8.8-26.5-23.5-23.5-4.6 1-7.5 3.7-87.5 83.6L450 522.5l-82.7-82.7C297 369.6 284 357.1 281 356.5c-1.9-.3-4.2-.8-5-1-.8-.1-3.5.2-5.9.7z"/>
+                            </svg>
+                        </div>
+                        <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="100 100 700 700" fill="#ffffff" stroke="#ffffff" class="w-7 h-7 transform rotate-180">
+                                <path stroke-width="20" d="M270.1 356.2c-9.7 2.1-16.1 12.9-13.9 23.5 1.5 7.5 181.6 187.6 189.1 189.1 11.8 2.4 3.5 9.7 105.9-92.6 88.8-88.9 91.6-91.8 92.6-96.5 3-14.7-8.8-26.5-23.5-23.5-4.6 1-7.5 3.7-87.5 83.6L450 522.5l-82.7-82.7C297 369.6 284 357.1 281 356.5c-1.9-.3-4.2-.8-5-1-.8-.1-3.5.2-5.9.7z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="border-t-2 border-dashed">
+                        <div>
+                            <div class="bg-white p-2 absolute z-1 -translate-y-6 translate-x-5">
+                                <p class="text-xl font-bold">Replies</p>
+                            </div>
+                            <div id="inputReplyC1" class="hidden p-5 pb-0">
+                                <input type="text" id="replyC1" placeholder="Replying" class="p-3 pl-8 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white">
+                            </div>
+                            <div id="reply1">
+                                <div class="border-b-2 border-[#545F71]">
+                                    <div class="p-5 flex gap-5 items-center justify-between">
+                                        <div class="flex gap-5 items-center">
+                                            <img src="/assets/image/account/phototest.jpg" class="w-14 h-14 object-cover rounded-full drop-shadow-lg">
+                                            <div>
+                                                <p class="text-2xl font-bold">Christopher V. C.</p>
+                                                <p class="text-lg">XI TKJ 3</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-3xl font-bold">16/03/2026</p>
+                                    </div>
+                                </div>
+                                <div class="p-5">
+                                    <p class="text-justify text-2xl md:text-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
+                                </div>
+                                <div class="flex gap-5 items-center p-5 pt-0 justify-end">
+                                    <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="100 100 700 700" fill="#ffffff" stroke="#ffffff" class="w-7 h-7 transform rotate-180">
+                                            <path stroke-width="20" d="M270.1 356.2c-9.7 2.1-16.1 12.9-13.9 23.5 1.5 7.5 181.6 187.6 189.1 189.1 11.8 2.4 3.5 9.7 105.9-92.6 88.8-88.9 91.6-91.8 92.6-96.5 3-14.7-8.8-26.5-23.5-23.5-4.6 1-7.5 3.7-87.5 83.6L450 522.5l-82.7-82.7C297 369.6 284 357.1 281 356.5c-1.9-.3-4.2-.8-5-1-.8-.1-3.5.2-5.9.7z"/>
+                                        </svg>
+                                        <p class="text-2xl">1</p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="100 100 700 700" fill="#ffffff" stroke="#ffffff" class="w-7 h-7">
+                                            <path stroke-width="20" d="M270.1 356.2c-9.7 2.1-16.1 12.9-13.9 23.5 1.5 7.5 181.6 187.6 189.1 189.1 11.8 2.4 3.5 9.7 105.9-92.6 88.8-88.9 91.6-91.8 92.6-96.5 3-14.7-8.8-26.5-23.5-23.5-4.6 1-7.5 3.7-87.5 83.6L450 522.5l-82.7-82.7C297 369.6 284 357.1 281 356.5c-1.9-.3-4.2-.8-5-1-.8-.1-3.5.2-5.9.7z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full">
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="100 100 700 700" fill="#ffffff" stroke="#ffffff" class="w-7 h-7 transform rotate-180">
+                                            <path stroke-width="20" d="M270.1 356.2c-9.7 2.1-16.1 12.9-13.9 23.5 1.5 7.5 181.6 187.6 189.1 189.1 11.8 2.4 3.5 9.7 105.9-92.6 88.8-88.9 91.6-91.8 92.6-96.5 3-14.7-8.8-26.5-23.5-23.5-4.6 1-7.5 3.7-87.5 83.6L450 522.5l-82.7-82.7C297 369.6 284 357.1 281 356.5c-1.9-.3-4.2-.8-5-1-.8-.1-3.5.2-5.9.7z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="reply2" class="border-t-2 border-[#545F71] border-dashed">
+                                <div class="border-b-2 border-[#545F71]">
+                                    <div class="p-5 flex gap-5 items-center justify-between">
+                                        <div class="flex gap-5 items-center">
+                                            <img src="/assets/image/account/phototest.jpg" class="w-14 h-14 object-cover rounded-full drop-shadow-lg">
+                                            <div>
+                                                <p class="text-2xl font-bold">Christopher V. C.</p>
+                                                <p class="text-lg">XI TKJ 3</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-3xl font-bold">16/03/2026</p>
+                                    </div>
+                                </div>
+                                <div class="p-5">
+                                    <p class="text-justify text-2xl md:text-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
+                                </div>
+                                <div class="flex gap-5 items-center p-5 pt-0 justify-end">
+                                    <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="100 100 700 700" fill="#ffffff" stroke="#ffffff" class="w-7 h-7 transform rotate-180">
+                                            <path stroke-width="20" d="M270.1 356.2c-9.7 2.1-16.1 12.9-13.9 23.5 1.5 7.5 181.6 187.6 189.1 189.1 11.8 2.4 3.5 9.7 105.9-92.6 88.8-88.9 91.6-91.8 92.6-96.5 3-14.7-8.8-26.5-23.5-23.5-4.6 1-7.5 3.7-87.5 83.6L450 522.5l-82.7-82.7C297 369.6 284 357.1 281 356.5c-1.9-.3-4.2-.8-5-1-.8-.1-3.5.2-5.9.7z"/>
+                                        </svg>
+                                        <p class="text-2xl">1</p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="100 100 700 700" fill="#ffffff" stroke="#ffffff" class="w-7 h-7">
+                                            <path stroke-width="20" d="M270.1 356.2c-9.7 2.1-16.1 12.9-13.9 23.5 1.5 7.5 181.6 187.6 189.1 189.1 11.8 2.4 3.5 9.7 105.9-92.6 88.8-88.9 91.6-91.8 92.6-96.5 3-14.7-8.8-26.5-23.5-23.5-4.6 1-7.5 3.7-87.5 83.6L450 522.5l-82.7-82.7C297 369.6 284 357.1 281 356.5c-1.9-.3-4.2-.8-5-1-.8-.1-3.5.2-5.9.7z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full">
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="100 100 700 700" fill="#ffffff" stroke="#ffffff" class="w-7 h-7 transform rotate-180">
+                                            <path stroke-width="20" d="M270.1 356.2c-9.7 2.1-16.1 12.9-13.9 23.5 1.5 7.5 181.6 187.6 189.1 189.1 11.8 2.4 3.5 9.7 105.9-92.6 88.8-88.9 91.6-91.8 92.6-96.5 3-14.7-8.8-26.5-23.5-23.5-4.6 1-7.5 3.7-87.5 83.6L450 522.5l-82.7-82.7C297 369.6 284 357.1 281 356.5c-1.9-.3-4.2-.8-5-1-.8-.1-3.5.2-5.9.7z"/>
+                                        </svg>
+                                    </div>
                                 </div>
                             </div>
                         </div>

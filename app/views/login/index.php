@@ -38,7 +38,7 @@
                         <b class="text-4xl">Share us your <b class="text-[#2C7CFF]!">ideas</b></b>
                         <p class="text-2xl"><b class="text-[#2C7CFF]!">Together</b>, we’ll help you develop it!</p>
                     </div>
-                    <form class="flex flex-col items-center w-full gap-5" action="/home">
+                    <form class="flex flex-col items-center w-full gap-5" action="/posts">
                         <div class="flex flex-col w-full">
                             <label for="email">Email</label>
                             <input id="email" type="email" class="rounded border p-2" placeholder="Enter your email" required>
