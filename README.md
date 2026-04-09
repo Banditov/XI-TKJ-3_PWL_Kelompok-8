@@ -7,11 +7,11 @@
 <br>
 <div align="center">
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
-      <img src="https://img.shields.io/badge/GitHub Version-wip--0.4.0-red">
+      <img src="https://img.shields.io/badge/GitHub Version-wip--0.3.1-red">
    </a>
-   <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
-      <img src="https://img.shields.io/badge/Latest Release-0.0.0-green">
-   </a><br>
+   <!-- <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
+      <img src="https://img.shields.io/badge/Latest Release-None-green">
+   </a><br> -->
    <a href="http://unlicense.org/">
       <img src="https://img.shields.io/badge/License-Unlicense-blue.svg">
    </a>
@@ -353,6 +353,18 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 <details>
    <summary>Click to Expand</summary>
 
+<details>
+   <summary>April</summary>
+
+### 21/03/2026 - 0.3.1
+<details>
+
+   - Simplifikasi core dan cara merender suatu halaman
+   - Pembagian controller untuk fitur yang berbeda
+   - Mengubah beberapa penamaan URL
+</details>
+</details>
+<br>
 <details>
    <summary>Maret</summary>
 

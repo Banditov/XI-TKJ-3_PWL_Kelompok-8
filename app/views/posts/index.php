@@ -68,7 +68,7 @@
                             </svg>
                         </div>
                     </div>
-                    <a href="/post/1" class="flex flex-col gap-3">
+                    <a href="/posts/1" class="flex flex-col gap-3">
                         <p class="text-4xl font-bold">POST TITLE</p>
                         <p class="text-2xl md:text-lg text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
                     </a>
@@ -138,7 +138,7 @@
                             </svg>
                         </div>
                     </div>
-                    <a href="/post/1" class="flex flex-col gap-3">
+                    <a href="/posts/1" class="flex flex-col gap-3">
                         <p class="text-4xl font-bold">POST TITLE</p>
                         <p class="text-2xl md:text-lg text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
                     </a>
