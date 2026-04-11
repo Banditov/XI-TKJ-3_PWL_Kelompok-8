@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Home | ImmaSpark</title>
+        <title>Login | ImmaSpark</title>
 		<link rel="icon" type="image/x-icon" href="/assets/image/logo/logo.ico">
         <link rel="stylesheet" href="/css/responsive/login.css">
     </head>

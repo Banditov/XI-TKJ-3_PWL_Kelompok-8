@@ -9,7 +9,7 @@
     </head>
 
     <body class="grow md:container m-0 md:mx-auto bg-[url('/assets/image/texture/background-l.png')] bg-size-[150%] **:select-none">
-        <?php include __DIR__ . '/../../../app/views/component/header/header.php'; ?>
+        <?php include __DIR__ . '/../../../app/views/layouts/partials/navbar/navbar.php'; ?>
 
         <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10">
 <!-- Post Detail -->
