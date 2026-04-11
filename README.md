@@ -356,14 +356,14 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 <details>
    <summary>April</summary>
 
-### 21/03/2026 - 0.3.2
+### 11/04/2026 - 0.3.2
 <details>
 
    - Perubahan struktur file
    - Perbaikan nama
 </details>
 
-### 21/03/2026 - 0.3.1
+### 08/04/2026 - 0.3.1
 <details>
 
    - Simplifikasi core dan cara merender suatu halaman
