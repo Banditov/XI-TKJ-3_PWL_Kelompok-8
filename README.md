@@ -356,7 +356,7 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 <details>
    <summary>April</summary>
 
-### 11/04/2026 - 0.4.0
+### 22/04/2026 - 0.4.0
 <details>
 
    - Database telah dibuat
