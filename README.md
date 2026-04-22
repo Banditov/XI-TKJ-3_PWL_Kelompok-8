@@ -361,7 +361,7 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 
    - Database telah dibuat
    - Database telah dikoneksikan dengan web
-   - 
+   - View post telah diimplementasikan
 </details>
 
 ### 11/04/2026 - 0.3.2
