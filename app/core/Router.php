@@ -18,7 +18,11 @@ class Router
     public function run()
     {
         $method = strtoupper($_SERVER['REQUEST_METHOD']);
-        $uri    = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        if ($method === 'POST' && isset($_POST['_method'])) {
+            $method = strtoupper($_POST['_method']);
+        }
+
+        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
         foreach ($this->routes as $route) {
             $pattern = '#^' . preg_replace('/\{[a-zA-Z_]+\}/', '([^/]+)', $route['uri']) . '$#';
