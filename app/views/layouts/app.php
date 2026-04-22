@@ -10,7 +10,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Allerta&family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
     </head>
-    <body>
+    <body class="m-0 bg-[url('/assets/image/texture/background-l.png')] bg-size-[150%] **:select-none">
         <?php include __DIR__ . '/../../../app/views//error/screen/error.php'; ?>
         <?= $content ?>
     </body>

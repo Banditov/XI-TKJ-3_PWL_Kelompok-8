@@ -7,7 +7,7 @@
 <br>
 <div align="center">
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
-      <img src="https://img.shields.io/badge/GitHub Version-wip--0.3.2-red">
+      <img src="https://img.shields.io/badge/GitHub Version-wip--0.4.0-red">
    </a>
    <!-- <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
       <img src="https://img.shields.io/badge/Latest Release-None-green">
@@ -355,6 +355,14 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 
 <details>
    <summary>April</summary>
+
+### 11/04/2026 - 0.4.0
+<details>
+
+   - Database telah dibuat
+   - Database telah dikoneksikan dengan web
+   - 
+</details>
 
 ### 11/04/2026 - 0.3.2
 <details>
