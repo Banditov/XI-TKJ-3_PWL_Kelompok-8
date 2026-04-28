@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Models\Post;
+use App\Models\Tag;
 
 class PostController extends Controller
 {
