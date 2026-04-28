@@ -3,6 +3,7 @@ require_once __DIR__ . '/../app/core/Router.php';
 require_once __DIR__ . '/../app/core/Controller.php';
 require_once __DIR__ . '/../app/controllers/ErrorController.php';
 require_once __DIR__ . '/../app/models/Post.php';
+require_once __DIR__ . '/../app/resources/icons/icon.php';
 
 use App\Core\Router;
 

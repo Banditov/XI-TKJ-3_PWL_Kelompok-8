@@ -7,7 +7,7 @@
 <br>
 <div align="center">
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
-      <img src="https://img.shields.io/badge/GitHub Version-wip--0.4.0-red">
+      <img src="https://img.shields.io/badge/GitHub Version-wip--0.4.2-red">
    </a>
    <!-- <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
       <img src="https://img.shields.io/badge/Latest Release-None-green">
@@ -355,6 +355,18 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 
 <details>
    <summary>April</summary>
+
+### 28/04/2026 - 0.4.2
+<details>
+
+   - Implementasi library ikon SVG
+</details>
+
+### 23/04/2026 - 0.4.1
+<details>
+
+   - Implementasi view tag untuk post
+</details>
 
 ### 22/04/2026 - 0.4.0
 <details>

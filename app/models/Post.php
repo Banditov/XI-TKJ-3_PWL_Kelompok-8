@@ -6,8 +6,8 @@ use App\Core\Database;
 
 class Post extends Database
 {
-    protected $table       = 'posts';
-    protected $table_imgs  = 'post_imgs';
+    protected $table = 'posts';
+    protected $table_imgs = 'post_imgs';
     protected $table_links = 'post_links';
 
     public function getPosts()
