@@ -2,88 +2,90 @@
 /* min dilakukan saat lebih */
 
 @media screen and (min-width: 5500px) {
-    .post, aside, #searchBar, #endMsg, #introContainer {
+    .post, aside, #searchBar, #endMsg, #introContainer, .create {
         zoom: 4;
-    }
-
-    main {
-        width: calc(100% - 70rem /* 256px */);
     }
 
     #searchBar {
         top: 0;
+    }
+
+    main {
+        width: calc(100% - 65rem);
     }
 }
 
 @media screen and (max-width: 5500px) {
-    .post, aside, #searchBar, #endMsg, #introContainer {
+    .post, aside, #searchBar, #endMsg, #introContainer, .create {
         zoom: 2.4;
-    }
-
-    main {
-        width: calc(100% - 40rem /* 256px */);
     }
 
     #searchBar {
         top: 0;
     }
+
+    main {
+        width: calc(100% - 40rem);
+    }
 }
 
 @media screen and (max-width: 3500px) {
-    .post, aside, #searchBar, #endMsg, #introContainer {
+    .post, aside, #searchBar, #endMsg, #introContainer, .create {
         zoom: 1.6;
     }
 
     main {
-        width: calc(100% - 26rem /* 256px */);
+        width: calc(100% - 25rem);
     }
 }
 
 @media screen and (max-width: 3000px) {
-    .post, aside, #searchBar, #endMsg, #introContainer {
+    .post, aside, #searchBar, #endMsg, #introContainer, .create {
         zoom: 1.4;
     }
 
     main {
-        width: calc(100% - 23rem /* 256px */);
+        width: calc(100% - 23rem);
     }
 }
 
 @media screen and (max-width: 2500px) {
-    .post, aside, #searchBar, #endMsg, #introContainer {
+    .post, aside, #searchBar, #endMsg, #introContainer, .create {
         zoom: 1.2;
-    }
-
-    main {
-        width: calc(100% - 20rem /* 256px */);
     }
 
     #searchBar {
         top: 40px;
     }
+
+    main {
+        width: calc(100% - 20rem);
+    }
 }
 
 @media screen and (max-width: 2200px) {
-    .post, aside, #searchBar, #endMsg, #introContainer {
+    .post, aside, #searchBar, #endMsg, #introContainer, .create {
         zoom: 1.1;
-    }
-
-    main {
-        width: calc(100% - 18rem /* 256px */);
     }
 
     #searchBarIcon {
         left: 100px;
     }
+
+    main {
+        width: calc(100% - 16rem);
+        zoom: 1.1;
+    }
 }
 
 @media screen and (max-width: 2000px) {
-    .post, aside, #searchBar, #endMsg, #searchBar, #introContainer {
+    .post, aside, #searchBar, #endMsg, #searchBar, #introContainer, .create {
         zoom: 1;
     }
 
     main {
-        width: calc(100% - 16rem /* 256px */);
+        width: calc(100% - 16rem);
+        zoom: 1;
     }
 }
 
@@ -97,7 +99,8 @@
     }
 
     main {
-        width: calc(100% - 14rem /* 256px */);
+        width: calc(100% - 14rem);
+        zoom: 1;
     }
 }
 
@@ -113,7 +116,7 @@
     }
 
     main {
-        width: calc(100% - 13rem /* 256px */);
+        width: calc(100% - 13rem);
     }
 
     .post {

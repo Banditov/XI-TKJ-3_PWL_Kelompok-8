@@ -3,8 +3,9 @@
 
 <?php include __DIR__ . '/../../../app/views/layouts/partials/navbar/navbar.php'; ?>
 
-<main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:container md:mx-auto">
-    <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg p-10 flex flex-col gap-5">
+<main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
+    <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg p-10 flex flex-col gap-5 create">
+        <p class="text-4xl font-bold text-center">Share Us Your Ideas!</p>
         <form action="/posts" method="POST" class="flex flex-col gap-5">
             <div class="flex flex-col gap-2">
                 <p class="text-2xl font-bold">Title</p>
