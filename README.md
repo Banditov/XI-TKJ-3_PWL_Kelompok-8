@@ -359,7 +359,7 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 ### 03/05/2026 - 0.5.0
 <details>
 
-   - Implementasi library ikon SVG
+   - Implementasi awal halaman create post
 </details>
 </details>
 <br>
