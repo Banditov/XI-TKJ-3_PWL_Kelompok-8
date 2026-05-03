@@ -10,8 +10,11 @@ use App\Core\Router;
 $router = new Router();
 
 $router->add('GET', '/', 'IntroController', 'index');
+
 $router->add('GET', '/login', 'AuthController', 'login');
+
 $router->add('GET', '/posts', 'PostController', 'index');
+$router->add('GET', '/posts/create', 'PostController', 'create');
 $router->add('GET', '/posts/{id}', 'PostController', 'show');
 
 $router->run();

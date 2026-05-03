@@ -3,7 +3,7 @@
         <h1 class="error-code"><?= $error_code ?? '404' ?></h1>
         <h2 class="error-title"><?= $error_message ?? 'Page Not Found' ?></h2>
         <p class="error-message"><?= $error_description ?? 'The page you are looking for does not exist.' ?></p>
-        <a href="/" class="home-button">Return to Homepage</a>
+        <a href="/posts" class="home-button">Return to Homepage</a>
     </div>
 </div>
 

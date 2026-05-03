@@ -7,7 +7,7 @@
 <br>
 <div align="center">
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
-      <img src="https://img.shields.io/badge/GitHub Version-wip--0.4.2-red">
+      <img src="https://img.shields.io/badge/GitHub Version-wip--0.5.0-red">
    </a>
    <!-- <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
       <img src="https://img.shields.io/badge/Latest Release-None-green">
@@ -325,8 +325,6 @@ Website ATK SKI digunakan sebagai sarana pembelian alat tulis dan buku secara le
 ![HTML](https://img.shields.io/badge/HTML-orange?logo=html5&logoColor=white)
 ![CSS](https://img.shields.io/badge/CSS-1572B6?logo=css&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-yellow?logo=javascript&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white)
-![Anime.js](https://img.shields.io/badge/Anime.js-FF2D55?style=flat&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AAAAZdEVYdFNvZnR3YXJlAFBhaW50Lk5FVCA1LjEuMTGKCBbOAAAAuGVYSWZJSSoACAAAAAUAGgEFAAEAAABKAAAAGwEFAAEAAABSAAAAKAEDAAEAAAACAAAAMQECABEAAABaAAAAaYcEAAEAAABsAAAAAAAAANl2AQDoAwAA2XYBAOgDAABQYWludC5ORVQgNS4xLjExAAADAACQBwAEAAAAMDIzMAGgAwABAAAAAQAAAAWgBAABAAAAlgAAAAAAAAACAAEAAgAEAAAAUjk4AAIABwAEAAAAMDEwMAAAAABZKX6wz+x41AAAAbxJREFUOE/FlE9IlFEUxc8LZ6E0IQqlm9lIm4jcCIEYrQIV/APujIh2YTujXUuFwEGwXLUJ0a2OC1v5B9GxghEkgqJW4oCSiIsBUZrg5+Z+w3tvJkgwOvAt7rnnnvfu++570v8AkAbSMV8LLiYSAO2SHku6J+mG0T8lbUqacc59jkpqA0gBWaDMn1E2TV1cH8DMFuPqWvh4BF2rrF+bZ6o5R3/iEbQMZCU9t/BE0rakXUklSb9N3yDp9sNP6lzar5S+KA25bCWSnZnX5g/gViDwADwY3YG7y9C5CvfXGIw1Aia9jkY8fgB4B8wBb4AM0AL0AiumnwjMPuQ3HFDwDL8Bs8Ar4L3lvlruqbfYtHGFwNDmbM8zfAlcB1KRLgO0efGC6feSOb3iFxgKzrkx59yhpAbgGTAOjEvqllSUpOPjkpOUiYslSVubQctvEx545O0a4BRotVwjsG982LIJkp/y2uOagCHgCTAM3PFyN4Ezq5msGHmCdksWgQ4gOA7gKtAH1FvcY/qyXdNq2HUC+AV8AdaBNSAPHNiOvtt3YNpwoH3Y1cuZ8G+QiyehChd8HKrM/v3zVQsXeWAvHedBNW9Pb9ocIgAAAABJRU5ErkJggg==)
 
 <b>-- Back-end Development --</b> <br>
 ![PHP](https://img.shields.io/badge/PHP-777bb4?logo=php&logoColor=white)
@@ -334,6 +332,11 @@ Website ATK SKI digunakan sebagai sarana pembelian alat tulis dan buku secara le
 
 <b>-- UI/UX Design --</b> <br>
 ![Figma](https://img.shields.io/badge/Figma-F24E1E?logo=figma&logoColor=white)
+
+<b>-- Libraries --</b> <br>
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white)
+![Anime.js](https://img.shields.io/badge/Anime.js-FF2D55?style=flat&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AAAAZdEVYdFNvZnR3YXJlAFBhaW50Lk5FVCA1LjEuMTGKCBbOAAAAuGVYSWZJSSoACAAAAAUAGgEFAAEAAABKAAAAGwEFAAEAAABSAAAAKAEDAAEAAAACAAAAMQECABEAAABaAAAAaYcEAAEAAABsAAAAAAAAANl2AQDoAwAA2XYBAOgDAABQYWludC5ORVQgNS4xLjExAAADAACQBwAEAAAAMDIzMAGgAwABAAAAAQAAAAWgBAABAAAAlgAAAAAAAAACAAEAAgAEAAAAUjk4AAIABwAEAAAAMDEwMAAAAABZKX6wz+x41AAAAbxJREFUOE/FlE9IlFEUxc8LZ6E0IQqlm9lIm4jcCIEYrQIV/APujIh2YTujXUuFwEGwXLUJ0a2OC1v5B9GxghEkgqJW4oCSiIsBUZrg5+Z+w3tvJkgwOvAt7rnnnvfu++570v8AkAbSMV8LLiYSAO2SHku6J+mG0T8lbUqacc59jkpqA0gBWaDMn1E2TV1cH8DMFuPqWvh4BF2rrF+bZ6o5R3/iEbQMZCU9t/BE0rakXUklSb9N3yDp9sNP6lzar5S+KA25bCWSnZnX5g/gViDwADwY3YG7y9C5CvfXGIw1Aia9jkY8fgB4B8wBb4AM0AL0AiumnwjMPuQ3HFDwDL8Bs8Ar4L3lvlruqbfYtHGFwNDmbM8zfAlcB1KRLgO0efGC6feSOb3iFxgKzrkx59yhpAbgGTAOjEvqllSUpOPjkpOUiYslSVubQctvEx545O0a4BRotVwjsG982LIJkp/y2uOagCHgCTAM3PFyN4Ezq5msGHmCdksWgQ4gOA7gKtAH1FvcY/qyXdNq2HUC+AV8AdaBNSAPHNiOvtt3YNpwoH3Y1cuZ8G+QiyehChd8HKrM/v3zVQsXeWAvHedBNW9Pb9ocIgAAAABJRU5ErkJggg==)
+![TinyMCE](https://img.shields.io/badge/TinyMCE-335DFF?style=flat&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAFqklEQVR4nOxbW6hUVRj+5jinOkWlccouWpbdtPuVNAykh9KEiAojI4pKQfKlty6P1UsQEUV0ozCph+ghKigMOpWVRJmVdFNJ02NaytEOR/Locfy++fc+7jNnbnvPrD1rz/jBx2Jm9szs719rr/X///pXHh6gUCh0sTmFPIe8mLyUnB687iWPI3XNILmd/I1cS64i1+RyuT1IiBxSBsXm2ZxKnkteQl4GE302eXKCe/qT/IBcTkN8j5hwagCKPZrN6eR5MLGXkzPJaeRJaC6GyffJp2mItfV+qWkGoFj91hTyIvIq2DCeQZ5Jnoj0sJd8jnyKhthb6+KGDEDR3WyuJm8ib4T1brN7Nim+Jh+kEX6tdlEiA1C4hvVdAdXbXfATf5N30wh9lS6IZQAKP43NMvJ+2ESWBfxH3k4jfFruw7oMEDzfS8jHYc951rCLnE8jfFv6QU0DUPxZbF4gFyDb0Fwwl0bYEX2z6rNL8XPYfIbsixe0Ij1b+mbFEUDx89i8g3SXsDRwB0fBe+GLsgag+Btg3tUJ8BsDMLd4Msxtrgc/k9eFPsK4R4Di5ZKugF/iC7AY4EvyefI+Uo/nTAqZzfaNGL8lj3Rh+CI/5l8sKHmRnIrWQS7tNljPrgm4mdxIsQMVvjMB8bCYWhU7jORLPniAnIf0MERuIv8if4CJ1Wy9mTc3FON34jp01wRcPWoAWkQu7KNwBwlST0pg2LPq5W0UO4x0oREzH1EDEPfAQtJm4w/yYXI9WiO2EjTR2xwQBDX3wg00nFfCP8yg7snhCFBAcwXcIO4ElRb0yE8JDTAX/kZ0riDtU0MDzEJnojfP56AHlp/rRPRoBEyEZWQ7Ed0ygFzeY9BicCQq9a3QW2k1ZYk1Ma/nCvII3CEvAxxLdsMdCuPeOCxWIeqVAS+EZZCPily6Cm4xQQYQXa4APRSsDLF69HxYaryc2HJw7TQVDaB1upkGiPr3q2HD+Uf4ia6w95OmxxWdbYT5+GX9e/b+E2zuhJ9oyADfwSLHXRRbqHJdHv4ip5tL2vu7KXwnMo5GJsC2cJ0bGQHtgEKnG+DgEQOgPQwwgmQY8XmJqgtBNJt0o3a/7yNg1L8INmi1AaLQXfVDih+UxZJ73YtkGPZ9BCiOWAorwtCGhoRPQvOwz6cRELrV62B7BF+Ri2AbNa4wlMYIKE2Kalhri3oDTLDiBwlW2nxH1K1m798CtxhMwwBbYXHDNzCx6uFq21xRuPY296TxCLxKsS/DP/xP7pQBDsAhKP4g/MS/ZL+GmBIYSR2JLEP5xoGw/taX/bo0oVqD4iTzD7kbnQWtNMWyORlAs/FW+In9cAPVEhdL5rpUJcH2J3gErv+TgkzyBXCD5WHOMvQD+mDVIaki4t+rmlx+/fSg1WtXlajKVq8IX4QG0AaE5oGJcIQyYkWlzJvt39fCM9FcZtEAfGMTb1AFkbfF+KFqNYba8NDGhzZAwp0f7QSlLbYUn5OvRN+IusJvIp4B5EmV2+ZSz+qMwDTYURdfoMl+WWmJzmgvUoiCli/I2agPWjlU8KT4/AzU3uZqJbTsLaT4d0s/GDOMg+jrQ7QfllL8S+U+GBNt8aKP2LyF9oGG+0OVxAvjJrLgUEQfLNWUZWi/cgnFf1LtonHxNr+gYybyCQaRXbxNzqklXiibcOAX5ReobnAfsgWl0Rbw/heRW+r5QtVkCB+HW2GV2K1cu2tBZ4L6yNfIjyk8VvxQz5GZa9m8DvPafIBGparJlUdURLeSojcgIeo9NKUR8CS5GOnu98vZ6ofVGytgUxT3C6z8NvF54SjiHpu7ns1jsIOSzS6BVWZKzpUqTCRWZTVytLZQrLMJOenBSVWWapK8GebyxoV6T1GZBEqoBP9O9tdz3LWZaPTorKJH+f6zgjZ0i4+HucYSqmVVM7JOeWsorwva7RTb8lXmEAAAAP//7hl29wAAAAZJREFUAwA9z3x6HYo0twAAAABJRU5ErkJggg==)
 
 <b>-- Hosting --</b> <br>
 ![Free-Hosting.org](.github/image/badges/freehostingorg.svg)
@@ -353,6 +356,19 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 <details>
    <summary>Click to Expand</summary>
 
+<details>
+   <summary>May</summary>
+
+### 03/05/2026 - 0.5.0
+<details>
+
+   - Implementasi halaman create post
+   - Buat style navbar ikut page yang dikunjungi
+   - Penambahan TinyMCE
+   - Pembaruan database
+</details>
+</details>
+<br>
 <details>
    <summary>April</summary>
 

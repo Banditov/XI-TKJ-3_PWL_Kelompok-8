@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 22, 2026 at 01:14 PM
+-- Generation Time: May 03, 2026 at 03:24 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -59,22 +59,22 @@ CREATE TABLE `classes` (
 --
 
 INSERT INTO `classes` (`id`, `name`) VALUES
-(1, 'X - TKJ - 1'),
-(2, 'XI - TKJ - 1'),
-(3, 'XII - TKJ - 1'),
-(4, 'X - TKJ - 2'),
-(5, 'XI - TKJ - 2'),
-(6, 'XII - TKJ - 2'),
-(7, 'XI - TKJ - 3'),
-(8, 'XII - TKJ - 3'),
 (9, 'X - AKL - 1'),
 (10, 'X - AKL - 2'),
+(14, 'X - BiD - 1'),
+(1, 'X - TKJ - 1'),
+(4, 'X - TKJ - 2'),
 (11, 'XI - AKL - 1'),
+(15, 'XI - BiD - 1'),
+(2, 'XI - TKJ - 1'),
+(5, 'XI - TKJ - 2'),
+(7, 'XI - TKJ - 3'),
 (12, 'XII - AKL - 1'),
 (13, 'XII - AKL - 2'),
-(14, 'X - BiD - 1'),
-(15, 'XI - BiD - 1'),
-(16, 'XII - BiD - 1');
+(16, 'XII - BiD - 1'),
+(3, 'XII - TKJ - 1'),
+(6, 'XII - TKJ - 2'),
+(8, 'XII - TKJ - 3');
 
 -- --------------------------------------------------------
 
@@ -86,9 +86,9 @@ CREATE TABLE `comments` (
   `id` int NOT NULL,
   `account_id` int NOT NULL,
   `post_id` int NOT NULL,
-  `description` int NOT NULL,
+  `description` varchar(9999) NOT NULL,
   `votes` int NOT NULL,
-  `date` int NOT NULL
+  `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -103,16 +103,17 @@ CREATE TABLE `posts` (
   `account_id` int NOT NULL,
   `votes` int NOT NULL DEFAULT '0',
   `description` varchar(999) NOT NULL,
-  `date` date NOT NULL
+  `date` date NOT NULL,
+  `tags` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`id`, `title`, `account_id`, `votes`, `description`, `date`) VALUES
-(1, 'TEST1', 1, 123, 'TEST SATU', '2026-04-22'),
-(2, 'TEST2', 1, -123, 'TEST KEDUA', '2026-04-22');
+INSERT INTO `posts` (`id`, `title`, `account_id`, `votes`, `description`, `date`, `tags`) VALUES
+(1, 'TEST1', 1, 123, 'TEST SATU', '2026-04-22', '1'),
+(2, 'TEST2', 1, -123, 'TEST KEDUA', '2026-04-22', '');
 
 -- --------------------------------------------------------
 
@@ -155,6 +156,22 @@ INSERT INTO `post_links` (`id`, `link`, `post_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `replies`
+--
+
+CREATE TABLE `replies` (
+  `id` int NOT NULL,
+  `account_id` int NOT NULL,
+  `post_id` int NOT NULL,
+  `comment_id` int NOT NULL,
+  `description` varchar(9999) NOT NULL,
+  `votes` int NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tags`
 --
 
@@ -162,8 +179,17 @@ CREATE TABLE `tags` (
   `id` int NOT NULL,
   `name` varchar(20) NOT NULL,
   `color_top` varchar(6) NOT NULL,
-  `color_bottom` varchar(6) NOT NULL
+  `color_bottom` varchar(6) NOT NULL,
+  `icon` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `tags`
+--
+
+INSERT INTO `tags` (`id`, `name`, `color_top`, `color_bottom`, `icon`) VALUES
+(1, 'test1', '313131', '8a8a8a', ''),
+(2, 'test2', '2C7CFF', '313131', '');
 
 --
 -- Indexes for dumped tables
@@ -173,13 +199,15 @@ CREATE TABLE `tags` (
 -- Indexes for table `accounts`
 --
 ALTER TABLE `accounts`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `classes`
 --
 ALTER TABLE `classes`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `comments`
@@ -191,7 +219,8 @@ ALTER TABLE `comments`
 -- Indexes for table `posts`
 --
 ALTER TABLE `posts`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `title` (`title`);
 
 --
 -- Indexes for table `post_imgs`
@@ -206,10 +235,17 @@ ALTER TABLE `post_links`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `replies`
+--
+ALTER TABLE `replies`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tags`
 --
 ALTER TABLE `tags`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -252,10 +288,16 @@ ALTER TABLE `post_links`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `replies`
+--
+ALTER TABLE `replies`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
