@@ -8,7 +8,7 @@
         <label for="search">
             <?= essIcon('search', 'w-8 absolute left-4 top-1/2 -translate-y-4 z-2') ?>
         </label>
-        <input type="text" id="search" placeholder="Search..." class="p-4 pl-14 w-full text-white rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
+        <input type="text" id="search" placeholder="Search..." class="p-4 pl-14 w-full text-white placeholder:text-white/60 rounded-full border border-white/20 backdrop-blur-md bg-gray-800/25">
     </div>
 
 <?php foreach ($posts as $index => $post): ?>

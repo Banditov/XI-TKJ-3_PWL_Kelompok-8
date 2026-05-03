@@ -3,5 +3,7 @@ tinymce.init({
     resize: false,
     promotion: false,
     branding: false,
+    elementpath: false,
+    statusbar: false,
     license_key: 'gpl'
 });

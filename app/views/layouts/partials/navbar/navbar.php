@@ -1,3 +1,16 @@
+<?php
+    function navLink($href, $label, $icon) {
+        $isActive = $_SERVER['REQUEST_URI'] === $href;
+        $class = $isActive
+            ? 'bg-[#2C7CFF] text-white'
+            : 'bg-transparent hover:outline-2 hover:outline-[#2C7CFF]';
+        echo "<a href=\"$href\" class=\"font-bold text-lg p-2 rounded-2xl flex items-center $class\">
+                " . essIcon($icon, 'w-8 mr-2') . "
+                <p>$label</p>
+            </a>";
+    }
+?>
+
 <aside class="fixed top-0 left-0 w-64 h-full bg-white overflow-y-scroll drop-shadow-lg **:transition-all **:duration-200 hidden md:block">
     <header class="text-[#545F71] flex items-center p-6 flex-col gap-5">
         <div>
@@ -6,39 +19,18 @@
         </div>
 
         <div class="flex flex-col gap-1 w-full">
-            <a href="/posts" class="font-bold text-lg bg-[#2C7CFF] text-white p-2 rounded-2xl flex items-center">
-                <?= essIcon('explore', 'w-8 mr-2') ?>
-                <p>Explore</p>
-            </a>
-            <a href="/latest" class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent">
-                <?= essIcon('latest', 'w-8 mr-2') ?>
-                <p>Latest</p>
-            </a>
-            <a href="/pinned" class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent">
-                <?= essIcon('pinned', 'w-8 mr-2') ?>
-                <p>Pinned</p>
-            </a>
-            <a href="/popular" class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent">
-                <?= essIcon('popular', 'w-8 mr-2') ?>
-                <p>Popular</p>
-            </a>
+            <?= navLink('/posts', 'Explore', 'explore') ?>
+            <?= navLink('/latest', 'Latest', 'latest') ?>
+            <?= navLink('/pinned', 'Pinned', 'pinned') ?>
+            <?= navLink('/popular', 'Popular', 'popular') ?>
         </div>
         
         <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
 
         <div class="flex flex-col gap-1 w-full">
-            <a href="/posts/create" class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent">
-                <?= essIcon('create', 'w-8 mr-2') ?>
-                <p>Create a Post</p>
-            </a>
-            <a href="/mypost" class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent">
-                <?= essIcon('myPost', 'w-8 mr-2') ?>
-                <p>Your Posts</p>
-            </a>
-            <a href="/notification" class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent">
-                <?= essIcon('notif', 'w-8 mr-2') ?>
-                <p>Notification</p>
-            </a>
+            <?= navLink('/posts/create', 'Create a Post', 'create') ?>
+            <?= navLink('/mypost', 'Your Posts', 'myPost') ?>
+            <?= navLink('/notification', 'Notification', 'notif') ?>
         </div>
 
         <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
@@ -90,7 +82,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2 w-full">
-                <?= essIcon('dysl', 'w-10') ?>
+                <?= essIcon('dyslexic', 'w-10') ?>
                 <div class="flex items-center justify-between w-full">
                     <label for="switch-dyslexic-on" class="text-xl cursor-pointer">Dyslexic</label>
                     <div class="relative inline-block w-11 h-5">
@@ -112,7 +104,7 @@
 </aside>
 
 <!-- Mobile Header -->
-<aside class="w-full h-25 text-white bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border-b border-gray-100 drop-shadow-lg **:transition-all **:duration-200 flex justify-center items-center md:hidden sticky top-0 z-10">
+<aside class="w-full h-25 text-white border-b border-white/20 drop-shadow-lg **:transition-all **:duration-200 flex justify-center items-center md:hidden sticky top-0 z-10 backdrop-blur-md bg-gray-800/25">
     <header class="text-[#545F71] flex items-center p-10 flex-col gap-5 w-full">
         <div class="flex items-center gap-3 w-full">
             <?= essIcon('dropMenu', 'w-12') ?>
@@ -127,45 +119,24 @@
 </aside>
 
 <!-- Mobile Navigation -->
-<div id="mobileNav" class="p-10 fixed w-full h-full justify-center items-center flex-col bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 z-900 top-0 left-0 overflow-hidden hidden opacity-0 transition-all">
-    <div class="text-[#545F71] flex items-center p-6 flex-col gap-8 bg-white overflow-scroll w-80 rounded-3xl drop-shadow-lg">
+<div id="mobileNav" class="p-10 fixed w-full h-full justify-center items-center flex-col bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 z-900 top-0 left-0 hidden opacity-0 transition-all">
+    <div class="text-[#545F71] flex items-center p-6 flex-col gap-8 bg-white overflow-y-auto max-h-[80vh] w-80 rounded-3xl drop-shadow-lg [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <div>
             <img src="/assets/image/logo/logo.png" class="object-contain">
             <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
         </div>
 
         <div class="flex flex-col gap-1 w-full">
-            <a href="/home" class="font-bold text-lg bg-[#2C7CFF] text-white p-2 rounded-2xl flex items-center">
-                <?= essIcon('explore', 'w-8 mr-2') ?>
-                <p>Explore</p>
-            </a>
-            <a href="/latest" class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent">
-                <?= essIcon('latest', 'w-8 mr-2') ?>
-                <p>Latest</p>
-            </a>
-            <a href="/pinned" class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent">
-                <?= essIcon('pinned', 'w-8 mr-2') ?>
-                <p>Pinned</p>
-            </a>
-            <a href="/popular" class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent">
-                <?= essIcon('popular', 'w-8 mr-2') ?>
-                <p>Popular</p>
-            </a>
+            <?= navLink('/posts', 'Explore', 'explore') ?>
+            <?= navLink('/latest', 'Latest', 'latest') ?>
+            <?= navLink('/pinned', 'Pinned', 'pinned') ?>
+            <?= navLink('/popular', 'Popular', 'popular') ?>
         </div>
 
         <div class="flex flex-col gap-1 w-full">
-            <a href="/create" class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent">
-                <?= essIcon('create', 'w-8 mr-2') ?>
-                <p>Create a Post</p>
-            </a>
-            <a href="/mypost" class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent">
-                <?= essIcon('myPost', 'w-8 mr-2') ?>
-                <p>Your Posts</p>
-            </a>
-            <a href="/notification" class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent">
-                <?= essIcon('notif', 'w-8 mr-2') ?>
-                <p>Notification</p>
-            </a>
+            <?= navLink('/posts/create', 'Create a Post', 'create') ?>
+            <?= navLink('/mypost', 'Your Posts', 'myPost') ?>
+            <?= navLink('/notification', 'Notification', 'notif') ?>
         </div>
 
         <div class="flex flex-col gap-1 w-full">
