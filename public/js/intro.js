@@ -1,4 +1,4 @@
-import { animate } from './anime.esm.js';
+import { animate } from './library/anime.esm.js';
 
 const canvas = document.getElementById('ballsCanvas');
 const ctx = canvas.getContext('2d');

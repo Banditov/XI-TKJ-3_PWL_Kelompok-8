@@ -27,7 +27,7 @@
         <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
 
         <div class="flex flex-col gap-1 w-full">
-            <a href="/create" class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent">
+            <a href="/posts/create" class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent">
                 <?= essIcon('create', 'w-8 mr-2') ?>
                 <p>Create a Post</p>
             </a>
