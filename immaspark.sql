@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 03, 2026 at 03:24 PM
+-- Generation Time: May 04, 2026 at 10:37 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -102,18 +102,17 @@ CREATE TABLE `posts` (
   `title` varchar(255) NOT NULL,
   `account_id` int NOT NULL,
   `votes` int NOT NULL DEFAULT '0',
-  `description` varchar(999) NOT NULL,
-  `date` date NOT NULL,
-  `tags` varchar(10) NOT NULL
+  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`id`, `title`, `account_id`, `votes`, `description`, `date`, `tags`) VALUES
-(1, 'TEST1', 1, 123, 'TEST SATU', '2026-04-22', '1'),
-(2, 'TEST2', 1, -123, 'TEST KEDUA', '2026-04-22', '');
+INSERT INTO `posts` (`id`, `title`, `account_id`, `votes`, `description`, `date`) VALUES
+(1, 'TEST1', 1, 123, 'TEST SATU', '2026-04-22'),
+(2, 'TEST2', 1, -123, 'TEST KEDUA', '2026-04-22');
 
 -- --------------------------------------------------------
 
@@ -151,7 +150,7 @@ CREATE TABLE `post_links` (
 --
 
 INSERT INTO `post_links` (`id`, `link`, `post_id`) VALUES
-(1, 'www.youtube.com', 1);
+(1, 'www.test.com', 1);
 
 -- --------------------------------------------------------
 
@@ -177,19 +176,22 @@ CREATE TABLE `replies` (
 
 CREATE TABLE `tags` (
   `id` int NOT NULL,
-  `name` varchar(20) NOT NULL,
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `color_top` varchar(6) NOT NULL,
   `color_bottom` varchar(6) NOT NULL,
-  `icon` varchar(255) NOT NULL
+  `icon` varchar(255) NOT NULL,
+  `post_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `tags`
 --
 
-INSERT INTO `tags` (`id`, `name`, `color_top`, `color_bottom`, `icon`) VALUES
-(1, 'test1', '313131', '8a8a8a', ''),
-(2, 'test2', '2C7CFF', '313131', '');
+INSERT INTO `tags` (`id`, `name`, `color_top`, `color_bottom`, `icon`, `post_id`) VALUES
+(1, 'Test', '313131', '8a8a8a', 'tag', 1),
+(2, 'Test1', '2C7CFF', '313131', 'tag', 0),
+(3, 'Cheeki', 'FC466B', '3F5EFB', '', 7),
+(4, 'wdwadada', 'A8C0FF', '3F2B96', '', 8);
 
 --
 -- Indexes for dumped tables
@@ -244,8 +246,7 @@ ALTER TABLE `replies`
 -- Indexes for table `tags`
 --
 ALTER TABLE `tags`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -273,7 +274,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `post_imgs`
@@ -297,7 +298,7 @@ ALTER TABLE `replies`
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
