@@ -18,9 +18,17 @@
                 <p class="text-3xl font-bold"><?= $post['date'] ?></p>
             </div>
             <div class="flex justify-between items-center">
-                <div class="flex gap-5">
-                    <p class="px-6 py-3 bg-linear-to-b from-stone-500 to-stone-700 text-white rounded-full drop-shadow-lg">TEMPLATE</p>
+        <?php if (!empty($post['tags'])): ?>
+            <?php foreach ($post['tags'] as $tag): ?>
+                <div class="px-4 py-2 text-white rounded-full drop-shadow-lg flex gap-2 items-center"
+                    style="background: linear-gradient(to bottom, #<?= $tag['color_top'] ?>, #<?= $tag['color_bottom'] ?>)">
+                    <?= icon(!empty($tag['icon']) ? $tag['icon'] : 'tag', 'w-7 h-7') ?>
+                    <p><?= strtoupper($tag['name']) ?></p>
                 </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+                <div class="px-4 py-2"></div>
+        <?php endif; ?>
                 <div class="flex items-center gap-5">
                     <div class="flex px-4 py-2 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
                         <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
@@ -40,33 +48,37 @@
             </div>
             <p class="text-4xl font-bold"><?= $post['title'] ?></p>
         </div>
-        <?php if ($post['img']): ?>
-            <div class="h-75 max-h-75 relative">
-                <button class="absolute left-10 top-30 p-4 rounded-full text-white drop-shadow-lg bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
-                    <?= essIcon('arrow', 'w-7 h-7 transform rotate-90') ?>
-                </button>
-                <img src="/assets/image/post/<?= $post['img'] ?>" class="rounded-4xl w-full h-full object-cover">
-                <button class="absolute right-10 top-30 p-4 rounded-full text-white drop-shadow-lg bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
-                    <?= essIcon('arrow', 'w-7 h-7 transform rotate-270') ?>
-                </button>
-                <div class="absolute left-1/2 bottom-8">
+    <?php if (!empty($post['imgs'])): ?>
+        <div class="h-75 max-h-75 relative">
+            <button class="absolute left-10 top-30 p-4 rounded-full text-white drop-shadow-lg bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
+                <?= essIcon('arrow', 'w-7 h-7 transform rotate-90') ?>
+            </button>
+            <img src="/assets/image/post/<?= $post['imgs'][0]['file_name'] ?>" class="rounded-4xl w-full h-full object-cover">
+            <button class="absolute right-10 top-30 p-4 rounded-full text-white drop-shadow-lg bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
+                <?= essIcon('arrow', 'w-7 h-7 transform rotate-270') ?>
+            </button>
+            <div class="absolute left-1/2 bottom-8 flex gap-2">
+                <?php foreach ($post['imgs'] as $index => $img): ?>
                     <div class="w-4 h-4 bg-white rounded-full opacity-80"></div>
-                </div>
+                <?php endforeach; ?>
             </div>
-        <?php endif; ?>
-        <div class="md:p-10 p-7 <?= $post['img'] === null ? 'pt-0!' : '' ?> flex flex-col md:gap-7 gap-5">
+        </div>
+    <?php endif; ?>
+        <div class="md:p-10 p-7 <?= ($post['imgs']) ? '' : 'pt-0!' ?> flex flex-col md:gap-7 gap-5">
             <p class="text-2xl md:text-xl text-justify"><?= $post['description'] ?></p>
-            <?php if ($post['link']): ?>
-                <div class="text-lg">
-                    <div class="flex items-center gap-2">
-                        <?= essIcon('linked', 'w-6 h-6') ?>
-                        <p class="font-bold">Links</p>
-                    </div>
-                    <ul class="list-disc ml-5">
-                        <li><a href="https://<?= $post['link'] ?>"><?= $post['link'] ?></a></li>
-                    </ul>
+    <?php if (!empty($post['links'])): ?>
+            <div class="text-lg">
+                <div class="flex items-center gap-2">
+                    <?= essIcon('linked', 'w-6 h-6') ?>
+                    <p class="font-bold">Links</p>
                 </div>
-            <?php endif; ?>
+                <ul class="list-disc ml-5">
+                    <?php foreach ($post['links'] as $link): ?>
+                        <li><a href="https://<?= $link['link'] ?>"><?= $link['link'] ?></a></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+    <?php endif; ?>
         </div>
     </div>
 
@@ -105,7 +117,7 @@
                         <p class="text-2xl">1</p>
                         <?= essIcon('arrow', 'w-7 h-7') ?>
                     </div>
-                    <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full">
+                    <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full text-white">
                         <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
                     </div>
                 </div>

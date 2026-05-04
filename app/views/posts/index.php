@@ -25,12 +25,17 @@
                 <p class="text-3xl font-bold"><?= $post['date'] ?></p>
             </div>
             <div class="flex justify-between items-center">
-                <div class="flex gap-5">
-                    <div class="px-4 py-2 bg-linear-to-b from-[#8a8a8a] to-[#313131] text-white rounded-full drop-shadow-lg flex gap-2 items-center">
-                        <?= icon('tag', 'w-7 h-7') ?>
-                        <p>TEMPLATE</p>
-                    </div>
+        <?php if (!empty($post['tags'])): ?>
+            <?php foreach ($post['tags'] as $tag): ?>
+                <div class="px-4 py-2 text-white rounded-full drop-shadow-lg flex gap-2 items-center"
+                    style="background: linear-gradient(to bottom, #<?= $tag['color_top'] ?>, #<?= $tag['color_bottom'] ?>)">
+                    <?= icon(!empty($tag['icon']) ? $tag['icon'] : 'tag', 'w-7 h-7') ?>
+                    <p><?= strtoupper($tag['name']) ?></p>
                 </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+                <div></div>
+        <?php endif; ?>
                 <div class="flex items-center gap-5">
                     <div class="flex px-4 py-2 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
                         <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
@@ -53,20 +58,22 @@
                 <p class="text-2xl md:text-lg text-justify"><?= $post['description'] ?></p>
             </a>
         </div>
-        <?php if ($post['img']): ?>
-            <div class="h-75 max-h-75 relative">
-                <button class="absolute left-10 top-30 p-4 rounded-full text-white drop-shadow-lg bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
-                    <?= essIcon('arrow', 'w-7 h-7 transform rotate-90') ?>
-                </button>
-                <img src="/assets/image/post/<?= $post['img'] ?>" class="rounded-4xl w-full h-full object-cover">
-                <button class="absolute right-10 top-30 p-4 rounded-full text-white drop-shadow-lg bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
-                    <?= essIcon('arrow', 'w-7 h-7 transform rotate-270') ?>
-                </button>
-                <div class="absolute left-1/2 bottom-8">
+<?php if (!empty($post['imgs'])): ?>
+        <div class="h-75 max-h-75 relative">
+            <button class="absolute left-10 top-30 p-4 rounded-full text-white drop-shadow-lg bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
+                <?= essIcon('arrow', 'w-7 h-7 transform rotate-90') ?>
+            </button>
+            <img src="/assets/image/post/<?= $post['imgs'][0]['file_name'] ?>" class="rounded-4xl w-full h-full object-cover">
+            <button class="absolute right-10 top-30 p-4 rounded-full text-white drop-shadow-lg bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
+                <?= essIcon('arrow', 'w-7 h-7 transform rotate-270') ?>
+            </button>
+            <div class="absolute left-1/2 bottom-8 flex gap-2">
+                <?php foreach ($post['imgs'] as $index => $img): ?>
                     <div class="w-4 h-4 bg-white rounded-full opacity-80"></div>
-                </div>
+                <?php endforeach; ?>
             </div>
-        <?php endif; ?>
+        </div>
+<?php endif; ?>
     </div>
 <?php endforeach; ?>
 

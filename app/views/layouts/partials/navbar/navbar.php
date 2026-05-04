@@ -1,6 +1,7 @@
 <?php
     function navLink($href, $label, $icon) {
-        $isActive = $_SERVER['REQUEST_URI'] === $href;
+        $currentPath = strtok($_SERVER['REQUEST_URI'], '?');
+        $isActive = $currentPath === $href;
         $class = $isActive
             ? 'bg-[#2C7CFF] text-white'
             : 'bg-transparent hover:outline-2 hover:outline-[#2C7CFF]';

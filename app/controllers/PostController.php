@@ -3,7 +3,6 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Models\Post;
-use App\Models\Tag;
 
 class PostController extends Controller
 {
@@ -31,6 +30,7 @@ class PostController extends Controller
 
     public function create()
     {
-        $this->view('posts.create');
+        $this->view('posts.create',[
+        ]);
     }
 }
