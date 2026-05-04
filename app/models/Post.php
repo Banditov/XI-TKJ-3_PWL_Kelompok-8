@@ -51,4 +51,17 @@ class Post extends Database
 
         return $row;
     }
+
+    public function createPost(string $title, string $description, string $accountId)
+    {
+        $date        = date('Y-m-d');
+        $title       = mysqli_real_escape_string($this->connection, $title);
+        $description = mysqli_real_escape_string($this->connection, $description);
+        $accountId   = mysqli_real_escape_string($this->connection, $accountId);
+
+        $query = "INSERT INTO {$this->table} (title, account_id, votes, description, date) 
+                VALUES ('$title', '$accountId', 0, '$description', '$date')";
+        mysqli_query($this->connection, $query);
+        return mysqli_insert_id($this->connection);
+    }
 }

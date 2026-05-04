@@ -1,8 +1,17 @@
 <?php
-require_once __DIR__ . '/../app/core/Router.php';
-require_once __DIR__ . '/../app/core/Controller.php';
-require_once __DIR__ . '/../app/controllers/ErrorController.php';
-require_once __DIR__ . '/../app/models/Post.php';
+// REMOVE SAAT SUDAH IMPLEMENTASI LOGIN
+session_start();
+$_SESSION['account_id'] = 1;
+
+spl_autoload_register(function ($class) {
+    $class = str_replace('App\\', '', $class);
+    $class = str_replace('\\', '/', $class);
+    $file  = __DIR__ . '/../app/' . strtolower($class) . '.php';
+    if (file_exists($file)) {
+        require_once $file;
+    }
+});
+
 require_once __DIR__ . '/../app/resources/icons/icon.php';
 
 use App\Core\Router;
@@ -16,5 +25,7 @@ $router->add('GET', '/login', 'AuthController', 'login');
 $router->add('GET', '/posts', 'PostController', 'index');
 $router->add('GET', '/posts/create', 'PostController', 'create');
 $router->add('GET', '/posts/{id}', 'PostController', 'show');
+
+$router->add('POST', '/posts', 'PostController', 'store');
 
 $router->run();

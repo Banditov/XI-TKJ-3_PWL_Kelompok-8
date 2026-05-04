@@ -365,6 +365,7 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
    - Perbaiki mismatch desain di halaman post
    - Perbaiki responsivitas
    - Implement view tags
+   - Implement create function
 </details>
 
 ### 03/05/2026 - 0.5.0
