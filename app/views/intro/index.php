@@ -1,10 +1,14 @@
-<meta http-equiv="refresh" content="3;url=redirect.php">
+<?php
+    $redirect = isset($_SESSION['account_id']) ? '/posts' : '/login';
+?>
+
+<meta http-equiv="refresh" content="3;url=<?= $redirect ?>">
 <title>Welcome to ImmaSpark!</title>
 <link rel="stylesheet" href="/css/responsive/main.css">
 
 <script type="module" src="/js/intro.js"></script>
 
-<div class="bg-[#1865a0] overflow-hidden w-screen h-screen flex items-center justify-center" onclick="window.location.href='redirect.php'">
+<div class="bg-[#1865a0] overflow-hidden w-screen h-screen flex items-center justify-center" onclick="window.location.href='<?= $redirect ?>'">
     <div id="introContainer" class="intro-container bg-white flex items-center justify-center w-200 h-150 rounded-4xl shadow-lg">
         <div class="splash-container fixed inset-0 z-9999 flex items-center justify-center overflow-hidden ">
             <div id="logoContainer" class="logo-container relative z-10 w-200 flex items-center justify-center">

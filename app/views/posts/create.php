@@ -9,12 +9,12 @@
         <form action="/posts" method="POST" class="flex flex-col gap-5">
             <div class="flex flex-col gap-2">
                 <p class="text-2xl font-bold">Title</p>
-                <input type="text" name="title" placeholder="Suatu Title" class="p-4 w-full text-gray-700 rounded-full border border-gray-500">
+                <input type="text" name="title" placeholder="Suatu Title" class="p-4 w-full text-gray-700 rounded-full border border-gray-500" required>
             </div>
             <div class="flex flex-col gap-2">
                 <p class="text-2xl font-bold">Tag</p>
                 <div class="flex flex-wrap gap-3 items-center">
-                    <input type="text" name="tag_name[]" placeholder="New Tag" class="p-4 flex-1 min-w-[200px] text-gray-700 rounded-full border border-gray-500">
+                    <input type="text" name="tag_name[]" placeholder="New Tag" class="p-4 flex-1 min-w-50 text-gray-700 rounded-full border border-gray-500">
                     <div class="flex items-center gap-2">
                         <input type="text" name="color_top[]" placeholder="Warna Atas" class="p-4 w-36 text-gray-700 rounded-full border border-gray-500">
                         <div class="h-14 w-14 shrink-0 border border-gray-500 rounded-xl flex items-center justify-center">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            <textarea name="description" id="mytextarea">Enter your idea here!</textarea>
+            <textarea name="description" id="mytextarea" placeholder="Enter your ideas here!"></textarea>
             <div class="flex flex-col gap-2">
                 <div class="flex items-center gap-2">
                     <?= essIcon('linked', 'w-6 h-6') ?>

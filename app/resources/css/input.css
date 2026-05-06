@@ -18,6 +18,14 @@
     border-radius: 3px;
 }
 
+.revert-tailwind {
+    all: initial;
+}
+
+.revert-tailwind > * {
+    all: revert;
+}
+
 /* Login */
 .name {
     font-family: 'Source Serif Pro';

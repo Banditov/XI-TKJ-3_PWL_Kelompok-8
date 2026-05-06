@@ -30,21 +30,20 @@
                 <b class="text-4xl">Share us your <b class="text-[#2C7CFF]!">ideas</b></b>
                 <p class="text-2xl"><b class="text-[#2C7CFF]!">Together</b>, we’ll help you develop it!</p>
             </div>
-            <form class="flex flex-col items-center w-full gap-5" action="/posts">
+            <form class="flex flex-col items-center w-full gap-5" action="/login" method="POST">
                 <div class="flex flex-col w-full">
                     <label for="email">Email</label>
-                    <input id="email" type="email" class="rounded border p-2" placeholder="Enter your email" required>
+                    <input id="email" name="email" type="email" class="rounded border p-2" placeholder="Enter your email" required>
                 </div>
                 <div class="flex flex-col w-full">
                     <label for="password">Password</label>
-                    <input id="password" type="password" class="rounded border p-2" placeholder="Enter your password" required>
+                    <input id="password" name="password" type="password" class="rounded border p-2" placeholder="Enter your password" required>
                 </div>
-                <div class="flex w-full justify-between">
+                <div class="flex w-full justify-start">
                     <div class="flex items-center">
-                        <input id="keep" type="checkbox">
+                        <input id="keep" name="keep" type="checkbox">
                         <label for="keep" class="select-none ms-2 text-sm font-medium text-heading">Keep me logged in</label>
                     </div>
-                    <a href="/recovery" class="text-[#2C7CFF]! underline">Forgot password?</a>
                 </div>
                 <button type="submit" class="mt-10 bg-linear-to-b from-[#1D7BC5] to-[#004881] w-50 p-3 rounded-full text-white! text-2xl font-bold drop-shadow-2xl">Login</button>
             </form>
