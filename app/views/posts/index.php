@@ -13,7 +13,7 @@
 
 <?php foreach ($posts as $index => $post): ?>
     <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg post">
-        <div class="md:pt-10 md:pr-10 md:pl-10 pb-5 pt-7 pr-7 pl-7 flex flex-col md:gap-3 gap-5">
+        <div class="md:pt-10 md:pr-10 md:pl-10 pb-7 pt-7 pr-7 pl-7 flex flex-col md:gap-3 gap-5">
             <div class="flex justify-between items-center">
                 <div class="flex gap-5 items-center">
                     <img src="/assets/image/account/phototest.jpg" class="w-15 h-15 object-cover rounded-full drop-shadow-lg">
@@ -55,7 +55,9 @@
             </div>
             <a href="/posts/<?= $post['id'] ?>" class="flex flex-col gap-3">
                 <p class="text-4xl font-bold"><?= $post['title'] ?></p>
-                <p class="text-2xl md:text-lg text-justify"><?= $post['description'] ?></p>
+                <div class="revert-tailwind">
+                    <?= $post['description'] ?>
+                </div>
             </a>
         </div>
 <?php if (!empty($post['imgs'])): ?>

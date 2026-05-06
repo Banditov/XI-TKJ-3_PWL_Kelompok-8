@@ -1,5 +1,5 @@
 tinymce.init({
-    selector: '#mytextarea',
+    selector: '#mytextarea:not(.mceNoEditor)',
     resize: false,
     promotion: false,
     branding: false,

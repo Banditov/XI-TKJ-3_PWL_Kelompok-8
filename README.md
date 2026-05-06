@@ -359,13 +359,20 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 <details>
    <summary>May</summary>
 
+### 06/05/2026 - 0.5.2
+<details>
+
+   - Perbaiki teks TinyMCE
+   - Implement function login dan logout
+</details>
+
 ### 04/05/2026 - 0.5.1
 <details>
 
    - Perbaiki mismatch desain di halaman post
    - Perbaiki responsivitas
    - Implement view tags
-   - Implement create function
+   - Implement function create
 </details>
 
 ### 03/05/2026 - 0.5.0

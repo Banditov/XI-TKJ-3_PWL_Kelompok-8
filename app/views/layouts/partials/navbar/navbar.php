@@ -97,10 +97,10 @@
 
         <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
 
-        <div class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent w-full">
+        <a class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent w-full" href="/logout">
             <?= essIcon('logout', 'w-8 mr-2 fill-current') ?>
-            <p>Logout</p>
-        </div>
+            Logout
+        </a>
     </header>
 </aside>
 

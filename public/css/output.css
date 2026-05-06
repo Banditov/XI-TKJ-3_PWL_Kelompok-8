@@ -15,8 +15,6 @@
     --color-gray-500: oklch(55.1% 0.027 264.364);
     --color-gray-700: oklch(37.3% 0.034 259.733);
     --color-gray-800: oklch(27.8% 0.033 256.848);
-    --color-stone-500: oklch(55.3% 0.013 58.071);
-    --color-stone-700: oklch(37.4% 0.01 67.558);
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
@@ -509,8 +507,8 @@
   .w-screen {
     width: 100vw;
   }
-  .min-w-\[200px\] {
-    min-width: 200px;
+  .min-w-50 {
+    min-width: calc(var(--spacing) * 50);
   }
   .flex-1 {
     flex: 1;
@@ -590,6 +588,9 @@
   }
   .justify-end {
     justify-content: flex-end;
+  }
+  .justify-start {
+    justify-content: flex-start;
   }
   .gap-1 {
     gap: calc(var(--spacing) * 1);
@@ -795,9 +796,6 @@
   .py-3 {
     padding-block: calc(var(--spacing) * 3);
   }
-  .\!pt-0 {
-    padding-top: calc(var(--spacing) * 0) !important;
-  }
   .pt-0 {
     padding-top: calc(var(--spacing) * 0);
   }
@@ -813,8 +811,8 @@
   .pb-0 {
     padding-bottom: calc(var(--spacing) * 0);
   }
-  .pb-5 {
-    padding-bottom: calc(var(--spacing) * 5);
+  .pb-7 {
+    padding-bottom: calc(var(--spacing) * 7);
   }
   .pl-7 {
     padding-left: calc(var(--spacing) * 7);
@@ -867,6 +865,14 @@
   .leading-10 {
     --tw-leading: calc(var(--spacing) * 10);
     line-height: calc(var(--spacing) * 10);
+  }
+  .leading-none {
+    --tw-leading: 1;
+    line-height: 1;
+  }
+  .leading-none\! {
+    --tw-leading: 1 !important;
+    line-height: 1 !important;
   }
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
@@ -1181,12 +1187,6 @@
       line-height: var(--tw-leading, var(--text-lg--line-height));
     }
   }
-  .md\:text-xl {
-    @media (width >= 48rem) {
-      font-size: var(--text-xl);
-      line-height: var(--tw-leading, var(--text-xl--line-height));
-    }
-  }
   .\[\&\:\:-webkit-scrollbar\]\:hidden {
     &::-webkit-scrollbar {
       display: none;
@@ -1205,6 +1205,12 @@
 ::-webkit-scrollbar-thumb {
   background-color: #545F71;
   border-radius: 3px;
+}
+.revert-tailwind {
+  all: initial;
+}
+.revert-tailwind > * {
+  all: revert;
 }
 .name {
   font-family: 'Source Serif Pro';

@@ -6,7 +6,7 @@
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
 <!-- Post Detail -->
     <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg post">
-        <div class="md:pt-10 md:pr-10 md:pl-10 pb-5 pt-7 pr-7 pl-7 flex flex-col md:gap-3 gap-5">
+        <div class="md:pt-10 md:pr-10 md:pl-10 pb-7 pt-7 pr-7 pl-7 flex flex-col md:gap-3 gap-5">
             <div class="flex justify-between items-center">
                 <div class="flex gap-5 items-center">
                     <img src="/assets/image/account/phototest.jpg" class="w-15 h-15 object-cover rounded-full drop-shadow-lg">
@@ -65,7 +65,9 @@
         </div>
     <?php endif; ?>
         <div class="md:p-10 p-7 <?= ($post['imgs']) ? '' : 'pt-0!' ?> flex flex-col md:gap-7 gap-5">
-            <p class="text-2xl md:text-xl text-justify"><?= $post['description'] ?></p>
+            <div class="revert-tailwind">
+                <?= $post['description'] ?>
+            </div>
     <?php if (!empty($post['links'])): ?>
             <div class="text-lg">
                 <div class="flex items-center gap-2">
