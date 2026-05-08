@@ -4,6 +4,8 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\Comment;
+use App\Models\Reply;
 
 class PostController extends Controller
 {
@@ -21,11 +23,20 @@ class PostController extends Controller
     {
         $id = intval($id);
 
-        $postModel = new Post();
-        $post = $postModel->getPostById($id);
+        $postModel    = new Post();
+        $commentModel = new Comment();
+        $replyModel   = new Reply();
+
+        $post     = $postModel->getPostById($id);
+        $comments = $commentModel->getCommentsByPostId($id);
+
+        foreach ($comments as &$comment) {
+            $comment['replies'] = $replyModel->getRepliesByCommentId($comment['id']);
+        }
 
         $this->view('posts.show', [
-            'post' => $post
+            'post'     => $post,
+            'comments' => $comments
         ]);
     }
 

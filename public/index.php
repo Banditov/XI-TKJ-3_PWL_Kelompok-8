@@ -28,4 +28,7 @@ $router->add('GET', '/posts/{id}', 'PostController', 'show');
 $router->add('POST', '/posts', 'PostController', 'store');
 $router->add('POST', '/login', 'AuthController', 'authenticate');
 
+$router->add('POST', '/posts/{id}/comments', 'CommentController', 'store');
+$router->add('POST', '/posts/{id}/comments/{commentId}/replies', 'ReplyController', 'store');
+
 $router->run();

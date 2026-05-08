@@ -52,4 +52,4 @@
 
 <script src="/js/library/tinymce/tinymce.min.js"></script>
 <script src="/js/tinymce.js"></script>
-<script src="/js/create.js"></script>
+<script src="/js/post/create.js"></script>

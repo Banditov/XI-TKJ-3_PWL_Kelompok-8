@@ -288,6 +288,9 @@
   .z-20 {
     z-index: 20;
   }
+  .z-50 {
+    z-index: 50;
+  }
   .z-900 {
     z-index: 900;
   }
@@ -295,6 +298,9 @@
     z-index: 999;
   }
   .z-9999 {
+    z-index: 9999;
+  }
+  .z-\[9999\] {
     z-index: 9999;
   }
   .container {
@@ -865,14 +871,6 @@
   .leading-10 {
     --tw-leading: calc(var(--spacing) * 10);
     line-height: calc(var(--spacing) * 10);
-  }
-  .leading-none {
-    --tw-leading: 1;
-    line-height: 1;
-  }
-  .leading-none\! {
-    --tw-leading: 1 !important;
-    line-height: 1 !important;
   }
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);

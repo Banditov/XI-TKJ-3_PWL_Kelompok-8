@@ -9,10 +9,10 @@
         <div class="md:pt-10 md:pr-10 md:pl-10 pb-7 pt-7 pr-7 pl-7 flex flex-col md:gap-3 gap-5">
             <div class="flex justify-between items-center">
                 <div class="flex gap-5 items-center">
-                    <img src="/assets/image/account/phototest.jpg" class="w-15 h-15 object-cover rounded-full drop-shadow-lg">
+                    <img src="/assets/image/account/<?= htmlspecialchars($post['account_id']) ?>.jpg" class="w-15 h-15 object-cover rounded-full drop-shadow-lg">
                     <div>
-                        <p class="text-3xl font-bold">Christopher V. C.</p>
-                        <p>XI TKJ 3</p>
+                        <p class="text-3xl font-bold"><?= htmlspecialchars($post['account_name']) ?></p>
+                        <p><?= htmlspecialchars($post['class_name']) ?></p>
                     </div>
                 </div>
                 <p class="text-3xl font-bold"><?= $post['date'] ?></p>
@@ -95,105 +95,76 @@
             <p class="text-2xl">3</p>
         </div>
 
-<!-- Comment desktop -->
-        <div id="comment1" class="hidden md:flex flex-col border-2 border-[#545F71] rounded-4xl">
+    <?php foreach ($comments as $comment): ?>
+<!-- desktop comment -->
+        <div class="hidden md:flex flex-col border-2 border-[#545F71] rounded-4xl">
             <div class="flex items-center justify-between p-5 border-b-2 border-[#545F71]">
                 <div class="flex gap-5 items-center">
-                    <div class="flex gap-5 items-center">
-                        <img src="/assets/image/account/phototest.jpg" class="w-10 h-10 object-cover rounded-full drop-shadow-lg">
-                        <div>
-                            <p class="text-2xl font-bold">Christopher V. C.</p>
-                            <p class="text-sm">XI TKJ 3</p>
-                        </div>
+                    <img src="/assets/image/account/<?= $comment['account_id'] ?>.jpg" class="w-10 h-10 object-cover rounded-full drop-shadow-lg">
+                    <div>
+                        <p class="text-2xl font-bold"><?= htmlspecialchars($comment['account_name']) ?></p>
+                        <p class="text-sm"><?= htmlspecialchars($comment['class_name']) ?></p>
                     </div>
                     <div class="w-2 h-2 bg-[#545F71] rounded-full"></div>
-                    <p class="text-2xl font-bold"></p>
+                    <p class="text-2xl font-bold"><?= $comment['date'] ?></p>
                 </div>
                 <div class="flex gap-5 items-center">
-                    <label id="replyBtnC1" for="replyC1" class="flex items-center gap-2" onclick="replyComment()">
+                    <label class="flex items-center gap-2 cursor-pointer" onclick="toggleReply(<?= $comment['id'] ?>)">
                         <?= essIcon('reply', 'w-8 h-8') ?>
                         <p class="text-2xl">Reply</p>
                     </label>
                     <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
                         <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                        <p class="text-2xl">1</p>
+                        <p class="text-2xl"><?= $comment['votes'] ?></p>
                         <?= essIcon('arrow', 'w-7 h-7') ?>
                     </div>
-                    <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full text-white">
-                        <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+            <?php if (!empty($comment['replies'])): ?>
+                    <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full text-white cursor-pointer" onclick="toggleReplies(<?= $comment['id'] ?>)">
+                        <?= essIcon('arrow', 'w-7 h-7 transform') ?>
                     </div>
+            <?php endif; ?>
                 </div>
             </div>
             <div class="p-5">
-                <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
+                <p class="text-justify"><?= htmlspecialchars($comment['description']) ?></p>
             </div>
-            <div class="border-t-2 border-dashed">
-                <div>
+    <?php if (!empty($comment['replies'])): ?>
+            <div>
+                <div id="inputReply-<?= $comment['id'] ?>" class="hidden p-5 pb-0">
+                    <input type="text" placeholder="Replying..." class="p-3 pl-8 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white">
+                </div>
+                <div id="replies-<?= $comment['id'] ?>">
                     <div class="bg-white p-2 absolute z-1 -translate-y-6 translate-x-3">
                         <p class="font-bold">Replies</p>
                     </div>
-                    <div id="inputReplyC1" class="hidden p-5 pb-0">
-                        <input type="text" id="replyC1" placeholder="Replying" class="p-3 pl-8 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white">
-                    </div>
-                    <div id="reply1">
-                        <div class="border-b-2 border-[#545F71] flex justify-between items-center">
-                            <div class="p-5 flex gap-5 items-center ">
+            <?php foreach ($comment['replies'] as $reply): ?>
+                        <div class="border-t-2 border-dashed">
+                            <div class="flex justify-between items-center p-5 border-b-2 border-[#545F71]">
                                 <div class="flex gap-5 items-center">
-                                    <img src="/assets/image/account/phototest.jpg" class="w-10 h-10 object-cover rounded-full drop-shadow-lg">
+                                    <img src="/assets/image/account/<?= $reply['account_id'] ?>.jpg" class="w-10 h-10 object-cover rounded-full drop-shadow-lg">
                                     <div>
-                                        <p class="text-2xl font-bold">Christopher V. C.</p>
-                                        <p class="text-sm">XI TKJ 3</p>
+                                        <p class="text-2xl font-bold"><?= htmlspecialchars($reply['account_name']) ?></p>
+                                        <p class="text-sm"><?= htmlspecialchars($reply['class_name']) ?></p>
                                     </div>
+                                    <div class="w-2 h-2 bg-[#545F71] rounded-full"></div>
+                                    <p class="text-2xl font-bold"><?= $reply['date'] ?></p>
                                 </div>
-                                <div class="w-2 h-2 bg-[#545F71] rounded-full"></div>
-                                <p class="text-2xl font-bold">16/03/2026</p>
-                            </div>
-                            <div class="flex gap-5 items-center p-5">
                                 <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
                                     <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                                    <p class="text-2xl">1</p>
+                                    <p class="text-2xl"><?= $reply['votes'] ?></p>
                                     <?= essIcon('arrow', 'w-7 h-7') ?>
                                 </div>
-                                <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full text-white">
-                                    <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                                </div>
+                            </div>
+                            <div class="p-5">
+                                <p class="text-justify"><?= htmlspecialchars($reply['description']) ?></p>
                             </div>
                         </div>
-                        <div class="p-5">
-                            <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
-                        </div>
-                    </div>
-                    <div id="reply2" class="border-t-2 border-[#545F71] border-dashed">
-                        <div class="border-b-2 border-[#545F71] flex justify-between items-center">
-                            <div class="p-5 flex gap-5 items-center ">
-                                <div class="flex gap-5 items-center">
-                                    <img src="/assets/image/account/phototest.jpg" class="w-10 h-10 object-cover rounded-full drop-shadow-lg">
-                                    <div>
-                                        <p class="text-2xl font-bold">Christopher V. C.</p>
-                                        <p class="text-sm">XI TKJ 3</p>
-                                    </div>
-                                </div>
-                                <div class="w-2 h-2 bg-[#545F71] rounded-full"></div>
-                                <p class="text-2xl font-bold">16/03/2026</p>
-                            </div>
-                            <div class="flex gap-5 items-center p-5">
-                                <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
-                                    <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                                    <p class="text-2xl">1</p>
-                                    <?= essIcon('arrow', 'w-7 h-7') ?>
-                                </div>
-                                <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full text-white">
-                                    <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-5">
-                            <p class="text-justify text-2xl md:text-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
-                        </div>
-                    </div>
+            <?php endforeach; ?>
                 </div>
             </div>
+    <?php endif; ?>
         </div>
+    <?php endforeach; ?>
 
 <!-- Comment mobile -->
         <div id="comment1" class="flex md:hidden flex-col border-2 border-[#545F71] rounded-4xl">
