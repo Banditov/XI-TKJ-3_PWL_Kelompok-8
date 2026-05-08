@@ -1,0 +1,371 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+ 
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+ 
+:root {
+    --bg:           #1a2a4a;
+    --sidebar-bg:   #ffffff;
+    --card-bg:      #ffffff;
+    --accent:       #2563eb;
+    --accent-hover: #1d4ed8;
+    --text-main:    #0f172a;
+    --text-muted:   #64748b;
+    --divider:      #e2e8f0;
+    --avatar-bg:    #cbd5e1;
+    --sidebar-w:    230px;
+    --radius:       16px;
+    --shadow:       0 4px 24px rgba(0,0,0,0.10);
+}
+ 
+html, body {
+    height: 100%;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+}
+ 
+/* ── Background blobs (matching the design's red/blue shapes) ── */
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+}
+body::before {
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, #e53e3e 0%, transparent 70%);
+    top: -120px;
+    right: 80px;
+    opacity: 0.55;
+}
+body::after {
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, #2563eb 0%, transparent 70%);
+    top: 60px;
+    right: 240px;
+    opacity: 0.40;
+}
+ 
+/* ── Layout ── */
+.container {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+ 
+/* ── Sidebar ── */
+.sidebar {
+    width: var(--sidebar-w);
+    min-height: 100vh;
+    background: var(--sidebar-bg);
+    padding: 28px 20px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+ 
+.sidebar h2 {
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+ 
+/* Logo badge inside h2 — optional, works if you wrap in a span */
+.sidebar h2 .logo-badge {
+    background: linear-gradient(135deg, #1a2a4a 0%, #2563eb 100%);
+    color: #fff;
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    text-align: center;
+}
+ 
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+ 
+.menu a {
+    text-decoration: none;
+    color: var(--text-main);
+    font-size: 0.92rem;
+    font-weight: 500;
+    padding: 9px 12px;
+    border-radius: 10px;
+    transition: background 0.15s, color 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+ 
+.menu a:hover {
+    background: #f1f5f9;
+    color: var(--accent);
+}
+ 
+.menu a.active {
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+}
+ 
+/* Dividers between menu groups */
+.menu .divider {
+    height: 1px;
+    background: var(--divider);
+    margin: 10px 0;
+}
+ 
+/* Toggle switches (Dark Mode / Dyslexic) */
+.menu .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 12px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--text-main);
+}
+ 
+.toggle {
+    width: 36px;
+    height: 20px;
+    background: #cbd5e1;
+    border-radius: 999px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+}
+ 
+.toggle.on {
+    background: var(--accent);
+}
+ 
+.toggle::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: #fff;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+}
+ 
+.toggle.on::after {
+    transform: translateX(16px);
+}
+ 
+/* ── Main ── */
+.main {
+    flex: 1;
+    padding: 32px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+}
+ 
+/* ── Search box ── */
+.search-box {
+    width: 100%;
+    max-width: 680px;
+    padding: 14px 20px 14px 50px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 18px center;
+    transition: background 0.2s;
+}
+ 
+.search-box::placeholder {
+    color: rgba(255,255,255,0.65);
+}
+ 
+.search-box:focus {
+    background-color: rgba(255,255,255,0.26);
+}
+ 
+/* ── Notification card container ── */
+.card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+ 
+/* ── Individual notification row ── */
+.notif {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--divider);
+    transition: background 0.15s;
+    animation: fadeSlideIn 0.3s ease both;
+}
+ 
+.notif:last-child {
+    border-bottom: none;
+}
+ 
+.notif:hover {
+    background: #f8fafc;
+}
+ 
+@keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+ 
+/* Stagger each row */
+.notif:nth-child(1)  { animation-delay: 0.04s; }
+.notif:nth-child(2)  { animation-delay: 0.08s; }
+.notif:nth-child(3)  { animation-delay: 0.12s; }
+.notif:nth-child(4)  { animation-delay: 0.16s; }
+.notif:nth-child(5)  { animation-delay: 0.20s; }
+.notif:nth-child(6)  { animation-delay: 0.24s; }
+.notif:nth-child(7)  { animation-delay: 0.28s; }
+.notif:nth-child(8)  { animation-delay: 0.32s; }
+ 
+.notif-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    min-width: 0;
+}
+ 
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--avatar-bg);
+    flex-shrink: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%23cbd5e1'/%3E%3Ccircle cx='20' cy='15' r='7' fill='%2394a3b8'/%3E%3Cellipse cx='20' cy='34' rx='12' ry='8' fill='%2394a3b8'/%3E%3C/svg%3E");
+    background-size: cover;
+}
+ 
+.notif-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+ 
+.notif-text b {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: 0.02em;
+}
+ 
+.notif-text b + * {
+    /* the inline text after <b> */
+    font-size: 0.9rem;
+    color: var(--text-main);
+}
+ 
+.notif-text small {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-family: 'Space Mono', monospace;
+    margin-top: 2px;
+}
+ 
+.notif-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+}
+ 
+.notif-right > div {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    font-family: 'Space Mono', monospace;
+}
+ 
+/* ── Reply button ── */
+.reply-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    white-space: nowrap;
+}
+ 
+.reply-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+}
+ 
+.reply-btn:active {
+    transform: translateY(0);
+}
+ 
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+ 
+    .main {
+        padding: 20px 16px;
+    }
+ 
+    .notif {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+ 
+    .notif-right {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
+    }
+}

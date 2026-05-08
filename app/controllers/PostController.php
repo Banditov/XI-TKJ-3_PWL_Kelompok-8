@@ -58,3 +58,5 @@ class PostController extends Controller
         exit;
     }
 }
+
+
