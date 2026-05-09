@@ -9,6 +9,8 @@ class Reply extends Database
 
     public function getRepliesByCommentId(string $commentId)
     {
+        $accountId = $_SESSION['account_id'];
+
         $query = "SELECT r.*, 
                         a.name AS account_name,
                         cl.name AS class_name
@@ -22,6 +24,12 @@ class Reply extends Database
 
         $replies = [];
         while ($row = mysqli_fetch_assoc($result)) {
+            $id = $row['id'];
+
+            $voteResult      = mysqli_query($this->connection, "SELECT vote FROM reply_votes WHERE reply_id = '$id' AND account_id = '$accountId'");
+            $voteRow         = mysqli_fetch_assoc($voteResult);
+            $row['user_vote'] = $voteRow ? $voteRow['vote'] : 0;
+
             $replies[] = $row;
         }
 

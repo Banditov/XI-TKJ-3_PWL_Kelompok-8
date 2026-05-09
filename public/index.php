@@ -16,6 +16,9 @@ use App\Core\Router;
 
 $router = new Router();
 
+$GLOBALS['tags']    = [];
+$GLOBALS['filters'] = [];
+
 $router->add('GET', '/', 'IntroController', 'index');
 
 $router->add('GET', '/login', 'AuthController', 'login');
@@ -30,5 +33,9 @@ $router->add('POST', '/login', 'AuthController', 'authenticate');
 
 $router->add('POST', '/posts/{id}/comments', 'CommentController', 'store');
 $router->add('POST', '/posts/{id}/comments/{commentId}/replies', 'ReplyController', 'store');
+
+$router->add('POST', '/posts/{id}/vote', 'VoteController', 'vote');
+$router->add('POST', '/comments/{id}/vote', 'VoteController', 'voteComment');
+$router->add('POST', '/replies/{id}/vote',  'VoteController', 'voteReply');
 
 $router->run();

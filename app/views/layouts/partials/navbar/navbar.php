@@ -1,4 +1,6 @@
 <?php
+    $currentPath = strtok($_SERVER['REQUEST_URI'], '?');
+
     function navLink($href, $label, $icon) {
         $currentPath = strtok($_SERVER['REQUEST_URI'], '?');
         $isActive = $currentPath === $href;
@@ -10,6 +12,9 @@
                 <p>$label</p>
             </a>";
     }
+
+    $navFilters = $_SESSION['filter_filters'] ?? [];
+    $navTags    = $_SESSION['filter_tags']    ?? [];
 ?>
 
 <aside class="fixed top-0 left-0 w-64 h-full bg-white overflow-y-scroll drop-shadow-lg **:transition-all **:duration-200 hidden md:block">
@@ -34,9 +39,11 @@
             <?= navLink('/notification', 'Notification', 'notif') ?>
         </div>
 
+    <?php if ($currentPath === '/posts'): ?>
         <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
 
-        <div class="flex flex-col gap-1 w-full">
+        <form method="GET" action="/posts" id="filterForm">
+            <input type="hidden" name="search" value="<?= htmlspecialchars($navFilters['search'] ?? '') ?>">
             <div class="font-bold text-lg rounded-2xl flex items-center">
                 <?= essIcon('filter', 'w-8 mr-2') ?>
                 <p>Filter</p>
@@ -44,29 +51,32 @@
             <div class="flex flex-col gap-1">
                 <div class="flex flex-col gap-1">
                     <p>Tag</p>
-                    <select id="filter" class="w-full p-2 rounded-lg border-2 border-[#545F71]">
+                    <select name="tag" class="w-full p-2 rounded-lg border-2 border-[#545F71]" onchange="document.getElementById('filterForm').submit()">
                         <option value="">All Tags</option>
-                        <option value="technology">Technology</option>
-                        <option value="design">Design</option>
-                        <option value="business">Business</option>
+                <?php foreach ($navTags as $t): ?>
+                            <option value="<?= htmlspecialchars($t['name']) ?>" <?= ($navFilters['tag'] ?? '') === $t['name'] ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($t['name']) ?>
+                            </option>
+                <?php endforeach; ?>
                     </select>
                 </div>
                 <div>
                     <p>Votes</p>
                     <div class="flex gap-2">
-                        <input type="number" id="votesMin" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Min">
-                        <input type="number" id="votesMax" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Max">
+                        <input type="number" name="votes_min" value="<?= htmlspecialchars($navFilters['votes_min'] ?? '') ?>" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Min" onchange="document.getElementById('filterForm').submit()">
+                        <input type="number" name="votes_max" value="<?= htmlspecialchars($navFilters['votes_max'] ?? '') ?>" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Max" onchange="document.getElementById('filterForm').submit()">
                     </div>
                 </div>
                 <div>
                     <p>Views</p>
                     <div class="flex gap-2">
-                        <input type="number" id="viewsMin" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Min">
-                        <input type="number" id="viewsMax" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Max">
+                        <input type="number" name="views_min" value="<?= htmlspecialchars($navFilters['views_min'] ?? '') ?>" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Min" onchange="document.getElementById('filterForm').submit()">
+                        <input type="number" name="views_max" value="<?= htmlspecialchars($navFilters['views_max'] ?? '') ?>" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Max" onchange="document.getElementById('filterForm').submit()">
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
+    <?php endif; ?>
 
         <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
 
@@ -110,8 +120,15 @@
         <div class="flex items-center gap-3 w-full">
             <?= essIcon('dropMenu', 'w-12') ?>
             <div id="searchBar" class="w-full">
-                <?= essIcon('searchMbl', 'w-8 absolute left-25 top-1/2 -translate-y-4 z-2') ?>
-                <input type="text" id="search" placeholder="Search..." class="p-3 pl-13 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white">
+                <form method="GET" action="/posts" id="searchFormMobile">
+                    <input type="hidden" name="tag"       value="<?= htmlspecialchars($navFilters['tag'] ?? '') ?>">
+                    <input type="hidden" name="votes_min" value="<?= htmlspecialchars($navFilters['votes_min'] ?? '') ?>">
+                    <input type="hidden" name="votes_max" value="<?= htmlspecialchars($navFilters['votes_max'] ?? '') ?>">
+                    <input type="hidden" name="views_min" value="<?= htmlspecialchars($navFilters['views_min'] ?? '') ?>">
+                    <input type="hidden" name="views_max" value="<?= htmlspecialchars($navFilters['views_max'] ?? '') ?>">
+                    <?= essIcon('searchMbl', 'w-8 absolute left-25 top-1/2 -translate-y-4 z-2') ?>
+                    <input type="text" id="searchMobile" name="search" value="<?= htmlspecialchars($navFilters['search'] ?? '') ?>" placeholder="Search..." class="p-3 pl-13 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white" onchange="this.form.submit()">
+                </form>
             </div>
             <?= essIcon('settings', 'w-12') ?>
             <?= essIcon('logout', 'w-12 fill-[#ffffff]') ?>

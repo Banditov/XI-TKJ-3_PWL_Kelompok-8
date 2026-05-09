@@ -5,10 +5,17 @@
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
     <div id="searchBar" class="z-2 sticky top-10 w-full md:block hidden">
-        <label for="search">
-            <?= essIcon('search', 'w-8 absolute left-4 top-1/2 -translate-y-4 z-2') ?>
-        </label>
-        <input type="text" id="search" placeholder="Search..." class="p-4 pl-14 w-full text-white placeholder:text-white/60 rounded-full border border-white/20 backdrop-blur-md bg-gray-800/25">
+        <form method="GET" action="/posts" id="searchForm">
+            <input type="hidden" name="tag"       value="<?= htmlspecialchars($filters['tag'] ?? '') ?>">
+            <input type="hidden" name="votes_min" value="<?= htmlspecialchars($filters['votes_min'] ?? '') ?>">
+            <input type="hidden" name="votes_max" value="<?= htmlspecialchars($filters['votes_max'] ?? '') ?>">
+            <input type="hidden" name="views_min" value="<?= htmlspecialchars($filters['views_min'] ?? '') ?>">
+            <input type="hidden" name="views_max" value="<?= htmlspecialchars($filters['views_max'] ?? '') ?>">
+            <label for="search">
+                <?= essIcon('search', 'w-8 absolute left-4 top-1/2 -translate-y-4 z-2') ?>
+            </label>
+            <input type="text" id="search" name="search" value="<?= htmlspecialchars($filters['search'] ?? '') ?>" placeholder="Search..." class="p-4 pl-14 w-full text-white placeholder:text-white/60 rounded-full border border-white/20 backdrop-blur-md bg-gray-800/25">
+        </form>
     </div>
 
 <?php foreach ($posts as $index => $post): ?>
@@ -38,19 +45,37 @@
         <?php endif; ?>
                 <div class="flex items-center gap-5">
                     <div class="flex px-4 py-2 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
-                        <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+                        <form method="POST" action="/posts/<?= $post['id'] ?>/vote">
+                            <input type="hidden" name="vote" value="1">
+                            <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
+                            <button type="submit" class="flex items-center justify-center">
+                                <span style="<?= $post['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
+                                    <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+                                </span>
+                            </button>
+                        </form>
                         <p class="text-2xl"><?= $post['votes'] ?></p>
-                        <?= essIcon('arrow', 'w-7 h-7') ?>
+                        <form method="POST" action="/posts/<?= $post['id'] ?>/vote">
+                            <input type="hidden" name="vote" value="-1">
+                            <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
+                            <button type="submit" class="flex items-center justify-center">
+                                <span style="<?= $post['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
+                                    <?= essIcon('arrow', 'w-7 h-7') ?>
+                                </span>
+                            </button>
+                        </form>
                     </div>
                     <div class="flex gap-1 items-center">
                         <?= essIcon('eye', 'w-10 h-10') ?>
-                        <p class="text-2xl">15</p>
+                        <p class="text-2xl"><?= $post['views'] ?></p>
                     </div>
                     <div class="flex gap-1 items-center">
                         <?= essIcon('comment', 'w-10 h-10') ?>
                         <p class="text-2xl"><?= $post['comment_count'] ?></p>
                     </div>
-                    <?= essIcon('share', 'w-10 h-10') ?>
+                    <button class="shareBtn" data-url="<?= 'http://' . $_SERVER['HTTP_HOST'] . '/posts/' . $post['id'] ?>">
+                        <?= essIcon('share', 'w-10 h-10') ?>
+                    </button>
                 </div>
             </div>
             <a href="/posts/<?= $post['id'] ?>" class="flex flex-col gap-3">
@@ -83,3 +108,6 @@
         <p class="text-xl font-bold text-[#545F71]">End of the line!</p>
     </div>
 </main>
+
+<script src="/js/post/search.js"></script>
+<script src="/js/post/share.js"></script>

@@ -1,8 +1,6 @@
 <title>Create Post | ImmaSpark</title>
 <link rel="stylesheet" href="/css/responsive/main.css">
 
-<?php include __DIR__ . '/../../../app/views/layouts/partials/navbar/navbar.php'; ?>
-
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
     <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg p-10 flex flex-col gap-5 create">
         <p class="text-4xl font-bold text-center">Share Us Your Ideas!</p>
