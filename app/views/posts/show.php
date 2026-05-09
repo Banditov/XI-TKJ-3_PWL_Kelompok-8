@@ -9,10 +9,10 @@
         <div class="md:pt-10 md:pr-10 md:pl-10 pb-7 pt-7 pr-7 pl-7 flex flex-col md:gap-3 gap-5">
             <div class="flex justify-between items-center">
                 <div class="flex gap-5 items-center">
-                    <img src="/assets/image/account/phototest.jpg" class="w-15 h-15 object-cover rounded-full drop-shadow-lg">
+                    <img src="/assets/image/account/<?= htmlspecialchars($post['account_id']) ?>.jpg" class="w-15 h-15 object-cover rounded-full drop-shadow-lg">
                     <div>
-                        <p class="text-3xl font-bold">Christopher V. C.</p>
-                        <p>XI TKJ 3</p>
+                        <p class="text-3xl font-bold"><?= htmlspecialchars($post['account_name']) ?></p>
+                        <p><?= htmlspecialchars($post['class_name']) ?></p>
                     </div>
                 </div>
                 <p class="text-3xl font-bold"><?= $post['date'] ?></p>
@@ -41,7 +41,12 @@
                     </div>
                     <div class="flex gap-1 items-center">
                         <?= essIcon('comment', 'w-10 h-10') ?>
-                        <p class="text-2xl">3</p>
+                        <p class="text-2xl">
+                            <?php
+                                $replyCount = array_sum(array_map(fn($c) => count($c['replies']), $comments));
+                                echo count($comments) + $replyCount;
+                            ?>
+                        </p>
                     </div>
                     <?= essIcon('share', 'w-10 h-10') ?>
                 </div>
@@ -86,211 +91,174 @@
 
 <!-- Comment Section -->
     <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg post md:p-10 p-7 flex flex-col md:gap-5 gap-3">
-        <input type="text" id="searchComment" placeholder="Share your thoughts!" class="p-3 pl-8 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white">
+        <form action="/posts/<?= $post['id'] ?>/comments" method="POST" class="flex gap-3 items-center">
+            <input type="text" name="description" id="searchComment" placeholder="Share your thoughts!" class="p-3 pl-8 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white" required>
+            <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full font-bold">Post</button>
+        </form>
 
         <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
 
         <div class="flex gap-1 items-center">
             <?= essIcon('comment', 'w-10 h-10') ?>
-            <p class="text-2xl">3</p>
+            <p class="text-2xl">
+                <?php
+                    $replyCount = array_sum(array_map(fn($c) => count($c['replies']), $comments));
+                    echo count($comments) + $replyCount;
+                ?>
+            </p>
         </div>
 
-<!-- Comment desktop -->
-        <div id="comment1" class="hidden md:flex flex-col border-2 border-[#545F71] rounded-4xl">
+    <?php if (empty($comments)): ?>
+        <p class="text-center text-[#545F71] text-xl">No comments here yet!</p>
+    <?php endif; ?>
+
+<!-- Desktop Comment -->
+    <?php foreach ($comments as $comment): ?>
+        <div class="hidden md:flex flex-col border-2 border-[#545F71] rounded-4xl">
             <div class="flex items-center justify-between p-5 border-b-2 border-[#545F71]">
                 <div class="flex gap-5 items-center">
-                    <div class="flex gap-5 items-center">
-                        <img src="/assets/image/account/phototest.jpg" class="w-10 h-10 object-cover rounded-full drop-shadow-lg">
-                        <div>
-                            <p class="text-2xl font-bold">Christopher V. C.</p>
-                            <p class="text-sm">XI TKJ 3</p>
-                        </div>
+                    <img src="/assets/image/account/<?= $comment['account_id'] ?>.jpg" class="w-10 h-10 object-cover rounded-full drop-shadow-lg">
+                    <div>
+                        <p class="text-2xl font-bold"><?= htmlspecialchars($comment['account_name']) ?></p>
+                        <p class="text-sm"><?= htmlspecialchars($comment['class_name']) ?></p>
                     </div>
                     <div class="w-2 h-2 bg-[#545F71] rounded-full"></div>
-                    <p class="text-2xl font-bold"></p>
+                    <p class="text-2xl font-bold"><?= $comment['date'] ?></p>
                 </div>
                 <div class="flex gap-5 items-center">
-                    <label id="replyBtnC1" for="replyC1" class="flex items-center gap-2" onclick="replyComment()">
+                    <label class="flex items-center gap-2 cursor-pointer" onclick="toggleReply('<?= $comment['id'] ?>-d')">
                         <?= essIcon('reply', 'w-8 h-8') ?>
                         <p class="text-2xl">Reply</p>
                     </label>
                     <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
                         <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                        <p class="text-2xl">1</p>
+                        <p class="text-2xl"><?= $comment['votes'] ?></p>
                         <?= essIcon('arrow', 'w-7 h-7') ?>
                     </div>
-                    <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full text-white">
-                        <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                    </div>
+                    <?php if (!empty($comment['replies'])): ?>
+                        <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full text-white cursor-pointer transition-transform duration-300" onclick="toggleReplies('<?= $comment['id'] ?>')">
+                            <?= essIcon('arrow', 'w-7 h-7 transform') ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="p-5">
-                <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
+                <p class="text-justify"><?= htmlspecialchars($comment['description']) ?></p>
             </div>
-            <div class="border-t-2 border-dashed">
-                <div>
-                    <div class="bg-white p-2 absolute z-1 -translate-y-6 translate-x-3">
-                        <p class="font-bold">Replies</p>
-                    </div>
-                    <div id="inputReplyC1" class="hidden p-5 pb-0">
-                        <input type="text" id="replyC1" placeholder="Replying" class="p-3 pl-8 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white">
-                    </div>
-                    <div id="reply1">
-                        <div class="border-b-2 border-[#545F71] flex justify-between items-center">
-                            <div class="p-5 flex gap-5 items-center ">
-                                <div class="flex gap-5 items-center">
-                                    <img src="/assets/image/account/phototest.jpg" class="w-10 h-10 object-cover rounded-full drop-shadow-lg">
-                                    <div>
-                                        <p class="text-2xl font-bold">Christopher V. C.</p>
-                                        <p class="text-sm">XI TKJ 3</p>
-                                    </div>
-                                </div>
-                                <div class="w-2 h-2 bg-[#545F71] rounded-full"></div>
-                                <p class="text-2xl font-bold">16/03/2026</p>
+            <div id="inputReply-<?= $comment['id'] ?>-d" class="hidden px-5 <?= !empty($comment['replies']) ? 'pb-8' : 'pb-5' ?>">
+                <form action="/posts/<?= $post['id'] ?>/comments/<?= $comment['id'] ?>/replies" method="POST" class="flex gap-3 items-center">
+                    <input type="text" name="description" placeholder="Replying..." class="p-3 pl-8 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white" required>
+                    <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full shrink-0 font-bold">Post</button>
+                </form>
+            </div>
+    <?php if (!empty($comment['replies'])): ?>
+            <div id="replies-<?= $comment['id'] ?>">
+                <div class="bg-white p-2 absolute z-1 -translate-y-6 translate-x-3">
+                    <p class="font-bold">Replies</p>
+                </div>
+        <?php foreach ($comment['replies'] as $reply): ?>
+                <div class="border-t-2 border-dashed">
+                    <div class="flex justify-between items-center p-5 border-b-2 border-[#545F71]">
+                        <div class="flex gap-5 items-center">
+                            <img src="/assets/image/account/<?= $reply['account_id'] ?>.jpg" class="w-10 h-10 object-cover rounded-full drop-shadow-lg">
+                            <div>
+                                <p class="text-2xl font-bold"><?= htmlspecialchars($reply['account_name']) ?></p>
+                                <p class="text-sm"><?= htmlspecialchars($reply['class_name']) ?></p>
                             </div>
-                            <div class="flex gap-5 items-center p-5">
-                                <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
-                                    <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                                    <p class="text-2xl">1</p>
-                                    <?= essIcon('arrow', 'w-7 h-7') ?>
-                                </div>
-                                <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full text-white">
-                                    <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                                </div>
-                            </div>
+                            <div class="w-2 h-2 bg-[#545F71] rounded-full"></div>
+                            <p class="text-2xl font-bold"><?= $reply['date'] ?></p>
                         </div>
-                        <div class="p-5">
-                            <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
+                        <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
+                            <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+                            <p class="text-2xl"><?= $reply['votes'] ?></p>
+                            <?= essIcon('arrow', 'w-7 h-7') ?>
                         </div>
                     </div>
-                    <div id="reply2" class="border-t-2 border-[#545F71] border-dashed">
-                        <div class="border-b-2 border-[#545F71] flex justify-between items-center">
-                            <div class="p-5 flex gap-5 items-center ">
-                                <div class="flex gap-5 items-center">
-                                    <img src="/assets/image/account/phototest.jpg" class="w-10 h-10 object-cover rounded-full drop-shadow-lg">
-                                    <div>
-                                        <p class="text-2xl font-bold">Christopher V. C.</p>
-                                        <p class="text-sm">XI TKJ 3</p>
-                                    </div>
-                                </div>
-                                <div class="w-2 h-2 bg-[#545F71] rounded-full"></div>
-                                <p class="text-2xl font-bold">16/03/2026</p>
-                            </div>
-                            <div class="flex gap-5 items-center p-5">
-                                <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
-                                    <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                                    <p class="text-2xl">1</p>
-                                    <?= essIcon('arrow', 'w-7 h-7') ?>
-                                </div>
-                                <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full text-white">
-                                    <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-5">
-                            <p class="text-justify text-2xl md:text-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
-                        </div>
+                    <div class="p-5">
+                        <p class="text-justify"><?= htmlspecialchars($reply['description']) ?></p>
                     </div>
                 </div>
+        <?php endforeach; ?>
             </div>
+    <?php endif; ?>
         </div>
+    <?php endforeach; ?>
 
-<!-- Comment mobile -->
-        <div id="comment1" class="flex md:hidden flex-col border-2 border-[#545F71] rounded-4xl">
+<!-- Comment Mobile -->
+<?php foreach ($comments as $comment): ?>
+        <div class="flex md:hidden flex-col border-2 border-[#545F71] rounded-4xl">
             <div class="p-5 border-b-2 border-[#545F71]">
                 <div class="flex gap-5 items-center justify-between w-full">
                     <div class="flex gap-5 items-center">
-                        <img src="/assets/image/account/phototest.jpg" class="w-14 h-14 object-cover rounded-full drop-shadow-lg">
+                        <img src="/assets/image/account/<?= $comment['account_id'] ?>.jpg" class="w-14 h-14 object-cover rounded-full drop-shadow-lg">
                         <div>
-                            <p class="text-2xl font-bold">Christopher V. C.</p>
-                            <p class="text-lg">XI TKJ 3</p>
+                            <p class="text-2xl font-bold"><?= htmlspecialchars($comment['account_name']) ?></p>
+                            <p class="text-lg"><?= htmlspecialchars($comment['class_name']) ?></p>
                         </div>
                     </div>
-                    <p class="text-3xl font-bold">16/03/2026</p>
+                    <p class="text-3xl font-bold"><?= $comment['date'] ?></p>
                 </div>
             </div>
             <div class="p-5">
-                <p class="text-justify text-2xl md:text-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
+                <p class="text-justify text-2xl md:text-lg"><?= htmlspecialchars($comment['description']) ?></p>
             </div>
             <div class="flex gap-5 items-center justify-end p-5 pt-0">
-                <label id="replyBtnC1" for="replyC1" class="flex items-center gap-2" onclick="replyComment()">
+                <label class="flex items-center gap-2 cursor-pointer" onclick="toggleReply('<?= $comment['id'] ?>-m')">
                     <?= essIcon('reply', 'w-8 h-8') ?>
                     <p class="text-2xl">Reply</p>
                 </label>
                 <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
                     <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                    <p class="text-2xl">1</p>
-                    <?= essIcon('arrow', 'w-7 h-7 transform') ?>
+                    <p class="text-2xl"><?= $comment['votes'] ?></p>
+                    <?= essIcon('arrow', 'w-7 h-7') ?>
                 </div>
-                <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full">
-                    <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                </div>
+                <?php if (!empty($comment['replies'])): ?>
+                    <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full text-white cursor-pointer transition-transform duration-300" onclick="toggleReplies('<?= $comment['id'] ?>-m')">
+                        <?= essIcon('arrow', 'w-7 h-7 transform') ?>
+                    </div>
+                <?php endif; ?>
             </div>
-            <div class="border-t-2 border-dashed">
-                <div>
-                    <div class="bg-white p-2 absolute z-1 -translate-y-6 translate-x-5">
-                        <p class="text-xl font-bold">Replies</p>
-                    </div>
-                    <div id="inputReplyC1" class="hidden p-5 pb-0">
-                        <input type="text" id="replyC1" placeholder="Replying" class="p-3 pl-8 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white">
-                    </div>
-                    <div id="reply1">
-                        <div class="border-b-2 border-[#545F71]">
-                            <div class="p-5 flex gap-5 items-center justify-between">
-                                <div class="flex gap-5 items-center">
-                                    <img src="/assets/image/account/phototest.jpg" class="w-14 h-14 object-cover rounded-full drop-shadow-lg">
-                                    <div>
-                                        <p class="text-2xl font-bold">Christopher V. C.</p>
-                                        <p class="text-lg">XI TKJ 3</p>
-                                    </div>
+            <div id="inputReply-<?= $comment['id'] ?>-m" class="hidden px-5 <?= !empty($comment['replies']) ? 'pb-8' : 'pb-5' ?>">
+                <form action="/posts/<?= $post['id'] ?>/comments/<?= $comment['id'] ?>/replies" method="POST" class="flex gap-3 items-center">
+                    <input type="text" name="description" placeholder="Replying..." class="p-3 pl-8 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white" required>
+                    <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full shrink-0 font-bold">Post</button>
+                </form>
+            </div>
+    <?php if (!empty($comment['replies'])): ?>
+            <div id="replies-<?= $comment['id'] ?>-m">
+                <div class="bg-white p-2 absolute z-1 -translate-y-6 translate-x-5">
+                    <p class="text-xl font-bold">Replies</p>
+                </div>
+        <?php foreach ($comment['replies'] as $reply): ?>
+                <div class="border-t-2 border-dashed">
+                    <div class="border-b-2 border-[#545F71]">
+                        <div class="p-5 flex gap-5 items-center justify-between">
+                            <div class="flex gap-5 items-center">
+                                <img src="/assets/image/account/<?= $reply['account_id'] ?>.jpg" class="w-14 h-14 object-cover rounded-full drop-shadow-lg">
+                                <div>
+                                    <p class="text-2xl font-bold"><?= htmlspecialchars($reply['account_name']) ?></p>
+                                    <p class="text-lg"><?= htmlspecialchars($reply['class_name']) ?></p>
                                 </div>
-                                <p class="text-3xl font-bold">16/03/2026</p>
                             </div>
-                        </div>
-                        <div class="p-5">
-                            <p class="text-justify text-2xl md:text-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
-                        </div>
-                        <div class="flex gap-5 items-center p-5 pt-0 justify-end">
-                            <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
-                                <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                                <p class="text-2xl">1</p>
-                                <?= essIcon('arrow', 'w-7 h-7 transform') ?>
-                            </div>
-                            <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full">
-                                <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                            </div>
+                            <p class="text-3xl font-bold"><?= $reply['date'] ?></p>
                         </div>
                     </div>
-                    <div id="reply2" class="border-t-2 border-[#545F71] border-dashed">
-                        <div class="border-b-2 border-[#545F71]">
-                            <div class="p-5 flex gap-5 items-center justify-between">
-                                <div class="flex gap-5 items-center">
-                                    <img src="/assets/image/account/phototest.jpg" class="w-14 h-14 object-cover rounded-full drop-shadow-lg">
-                                    <div>
-                                        <p class="text-2xl font-bold">Christopher V. C.</p>
-                                        <p class="text-lg">XI TKJ 3</p>
-                                    </div>
-                                </div>
-                                <p class="text-3xl font-bold">16/03/2026</p>
-                            </div>
-                        </div>
-                        <div class="p-5">
-                            <p class="text-justify text-2xl md:text-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dignissim malesuada ullamcorper. Phasellus lobortis augue quis consectetur lacinia. Suspendisse sed dolor quis nibh dictum hendrerit. Donec ac dolor consequat, egestas ligula eget, fringilla leo. Phasellus viverra libero id accumsan rhoncus.</p>
-                        </div>
-                        <div class="flex gap-5 items-center p-5 pt-0 justify-end">
-                            <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
-                                <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                                <p class="text-2xl">1</p>
-                                <?= essIcon('arrow', 'w-7 h-7 transform') ?>
-                            </div>
-                            <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full">
-                                <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                            </div>
+                    <div class="p-5">
+                        <p class="text-justify text-2xl md:text-lg"><?= htmlspecialchars($reply['description']) ?></p>
+                    </div>
+                    <div class="flex gap-5 items-center p-5 pt-0 justify-end">
+                        <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
+                            <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+                            <p class="text-2xl"><?= $reply['votes'] ?></p>
+                            <?= essIcon('arrow', 'w-7 h-7') ?>
                         </div>
                     </div>
                 </div>
+        <?php endforeach; ?>
             </div>
+    <?php endif; ?>
         </div>
+<?php endforeach; ?>
     </div>
 </main>
 

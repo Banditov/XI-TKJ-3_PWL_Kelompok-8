@@ -16,10 +16,10 @@
         <div class="md:pt-10 md:pr-10 md:pl-10 pb-7 pt-7 pr-7 pl-7 flex flex-col md:gap-3 gap-5">
             <div class="flex justify-between items-center">
                 <div class="flex gap-5 items-center">
-                    <img src="/assets/image/account/phototest.jpg" class="w-15 h-15 object-cover rounded-full drop-shadow-lg">
+                    <img src="/assets/image/account/<?= htmlspecialchars($post['account_id']) ?>.jpg" class="w-15 h-15 object-cover rounded-full drop-shadow-lg">
                     <div>
-                        <p class="text-3xl font-bold">Christopher V. C.</p>
-                        <p>XI TKJ 3</p>
+                        <p class="text-3xl font-bold"><?= htmlspecialchars($post['account_name']) ?></p>
+                        <p><?= htmlspecialchars($post['class_name']) ?></p>
                     </div>
                 </div>
                 <p class="text-3xl font-bold"><?= $post['date'] ?></p>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="flex gap-1 items-center">
                         <?= essIcon('comment', 'w-10 h-10') ?>
-                        <p class="text-2xl">3</p>
+                        <p class="text-2xl"><?= $post['comment_count'] ?></p>
                     </div>
                     <?= essIcon('share', 'w-10 h-10') ?>
                 </div>

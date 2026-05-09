@@ -12,7 +12,15 @@ class Post extends Database
 
     public function getPosts()
     {
-        $query = "SELECT * FROM {$this->table}";
+        $query = "SELECT p.*, 
+                        a.name AS account_name,
+                        c.name AS class_name,
+                        (SELECT COUNT(*) FROM comments WHERE post_id = p.id) +
+                        (SELECT COUNT(*) FROM replies WHERE post_id = p.id) AS comment_count
+                FROM {$this->table} p
+                LEFT JOIN accounts a ON a.id = p.account_id
+                LEFT JOIN classes c ON c.id = a.class_id";
+
         $result = mysqli_query($this->connection, $query);
 
         $posts = [];
@@ -36,7 +44,14 @@ class Post extends Database
 
     public function getPostById(string $id)
     {
-        $query = "SELECT * FROM {$this->table} WHERE id = '$id'";
+        $query = "SELECT p.*, 
+                        a.name AS account_name,
+                        c.name AS class_name
+                FROM {$this->table} p
+                LEFT JOIN accounts a ON a.id = p.account_id
+                LEFT JOIN classes c ON c.id = a.class_id
+                WHERE p.id = '$id'";
+
         $result = mysqli_query($this->connection, $query);
         $row = mysqli_fetch_assoc($result);
 
