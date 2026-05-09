@@ -5,10 +5,17 @@
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
     <div id="searchBar" class="z-2 sticky top-10 w-full md:block hidden">
-        <label for="search">
-            <?= essIcon('search', 'w-8 absolute left-4 top-1/2 -translate-y-4 z-2') ?>
-        </label>
-        <input type="text" id="search" placeholder="Search..." class="p-4 pl-14 w-full text-white placeholder:text-white/60 rounded-full border border-white/20 backdrop-blur-md bg-gray-800/25">
+        <form method="GET" action="/posts" id="searchForm">
+            <input type="hidden" name="tag"       value="<?= htmlspecialchars($filters['tag'] ?? '') ?>">
+            <input type="hidden" name="votes_min" value="<?= htmlspecialchars($filters['votes_min'] ?? '') ?>">
+            <input type="hidden" name="votes_max" value="<?= htmlspecialchars($filters['votes_max'] ?? '') ?>">
+            <input type="hidden" name="views_min" value="<?= htmlspecialchars($filters['views_min'] ?? '') ?>">
+            <input type="hidden" name="views_max" value="<?= htmlspecialchars($filters['views_max'] ?? '') ?>">
+            <label for="search">
+                <?= essIcon('search', 'w-8 absolute left-4 top-1/2 -translate-y-4 z-2') ?>
+            </label>
+            <input type="text" id="search" name="search" value="<?= htmlspecialchars($filters['search'] ?? '') ?>" placeholder="Search..." class="p-4 pl-14 w-full text-white placeholder:text-white/60 rounded-full border border-white/20 backdrop-blur-md bg-gray-800/25">
+        </form>
     </div>
 
 <?php foreach ($posts as $index => $post): ?>
@@ -44,7 +51,7 @@
                     </div>
                     <div class="flex gap-1 items-center">
                         <?= essIcon('eye', 'w-10 h-10') ?>
-                        <p class="text-2xl">15</p>
+                        <p class="text-2xl"><?= $post['views'] ?></p>
                     </div>
                     <div class="flex gap-1 items-center">
                         <?= essIcon('comment', 'w-10 h-10') ?>
@@ -83,3 +90,5 @@
         <p class="text-xl font-bold text-[#545F71]">End of the line!</p>
     </div>
 </main>
+
+<script src="/js/post/search.js"></script>

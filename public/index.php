@@ -16,6 +16,9 @@ use App\Core\Router;
 
 $router = new Router();
 
+$GLOBALS['tags']    = [];
+$GLOBALS['filters'] = [];
+
 $router->add('GET', '/', 'IntroController', 'index');
 
 $router->add('GET', '/login', 'AuthController', 'login');

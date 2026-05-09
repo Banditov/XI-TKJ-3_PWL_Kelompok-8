@@ -7,7 +7,7 @@
 <br>
 <div align="center">
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
-      <img src="https://img.shields.io/badge/GitHub Version-wip--0.6.0-red">
+      <img src="https://img.shields.io/badge/GitHub Version-wip--0.7.0-red">
    </a>
    <!-- <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
       <img src="https://img.shields.io/badge/Latest Release-None-green">
@@ -358,6 +358,15 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 
 <details>
    <summary>May</summary>
+
+### 09/05/2026 - 0.7.0
+<details>
+
+   - Implement function filter
+   - Implement function comment dan reply
+   - Implement function view
+   - Implement function search
+</details>
 
 ### 06/05/2026 - 0.6.0
 <details>

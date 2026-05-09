@@ -37,7 +37,7 @@
                     </div>
                     <div class="flex gap-1 items-center">
                         <?= essIcon('eye', 'w-10 h-10') ?>
-                        <p class="text-2xl">15</p>
+                        <p class="text-2xl"><?= $post['views'] ?></p>
                     </div>
                     <div class="flex gap-1 items-center">
                         <?= essIcon('comment', 'w-10 h-10') ?>

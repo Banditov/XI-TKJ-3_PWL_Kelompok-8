@@ -12,10 +12,29 @@ class PostController extends Controller
     public function index()
     {
         $postModel = new Post();
-        $posts = $postModel->getPosts();
+        $tagModel  = new Tag();
+        $tagModel->deleteUnusedTags();
+        $tags = $tagModel->getTags();
+
+        $filters = [
+            'search'     => $_GET['search']     ?? '',
+            'tag'        => $_GET['tag']        ?? '',
+            'votes_min'  => $_GET['votes_min']  ?? '',
+            'votes_max'  => $_GET['votes_max']  ?? '',
+            'views_min'  => $_GET['views_min']  ?? '',
+            'views_max'  => $_GET['views_max']  ?? '',
+        ];
+
+        $posts = $postModel->getPosts($filters);
+        $tags  = $tagModel->getTags();
+
+        $_SESSION['filter_tags']    = $tags;
+        $_SESSION['filter_filters'] = $filters;
 
         $this->view('posts.index', [
-            'posts' => $posts
+            'posts'   => $posts,
+            'tags'    => $tags,
+            'filters' => $filters
         ]);
     }
 
@@ -26,6 +45,8 @@ class PostController extends Controller
         $postModel    = new Post();
         $commentModel = new Comment();
         $replyModel   = new Reply();
+
+        $postModel->incrementViews($id, $_SESSION['account_id']);
 
         $post     = $postModel->getPostById($id);
         $comments = $commentModel->getCommentsByPostId($id);

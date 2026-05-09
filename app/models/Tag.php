@@ -10,12 +10,8 @@ class Tag extends Database
 
     public function getTags()
     {
-        $query = "SELECT * FROM $this->table";
+        $query = "SELECT DISTINCT name FROM {$this->table} ORDER BY name";
         $result = mysqli_query($this->connection, $query);
-
-        if (!$result) {
-            die('Query failed: ' . mysqli_error($this->connection));
-        }
 
         $tags = [];
         while ($row = mysqli_fetch_assoc($result)) {
@@ -44,6 +40,12 @@ class Tag extends Database
 
         $query = "INSERT INTO {$this->table} (post_id, name, color_top, color_bottom, icon) 
                 VALUES ('$postId', '$name', '$colorTop', '$colorBottom', '')";
+        mysqli_query($this->connection, $query);
+    }
+
+    public function deleteUnusedTags()
+    {
+        $query = "DELETE FROM {$this->table} WHERE post_id NOT IN (SELECT id FROM posts)";
         mysqli_query($this->connection, $query);
     }
 }
