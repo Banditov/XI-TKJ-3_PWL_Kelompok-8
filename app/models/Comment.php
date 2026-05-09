@@ -9,6 +9,8 @@ class Comment extends Database
 
     public function getCommentsByPostId(string $postId)
     {
+        $accountId = $_SESSION['account_id'];
+
         $query = "SELECT c.*, 
                         a.name AS account_name,
                         cl.name AS class_name
@@ -22,6 +24,12 @@ class Comment extends Database
 
         $comments = [];
         while ($row = mysqli_fetch_assoc($result)) {
+            $id = $row['id'];
+
+            $voteResult      = mysqli_query($this->connection, "SELECT vote FROM comment_votes WHERE comment_id = '$id' AND account_id = '$accountId'");
+            $voteRow         = mysqli_fetch_assoc($voteResult);
+            $row['user_vote'] = $voteRow ? $voteRow['vote'] : 0;
+
             $comments[] = $row;
         }
 

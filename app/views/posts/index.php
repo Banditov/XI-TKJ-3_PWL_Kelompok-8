@@ -45,9 +45,25 @@
         <?php endif; ?>
                 <div class="flex items-center gap-5">
                     <div class="flex px-4 py-2 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
-                        <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+                        <form method="POST" action="/posts/<?= $post['id'] ?>/vote">
+                            <input type="hidden" name="vote" value="1">
+                            <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
+                            <button type="submit" class="flex items-center justify-center">
+                                <span style="<?= $post['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
+                                    <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+                                </span>
+                            </button>
+                        </form>
                         <p class="text-2xl"><?= $post['votes'] ?></p>
-                        <?= essIcon('arrow', 'w-7 h-7') ?>
+                        <form method="POST" action="/posts/<?= $post['id'] ?>/vote">
+                            <input type="hidden" name="vote" value="-1">
+                            <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
+                            <button type="submit" class="flex items-center justify-center">
+                                <span style="<?= $post['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
+                                    <?= essIcon('arrow', 'w-7 h-7') ?>
+                                </span>
+                            </button>
+                        </form>
                     </div>
                     <div class="flex gap-1 items-center">
                         <?= essIcon('eye', 'w-10 h-10') ?>
@@ -57,7 +73,9 @@
                         <?= essIcon('comment', 'w-10 h-10') ?>
                         <p class="text-2xl"><?= $post['comment_count'] ?></p>
                     </div>
-                    <?= essIcon('share', 'w-10 h-10') ?>
+                    <button class="shareBtn" data-url="<?= 'http://' . $_SERVER['HTTP_HOST'] . '/posts/' . $post['id'] ?>">
+                        <?= essIcon('share', 'w-10 h-10') ?>
+                    </button>
                 </div>
             </div>
             <a href="/posts/<?= $post['id'] ?>" class="flex flex-col gap-3">
@@ -92,3 +110,4 @@
 </main>
 
 <script src="/js/post/search.js"></script>
+<script src="/js/post/share.js"></script>

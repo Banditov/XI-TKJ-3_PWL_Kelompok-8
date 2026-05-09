@@ -58,6 +58,8 @@ class Post extends Database
 
         $result = mysqli_query($this->connection, $query);
 
+        $accountId = $_SESSION['account_id'];
+
         $posts = [];
         while ($row = mysqli_fetch_assoc($result)) {
             $id = $row['id'];
@@ -70,6 +72,10 @@ class Post extends Database
 
             $tagResult = mysqli_query($this->connection, "SELECT * FROM tags WHERE post_id = '$id'");
             $row['tags'] = mysqli_fetch_all($tagResult, MYSQLI_ASSOC);
+
+            $voteResult = mysqli_query($this->connection, "SELECT vote FROM post_votes WHERE post_id = '$id' AND account_id = '$accountId'");
+            $voteRow = mysqli_fetch_assoc($voteResult);
+            $row['user_vote'] = $voteRow ? $voteRow['vote'] : 0;
 
             $posts[] = $row;
         }
@@ -98,6 +104,11 @@ class Post extends Database
 
         $tagResult = mysqli_query($this->connection, "SELECT * FROM tags WHERE post_id = '$id'");
         $row['tags'] = mysqli_fetch_all($tagResult, MYSQLI_ASSOC);
+
+        $accountId = $_SESSION['account_id'];
+        $voteResult = mysqli_query($this->connection, "SELECT vote FROM post_votes WHERE post_id = '$id' AND account_id = '$accountId'");
+        $voteRow = mysqli_fetch_assoc($voteResult);
+        $row['user_vote'] = $voteRow ? $voteRow['vote'] : 0;
 
         return $row;
     }

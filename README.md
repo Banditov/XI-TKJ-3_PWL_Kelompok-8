@@ -362,10 +362,12 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 ### 09/05/2026 - 0.7.0
 <details>
 
-   - Implement function filter
    - Implement function comment dan reply
-   - Implement function view
+   - Implement function filter
+   - Implement function view post
    - Implement function search
+   - Implement function voting
+   - Implement function share
 </details>
 
 ### 06/05/2026 - 0.6.0

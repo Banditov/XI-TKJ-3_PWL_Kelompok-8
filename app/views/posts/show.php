@@ -31,9 +31,25 @@
         <?php endif; ?>
                 <div class="flex items-center gap-5">
                     <div class="flex px-4 py-2 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
-                        <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+                        <form method="POST" action="/posts/<?= $post['id'] ?>/vote">
+                            <input type="hidden" name="vote" value="1">
+                            <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
+                            <button type="submit" class="flex items-center justify-center">
+                                <span style="<?= $post['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
+                                    <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+                                </span>
+                            </button>
+                        </form>
                         <p class="text-2xl"><?= $post['votes'] ?></p>
-                        <?= essIcon('arrow', 'w-7 h-7') ?>
+                        <form method="POST" action="/posts/<?= $post['id'] ?>/vote">
+                            <input type="hidden" name="vote" value="-1">
+                            <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
+                            <button type="submit" class="flex items-center justify-center">
+                                <span style="<?= $post['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
+                                    <?= essIcon('arrow', 'w-7 h-7') ?>
+                                </span>
+                            </button>
+                        </form>
                     </div>
                     <div class="flex gap-1 items-center">
                         <?= essIcon('eye', 'w-10 h-10') ?>
@@ -48,7 +64,9 @@
                             ?>
                         </p>
                     </div>
-                    <?= essIcon('share', 'w-10 h-10') ?>
+                    <button class="shareBtn" data-url="<?= 'http://' . $_SERVER['HTTP_HOST'] . '/posts/' . $post['id'] ?>">
+                        <?= essIcon('share', 'w-10 h-10') ?>
+                    </button>
                 </div>
             </div>
             <p class="text-4xl font-bold"><?= $post['title'] ?></p>
@@ -131,9 +149,25 @@
                         <p class="text-2xl">Reply</p>
                     </label>
                     <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
-                        <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+                        <form method="POST" action="/comments/<?= $comment['id'] ?>/vote">
+                            <input type="hidden" name="vote" value="1">
+                            <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
+                            <button type="submit" class="flex items-center justify-center">
+                                <span style="<?= $comment['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
+                                    <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+                                </span>
+                            </button>
+                        </form>
                         <p class="text-2xl"><?= $comment['votes'] ?></p>
-                        <?= essIcon('arrow', 'w-7 h-7') ?>
+                        <form method="POST" action="/comments/<?= $comment['id'] ?>/vote">
+                            <input type="hidden" name="vote" value="-1">
+                            <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
+                            <button type="submit" class="flex items-center justify-center">
+                                <span style="<?= $comment['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
+                                    <?= essIcon('arrow', 'w-7 h-7') ?>
+                                </span>
+                            </button>
+                        </form>
                     </div>
                     <?php if (!empty($comment['replies'])): ?>
                         <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full text-white cursor-pointer transition-transform duration-300" onclick="toggleReplies('<?= $comment['id'] ?>')">
@@ -169,9 +203,25 @@
                             <p class="text-2xl font-bold"><?= $reply['date'] ?></p>
                         </div>
                         <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
-                            <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+                            <form method="POST" action="/replies/<?= $reply['id'] ?>/vote">
+                                <input type="hidden" name="vote" value="1">
+                                <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
+                                <button type="submit" class="flex items-center justify-center">
+                                    <span style="<?= $reply['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
+                                        <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+                                    </span>
+                                </button>
+                            </form>
                             <p class="text-2xl"><?= $reply['votes'] ?></p>
-                            <?= essIcon('arrow', 'w-7 h-7') ?>
+                            <form method="POST" action="/replies/<?= $reply['id'] ?>/vote">
+                                <input type="hidden" name="vote" value="-1">
+                                <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
+                                <button type="submit" class="flex items-center justify-center">
+                                    <span style="<?= $reply['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
+                                        <?= essIcon('arrow', 'w-7 h-7') ?>
+                                    </span>
+                                </button>
+                            </form>
                         </div>
                     </div>
                     <div class="p-5">
@@ -208,9 +258,25 @@
                     <p class="text-2xl">Reply</p>
                 </label>
                 <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
-                    <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+                    <form method="POST" action="/comments/<?= $comment['id'] ?>/vote">
+                        <input type="hidden" name="vote" value="1">
+                        <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
+                        <button type="submit" class="flex items-center justify-center">
+                            <span style="<?= $comment['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
+                                <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+                            </span>
+                        </button>
+                    </form>
                     <p class="text-2xl"><?= $comment['votes'] ?></p>
-                    <?= essIcon('arrow', 'w-7 h-7') ?>
+                    <form method="POST" action="/comments/<?= $comment['id'] ?>/vote">
+                        <input type="hidden" name="vote" value="-1">
+                        <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
+                        <button type="submit" class="flex items-center justify-center">
+                            <span style="<?= $comment['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
+                                <?= essIcon('arrow', 'w-7 h-7') ?>
+                            </span>
+                        </button>
+                    </form>
                 </div>
                 <?php if (!empty($comment['replies'])): ?>
                     <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full text-white cursor-pointer transition-transform duration-300" onclick="toggleReplies('<?= $comment['id'] ?>-m')">
@@ -248,9 +314,25 @@
                     </div>
                     <div class="flex gap-5 items-center p-5 pt-0 justify-end">
                         <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
-                            <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+                            <form method="POST" action="/replies/<?= $reply['id'] ?>/vote">
+                                <input type="hidden" name="vote" value="1">
+                                <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
+                                <button type="submit" class="flex items-center justify-center">
+                                    <span style="<?= $reply['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
+                                        <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+                                    </span>
+                                </button>
+                            </form>
                             <p class="text-2xl"><?= $reply['votes'] ?></p>
-                            <?= essIcon('arrow', 'w-7 h-7') ?>
+                            <form method="POST" action="/replies/<?= $reply['id'] ?>/vote">
+                                <input type="hidden" name="vote" value="-1">
+                                <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
+                                <button type="submit" class="flex items-center justify-center">
+                                    <span style="<?= $reply['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
+                                        <?= essIcon('arrow', 'w-7 h-7') ?>
+                                    </span>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -263,3 +345,4 @@
 </main>
 
 <script src="/js/post/postReply.js"></script>
+<script src="/js/post/share.js"></script>
