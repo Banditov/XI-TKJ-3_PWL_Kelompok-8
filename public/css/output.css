@@ -288,9 +288,6 @@
   .z-20 {
     z-index: 20;
   }
-  .z-50 {
-    z-index: 50;
-  }
   .z-900 {
     z-index: 900;
   }
@@ -298,9 +295,6 @@
     z-index: 999;
   }
   .z-9999 {
-    z-index: 9999;
-  }
-  .z-\[9999\] {
     z-index: 9999;
   }
   .container {
@@ -790,6 +784,9 @@
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
   }
+  .px-5 {
+    padding-inline: calc(var(--spacing) * 5);
+  }
   .px-6 {
     padding-inline: calc(var(--spacing) * 6);
   }
@@ -817,8 +814,17 @@
   .pb-0 {
     padding-bottom: calc(var(--spacing) * 0);
   }
+  .pb-5 {
+    padding-bottom: calc(var(--spacing) * 5);
+  }
   .pb-7 {
     padding-bottom: calc(var(--spacing) * 7);
+  }
+  .pb-8 {
+    padding-bottom: calc(var(--spacing) * 8);
+  }
+  .pb-10 {
+    padding-bottom: calc(var(--spacing) * 10);
   }
   .pl-7 {
     padding-left: calc(var(--spacing) * 7);

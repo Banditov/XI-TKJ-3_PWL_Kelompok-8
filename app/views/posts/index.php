@@ -48,7 +48,7 @@
                     </div>
                     <div class="flex gap-1 items-center">
                         <?= essIcon('comment', 'w-10 h-10') ?>
-                        <p class="text-2xl">3</p>
+                        <p class="text-2xl"><?= $post['comment_count'] ?></p>
                     </div>
                     <?= essIcon('share', 'w-10 h-10') ?>
                 </div>
