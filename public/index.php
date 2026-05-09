@@ -34,7 +34,7 @@ $router->add('POST', '/login', 'AuthController', 'authenticate');
 $router->add('POST', '/posts/{id}/comments', 'CommentController', 'store');
 $router->add('POST', '/posts/{id}/comments/{commentId}/replies', 'ReplyController', 'store');
 
-$router->add('POST', '/posts/{id}/vote', 'VoteController', 'vote');
+$router->add('POST', '/posts/{id}/vote', 'VoteController', 'votePost');
 $router->add('POST', '/comments/{id}/vote', 'VoteController', 'voteComment');
 $router->add('POST', '/replies/{id}/vote',  'VoteController', 'voteReply');
 
