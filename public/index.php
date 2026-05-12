@@ -28,6 +28,6 @@ $router->add('GET', '/posts/{id}', 'PostController', 'show');
 $router->add('POST', '/posts', 'PostController', 'store');
 $router->add('POST', '/login', 'AuthController', 'authenticate');
 
-$router->add('GET', '/notification', 'NotificationController', 'nontifications');
+$router->add('GET', '/notifications', 'NotificationController', 'notifications');
 
 $router->run();

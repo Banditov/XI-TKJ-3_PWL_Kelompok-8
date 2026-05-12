@@ -9,6 +9,14 @@ class NotificationController extends Controller
 {
     public function notifications()
     {
-        require_once '../app/controllers/notifications.php';
+        $notifications = [];
+        $is_dyslexic = $_SESSION['is_dyslexic'] ?? false;
+        $user_name = $_SESSION['name'] ?? 'Guest';
+
+        $this->view('posts/notifications', [
+            'notifications' => $notifications,
+            'is_dyslexic' => $is_dyslexic,
+            'user_name' => $user_name
+        ]);
     }
 }

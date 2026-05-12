@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 $notifications = [
     ['id' => 1, 'from_user' => 'CHRISTOPHER', 'action' => 'Give you a feedback', 'description' => 'Lorem ipsum dolor sit amet', 'date' => '13/06/2026', 'post_id' => 1],
