@@ -7,6 +7,7 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-red-300: oklch(80.8% 0.114 19.571);
     --color-red-500: oklch(63.7% 0.237 25.331);
     --color-slate-100: oklch(96.8% 0.007 247.896);
     --color-slate-300: oklch(86.9% 0.022 252.894);
@@ -43,6 +44,7 @@
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --blur-md: 12px;
+    --blur-2xl: 40px;
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
@@ -333,6 +335,9 @@
   .mb-7 {
     margin-bottom: calc(var(--spacing) * 7);
   }
+  .ml-1 {
+    margin-left: calc(var(--spacing) * 1);
+  }
   .ml-5 {
     margin-left: calc(var(--spacing) * 5);
   }
@@ -501,14 +506,17 @@
   .w-\[60\%\] {
     width: 60%;
   }
+  .w-fit {
+    width: fit-content;
+  }
   .w-full {
     width: 100%;
   }
   .w-screen {
     width: 100vw;
   }
-  .min-w-50 {
-    min-width: calc(var(--spacing) * 50);
+  .min-w-30 {
+    min-width: calc(var(--spacing) * 30);
   }
   .flex-1 {
     flex: 1;
@@ -610,6 +618,9 @@
   .gap-10 {
     gap: calc(var(--spacing) * 10);
   }
+  .self-start {
+    align-self: flex-start;
+  }
   .overflow-hidden {
     overflow: hidden;
   }
@@ -700,6 +711,12 @@
   .bg-black {
     background-color: var(--color-black);
   }
+  .bg-black\/50 {
+    background-color: color-mix(in srgb, #000 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-black) 50%, transparent);
+    }
+  }
   .bg-gray-800 {
     background-color: var(--color-gray-800);
   }
@@ -760,6 +777,9 @@
   .object-cover {
     object-fit: cover;
   }
+  .p-1 {
+    padding: calc(var(--spacing) * 1);
+  }
   .p-2 {
     padding: calc(var(--spacing) * 2);
   }
@@ -799,6 +819,9 @@
   .py-3 {
     padding-block: calc(var(--spacing) * 3);
   }
+  .py-4 {
+    padding-block: calc(var(--spacing) * 4);
+  }
   .pt-0 {
     padding-top: calc(var(--spacing) * 0);
   }
@@ -811,8 +834,8 @@
   .pr-7 {
     padding-right: calc(var(--spacing) * 7);
   }
-  .pb-0 {
-    padding-bottom: calc(var(--spacing) * 0);
+  .pb-2 {
+    padding-bottom: calc(var(--spacing) * 2);
   }
   .pb-5 {
     padding-bottom: calc(var(--spacing) * 5);
@@ -822,9 +845,6 @@
   }
   .pb-8 {
     padding-bottom: calc(var(--spacing) * 8);
-  }
-  .pb-10 {
-    padding-bottom: calc(var(--spacing) * 10);
   }
   .pl-7 {
     padding-left: calc(var(--spacing) * 7);
@@ -966,6 +986,11 @@
   .filter {
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
+  .backdrop-blur-2xl {
+    --tw-backdrop-blur: blur(var(--blur-2xl));
+    -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
+    backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
+  }
   .backdrop-blur-md {
     --tw-backdrop-blur: blur(var(--blur-md));
     -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
@@ -1088,6 +1113,27 @@
   .checked\:bg-slate-800 {
     &:checked {
       background-color: var(--color-slate-800);
+    }
+  }
+  .hover\:bg-gray-100 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-gray-100);
+      }
+    }
+  }
+  .hover\:text-red-300 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-red-300);
+      }
+    }
+  }
+  .hover\:opacity-60 {
+    &:hover {
+      @media (hover: hover) {
+        opacity: 60%;
+      }
     }
   }
   .hover\:outline-2 {

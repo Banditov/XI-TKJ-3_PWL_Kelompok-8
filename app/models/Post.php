@@ -115,15 +115,23 @@ class Post extends Database
 
     public function createPost(string $title, string $description, string $accountId)
     {
-        $date = date('Y-m-d');
-        $title = mysqli_real_escape_string($this->connection, $title);
+        $date        = date('Y-m-d');
+        $title       = mysqli_real_escape_string($this->connection, $title);
         $description = mysqli_real_escape_string($this->connection, $description);
-        $accountId = mysqli_real_escape_string($this->connection, $accountId);
+        $accountId   = mysqli_real_escape_string($this->connection, $accountId);
 
         $query = "INSERT INTO {$this->table} (title, account_id, votes, description, date) 
-                  VALUES ('$title', '$accountId', 0, '$description', '$date')";
-        mysqli_query($this->connection, $query);
-        return mysqli_insert_id($this->connection);
+                VALUES ('$title', '$accountId', 0, '$description', '$date')";
+
+        try {
+            mysqli_query($this->connection, $query);
+            return mysqli_insert_id($this->connection);
+        } catch (\mysqli_sql_exception $e) {
+            if ($e->getCode() === 1062) {
+                return null;
+            }
+            throw $e;
+        }
     }
 
     public function incrementViews(int $postId, int $accountId)

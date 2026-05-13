@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="/css/responsive/main.css">
 
 <?php include __DIR__ . '/../../../app/views/layouts/partials/navbar/navbar.php'; ?>
+<?php include __DIR__ . '/../../../app/helpers/tagText.php'; ?>
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
 <!-- Post Detail -->
@@ -18,17 +19,20 @@
                 <p class="text-3xl font-bold"><?= $post['date'] ?></p>
             </div>
             <div class="flex justify-between items-center">
-        <?php if (!empty($post['tags'])): ?>
-            <?php foreach ($post['tags'] as $tag): ?>
-                <div class="px-4 py-2 text-white rounded-full drop-shadow-lg flex gap-2 items-center"
-                    style="background: linear-gradient(to bottom, #<?= $tag['color_top'] ?>, #<?= $tag['color_bottom'] ?>)">
-                    <?= icon(!empty($tag['icon']) ? $tag['icon'] : 'tag', 'w-7 h-7') ?>
-                    <p><?= strtoupper($tag['name']) ?></p>
+                <div class="flex gap-5 items-center">
+            <?php if (!empty($post['tags'])): ?>
+                <?php foreach ($post['tags'] as $tag): ?>
+                    <?php $textColor = tagTextColor($tag['color_top'], $tag['color_bottom']); ?>
+                    <div class="px-4 py-2 rounded-full drop-shadow-lg flex gap-2 items-center"
+                        style="background: linear-gradient(to bottom, #<?= $tag['color_top'] ?>, #<?= $tag['color_bottom'] ?>); color: <?= $textColor ?>;">
+                        <?= icon(!empty($tag['icon']) ? $tag['icon'] : 'tag', 'w-7 h-7') ?>
+                        <p><?= $tag['name'] ?></p>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                    <div class="px-4 py-2"></div>
+            <?php endif; ?>
                 </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-                <div class="px-4 py-2"></div>
-        <?php endif; ?>
                 <div class="flex items-center gap-5">
                     <div class="flex px-4 py-2 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
                         <form method="POST" action="/posts/<?= $post['id'] ?>/vote">

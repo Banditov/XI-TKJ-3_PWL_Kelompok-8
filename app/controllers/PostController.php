@@ -69,12 +69,17 @@ class PostController extends Controller
 
     public function store()
     {
-        $title       = $_POST['title'];
-        $description = $_POST['description'];
+        $title       = $_POST['title']       ?? '';
+        $description = $_POST['description'] ?? '';
         $accountId   = $_SESSION['account_id'];
 
         $postModel = new Post();
         $postId    = $postModel->createPost($title, $description, $accountId);
+
+        if (!$postId) {
+            header('Location: /posts/create?error=duplicate_title');
+            exit;
+        }
 
         if (!empty($_POST['tag_name'])) {
             $tagModel = new Tag();
@@ -82,7 +87,8 @@ class PostController extends Controller
                 if (empty($tagName)) continue;
                 $colorTop    = $_POST['color_top'][$index]    ?? 'ffffff';
                 $colorBottom = $_POST['color_bottom'][$index] ?? 'ffffff';
-                $tagModel->createTag($postId, $tagName, $colorTop, $colorBottom);
+                $icon        = $_POST['icon'][$index]         ?? 'tag';
+                $tagModel->createTag($postId, $tagName, $colorTop, $colorBottom, $icon);
             }
         }
 
