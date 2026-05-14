@@ -108,7 +108,7 @@ class Post extends Database
         $accountId = $_SESSION['account_id'];
         $voteResult = mysqli_query($this->connection, "SELECT vote FROM post_votes WHERE post_id = '$id' AND account_id = '$accountId'");
         $voteRow = mysqli_fetch_assoc($voteResult);
-        $row['user_vote'] = $voteRow ? $voteRow['vote'] : 0;
+        $row['user_vote'] = $voteRow ? (int)$voteRow['vote'] : 0;
 
         return $row;
     }
@@ -148,5 +148,24 @@ class Post extends Database
                 "UPDATE {$this->table} SET views = views + 1 WHERE id = '$postId'"
             );
         }
+    }
+
+    public function addImage(string $postId, string $fileName)
+    {
+        $postId   = mysqli_real_escape_string($this->connection, $postId);
+        $fileName = mysqli_real_escape_string($this->connection, $fileName);
+        mysqli_query($this->connection, 
+            "INSERT INTO {$this->table_imgs} (post_id, file_name) VALUES ('$postId', '$fileName')"
+        );
+    }
+
+    public function addLink(string $postId, string $link, string $linkText = '')
+    {
+        $postId   = mysqli_real_escape_string($this->connection, $postId);
+        $link     = mysqli_real_escape_string($this->connection, $link);
+        $linkText = mysqli_real_escape_string($this->connection, $linkText ?: $link);
+        mysqli_query($this->connection,
+            "INSERT INTO {$this->table_links} (post_id, link, link_text) VALUES ('$postId', '$link', '$linkText')"
+        );
     }
 }

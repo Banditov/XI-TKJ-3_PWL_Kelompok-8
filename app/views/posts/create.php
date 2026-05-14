@@ -44,24 +44,26 @@
             </div>
             <textarea name="description" id="mytextarea" placeholder="Enter your ideas here!"></textarea>
             <div class="flex flex-col gap-2">
-                <div class="flex items-center gap-2">
-                    <?= essIcon('linked', 'w-6 h-6') ?>
-                    <p class="text-2xl font-bold">Links & Images</p>
+                <div class="flex items-center gap-5">
+                    <div class="flex items-center gap-2">
+                        <?= essIcon('linked', 'w-6 h-6') ?>
+                        <p class="text-2xl font-bold">Links & Images</p>
+                    </div>
+                    <button type="button" id="openAddLinkImg" class="px-4 py-2 bg-[#2C7CFF] text-white rounded-full text-sm">Add +</button>
                 </div>
-                <ul class="list-disc ml-5">
-                    <li>Add +</li>
-                </ul>
+                <div id="mediaPreview" class="flex flex-col gap-2 mt-1"></div>
             </div>
             <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full w-full">POST</button>
         </form>
     </div>
 </main>
 
+<!-- Icon Picker Modal -->
 <div class="w-screen h-screen bg-black/50 backdrop-blur-2xl z-10 flex justify-center items-center fixed top-0 left-0 hidden" id="iconPicker">
     <div class="w-50 bg-white rounded-4xl p-5 flex flex-col gap-5 text-[#545F71] items-center">
         <div class="flex justify-between border-b-2 border-[#545F71] pb-2 w-full">
             <p>Icons</p>
-            <?= essIcon('x', 'w-6 h-6 cursor-pointer close-picker') ?>
+            <?= essIcon('x', 'w-6 h-6 cursor-pointer close-icon-picker') ?>
         </div>
         <div class="flex flex-wrap gap-2">
             <?php foreach (icon() as $i): ?>
@@ -69,6 +71,36 @@
                     <?= icon($i, 'w-6 h-6') ?>
                 </div>
             <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+
+<!-- Link & Image Modal -->
+<div class="w-screen h-screen bg-black/50 backdrop-blur-2xl z-10 flex justify-center items-center fixed top-0 left-0 hidden" id="addLinkImg">
+    <div class="w-75 bg-white rounded-4xl p-5 flex flex-col gap-5 text-[#545F71] items-center">
+        <div class="w-full flex justify-between items-center border-b-2 border-[#545F71] pb-3">
+            <b>Links & Images</b>
+            <?= essIcon('x', 'w-6 h-6 cursor-pointer close-media-picker') ?>
+        </div>
+
+        <!-- Image upload -->
+        <div class="w-full flex flex-col gap-3">
+            <b class="text-left">Add Image</b>
+            <div id="imageUploadArea" class="flex flex-col items-center justify-center text-[#545F71] p-10 rounded-lg bg-gray-100 hover:bg-gray-200 border-2 border-dashed border-[#545F71] cursor-pointer w-full gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                <p>Add Image</p>
+            </div>
+            <input type="file" id="imageFileInput" accept="image/*" class="hidden">
+        </div>
+
+        <!-- Link add -->
+        <div class="w-full flex flex-col gap-3 border-t-2 border-[#545F71] pt-3">
+            <b class="text-left">Add Link</b>
+            <input type="text" id="linkUrl" placeholder="https://example.com" class="p-2 w-full text-gray-700 rounded-xl border border-gray-500">
+            <input type="text" id="linkText" placeholder="Display text (optional)" class="p-2 w-full text-gray-700 rounded-xl border border-gray-500">
+            <button type="button" id="addLinkBtn" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full w-full">Add Link</button>
         </div>
     </div>
 </div>

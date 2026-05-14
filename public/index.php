@@ -19,23 +19,36 @@ $router = new Router();
 $GLOBALS['tags']    = [];
 $GLOBALS['filters'] = [];
 
+// Intro
 $router->add('GET', '/', 'IntroController', 'index');
 
+// Login view
 $router->add('GET', '/login', 'AuthController', 'login');
-$router->add('GET', '/logout', 'AuthController', 'logout');
 
+// Post views
 $router->add('GET', '/posts', 'PostController', 'index');
 $router->add('GET', '/posts/create', 'PostController', 'create');
 $router->add('GET', '/posts/{id}', 'PostController', 'show');
 
+// Post creation
 $router->add('POST', '/posts', 'PostController', 'store');
+
+// Login
 $router->add('POST', '/login', 'AuthController', 'authenticate');
 
+// Logout
+$router->add('GET', '/logout', 'AuthController', 'logout');
+
+// Comment
 $router->add('POST', '/posts/{id}/comments', 'CommentController', 'store');
 $router->add('POST', '/posts/{id}/comments/{commentId}/replies', 'ReplyController', 'store');
 
+// Voting
 $router->add('POST', '/posts/{id}/vote', 'VoteController', 'votePost');
 $router->add('POST', '/comments/{id}/vote', 'VoteController', 'voteComment');
 $router->add('POST', '/replies/{id}/vote',  'VoteController', 'voteReply');
+
+// Image upload
+$router->add('POST', '/upload/image', 'UploadController', 'image');
 
 $router->run();

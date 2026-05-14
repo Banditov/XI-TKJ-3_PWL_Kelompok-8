@@ -92,6 +92,21 @@ class PostController extends Controller
             }
         }
 
+        if (!empty($_POST['imgs'])) {
+            foreach ($_POST['imgs'] as $filename) {
+                if (empty($filename)) continue;
+                $postModel->addImage($postId, $filename);
+            }
+        }
+
+        if (!empty($_POST['link_url'])) {
+            foreach ($_POST['link_url'] as $index => $url) {
+                if (empty($url)) continue;
+                $linkText = $_POST['link_text'][$index] ?? '';
+                $postModel->addLink($postId, $url, $linkText);
+            }
+        }
+
         header('Location: /posts');
         exit;
     }

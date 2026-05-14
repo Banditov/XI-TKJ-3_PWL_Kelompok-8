@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function toggleReplies(commentId) {
         const replies = document.getElementById(`replies-${commentId}`);
-        const button  = document.querySelector(`[onclick="toggleReplies('${commentId}')"]`);
+        const button  = document.querySelector(`[onclick*="toggleReplies('${commentId}')"]`);
 
         if (replies) {
             replies.classList.toggle('hidden');
@@ -23,25 +23,52 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    document.querySelectorAll('[id^="inputReply-"] input').forEach(input => {
-        input.addEventListener('blur', function() {
-            if (input.value.trim() === '') {
-                input.closest('[id^="inputReply-"]').classList.add('hidden');
-            }
-        });
+    function attachReplyInputListeners() {
+        document.querySelectorAll('[id^="inputReply-"] input').forEach(input => {
+            input.removeEventListener('blur', handleBlur);
+            input.removeEventListener('keydown', handleKeydown);
 
-        input.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                input.value = '';
-                input.closest('[id^="inputReply-"]').classList.add('hidden');
-            }
-            if (e.key === 'Enter') {
-                e.preventDefault()
-                console.log('Reply submitted:', input.value.trim());
-            }
+            input.addEventListener('blur', handleBlur);
+            input.addEventListener('keydown', handleKeydown);
         });
-    });
+    }
 
-    window.toggleReply   = toggleReply;
+    function handleBlur() {
+        if (this.value.trim() === '') {
+            const container = this.closest('[id^="inputReply-"]');
+            if (container) {
+                container.classList.add('hidden');
+            }
+        }
+    }
+
+    function handleKeydown(e) {
+        if (e.key === 'Escape') {
+            this.value = '';
+            const container = this.closest('[id^="inputReply-"]');
+            if (container) {
+                container.classList.add('hidden');
+            }
+        }
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            console.log('Reply submitted:', this.value.trim());
+            const form = this.closest('form');
+            if (form && this.value.trim()) {
+                form.dispatchEvent(new Event('submit', { bubbles: true }));
+            }
+        }
+    }
+
+    function initReplySystem() {
+        attachReplyInputListeners();
+    }
+
+    initReplySystem();
+
+    window.toggleReply = toggleReply;
     window.toggleReplies = toggleReplies;
+    window.initReplySystem = initReplySystem;
+
+    window.attachReplyInputListeners = attachReplyInputListeners;
 });

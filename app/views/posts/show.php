@@ -1,8 +1,10 @@
-<title>Post Title | ImmaSpark</title>
+<title><?= htmlspecialchars($post['title']) ?> | ImmaSpark</title>
 <link rel="stylesheet" href="/css/responsive/main.css">
 
 <?php include __DIR__ . '/../../../app/views/layouts/partials/navbar/navbar.php'; ?>
 <?php include __DIR__ . '/../../../app/helpers/tagText.php'; ?>
+
+<div id="xIconSvg" class="hidden"><?= essIcon('x', 'w-6 h-6 cursor-pointer') ?></div>
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
 <!-- Post Detail -->
@@ -34,26 +36,18 @@
             <?php endif; ?>
                 </div>
                 <div class="flex items-center gap-5">
-                    <div class="flex px-4 py-2 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
-                        <form method="POST" action="/posts/<?= $post['id'] ?>/vote">
-                            <input type="hidden" name="vote" value="1">
-                            <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
-                            <button type="submit" class="flex items-center justify-center">
-                                <span style="<?= $post['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
-                                    <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                                </span>
-                            </button>
-                        </form>
-                        <p class="text-2xl"><?= $post['votes'] ?></p>
-                        <form method="POST" action="/posts/<?= $post['id'] ?>/vote">
-                            <input type="hidden" name="vote" value="-1">
-                            <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
-                            <button type="submit" class="flex items-center justify-center">
-                                <span style="<?= $post['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
-                                    <?= essIcon('arrow', 'w-7 h-7') ?>
-                                </span>
-                            </button>
-                        </form>
+                    <div class="vote-container flex px-4 py-2 bg-[#2C7CFF] text-white rounded-full items-center gap-3" data-post-id="<?= $post['id'] ?>" data-type="post">
+                        <button type="button" class="vote-btn vote-up flex items-center justify-center" data-vote="up" data-current-vote="<?= $post['user_vote'] == 1 ? 'up' : ($post['user_vote'] == -1 ? 'down' : '') ?>">
+                            <span style="<?= $post['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
+                                <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+                            </span>
+                        </button>
+                        <p class="vote-count text-2xl"><?= $post['votes'] ?></p>
+                        <button type="button" class="vote-btn vote-down flex items-center justify-center" data-vote="down" data-current-vote="<?= $post['user_vote'] == 1 ? 'up' : ($post['user_vote'] == -1 ? 'down' : '') ?>">
+                            <span style="<?= $post['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
+                                <?= essIcon('arrow', 'w-7 h-7') ?>
+                            </span>
+                        </button>
                     </div>
                     <div class="flex gap-1 items-center">
                         <?= essIcon('eye', 'w-10 h-10') ?>
@@ -75,22 +69,7 @@
             </div>
             <p class="text-4xl font-bold"><?= $post['title'] ?></p>
         </div>
-    <?php if (!empty($post['imgs'])): ?>
-        <div class="h-75 max-h-75 relative">
-            <button class="absolute left-10 top-30 p-4 rounded-full text-white drop-shadow-lg bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
-                <?= essIcon('arrow', 'w-7 h-7 transform rotate-90') ?>
-            </button>
-            <img src="/assets/image/post/<?= $post['imgs'][0]['file_name'] ?>" class="rounded-4xl w-full h-full object-cover">
-            <button class="absolute right-10 top-30 p-4 rounded-full text-white drop-shadow-lg bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
-                <?= essIcon('arrow', 'w-7 h-7 transform rotate-270') ?>
-            </button>
-            <div class="absolute left-1/2 bottom-8 flex gap-2">
-                <?php foreach ($post['imgs'] as $index => $img): ?>
-                    <div class="w-4 h-4 bg-white rounded-full opacity-80"></div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    <?php endif; ?>
+    <?php include __DIR__ . '/../layouts/partials/carousel/carousel.php'; ?>
         <div class="md:p-10 p-7 <?= ($post['imgs']) ? '' : 'pt-0!' ?> flex flex-col md:gap-7 gap-5">
             <div class="revert-tailwind">
                 <?= $post['description'] ?>
@@ -113,8 +92,8 @@
 
 <!-- Comment Section -->
     <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg post md:p-10 p-7 flex flex-col md:gap-5 gap-3">
-        <form action="/posts/<?= $post['id'] ?>/comments" method="POST" class="flex gap-3 items-center">
-            <input type="text" name="description" id="searchComment" placeholder="Share your thoughts!" class="p-3 pl-8 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white" required>
+        <form action="/posts/<?= $post['id'] ?>/comments" method="POST" id="commentForm" data-post-id="<?= $post['id'] ?>" class="flex gap-3 items-center">
+            <input type="text" name="description" placeholder="Share your thoughts!" class="p-3 pl-8 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white" required>
             <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full font-bold">Post</button>
         </form>
 
@@ -135,218 +114,193 @@
     <?php endif; ?>
 
 <!-- Desktop Comment -->
+        <div class="comments-list-desktop">
     <?php foreach ($comments as $comment): ?>
-        <div class="hidden md:flex flex-col border-2 border-[#545F71] rounded-4xl">
-            <div class="flex items-center justify-between p-5 border-b-2 border-[#545F71]">
-                <div class="flex gap-5 items-center">
-                    <img src="/assets/image/account/<?= $comment['account_id'] ?>.jpg" class="w-10 h-10 object-cover rounded-full drop-shadow-lg">
-                    <div>
-                        <p class="text-2xl font-bold"><?= htmlspecialchars($comment['account_name']) ?></p>
-                        <p class="text-sm"><?= htmlspecialchars($comment['class_name']) ?></p>
+            <div class="hidden md:flex flex-col border-2 border-[#545F71] rounded-4xl comment-item mb-5" data-comment-id="<?= $comment['id'] ?>">
+                <div class="flex items-center justify-between p-5 border-b-2 border-[#545F71]">
+                    <div class="flex gap-5 items-center">
+                        <img src="/assets/image/account/<?= $comment['account_id'] ?>.jpg" class="w-10 h-10 object-cover rounded-full drop-shadow-lg">
+                        <div>
+                            <p class="text-2xl font-bold"><?= htmlspecialchars($comment['account_name']) ?></p>
+                            <p class="text-sm"><?= htmlspecialchars($comment['class_name']) ?></p>
+                        </div>
+                        <div class="w-2 h-2 bg-[#545F71] rounded-full"></div>
+                        <p class="text-2xl font-bold"><?= $comment['date'] ?></p>
                     </div>
-                    <div class="w-2 h-2 bg-[#545F71] rounded-full"></div>
-                    <p class="text-2xl font-bold"><?= $comment['date'] ?></p>
-                </div>
-                <div class="flex gap-5 items-center">
-                    <label class="flex items-center gap-2 cursor-pointer" onclick="toggleReply('<?= $comment['id'] ?>-d')">
-                        <?= essIcon('reply', 'w-8 h-8') ?>
-                        <p class="text-2xl">Reply</p>
-                    </label>
-                    <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
-                        <form method="POST" action="/comments/<?= $comment['id'] ?>/vote">
-                            <input type="hidden" name="vote" value="1">
-                            <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
-                            <button type="submit" class="flex items-center justify-center">
+                    <div class="flex gap-5 items-center">
+                        <label class="flex items-center gap-2 cursor-pointer" onclick="toggleReply('<?= $comment['id'] ?>-d')">
+                            <?= essIcon('reply', 'w-8 h-8') ?>
+                            <p class="text-2xl">Reply</p>
+                        </label>
+                        <div class="vote-container flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3" data-comment-id="<?= $comment['id'] ?>" data-type="comment">
+                            <button type="button" class="vote-btn vote-up flex items-center justify-center" data-vote="up" data-current-vote="<?= $comment['user_vote'] == 1 ? 'up' : ($comment['user_vote'] == -1 ? 'down' : '') ?>">
                                 <span style="<?= $comment['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
                                     <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
                                 </span>
                             </button>
-                        </form>
-                        <p class="text-2xl"><?= $comment['votes'] ?></p>
-                        <form method="POST" action="/comments/<?= $comment['id'] ?>/vote">
-                            <input type="hidden" name="vote" value="-1">
-                            <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
-                            <button type="submit" class="flex items-center justify-center">
+                            <p class="vote-count text-2xl"><?= $comment['votes'] ?></p>
+                            <button type="button" class="vote-btn vote-down flex items-center justify-center" data-vote="down" data-current-vote="<?= $comment['user_vote'] == 1 ? 'up' : ($comment['user_vote'] == -1 ? 'down' : '') ?>">
                                 <span style="<?= $comment['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
                                     <?= essIcon('arrow', 'w-7 h-7') ?>
                                 </span>
                             </button>
-                        </form>
-                    </div>
-                    <?php if (!empty($comment['replies'])): ?>
-                        <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full text-white cursor-pointer transition-transform duration-300" onclick="toggleReplies('<?= $comment['id'] ?>')">
-                            <?= essIcon('arrow', 'w-7 h-7 transform') ?>
                         </div>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <div class="p-5">
-                <p class="text-justify"><?= htmlspecialchars($comment['description']) ?></p>
-            </div>
-            <div id="inputReply-<?= $comment['id'] ?>-d" class="hidden px-5 <?= !empty($comment['replies']) ? 'pb-8' : 'pb-5' ?>">
-                <form action="/posts/<?= $post['id'] ?>/comments/<?= $comment['id'] ?>/replies" method="POST" class="flex gap-3 items-center">
-                    <input type="text" name="description" placeholder="Replying..." class="p-3 pl-8 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white" required>
-                    <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full shrink-0 font-bold">Post</button>
-                </form>
-            </div>
-    <?php if (!empty($comment['replies'])): ?>
-            <div id="replies-<?= $comment['id'] ?>">
-                <div class="bg-white p-2 absolute z-1 -translate-y-6 translate-x-3">
-                    <p class="font-bold">Replies</p>
-                </div>
-        <?php foreach ($comment['replies'] as $reply): ?>
-                <div class="border-t-2 border-dashed">
-                    <div class="flex justify-between items-center p-5 border-b-2 border-[#545F71]">
-                        <div class="flex gap-5 items-center">
-                            <img src="/assets/image/account/<?= $reply['account_id'] ?>.jpg" class="w-10 h-10 object-cover rounded-full drop-shadow-lg">
-                            <div>
-                                <p class="text-2xl font-bold"><?= htmlspecialchars($reply['account_name']) ?></p>
-                                <p class="text-sm"><?= htmlspecialchars($reply['class_name']) ?></p>
+                <?php if (!empty($comment['replies'])): ?>
+                            <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full text-white cursor-pointer transition-transform duration-300" onclick="toggleReplies('<?= $comment['id'] ?>')">
+                                <?= essIcon('arrow', 'w-7 h-7 transform') ?>
                             </div>
-                            <div class="w-2 h-2 bg-[#545F71] rounded-full"></div>
-                            <p class="text-2xl font-bold"><?= $reply['date'] ?></p>
-                        </div>
-                        <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
-                            <form method="POST" action="/replies/<?= $reply['id'] ?>/vote">
-                                <input type="hidden" name="vote" value="1">
-                                <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
-                                <button type="submit" class="flex items-center justify-center">
+                <?php endif; ?>
+                    </div>
+                </div>
+                <div class="p-5">
+                    <p class="text-justify"><?= htmlspecialchars($comment['description']) ?></p>
+                </div>
+                <div id="inputReply-<?= $comment['id'] ?>-d" class="hidden px-5 <?= !empty($comment['replies']) ? 'pb-8' : 'pb-5' ?>">
+                    <form action="/posts/<?= $post['id'] ?>/comments/<?= $comment['id'] ?>/replies" method="POST" class="flex gap-3 items-center">
+                        <input type="text" name="description" placeholder="Replying..." class="p-3 pl-8 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white" required>
+                        <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full shrink-0 font-bold">Post</button>
+                    </form>
+                </div>
+        <?php if (!empty($comment['replies'])): ?>
+                <div id="replies-<?= $comment['id'] ?>">
+                    <div class="bg-white p-2 absolute z-1 -translate-y-6 translate-x-3">
+                        <p class="font-bold">Replies</p>
+                    </div>
+            <?php foreach ($comment['replies'] as $reply): ?>
+                    <div class="border-t-2 border-dashed">
+                        <div class="flex justify-between items-center p-5 border-b-2 border-[#545F71]">
+                            <div class="flex gap-5 items-center">
+                                <img src="/assets/image/account/<?= $reply['account_id'] ?>.jpg" class="w-10 h-10 object-cover rounded-full drop-shadow-lg">
+                                <div>
+                                    <p class="text-2xl font-bold"><?= htmlspecialchars($reply['account_name']) ?></p>
+                                    <p class="text-sm"><?= htmlspecialchars($reply['class_name']) ?></p>
+                                </div>
+                                <div class="w-2 h-2 bg-[#545F71] rounded-full"></div>
+                                <p class="text-2xl font-bold"><?= $reply['date'] ?></p>
+                            </div>
+                            <div class="vote-container flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3" data-reply-id="<?= $reply['id'] ?>" data-type="reply">
+                                <button type="button" class="vote-btn vote-up flex items-center justify-center" data-vote="up" data-current-vote="<?= $reply['user_vote'] == 1 ? 'up' : ($reply['user_vote'] == -1 ? 'down' : '') ?>">
                                     <span style="<?= $reply['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
                                         <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
                                     </span>
                                 </button>
-                            </form>
-                            <p class="text-2xl"><?= $reply['votes'] ?></p>
-                            <form method="POST" action="/replies/<?= $reply['id'] ?>/vote">
-                                <input type="hidden" name="vote" value="-1">
-                                <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
-                                <button type="submit" class="flex items-center justify-center">
+                                <p class="vote-count text-2xl"><?= $reply['votes'] ?></p>
+                                <button type="button" class="vote-btn vote-down flex items-center justify-center" data-vote="down" data-current-vote="<?= $reply['user_vote'] == 1 ? 'up' : ($reply['user_vote'] == -1 ? 'down' : '') ?>">
                                     <span style="<?= $reply['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
                                         <?= essIcon('arrow', 'w-7 h-7') ?>
                                     </span>
                                 </button>
-                            </form>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <p class="text-justify"><?= htmlspecialchars($reply['description']) ?></p>
                         </div>
                     </div>
-                    <div class="p-5">
-                        <p class="text-justify"><?= htmlspecialchars($reply['description']) ?></p>
-                    </div>
+            <?php endforeach; ?>
                 </div>
-        <?php endforeach; ?>
+        <?php endif; ?>
             </div>
-    <?php endif; ?>
-        </div>
     <?php endforeach; ?>
+        </div>
 
 <!-- Comment Mobile -->
-<?php foreach ($comments as $comment): ?>
-        <div class="flex md:hidden flex-col border-2 border-[#545F71] rounded-4xl">
-            <div class="p-5 border-b-2 border-[#545F71]">
-                <div class="flex gap-5 items-center justify-between w-full">
-                    <div class="flex gap-5 items-center">
-                        <img src="/assets/image/account/<?= $comment['account_id'] ?>.jpg" class="w-14 h-14 object-cover rounded-full drop-shadow-lg">
-                        <div>
-                            <p class="text-2xl font-bold"><?= htmlspecialchars($comment['account_name']) ?></p>
-                            <p class="text-lg"><?= htmlspecialchars($comment['class_name']) ?></p>
+        <div class="comments-list-mobile">
+    <?php foreach ($comments as $comment): ?>
+            <div class="flex md:hidden flex-col border-2 border-[#545F71] rounded-4xl comment-item mb-5" data-comment-id="<?= $comment['id'] ?>">
+                <div class="p-5 border-b-2 border-[#545F71]">
+                    <div class="flex gap-5 items-center justify-between w-full">
+                        <div class="flex gap-5 items-center">
+                            <img src="/assets/image/account/<?= $comment['account_id'] ?>.jpg" class="w-14 h-14 object-cover rounded-full drop-shadow-lg">
+                            <div>
+                                <p class="text-2xl font-bold"><?= htmlspecialchars($comment['account_name']) ?></p>
+                                <p class="text-lg"><?= htmlspecialchars($comment['class_name']) ?></p>
+                            </div>
                         </div>
+                        <p class="text-3xl font-bold"><?= $comment['date'] ?></p>
                     </div>
-                    <p class="text-3xl font-bold"><?= $comment['date'] ?></p>
                 </div>
-            </div>
-            <div class="p-5">
-                <p class="text-justify text-2xl md:text-lg"><?= htmlspecialchars($comment['description']) ?></p>
-            </div>
-            <div class="flex gap-5 items-center justify-end p-5 pt-0">
-                <label class="flex items-center gap-2 cursor-pointer" onclick="toggleReply('<?= $comment['id'] ?>-m')">
-                    <?= essIcon('reply', 'w-8 h-8') ?>
-                    <p class="text-2xl">Reply</p>
-                </label>
-                <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
-                    <form method="POST" action="/comments/<?= $comment['id'] ?>/vote">
-                        <input type="hidden" name="vote" value="1">
-                        <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
-                        <button type="submit" class="flex items-center justify-center">
+                <div class="p-5">
+                    <p class="text-justify text-2xl md:text-lg"><?= htmlspecialchars($comment['description']) ?></p>
+                </div>
+                <div class="flex gap-5 items-center justify-end p-5 pt-0">
+                    <label class="flex items-center gap-2 cursor-pointer" onclick="toggleReply('<?= $comment['id'] ?>-m')">
+                        <?= essIcon('reply', 'w-8 h-8') ?>
+                        <p class="text-2xl">Reply</p>
+                    </label>
+                    <div class="vote-container flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3" data-comment-id="<?= $comment['id'] ?>" data-type="comment">
+                        <button type="button" class="vote-btn vote-up flex items-center justify-center" data-vote="up" data-current-vote="<?= $comment['user_vote'] == 1 ? 'up' : ($comment['user_vote'] == -1 ? 'down' : '') ?>">
                             <span style="<?= $comment['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
                                 <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
                             </span>
                         </button>
-                    </form>
-                    <p class="text-2xl"><?= $comment['votes'] ?></p>
-                    <form method="POST" action="/comments/<?= $comment['id'] ?>/vote">
-                        <input type="hidden" name="vote" value="-1">
-                        <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
-                        <button type="submit" class="flex items-center justify-center">
+                        <p class="vote-count text-2xl"><?= $comment['votes'] ?></p>
+                        <button type="button" class="vote-btn vote-down flex items-center justify-center" data-vote="down" data-current-vote="<?= $comment['user_vote'] == 1 ? 'up' : ($comment['user_vote'] == -1 ? 'down' : '') ?>">
                             <span style="<?= $comment['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
                                 <?= essIcon('arrow', 'w-7 h-7') ?>
                             </span>
                         </button>
+                    </div>
+                    <?php if (!empty($comment['replies'])): ?>
+                        <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full text-white cursor-pointer transition-transform duration-300" onclick="toggleReplies('<?= $comment['id'] ?>-m')">
+                            <?= essIcon('arrow', 'w-7 h-7 transform') ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div id="inputReply-<?= $comment['id'] ?>-m" class="hidden px-5 <?= !empty($comment['replies']) ? 'pb-8' : 'pb-5' ?>">
+                    <form action="/posts/<?= $post['id'] ?>/comments/<?= $comment['id'] ?>/replies" method="POST" class="flex gap-3 items-center">
+                        <input type="text" name="description" placeholder="Replying..." class="p-3 pl-8 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white" required>
+                        <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full shrink-0 font-bold">Post</button>
                     </form>
                 </div>
-                <?php if (!empty($comment['replies'])): ?>
-                    <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full text-white cursor-pointer transition-transform duration-300" onclick="toggleReplies('<?= $comment['id'] ?>-m')">
-                        <?= essIcon('arrow', 'w-7 h-7 transform') ?>
+        <?php if (!empty($comment['replies'])): ?>
+                <div id="replies-<?= $comment['id'] ?>-m">
+                    <div class="bg-white p-2 absolute z-1 -translate-y-6 translate-x-5">
+                        <p class="text-xl font-bold">Replies</p>
                     </div>
-                <?php endif; ?>
-            </div>
-            <div id="inputReply-<?= $comment['id'] ?>-m" class="hidden px-5 <?= !empty($comment['replies']) ? 'pb-8' : 'pb-5' ?>">
-                <form action="/posts/<?= $post['id'] ?>/comments/<?= $comment['id'] ?>/replies" method="POST" class="flex gap-3 items-center">
-                    <input type="text" name="description" placeholder="Replying..." class="p-3 pl-8 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white" required>
-                    <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full shrink-0 font-bold">Post</button>
-                </form>
-            </div>
-    <?php if (!empty($comment['replies'])): ?>
-            <div id="replies-<?= $comment['id'] ?>-m">
-                <div class="bg-white p-2 absolute z-1 -translate-y-6 translate-x-5">
-                    <p class="text-xl font-bold">Replies</p>
-                </div>
-        <?php foreach ($comment['replies'] as $reply): ?>
-                <div class="border-t-2 border-dashed">
-                    <div class="border-b-2 border-[#545F71]">
-                        <div class="p-5 flex gap-5 items-center justify-between">
-                            <div class="flex gap-5 items-center">
-                                <img src="/assets/image/account/<?= $reply['account_id'] ?>.jpg" class="w-14 h-14 object-cover rounded-full drop-shadow-lg">
-                                <div>
-                                    <p class="text-2xl font-bold"><?= htmlspecialchars($reply['account_name']) ?></p>
-                                    <p class="text-lg"><?= htmlspecialchars($reply['class_name']) ?></p>
+            <?php foreach ($comment['replies'] as $reply): ?>
+                    <div class="border-t-2 border-dashed">
+                        <div class="border-b-2 border-[#545F71]">
+                            <div class="p-5 flex gap-5 items-center justify-between">
+                                <div class="flex gap-5 items-center">
+                                    <img src="/assets/image/account/<?= $reply['account_id'] ?>.jpg" class="w-14 h-14 object-cover rounded-full drop-shadow-lg">
+                                    <div>
+                                        <p class="text-2xl font-bold"><?= htmlspecialchars($reply['account_name']) ?></p>
+                                        <p class="text-lg"><?= htmlspecialchars($reply['class_name']) ?></p>
+                                    </div>
                                 </div>
+                                <p class="text-3xl font-bold"><?= $reply['date'] ?></p>
                             </div>
-                            <p class="text-3xl font-bold"><?= $reply['date'] ?></p>
                         </div>
-                    </div>
-                    <div class="p-5">
-                        <p class="text-justify text-2xl md:text-lg"><?= htmlspecialchars($reply['description']) ?></p>
-                    </div>
-                    <div class="flex gap-5 items-center p-5 pt-0 justify-end">
-                        <div class="flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
-                            <form method="POST" action="/replies/<?= $reply['id'] ?>/vote">
-                                <input type="hidden" name="vote" value="1">
-                                <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
-                                <button type="submit" class="flex items-center justify-center">
+                        <div class="p-5">
+                            <p class="text-justify text-2xl md:text-lg"><?= htmlspecialchars($reply['description']) ?></p>
+                        </div>
+                        <div class="flex gap-5 items-center p-5 pt-0 justify-end">
+                            <div class="vote-container flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3" data-reply-id="<?= $reply['id'] ?>" data-type="reply">
+                                <button type="button" class="vote-btn vote-up flex items-center justify-center" data-vote="up" data-current-vote="<?= $reply['user_vote'] == 1 ? 'up' : ($reply['user_vote'] == -1 ? 'down' : '') ?>">
                                     <span style="<?= $reply['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
                                         <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
                                     </span>
                                 </button>
-                            </form>
-                            <p class="text-2xl"><?= $reply['votes'] ?></p>
-                            <form method="POST" action="/replies/<?= $reply['id'] ?>/vote">
-                                <input type="hidden" name="vote" value="-1">
-                                <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
-                                <button type="submit" class="flex items-center justify-center">
+                                <p class="vote-count text-2xl"><?= $reply['votes'] ?></p>
+                                <button type="button" class="vote-btn vote-down flex items-center justify-center" data-vote="down" data-current-vote="<?= $reply['user_vote'] == 1 ? 'up' : ($reply['user_vote'] == -1 ? 'down' : '') ?>">
                                     <span style="<?= $reply['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
                                         <?= essIcon('arrow', 'w-7 h-7') ?>
                                     </span>
                                 </button>
-                            </form>
+                            </div>
                         </div>
                     </div>
+            <?php endforeach; ?>
                 </div>
-        <?php endforeach; ?>
+        <?php endif; ?>
             </div>
-    <?php endif; ?>
+    <?php endforeach; ?>
         </div>
-<?php endforeach; ?>
     </div>
 </main>
 
+<script src="/js/post/comment.js"></script>
 <script src="/js/post/postReply.js"></script>
 <script src="/js/post/share.js"></script>
+<script src="/js/post/carousel.js"></script>
+<script src="/js/post/vote.js"></script>
