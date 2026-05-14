@@ -2,6 +2,9 @@
 <link rel="stylesheet" href="/css/responsive/main.css">
 
 <?php include __DIR__ . '/../../../app/views/layouts/partials/navbar/navbar.php'; ?>
+<?php include __DIR__ . '/../../../app/helpers/tagText.php'; ?>
+
+<div id="xIconSvg" class="hidden"><?= essIcon('x', 'w-6 h-6 cursor-pointer') ?></div>
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
     <div id="searchBar" class="z-2 sticky top-10 w-full md:block hidden">
@@ -14,100 +17,94 @@
             <label for="search">
                 <?= essIcon('search', 'w-8 absolute left-4 top-1/2 -translate-y-4 z-2') ?>
             </label>
-            <input type="text" id="search" name="search" value="<?= htmlspecialchars($filters['search'] ?? '') ?>" placeholder="Search..." class="p-4 pl-14 w-full text-white placeholder:text-white/60 rounded-full border border-white/20 backdrop-blur-md bg-gray-800/25">
+            <input type="text" id="search" name="search" value="<?= htmlspecialchars($filters['search'] ?? '') ?>" placeholder="Search..." class="p-4 pl-14 w-full text-white placeholder:text-white/60 rounded-full border border-white/20 backdrop-blur-md bg-gray-900/25">
         </form>
     </div>
 
+    <div id="postsContainer" class="flex flex-col gap-10">
 <?php foreach ($posts as $index => $post): ?>
-    <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg post">
-        <div class="md:pt-10 md:pr-10 md:pl-10 pb-7 pt-7 pr-7 pl-7 flex flex-col md:gap-3 gap-5">
-            <div class="flex justify-between items-center">
-                <div class="flex gap-5 items-center">
-                    <img src="/assets/image/account/<?= htmlspecialchars($post['account_id']) ?>.jpg" class="w-15 h-15 object-cover rounded-full drop-shadow-lg">
-                    <div>
-                        <p class="text-3xl font-bold"><?= htmlspecialchars($post['account_name']) ?></p>
-                        <p><?= htmlspecialchars($post['class_name']) ?></p>
+        <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg post">
+            <div class="md:pt-10 md:pr-10 md:pl-10 pb-7 pt-7 pr-7 pl-7 flex flex-col md:gap-3 gap-5">
+                <div class="flex justify-between items-center">
+                    <div class="flex gap-5 items-center">
+                        <img src="/assets/image/account/<?= htmlspecialchars($post['account_id']) ?>.jpg" class="w-15 h-15 object-cover rounded-full drop-shadow-lg">
+                        <div>
+                            <p class="text-3xl font-bold"><?= htmlspecialchars($post['account_name']) ?></p>
+                            <p><?= htmlspecialchars($post['class_name']) ?></p>
+                        </div>
                     </div>
+                    <p class="text-3xl font-bold"><?= $post['date'] ?></p>
                 </div>
-                <p class="text-3xl font-bold"><?= $post['date'] ?></p>
-            </div>
-            <div class="flex justify-between items-center">
-        <?php if (!empty($post['tags'])): ?>
-            <?php foreach ($post['tags'] as $tag): ?>
-                <div class="px-4 py-2 text-white rounded-full drop-shadow-lg flex gap-2 items-center"
-                    style="background: linear-gradient(to bottom, #<?= $tag['color_top'] ?>, #<?= $tag['color_bottom'] ?>)">
-                    <?= icon(!empty($tag['icon']) ? $tag['icon'] : 'tag', 'w-7 h-7') ?>
-                    <p><?= strtoupper($tag['name']) ?></p>
-                </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-                <div></div>
-        <?php endif; ?>
-                <div class="flex items-center gap-5">
-                    <div class="flex px-4 py-2 bg-[#2C7CFF] text-white rounded-full items-center gap-3">
-                        <form method="POST" action="/posts/<?= $post['id'] ?>/vote">
-                            <input type="hidden" name="vote" value="1">
-                            <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
-                            <button type="submit" class="flex items-center justify-center">
-                                <span style="<?= $post['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
+                <div class="flex justify-between items-center">
+                    <div class="flex gap-5 items-center">
+                <?php if (!empty($post['tags'])): ?>
+                    <?php foreach ($post['tags'] as $tag): ?>
+                        <?php $textColor = tagTextColor($tag['color_top'], $tag['color_bottom']); ?>
+                        <div class="px-4 py-2 rounded-full drop-shadow-lg flex gap-2 items-center"
+                            style="background: linear-gradient(to bottom, #<?= $tag['color_top'] ?>, #<?= $tag['color_bottom'] ?>); color: <?= $textColor ?>;">
+                            <?= icon(!empty($tag['icon']) ? $tag['icon'] : 'tag', 'w-7 h-7') ?>
+                            <p><?= $tag['name'] ?></p>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                        <div></div>
+                <?php endif; ?>
+                    </div>
+                    <div class="flex items-center gap-5">
+                        <div class="flex px-4 py-2 bg-[#2C7CFF] text-white rounded-full items-center gap-3 vote-container" data-type="post" data-post-id="<?= $post['id'] ?>">
+                            <button type="button" 
+                                    class="vote-btn vote-up flex items-center justify-center"
+                                    data-vote="up"
+                                    data-current-vote="<?= ($post['user_vote'] ?? 0) == 1 ? 'up' : (($post['user_vote'] ?? 0) == -1 ? 'down' : '') ?>">
+                                <span style="<?= ($post['user_vote'] ?? 0) == 1 ? 'color: #FFE500' : '' ?>">
                                     <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
                                 </span>
                             </button>
-                        </form>
-                        <p class="text-2xl"><?= $post['votes'] ?></p>
-                        <form method="POST" action="/posts/<?= $post['id'] ?>/vote">
-                            <input type="hidden" name="vote" value="-1">
-                            <input type="hidden" name="redirect" value="<?= $_SERVER['REQUEST_URI'] ?>">
-                            <button type="submit" class="flex items-center justify-center">
-                                <span style="<?= $post['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
+                            <p class="vote-count text-2xl"><?= $post['votes'] ?></p>
+                            <button type="button"
+                                    class="vote-btn vote-down flex items-center justify-center"
+                                    data-vote="down"
+                                    data-current-vote="<?= ($post['user_vote'] ?? 0) == 1 ? 'up' : (($post['user_vote'] ?? 0) == -1 ? 'down' : '') ?>">
+                                <span style="<?= ($post['user_vote'] ?? 0) == -1 ? 'color: #FFE500' : '' ?>">
                                     <?= essIcon('arrow', 'w-7 h-7') ?>
                                 </span>
                             </button>
-                        </form>
+                        </div>
+                        <div class="flex gap-1 items-center">
+                            <?= essIcon('eye', 'w-10 h-10') ?>
+                            <p class="text-2xl"><?= $post['views'] ?></p>
+                        </div>
+                        <div class="flex gap-1 items-center">
+                            <?= essIcon('comment', 'w-10 h-10') ?>
+                            <p class="text-2xl"><?= $post['comment_count'] ?></p>
+                        </div>
+                    <?php if (isset($_SESSION['account_id']) && $_SESSION['account_id'] == $post['account_id']): ?>
+                            <a href="/posts/<?= $post['id'] ?>/edit" class="flex items-center gap-1 hover:opacity-70 transition">
+                                <?= essIcon('create', 'w-10 h-10') ?>
+                            </a>
+                    <?php endif; ?>
+                        <button class="shareBtn hover:opacity-70 transition cursor-pointer" data-url="<?= 'http://' . $_SERVER['HTTP_HOST'] . '/posts/' . $post['id'] ?>">
+                            <?= essIcon('share', 'w-10 h-10') ?>
+                        </button>
                     </div>
-                    <div class="flex gap-1 items-center">
-                        <?= essIcon('eye', 'w-10 h-10') ?>
-                        <p class="text-2xl"><?= $post['views'] ?></p>
-                    </div>
-                    <div class="flex gap-1 items-center">
-                        <?= essIcon('comment', 'w-10 h-10') ?>
-                        <p class="text-2xl"><?= $post['comment_count'] ?></p>
-                    </div>
-                    <button class="shareBtn" data-url="<?= 'http://' . $_SERVER['HTTP_HOST'] . '/posts/' . $post['id'] ?>">
-                        <?= essIcon('share', 'w-10 h-10') ?>
-                    </button>
                 </div>
+                <a href="/posts/<?= $post['id'] ?>" class="flex flex-col gap-3">
+                    <p class="text-4xl font-bold"><?= $post['title'] ?></p>
+                    <div class="revert-tailwind">
+                        <?= $post['description'] ?>
+                    </div>
+                </a>
             </div>
-            <a href="/posts/<?= $post['id'] ?>" class="flex flex-col gap-3">
-                <p class="text-4xl font-bold"><?= $post['title'] ?></p>
-                <div class="revert-tailwind">
-                    <?= $post['description'] ?>
-                </div>
-            </a>
+    <?php include __DIR__ . '/../layouts/partials/carousel/carousel.php'; ?>
         </div>
-<?php if (!empty($post['imgs'])): ?>
-        <div class="h-75 max-h-75 relative">
-            <button class="absolute left-10 top-30 p-4 rounded-full text-white drop-shadow-lg bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
-                <?= essIcon('arrow', 'w-7 h-7 transform rotate-90') ?>
-            </button>
-            <img src="/assets/image/post/<?= $post['imgs'][0]['file_name'] ?>" class="rounded-4xl w-full h-full object-cover">
-            <button class="absolute right-10 top-30 p-4 rounded-full text-white drop-shadow-lg bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
-                <?= essIcon('arrow', 'w-7 h-7 transform rotate-270') ?>
-            </button>
-            <div class="absolute left-1/2 bottom-8 flex gap-2">
-                <?php foreach ($post['imgs'] as $index => $img): ?>
-                    <div class="w-4 h-4 bg-white rounded-full opacity-80"></div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-<?php endif; ?>
-    </div>
 <?php endforeach; ?>
-
-    <div id="endMsg" class="w-full p-3 flex justify-center bg-white rounded-full drop-shadow-lg">
-        <p class="text-xl font-bold text-[#545F71]">End of the line!</p>
+        <div id="endMsg" class="w-full p-3 flex justify-center bg-white rounded-full drop-shadow-lg">
+            <p class="text-xl font-bold text-[#545F71]">End of the line!</p>
+        </div>
     </div>
 </main>
 
-<script src="/js/post/search.js"></script>
 <script src="/js/post/share.js"></script>
+<script src="/js/post/carousel.js"></script>
+<script src="/js/post/filter.js"></script>
+<script src="/js/post/vote.js"></script>

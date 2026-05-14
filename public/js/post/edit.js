@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('Edit.js loaded');
+
     function cleanColor(value) {
         return value.replace('#', '');
     }
@@ -23,37 +25,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updatePreview() {
-        const topElement = document.getElementById('colorTop');
-        const bottomElement = document.getElementById('colorBottom');
-        const previewElement = document.querySelector('.color-preview');
-        
-        if (topElement && bottomElement && previewElement) {
-            const top = cleanColor(topElement.value);
-            const bottom = cleanColor(bottomElement.value);
-            previewElement.style.background = `linear-gradient(to bottom, #${top || 'CCCCCC'}, #${bottom || 'CCCCCC'})`;
+        const top = document.getElementById('colorTop');
+        const bottom = document.getElementById('colorBottom');
+        if (top && bottom) {
+            const topVal = cleanColor(top.value);
+            const bottomVal = cleanColor(bottom.value);
+            const preview = document.querySelector('.color-preview');
+            if (preview) {
+                preview.style.background = `linear-gradient(to bottom, #${topVal}, #${bottomVal})`;
+            }
         }
     }
 
-    // Color inputs
-    const colorTopInput = document.getElementById('colorTop');
-    const colorBottomInput = document.getElementById('colorBottom');
+    // Colour preview
+    const colorTop = document.getElementById('colorTop');
+    const colorBottom = document.getElementById('colorBottom');
     const colorTopDiv = document.querySelector('.color-top');
     const colorBottomDiv = document.querySelector('.color-bottom');
 
-    if (colorTopInput) {
-        colorTopInput.addEventListener('input', function() {
-            if (colorTopDiv) {
-                colorTopDiv.style.backgroundColor = '#' + cleanColor(this.value);
-            }
+    if (colorTop) {
+        colorTop.addEventListener('input', function() {
+            if (colorTopDiv) colorTopDiv.style.backgroundColor = '#' + cleanColor(this.value);
             updatePreview();
         });
     }
 
-    if (colorBottomInput) {
-        colorBottomInput.addEventListener('input', function() {
-            if (colorBottomDiv) {
-                colorBottomDiv.style.backgroundColor = '#' + cleanColor(this.value);
-            }
+    if (colorBottom) {
+        colorBottom.addEventListener('input', function() {
+            if (colorBottomDiv) colorBottomDiv.style.backgroundColor = '#' + cleanColor(this.value);
             updatePreview();
         });
     }
@@ -85,44 +84,45 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Tag
+    // Add tag
     const addTagBtn = document.getElementById('addTagBtn');
     const tagPreview = document.getElementById('tagPreview');
     const postForm = document.getElementById('postForm');
+    const tagNameInput = document.getElementById('tagName');
 
     if (addTagBtn) {
         addTagBtn.addEventListener('click', () => {
-            const tagNameInput = document.getElementById('tagName');
             const name = tagNameInput ? tagNameInput.value.trim() : '';
-            const colorTop = cleanColor(colorTopInput?.value || '') || 'CCCCCC';
-            const colorBot = cleanColor(colorBottomInput?.value || '') || 'CCCCCC';
+            const colorTopVal = colorTop ? cleanColor(colorTop.value) : 'ffffff';
+            const colorBotVal = colorBottom ? cleanColor(colorBottom.value) : 'ffffff';
             const iconName = iconInput ? iconInput.value : 'tag';
             const iconSvg = iconPreview ? iconPreview.innerHTML : '';
 
             if (!name) {
                 alert('Please enter a tag name');
+                if (tagNameInput) tagNameInput.focus();
                 return;
             }
 
-            const textColor = getTextColor(colorTop, colorBot);
+            const textColor = getTextColor(colorTopVal, colorBotVal);
 
             const hiddenContainer = document.createElement('div');
             hiddenContainer.classList.add('tag-hidden-inputs');
             hiddenContainer.innerHTML = `
-                <input type="hidden" name="tag_name[]"           value="${escapeHtml(name)}">
-                <input type="hidden" name="tag_color_top[]"      value="${colorTop}">
-                <input type="hidden" name="tag_color_bottom[]"   value="${colorBot}">
-                <input type="hidden" name="tag_icon[]"           value="${escapeHtml(iconName)}">
+                <input type="hidden" name="tag_name[]" value="${escapeHtml(name)}">
+                <input type="hidden" name="tag_color_top[]" value="${colorTopVal}">
+                <input type="hidden" name="tag_color_bottom[]" value="${colorBotVal}">
+                <input type="hidden" name="tag_icon[]" value="${iconName}">
             `;
-            postForm.appendChild(hiddenContainer);
+            if (postForm) postForm.appendChild(hiddenContainer);
 
             const tag = document.createElement('div');
             tag.className = 'tag-preview-item px-4 py-2 rounded-full drop-shadow-lg flex gap-2 items-center justify-center';
-            tag.style.background = `linear-gradient(to bottom, #${colorTop}, #${colorBot})`;
+            tag.style.background = `linear-gradient(to bottom, #${colorTopVal}, #${colorBotVal})`;
             tag.style.color = textColor;
             tag.innerHTML = `
                 <div class="w-6 h-6">${iconSvg}</div>
-                <p>${escapeHtml(name)}</p>
+                <span>${escapeHtml(name)}</span>
                 <button type="button" class="remove-tag ml-1 font-bold hover:opacity-60">✕</button>
             `;
 
@@ -142,20 +142,42 @@ document.addEventListener('DOMContentLoaded', () => {
                 tagPreview.appendChild(tag);
             }
 
-            // Clear inputs
             if (tagNameInput) tagNameInput.value = '';
-            if (colorTopInput) colorTopInput.value = '';
-            if (colorBottomInput) colorBottomInput.value = '';
+            if (colorTop) colorTop.value = '';
+            if (colorBottom) colorBottom.value = '';
             if (colorTopDiv) colorTopDiv.style.backgroundColor = '';
             if (colorBottomDiv) colorBottomDiv.style.backgroundColor = '';
-            
-            const colorPreview = document.querySelector('.color-preview');
-            if (colorPreview) colorPreview.style.background = '';
-            
+            if (document.querySelector('.color-preview')) {
+                document.querySelector('.color-preview').style.background = '';
+            }
             if (iconInput) iconInput.value = 'tag';
             if (iconPreview) iconPreview.innerHTML = defaultIconSvg;
         });
     }
+
+    // Remove tag
+    document.querySelectorAll('.remove-tag').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const tagDiv = this.closest('.tag-preview-item');
+            if (tagDiv) {
+                const hiddenInputs = tagDiv.querySelectorAll('input[type="hidden"]');
+                hiddenInputs.forEach(input => input.remove());
+                tagDiv.remove();
+            }
+        });
+    });
+
+    // Remove media
+    document.querySelectorAll('.remove-media').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const mediaDiv = this.closest('.media-item');
+            if (mediaDiv) {
+                mediaDiv.remove();
+            }
+        });
+    });
 
     // Link & Image modal
     const addLinkImgModal = document.getElementById('addLinkImg');
@@ -174,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Image
+    // Image upload
     const imageUploadArea = document.getElementById('imageUploadArea');
     const imageFileInput = document.getElementById('imageFileInput');
 
@@ -214,16 +236,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 hiddenImg.name = 'imgs[]';
                 hiddenImg.value = data.filename;
                 hiddenImg.id = 'img_' + data.filename;
-                postForm.appendChild(hiddenImg);
+                if (postForm) postForm.appendChild(hiddenImg);
 
                 const imgRow = document.createElement('div');
-                imgRow.className = 'flex items-center gap-3 text-[#545F71]';
+                imgRow.className = 'media-item flex items-center gap-3 text-[#545F71]';
                 imgRow.innerHTML = `
                     <img src="/assets/image/post/${data.filename}" class="w-12 h-12 object-cover rounded-lg">
                     <p class="flex-1 truncate">${escapeHtml(data.filename)}</p>
-                    <button type="button" class="text-red-400 font-bold hover:text-red-600">✕</button>
+                    <button type="button" class="remove-media text-red-400 font-bold hover:text-red-600">&times;</button>
                 `;
-                imgRow.querySelector('button').addEventListener('click', () => {
+                imgRow.querySelector('.remove-media').addEventListener('click', () => {
                     imgRow.remove();
                     document.getElementById('img_' + data.filename)?.remove();
                 });
@@ -249,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Link
+    // Add link
     const addLinkBtn = document.getElementById('addLinkBtn');
     const linkUrl = document.getElementById('linkUrl');
     const linkText = document.getElementById('linkText');
@@ -259,9 +281,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const url = linkUrl ? linkUrl.value.trim() : '';
             const text = linkText ? linkText.value.trim() : '';
 
-            if (!url) return;
+            if (!url) {
+                alert('Please enter a URL');
+                return;
+            }
 
             const display = text || url;
+
             const hiddenUrl = document.createElement('input');
             hiddenUrl.type = 'hidden';
             hiddenUrl.name = 'link_url[]';
@@ -276,19 +302,19 @@ document.addEventListener('DOMContentLoaded', () => {
             linkContainer.classList.add('link-hidden-inputs');
             linkContainer.appendChild(hiddenUrl);
             linkContainer.appendChild(hiddenText);
-            postForm.appendChild(linkContainer);
+            if (postForm) postForm.appendChild(linkContainer);
 
             const linkRow = document.createElement('div');
-            linkRow.className = 'flex items-center gap-3 text-[#545F71]';
+            linkRow.className = 'media-item flex items-center gap-3 text-[#545F71]';
             linkRow.innerHTML = `
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101"/>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 015.656 0l4-4a4 4 0 01-5.656-5.656l-1.1 1.1"/>
                 </svg>
                 <a href="${escapeHtml(url)}" target="_blank" class="flex-1 truncate hover:underline">${escapeHtml(display)}</a>
-                <button type="button" class="text-red-400 font-bold hover:text-red-600">✕</button>
+                <button type="button" class="remove-media text-red-400 font-bold hover:text-red-600">&times;</button>
             `;
-            linkRow.querySelector('button').addEventListener('click', () => {
+            linkRow.querySelector('.remove-media').addEventListener('click', () => {
                 linkRow.remove();
                 linkContainer.remove();
             });
@@ -300,43 +326,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (postForm) {
-        postForm.addEventListener('submit', function(e) {
-            const titleInput = document.querySelector('input[name="title"]');
-            const title = titleInput ? titleInput.value.trim() : '';
-            
-            if (!title) {
-                e.preventDefault();
-                alert('Please enter a post title');
-                if (titleInput) titleInput.focus();
-                return false;
-            }
-
-            let description = '';
-            if (typeof tinymce !== 'undefined' && tinymce.get('mytextarea')) {
-                description = tinymce.get('mytextarea').getContent().trim();
-            } else {
-                const descTextarea = document.querySelector('textarea[name="description"]');
-                if (descTextarea) {
-                    description = descTextarea.value.trim();
-                }
-            }
-
-            if (!description) {
-                e.preventDefault();
-                alert('Please enter a post description');
-                if (typeof tinymce !== 'undefined' && tinymce.get('mytextarea')) {
-                    tinymce.get('mytextarea').focus();
-                }
-                return false;
-            }
-            return true;
-        });
-    }
-
     function escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
+    }
+
+    updatePreview();
+
+    const deletePostBtn = document.getElementById('deletePostBtn');
+    if (deletePostBtn) {
+        deletePostBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            if (confirm('Are you sure you want to delete this post? This action cannot be undone and will delete all comments, replies, images, and links associated with this post.')) {
+                const postId = window.location.pathname.split('/')[2];
+                
+                fetch(`/posts/${postId}/delete`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                }).then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else {
+                        window.location.href = '/posts';
+                    }
+                }).catch(error => {
+                    console.error('Delete error:', error);
+                    window.location.href = '/posts';
+                });
+            }
+        });
     }
 });

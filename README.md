@@ -7,7 +7,7 @@
 <br>
 <div align="center">
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
-      <img src="https://img.shields.io/badge/GitHub Version-wip--0.7.0-red">
+      <img src="https://img.shields.io/badge/GitHub Version-wip--0.9.0-red">
    </a>
    <!-- <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
       <img src="https://img.shields.io/badge/Latest Release-None-green">
@@ -344,7 +344,8 @@ Website ATK SKI digunakan sebagai sarana pembelian alat tulis dan buku secara le
 
 ## Kontributor
 <img src="https://avatars.githubusercontent.com/u/199484083" width="20"> [Christopher V.C - "Banditov"](https://github.com/Banditov), sebagai ketua & back-end developer.<br>
-<img src="https://avatars.githubusercontent.com/u/229849683" width="20"> [Justin S. - "Justin12-cmk"](https://github.com/Justin12-cmk), sebagai front-end developer.<br>
+<img src="https://avatars.githubusercontent.com/u/229849683" width="20"> [Justin S. - "Justin12-cmk"](https://github.com/Justin12-cmk), sebagai front-end developer.
+<br>
 <img src="https://avatars.githubusercontent.com/u/253169611" width="20"> [Michelle N. - "MN ( o v o )"](https://github.com/idunno2467), sebagai UI/UX designer.
 
 
@@ -358,6 +359,30 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 
 <details>
    <summary>May</summary>
+
+### 14/05/2026 - 0.9.0
+<details>
+
+   - Menambahkan ikon
+   - Implement menambah img dan link
+   - Implement carousel dan preview image
+   - Implement AJAX untuk voting, filter, comment, reply dan search
+   - Implement halaman edit
+</details>
+
+### 13/05/2026 - 0.8.0
+<details>
+
+   - Menambahkan ikon
+   - Implement creation tag multiple
+   - Implement warna teks tag otomatis
+</details>
+
+### 12/05/2026 - 0.7.1
+<details>
+
+   - Menambahkan ikon
+</details>
 
 ### 09/05/2026 - 0.7.0
 <details>
