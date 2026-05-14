@@ -29,6 +29,7 @@ $router->add('GET', '/login', 'AuthController', 'login');
 $router->add('GET', '/posts', 'PostController', 'index');
 $router->add('GET', '/posts/create', 'PostController', 'create');
 $router->add('GET', '/posts/{id}', 'PostController', 'show');
+$router->add('GET', '/posts/{id}/edit', 'PostController', 'edit');
 
 // Post creation
 $router->add('POST', '/posts', 'PostController', 'store');
@@ -50,5 +51,9 @@ $router->add('POST', '/replies/{id}/vote',  'VoteController', 'voteReply');
 
 // Image upload
 $router->add('POST', '/upload/image', 'UploadController', 'image');
+
+// Post edit
+$router->add('POST', '/posts/{id}/update', 'PostController', 'update');
+$router->add('POST', '/posts/{id}/delete', 'PostController', 'delete');
 
 $router->run();

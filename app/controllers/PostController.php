@@ -14,7 +14,17 @@ class PostController extends Controller
         $postModel = new Post();
         $tagModel  = new Tag();
         $tagModel->deleteUnusedTags();
-        $tags = $tagModel->getTags();
+
+        $allTags = $tagModel->getTags();
+
+        $uniqueTags = [];
+        foreach ($allTags as $tag) {
+            $name = $tag['name'];
+            if (!isset($uniqueTags[$name])) {
+                $uniqueTags[$name] = $tag;
+            }
+        }
+        $tags = array_values($uniqueTags);
 
         $filters = [
             'search'     => $_GET['search']     ?? '',
@@ -26,7 +36,6 @@ class PostController extends Controller
         ];
 
         $posts = $postModel->getPosts($filters);
-        $tags  = $tagModel->getTags();
 
         $_SESSION['filter_tags']    = $tags;
         $_SESSION['filter_filters'] = $filters;
@@ -69,45 +78,253 @@ class PostController extends Controller
 
     public function store()
     {
-        $title       = $_POST['title']       ?? '';
-        $description = $_POST['description'] ?? '';
-        $accountId   = $_SESSION['account_id'];
-
-        $postModel = new Post();
-        $postId    = $postModel->createPost($title, $description, $accountId);
-
-        if (!$postId) {
-            header('Location: /posts/create?error=duplicate_title');
+        if (!isset($_SESSION['account_id'])) {
+            header("Location: /login");
             exit;
         }
 
-        if (!empty($_POST['tag_name'])) {
+        $title = trim($_POST['title'] ?? '');
+        $description = trim($_POST['description'] ?? '');
+        $accountId = $_SESSION['account_id'];
+
+        if (empty($title)) {
+            $_SESSION['error'] = 'Post title cannot be empty';
+            header("Location: /posts/create");
+            exit;
+        }
+
+        if (empty($description)) {
+            $_SESSION['error'] = 'Post description cannot be empty';
+            header("Location: /posts/create");
+            exit;
+        }
+
+        $postModel = new Post();
+        $postId = $postModel->createPost($title, $description, $accountId);
+
+        if (!$postId) {
+            $_SESSION['error'] = 'A post with this title already exists. Please use a different title.';
+            header("Location: /posts/create");
+            exit;
+        }
+
+        if (!empty($_POST['tag_name']) && is_array($_POST['tag_name'])) {
             $tagModel = new Tag();
             foreach ($_POST['tag_name'] as $index => $tagName) {
+                $tagName = trim($tagName);
                 if (empty($tagName)) continue;
-                $colorTop    = $_POST['color_top'][$index]    ?? 'ffffff';
-                $colorBottom = $_POST['color_bottom'][$index] ?? 'ffffff';
-                $icon        = $_POST['icon'][$index]         ?? 'tag';
+
+                $colorTop = $_POST['tag_color_top'][$index] ?? 'CCCCCC';
+                $colorBottom = $_POST['tag_color_bottom'][$index] ?? 'CCCCCC';
+                $icon = $_POST['tag_icon'][$index] ?? 'tag';
+
                 $tagModel->createTag($postId, $tagName, $colorTop, $colorBottom, $icon);
             }
         }
 
-        if (!empty($_POST['imgs'])) {
+        if (!empty($_FILES['images']['name'][0])) {
+            $uploadDir = __DIR__ . '/../../public/assets/image/post/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
+            foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name) {
+                if ($_FILES['images']['error'][$key] === UPLOAD_ERR_OK) {
+                    $fileName = 'post_' . uniqid() . '_' . $_FILES['images']['name'][$key];
+                    $destination = $uploadDir . $fileName;
+                    
+                    if (move_uploaded_file($tmp_name, $destination)) {
+                        $postModel->addImage($postId, $fileName);
+                    }
+                }
+            }
+        }
+
+        if (!empty($_POST['imgs']) && is_array($_POST['imgs'])) {
             foreach ($_POST['imgs'] as $filename) {
                 if (empty($filename)) continue;
                 $postModel->addImage($postId, $filename);
             }
         }
 
-        if (!empty($_POST['link_url'])) {
+        if (!empty($_POST['link_url']) && is_array($_POST['link_url'])) {
             foreach ($_POST['link_url'] as $index => $url) {
+                $url = trim($url);
                 if (empty($url)) continue;
+                
                 $linkText = $_POST['link_text'][$index] ?? '';
                 $postModel->addLink($postId, $url, $linkText);
             }
         }
 
-        header('Location: /posts');
+        $_SESSION['success'] = 'Post created successfully!';
+        header("Location: /posts/{$postId}");
+        exit;
+    }
+
+    public function edit(string $id)
+    {
+        if (!isset($_SESSION['account_id'])) {
+            header("Location: /login");
+            exit;
+        }
+
+        $postModel = new Post();
+        $post = $postModel->getPostById($id);
+
+        if (!$post) {
+            header("Location: /posts");
+            exit;
+        }
+
+        if ($post['account_id'] != $_SESSION['account_id'] && $_SESSION['is_admin'] != 1) {
+            header("Location: /posts/{$id}");
+            exit;
+        }
+
+        $tagModel = new Tag();
+        $tags = $tagModel->getTags();
+
+        $this->view('posts/edit', [
+            'post' => $post,
+            'tags' => $tags
+        ]);
+    }
+
+    public function update(string $id)
+    {
+        if (!isset($_SESSION['account_id'])) {
+            header("Location: /login");
+            exit;
+        }
+
+        $postModel = new Post();
+        $post = $postModel->getPostById($id);
+
+        if (!$post) {
+            header("Location: /posts");
+            exit;
+        }
+
+        if ($post['account_id'] != $_SESSION['account_id'] && ($_SESSION['is_admin'] ?? 0) != 1) {
+            header("Location: /posts/{$id}");
+            exit;
+        }
+
+        $title = trim($_POST['title'] ?? '');
+        $description = trim($_POST['description'] ?? '');
+
+        if (empty($title)) {
+            $_SESSION['error'] = 'Post title cannot be empty';
+            header("Location: /posts/{$id}/edit");
+            exit;
+        }
+
+        if (empty($description)) {
+            $_SESSION['error'] = 'Post description cannot be empty';
+            header("Location: /posts/{$id}/edit");
+            exit;
+        }
+
+        $result = $postModel->updatePost(intval($id), $title, $description);
+
+        if (!$result) {
+            $_SESSION['error'] = 'Failed to update post';
+            header("Location: /posts/{$id}/edit");
+            exit;
+        }
+
+        $tagModel = new Tag();
+        $tagModel->deleteTagsByPostId(intval($id));
+
+        if (!empty($_POST['tag_name']) && is_array($_POST['tag_name'])) {
+            foreach ($_POST['tag_name'] as $index => $tagName) {
+                $tagName = trim($tagName);
+                if (empty($tagName)) continue;
+
+                $colorTop = $_POST['tag_color_top'][$index] ?? 'CCCCCC';
+                $colorBottom = $_POST['tag_color_bottom'][$index] ?? 'CCCCCC';
+                $icon = $_POST['tag_icon'][$index] ?? 'tag';
+
+                $tagModel->createTag(intval($id), $tagName, $colorTop, $colorBottom, $icon);
+            }
+        }
+
+        if (!empty($_POST['existing_images'])) {
+            $keepImages = $_POST['existing_images'];
+        } else {
+            $keepImages = [];
+        }
+
+        $currentImages = $postModel->getImagesByPostId(intval($id));
+        foreach ($currentImages as $img) {
+            if (!in_array($img['file_name'], $keepImages)) {
+                $filePath = __DIR__ . '/../../public/assets/image/post/' . $img['file_name'];
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+                $postModel->deleteImage($img['id']);
+            }
+        }
+
+        if (!empty($_POST['imgs']) && is_array($_POST['imgs'])) {
+            foreach ($_POST['imgs'] as $filename) {
+                if (empty($filename)) continue;
+                $postModel->addImage(intval($id), $filename);
+            }
+        }
+
+        $postModel->deleteLinksByPostId(intval($id));
+
+        if (!empty($_POST['existing_links']) && is_array($_POST['existing_links'])) {
+            foreach ($_POST['existing_links'] as $index => $url) {
+                $url = trim($url);
+                if (empty($url)) continue;
+
+                $linkText = $_POST['existing_link_texts'][$index] ?? $url;
+                $postModel->addLink(intval($id), $url, $linkText);
+            }
+        }
+
+        if (!empty($_POST['link_url']) && is_array($_POST['link_url'])) {
+            foreach ($_POST['link_url'] as $index => $url) {
+                $url = trim($url);
+                if (empty($url)) continue;
+
+                $linkText = $_POST['link_text'][$index] ?? '';
+                $postModel->addLink(intval($id), $url, $linkText);
+            }
+        }
+
+        $_SESSION['success'] = 'Post updated successfully!';
+        header("Location: /posts/{$id}");
+        exit;
+    }
+
+    public function delete(string $id)
+    {
+        if (!isset($_SESSION['account_id'])) {
+            header("Location: /login");
+            exit;
+        }
+
+        $postModel = new Post();
+        $post = $postModel->getPostById($id);
+
+        if (!$post) {
+            header("Location: /posts");
+            exit;
+        }
+
+        if ($post['account_id'] != $_SESSION['account_id'] && ($_SESSION['is_admin'] ?? 0) != 1) {
+            header("Location: /posts/{$id}");
+            exit;
+        }
+
+        $postModel->deletePostCompletely(intval($id));
+
+        $_SESSION['success'] = 'Post deleted successfully!';
+        header("Location: /posts");
         exit;
     }
 }

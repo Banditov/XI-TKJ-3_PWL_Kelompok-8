@@ -34,47 +34,53 @@ overlay.addEventListener('click', (e) => { if (e.target === overlay) closeOverla
 
 function initCarousels() {
     document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
-    const track  = wrapper.querySelector('.carousel-track');
-    const dots   = wrapper.querySelectorAll('.carousel-dot');
-    const prev   = wrapper.querySelector('.carousel-prev');
-    const next   = wrapper.querySelector('.carousel-next');
-    const total  = wrapper.querySelectorAll('.carousel-slide').length;
+        const track  = wrapper.querySelector('.carousel-track');
+        const dots   = wrapper.querySelectorAll('.carousel-dot');
+        const prev   = wrapper.querySelector('.carousel-prev');
+        const next   = wrapper.querySelector('.carousel-next');
+        const total  = wrapper.querySelectorAll('.carousel-slide').length;
 
-    if (total <= 1) return;
+        if (total <= 1) {
+            const singleImg = wrapper.querySelector('.carousel-img');
+            if (singleImg && singleImg.dataset.src) {
+                singleImg.addEventListener('click', () => openOverlay(singleImg.dataset.src));
+            }
+            return;
+        }
 
-    track.style.transition = 'transform 350ms ease-in-out';
-    track.style.transform  = 'translateX(0%)';
+        track.style.transition = 'transform 350ms ease-in-out';
+        track.style.transform  = 'translateX(0%)';
 
-    let current   = 0;
-    let animating = false;
+        let current   = 0;
+        let animating = false;
 
-    function goTo(index) {
-        if (animating || index === current) return;
-        animating = true;
+        function goTo(index) {
+            if (animating || index === current) return;
+            animating = true;
 
-        const slideWidth = 100 / total;
-        const targetX    = -(index * slideWidth);
+            const slideWidth = 100 / total;
+            const targetX    = -(index * slideWidth);
 
-        track.style.transform = `translateX(${targetX}%)`;
+            track.style.transform = `translateX(${targetX}%)`;
 
-        dots.forEach((dot, i) => {
-            dot.classList.toggle('opacity-100', i === index);
-            dot.classList.toggle('opacity-40',  i !== index);
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('opacity-100', i === index);
+                dot.classList.toggle('opacity-40',  i !== index);
+            });
+
+            current = index;
+
+            setTimeout(() => { animating = false; }, 350);
+        }
+
+        if (prev) prev.addEventListener('click', () => goTo(current === 0 ? total - 1 : current - 1));
+        if (next) next.addEventListener('click', () => goTo(current === total - 1 ? 0 : current + 1));
+        dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+
+        wrapper.querySelectorAll('.carousel-img').forEach(img => {
+            img.addEventListener('click', () => openOverlay(img.dataset.src));
         });
-
-        current = index;
-
-        setTimeout(() => { animating = false; }, 350);
-    }
-
-    if (prev) prev.addEventListener('click', () => goTo(current === 0 ? total - 1 : current - 1));
-    if (next) next.addEventListener('click', () => goTo(current === total - 1 ? 0 : current + 1));
-    dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
-
-    wrapper.querySelectorAll('.carousel-img').forEach(img => {
-        img.addEventListener('click', () => openOverlay(img.dataset.src));
     });
-});
 }
 
 initCarousels();

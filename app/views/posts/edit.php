@@ -1,4 +1,4 @@
-<title>Create Post | ImmaSpark</title>
+<title>Edit Post | ImmaSpark</title>
 <link rel="stylesheet" href="/css/responsive/main.css">
 
 <?php include __DIR__ . '/../../../app/views/layouts/partials/navbar/navbar.php'; ?>
@@ -6,16 +6,10 @@
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
     <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg p-10 flex flex-col gap-5 create post">
-        <p class="text-4xl font-bold text-center">Share Us Your Ideas!</p>
-    <?php if (isset($_GET['error']) && $_GET['error'] === 'duplicate_title'): ?>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            A post with this title already exists. Please use a different title.
-        </div>
-    <?php endif; ?>
-        <form action="/posts" method="POST" id="postForm" class="flex flex-col gap-5">
+        <form action="/posts/<?= $post['id'] ?>/update" method="POST" id="postForm" class="flex flex-col gap-5">
             <div class="flex flex-col gap-2">
                 <p class="text-2xl font-bold">Title</p>
-                <input type="text" name="title" placeholder="Suatu Title" class="p-4 w-full text-gray-700 rounded-full border border-gray-500" required>
+                <input type="text" name="title" value="<?= htmlspecialchars($post['title']) ?>" placeholder="Suatu Title" class="p-4 w-full text-gray-700 rounded-full border border-gray-500" required>
             </div>
             <div class="flex flex-col gap-2">
                 <p class="text-2xl font-bold">Tag</p>
@@ -45,9 +39,25 @@
                     </div>
                     <button type="button" id="addTagBtn" class="px-6 py-4 bg-[#2C7CFF] text-white rounded-full self-start">Add Tag</button>
                 </div>
-                <div id="tagPreview" class="flex gap-3 flex-wrap mt-2"></div>
+                <div id="tagPreview" class="flex gap-3 flex-wrap mt-2">
+            <?php if (!empty($post['tags']) && is_array($post['tags'])): ?>
+                <?php foreach ($post['tags'] as $tag): ?>
+                    <div class="tag-preview-item px-4 py-2 rounded-full flex gap-2 items-center" 
+                        style="background: linear-gradient(to bottom, #<?= $tag['color_top'] ?? 'CCCCCC' ?>, #<?= $tag['color_bottom'] ?? 'CCCCCC' ?>); 
+                                color: <?= tagTextColor($tag['color_top'] ?? 'CCCCCC', $tag['color_bottom'] ?? 'CCCCCC') ?>">
+                        <?= icon($tag['icon'] ?? 'tag', 'w-5 h-5') ?>
+                        <span><?= htmlspecialchars($tag['name'] ?? '') ?></span>
+                        <button type="button" class="remove-tag ml-1 text-white hover:opacity-60">✕</button>
+                        <input type="hidden" name="tag_name[]" value="<?= htmlspecialchars($tag['name'] ?? '') ?>">
+                        <input type="hidden" name="tag_color_top[]" value="<?= $tag['color_top'] ?? 'CCCCCC' ?>">
+                        <input type="hidden" name="tag_color_bottom[]" value="<?= $tag['color_bottom'] ?? 'CCCCCC' ?>">
+                        <input type="hidden" name="tag_icon[]" value="<?= $tag['icon'] ?? 'tag' ?>">
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+                </div>
             </div>
-            <textarea name="description" id="mytextarea" placeholder="Enter your ideas here!"></textarea>
+            <textarea name="description" id="mytextarea"><?= htmlspecialchars($post['description']) ?></textarea>
             <div class="flex flex-col gap-2">
                 <div class="flex items-center gap-5">
                     <div class="flex items-center gap-2">
@@ -56,14 +66,38 @@
                     </div>
                     <button type="button" id="openAddLinkImg" class="px-4 py-2 bg-[#2C7CFF] text-white rounded-full text-sm">Add +</button>
                 </div>
-                <div id="mediaPreview" class="flex flex-col gap-2 mt-1"></div>
+                <div id="mediaPreview" class="flex flex-col gap-2 mt-1">
+            <?php if (!empty($post['imgs'])): ?>
+                <?php foreach ($post['imgs'] as $img): ?>
+                    <div class="media-item flex items-center gap-2">
+                        <span>📷 <?= htmlspecialchars($img['file_name']) ?></span>
+                        <button type="button" class="remove-media text-red-500">&times;</button>
+                        <input type="hidden" name="existing_images[]" value="<?= $img['file_name'] ?>">
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            <?php if (!empty($post['links'])): ?>
+                <?php foreach ($post['links'] as $link): ?>
+                    <div class="media-item flex items-center gap-2">
+                        <span>🔗 <?= htmlspecialchars($link['link']) ?></span>
+                        <button type="button" class="remove-media text-red-500">&times;</button>
+                        <input type="hidden" name="existing_links[]" value="<?= htmlspecialchars($link['link']) ?>">
+                        <input type="hidden" name="existing_link_texts[]" value="<?= htmlspecialchars($link['link_text'] ?? $link['link']) ?>">
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+                </div>
             </div>
-            <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full w-full">POST</button>
+            <div class="flex gap-4 w-full flex-col">
+                <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full w-full">Update Post</button>
+                <button type="button" id="deletePostBtn" class="px-6 py-3 bg-red-600 text-white rounded-full w-full hover:bg-red-700 transition">DELETE POST</button>
+                <a href="/posts/<?= $post['id'] ?>" class="text-[#545F71] rounded-full w-full text-center">Cancel</a>
+            </div>
         </form>
     </div>
 </main>
 
-<!-- Icon Picker Modal -->
+<!-- Icon Picker -->
 <div class="w-screen h-screen bg-black/50 backdrop-blur-2xl z-10 flex justify-center items-center fixed top-0 left-0 hidden" id="iconPicker">
     <div class="w-50 bg-white rounded-4xl p-5 flex flex-col gap-5 text-[#545F71] items-center">
         <div class="flex justify-between border-b-2 border-[#545F71] pb-2 w-full">
@@ -80,7 +114,7 @@
     </div>
 </div>
 
-<!-- Link & Image Modal -->
+<!-- Link & Image -->
 <div class="w-screen h-screen bg-black/50 backdrop-blur-2xl z-10 flex justify-center items-center fixed top-0 left-0 hidden" id="addLinkImg">
     <div class="w-75 bg-white rounded-4xl p-5 flex flex-col gap-5 text-[#545F71] items-center">
         <div class="w-full flex justify-between items-center border-b-2 border-[#545F71] pb-3">
@@ -97,7 +131,7 @@
                 </svg>
                 <p>Add Image</p>
             </div>
-            <input type="file" id="imageFileInput" accept="image/*" class="hidden">
+            <input type="file" id="imageFileInput" accept="image/*" class="hidden" multiple>
         </div>
 
         <!-- Link add -->
@@ -112,4 +146,4 @@
 
 <script src="/js/library/tinymce/tinymce.min.js"></script>
 <script src="/js/tinymce.js"></script>
-<script src="/js/post/create.js"></script>
+<script src="/js/post/edit.js"></script>

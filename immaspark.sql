@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 09, 2026 at 04:25 PM
+-- Generation Time: May 14, 2026 at 03:19 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -43,7 +43,8 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `name`, `email`, `password`, `class_id`, `is_admin`, `is_dark`, `is_dyslexic`) VALUES
-(1, 'test', 'test@test', 'test', 7, 1, 1, 0);
+(1, 'TEST1', 'test.001@ski.sch.id', 'test', 7, 0, 1, 0),
+(2, 'TEST2', 'test.002@ski.sch.id', 'test2', 7, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -61,6 +62,7 @@ CREATE TABLE `classes` (
 --
 
 INSERT INTO `classes` (`id`, `name`) VALUES
+(17, 'Guru'),
 (9, 'X AKL 1'),
 (10, 'X AKL 2'),
 (14, 'X BiD 1'),
@@ -93,16 +95,6 @@ CREATE TABLE `comments` (
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `comments`
---
-
-INSERT INTO `comments` (`id`, `account_id`, `post_id`, `description`, `votes`, `date`) VALUES
-(1, 1, 1, 'Testststs', 0, '2026-05-08'),
-(2, 1, 1, 'test agi', 0, '2026-05-08'),
-(3, 1, 1, 'aye', 0, '2026-05-08'),
-(5, 1, 1, 'bruh', 1, '2026-05-09');
-
 -- --------------------------------------------------------
 
 --
@@ -115,13 +107,6 @@ CREATE TABLE `comment_votes` (
   `comment_id` int NOT NULL,
   `vote` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `comment_votes`
---
-
-INSERT INTO `comment_votes` (`id`, `account_id`, `comment_id`, `vote`) VALUES
-(1, 1, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -139,17 +124,6 @@ CREATE TABLE `posts` (
   `views` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `posts`
---
-
-INSERT INTO `posts` (`id`, `title`, `account_id`, `votes`, `description`, `date`, `views`) VALUES
-(1, 'TEST1', 1, 124, 'TEST SATU', '2026-04-22', 1),
-(2, 'TEST2', 1, -122, 'TEST KEDUA', '2026-04-22', 1),
-(9, 'Creaedadw', 1, 1, '<h1><em>Enter your</em><strong><span style=\"color: #ba372a;\"><em> idea</em> h</span>ere!</strong></h1>', '2026-05-04', 1),
-(19, 'testtete', 1, 0, '<h1>tet<span style=\"color: #ba372a;\">s<em>ttetewdd</em></span></h1>', '2026-05-05', 1),
-(20, 'Testttbro', 1, 0, '<p>d</p>', '2026-05-09', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -162,13 +136,6 @@ CREATE TABLE `post_imgs` (
   `post_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `post_imgs`
---
-
-INSERT INTO `post_imgs` (`id`, `file_name`, `post_id`) VALUES
-(1, 'posttest.png', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -178,15 +145,9 @@ INSERT INTO `post_imgs` (`id`, `file_name`, `post_id`) VALUES
 CREATE TABLE `post_links` (
   `id` int NOT NULL,
   `link` varchar(255) NOT NULL,
+  `link_text` varchar(255) DEFAULT NULL,
   `post_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `post_links`
---
-
-INSERT INTO `post_links` (`id`, `link`, `post_id`) VALUES
-(1, 'www.test.com', 1);
 
 -- --------------------------------------------------------
 
@@ -200,17 +161,6 @@ CREATE TABLE `post_views` (
   `post_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `post_views`
---
-
-INSERT INTO `post_views` (`id`, `account_id`, `post_id`) VALUES
-(8, 1, 1),
-(9, 1, 2),
-(1, 1, 9),
-(7, 1, 19),
-(10, 1, 20);
-
 -- --------------------------------------------------------
 
 --
@@ -223,15 +173,6 @@ CREATE TABLE `post_votes` (
   `post_id` int NOT NULL,
   `vote` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `post_votes`
---
-
-INSERT INTO `post_votes` (`id`, `account_id`, `post_id`, `vote`) VALUES
-(5, 1, 9, 1),
-(6, 1, 2, 1),
-(8, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -248,18 +189,6 @@ CREATE TABLE `replies` (
   `votes` int NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `replies`
---
-
-INSERT INTO `replies` (`id`, `account_id`, `post_id`, `comment_id`, `description`, `votes`, `date`) VALUES
-(1, 1, 1, 1, 'yo', 0, '2026-05-08'),
-(2, 1, 1, 2, 'test', 0, '2026-05-08'),
-(3, 1, 1, 1, 'testtttt', 0, '2026-05-08'),
-(4, 1, 1, 1, 'wdwdw', 0, '2026-05-09'),
-(5, 1, 1, 2, 'lmao', 0, '2026-05-09'),
-(6, 1, 1, 1, 'testst', 0, '2026-05-09');
 
 -- --------------------------------------------------------
 
@@ -288,16 +217,6 @@ CREATE TABLE `tags` (
   `icon` varchar(255) NOT NULL,
   `post_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `tags`
---
-
-INSERT INTO `tags` (`id`, `name`, `color_top`, `color_bottom`, `icon`, `post_id`) VALUES
-(1, 'Test', '313131', '8a8a8a', 'tag', 1),
-(5, 'adawdad', 'FC466B', '3F5EFB', '', 9),
-(6, 'tete', 'FC466B', '3F5EFB', '', 19),
-(7, 'TEST', 'FC466B', '3F2B96', '', 20);
 
 --
 -- Indexes for dumped tables
@@ -391,73 +310,73 @@ ALTER TABLE `tags`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `classes`
 --
 ALTER TABLE `classes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `comment_votes`
 --
 ALTER TABLE `comment_votes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `post_imgs`
 --
 ALTER TABLE `post_imgs`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `post_links`
 --
 ALTER TABLE `post_links`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `post_views`
 --
 ALTER TABLE `post_views`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `post_votes`
 --
 ALTER TABLE `post_votes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `replies`
 --
 ALTER TABLE `replies`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `reply_votes`
 --
 ALTER TABLE `reply_votes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

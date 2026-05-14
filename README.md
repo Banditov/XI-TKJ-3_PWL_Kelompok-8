@@ -367,6 +367,7 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
    - Implement menambah img dan link
    - Implement carousel dan preview image
    - Implement AJAX untuk voting, filter, comment, reply dan search
+   - Implement halaman edit
 </details>
 
 ### 13/05/2026 - 0.8.0

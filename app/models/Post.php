@@ -85,6 +85,8 @@ class Post extends Database
 
     public function getPostById(string $id)
     {
+        $accountId = $_SESSION['account_id'];
+        
         $query = "SELECT p.*, 
                         a.name AS account_name,
                         c.name AS class_name
@@ -96,19 +98,22 @@ class Post extends Database
         $result = mysqli_query($this->connection, $query);
         $row = mysqli_fetch_assoc($result);
 
+        if (!$row) {
+            return null;
+        }
+
         $imgResult = mysqli_query($this->connection, "SELECT file_name FROM {$this->table_imgs} WHERE post_id = '$id'");
         $row['imgs'] = mysqli_fetch_all($imgResult, MYSQLI_ASSOC);
 
-        $linkResult = mysqli_query($this->connection, "SELECT link FROM {$this->table_links} WHERE post_id = '$id'");
+        $linkResult = mysqli_query($this->connection, "SELECT link, link_text FROM {$this->table_links} WHERE post_id = '$id'");
         $row['links'] = mysqli_fetch_all($linkResult, MYSQLI_ASSOC);
 
         $tagResult = mysqli_query($this->connection, "SELECT * FROM tags WHERE post_id = '$id'");
         $row['tags'] = mysqli_fetch_all($tagResult, MYSQLI_ASSOC);
 
-        $accountId = $_SESSION['account_id'];
         $voteResult = mysqli_query($this->connection, "SELECT vote FROM post_votes WHERE post_id = '$id' AND account_id = '$accountId'");
         $voteRow = mysqli_fetch_assoc($voteResult);
-        $row['user_vote'] = $voteRow ? (int)$voteRow['vote'] : 0;
+        $row['user_vote'] = $voteRow ? $voteRow['vote'] : 0;
 
         return $row;
     }
@@ -167,5 +172,66 @@ class Post extends Database
         mysqli_query($this->connection,
             "INSERT INTO {$this->table_links} (post_id, link, link_text) VALUES ('$postId', '$link', '$linkText')"
         );
+    }
+
+    public function updatePost(int $postId, string $title, string $description)
+    {
+        $title = mysqli_real_escape_string($this->connection, $title);
+        $description = mysqli_real_escape_string($this->connection, $description);
+
+        $query = "UPDATE {$this->table} SET title = '$title', description = '$description' WHERE id = '$postId'";
+        return mysqli_query($this->connection, $query);
+    }
+
+    public function getImagesByPostId(int $postId)
+    {
+        $query = "SELECT * FROM {$this->table_imgs} WHERE post_id = '$postId'";
+        $result = mysqli_query($this->connection, $query);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+
+    public function deleteImage(int $imageId)
+    {
+        $query = "DELETE FROM {$this->table_imgs} WHERE id = '$imageId'";
+        return mysqli_query($this->connection, $query);
+    }
+
+    public function deleteLinksByPostId(int $postId)
+    {
+        $query = "DELETE FROM {$this->table_links} WHERE post_id = '$postId'";
+        return mysqli_query($this->connection, $query);
+    }
+
+    public function deletePostCompletely(int $postId)
+    {
+        mysqli_query($this->connection, "DELETE FROM post_votes WHERE post_id = '$postId'");
+
+        mysqli_query($this->connection, "DELETE FROM post_views WHERE post_id = '$postId'");
+
+        mysqli_query($this->connection, "DELETE FROM tags WHERE post_id = '$postId'");
+
+        $comments = mysqli_query($this->connection, "SELECT id FROM comments WHERE post_id = '$postId'");
+        while ($comment = mysqli_fetch_assoc($comments)) {
+            $commentId = $comment['id'];
+            mysqli_query($this->connection, "DELETE FROM reply_votes WHERE reply_id IN (SELECT id FROM replies WHERE comment_id = '$commentId')");
+            mysqli_query($this->connection, "DELETE FROM replies WHERE comment_id = '$commentId'");
+            mysqli_query($this->connection, "DELETE FROM comment_votes WHERE comment_id = '$commentId'");
+        }
+        mysqli_query($this->connection, "DELETE FROM comments WHERE post_id = '$postId'");
+
+        $images = mysqli_query($this->connection, "SELECT file_name FROM post_imgs WHERE post_id = '$postId'");
+        while ($img = mysqli_fetch_assoc($images)) {
+            $filePath = __DIR__ . '/../../public/assets/image/post/' . $img['file_name'];
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+        }
+        mysqli_query($this->connection, "DELETE FROM post_imgs WHERE post_id = '$postId'");
+
+        mysqli_query($this->connection, "DELETE FROM post_links WHERE post_id = '$postId'");
+
+        mysqli_query($this->connection, "DELETE FROM posts WHERE id = '$postId'");
+
+        return true;
     }
 }

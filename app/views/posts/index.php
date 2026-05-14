@@ -78,7 +78,12 @@
                             <?= essIcon('comment', 'w-10 h-10') ?>
                             <p class="text-2xl"><?= $post['comment_count'] ?></p>
                         </div>
-                        <button class="shareBtn" data-url="<?= 'http://' . $_SERVER['HTTP_HOST'] . '/posts/' . $post['id'] ?>">
+                    <?php if (isset($_SESSION['account_id']) && $_SESSION['account_id'] == $post['account_id']): ?>
+                            <a href="/posts/<?= $post['id'] ?>/edit" class="flex items-center gap-1 hover:opacity-70 transition">
+                                <?= essIcon('create', 'w-10 h-10') ?>
+                            </a>
+                    <?php endif; ?>
+                        <button class="shareBtn hover:opacity-70 transition cursor-pointer" data-url="<?= 'http://' . $_SERVER['HTTP_HOST'] . '/posts/' . $post['id'] ?>">
                             <?= essIcon('share', 'w-10 h-10') ?>
                         </button>
                     </div>

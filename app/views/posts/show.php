@@ -62,7 +62,12 @@
                             ?>
                         </p>
                     </div>
-                    <button class="shareBtn" data-url="<?= 'http://' . $_SERVER['HTTP_HOST'] . '/posts/' . $post['id'] ?>">
+                <?php if (isset($_SESSION['account_id']) && $_SESSION['account_id'] == $post['account_id']): ?>
+                    <a href="/posts/<?= $post['id'] ?>/edit" class="flex items-center gap-1 hover:opacity-70 transition">
+                        <?= essIcon('create', 'w-10 h-10') ?>
+                    </a>
+                <?php endif; ?>
+                    <button class="shareBtn hover:opacity-70 transition cursor-pointer" data-url="<?= 'http://' . $_SERVER['HTTP_HOST'] . '/posts/' . $post['id'] ?>">
                         <?= essIcon('share', 'w-10 h-10') ?>
                     </button>
                 </div>
@@ -81,9 +86,13 @@
                     <p class="font-bold">Links</p>
                 </div>
                 <ul class="list-disc ml-5">
-                    <?php foreach ($post['links'] as $link): ?>
-                        <li><a href="https://<?= $link['link'] ?>"><?= $link['link'] ?></a></li>
-                    <?php endforeach; ?>
+            <?php foreach ($post['links'] as $link): ?>
+                    <li>
+                        <a href="<?= htmlspecialchars($link['link']) ?>" target="_blank" class="text-blue-600 hover:underline">
+                            <?= htmlspecialchars($link['link_text'] ?? $link['link']) ?>
+                        </a>
+                    </li>
+            <?php endforeach; ?>
                 </ul>
             </div>
     <?php endif; ?>
