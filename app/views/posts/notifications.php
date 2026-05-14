@@ -1,18 +1,92 @@
 <?php
 
+$avatar_seeds = ['christopher', 'alex', 'morgan', 'jordan', 'taylor', 'riley', 'casey', 'dana'];
+
 $notifications = [
-    ['id' => 1, 'from_user' => 'CHRISTOPHER', 'action' => 'Give you a feedback', 'description' => 'Lorem ipsum dolor sit amet', 'date' => '13/06/2026', 'post_id' => 1],
-    ['id' => 2, 'from_user' => 'CHRISTOPHER', 'action' => 'Give you a feedback', 'description' => 'Lorem ipsum dolor sit amet', 'date' => '13/06/2026', 'post_id' => 1],
-    ['id' => 3, 'from_user' => 'CHRISTOPHER', 'action' => 'Give you a feedback', 'description' => 'Lorem ipsum dolor sit amet', 'date' => '13/06/2026', 'post_id' => 2],
-    ['id' => 4, 'from_user' => 'CHRISTOPHER', 'action' => 'Give you a feedback', 'description' => 'Lorem ipsum dolor sit amet', 'date' => '13/06/2026', 'post_id' => 2],
-    ['id' => 5, 'from_user' => 'CHRISTOPHER', 'action' => 'Give you a feedback', 'description' => 'Lorem ipsum dolor sit amet', 'date' => '13/06/2026', 'post_id' => 1],
-    ['id' => 6, 'from_user' => 'CHRISTOPHER', 'action' => 'Give you a feedback', 'description' => 'Lorem ipsum dolor sit amet', 'date' => '13/06/2026', 'post_id' => 3],
-    ['id' => 7, 'from_user' => 'CHRISTOPHER', 'action' => 'Give you a feedback', 'description' => 'Lorem ipsum dolor sit amet', 'date' => '13/06/2026', 'post_id' => 1],
-    ['id' => 8, 'from_user' => 'CHRISTOPHER', 'action' => 'Give you a feedback', 'description' => 'Lorem ipsum dolor sit amet', 'date' => '13/06/2026', 'post_id' => 4],
+    [
+        'id' => 1,
+        'user' => 'CHRISTOPHER',
+        'action' => 'Give you a feedback',
+        'body' => 'Lorem ipsum dolor sit amet',
+        'date' => '13/06/2026',
+        'unread' => true,
+        'seed' => 'christopher',
+    ],
+    [
+        'id' => 2,
+        'user' => 'CHRISTOPHER',
+        'action' => 'Give you a feedback',
+        'body' => 'Lorem ipsum dolor sit amet',
+        'date' => '13/06/2026',
+        'unread' => false,
+        'seed' => 'alex',
+    ],
+    [
+        'id' => 3,
+        'user' => 'CHRISTOPHER',
+        'action' => 'Give you a feedback',
+        'body' => 'Lorem ipsum dolor sit amet',
+        'date' => '13/06/2026',
+        'unread' => true,
+        'seed' => 'morgan',
+    ],
+    [
+        'id' => 4,
+        'user' => 'CHRISTOPHER',
+        'action' => 'Give you a feedback',
+        'body' => 'Lorem ipsum dolor sit amet',
+        'date' => '13/06/2026',
+        'unread' => false,
+        'seed' => 'jordan',
+    ],
+    [
+        'id' => 5,
+        'user' => 'CHRISTOPHER',
+        'action' => 'Give you a feedback',
+        'body' => 'Lorem ipsum dolor sit amet',
+        'date' => '13/06/2026',
+        'unread' => false,
+        'seed' => 'taylor',
+    ],
+    [
+        'id' => 6,
+        'user' => 'CHRISTOPHER',
+        'action' => 'Give you a feedback',
+        'body' => 'Lorem ipsum dolor sit amet',
+        'date' => '13/06/2026',
+        'unread' => true,
+        'seed' => 'riley',
+    ],
+    [
+        'id' => 7,
+        'user' => 'CHRISTOPHER',
+        'action' => 'Give you a feedback',
+        'body' => 'Lorem ipsum dolor sit amet',
+        'date' => '13/06/2026',
+        'unread' => false,
+        'seed' => 'casey',
+    ],
+    [
+        'id' => 8,
+        'user' => 'CHRISTOPHER',
+        'action' => 'Give you a feedback',
+        'body' => 'Lorem ipsum dolor sit amet',
+        'date' => '13/06/2026',
+        'unread' => false,
+        'seed' => 'dana',
+    ],
 ];
 
-$is_dyslexic = false; 
-$user_name = 'test'; 
+$logo_colors = ['#1A56DB', '#E53E3E', '#047857', '#7C3AED', '#B45309'];
+$logo_bg = $logo_colors[array_rand($logo_colors)];
+
+function avatarUrl(string $seed): string
+{
+    return "https://api.dicebear.com/7.x/avataaars/svg?seed=" . urlencode($seed) . "&backgroundColor=b6e3f4,c0aede,d1d4f9";
+}
+
+// Current page (for nav active state)
+$current_page = 'notifications';
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -20,141 +94,299 @@ $user_name = 'test';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notifications - ImmaSpark</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Space+Mono:wght@400;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Notifications — ImmaSpark</title>
     <link rel="stylesheet" href="/css/responsive/notifications.css">
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%231A56DB'/><text x='16' y='22' font-size='14' text-anchor='middle' fill='white' font-family='monospace' font-weight='bold'>IS</text></svg>">
 </head>
 
-<body class="<?php echo $is_dyslexic ? 'dyslexic' : ''; ?>">
+<body>
 
-    <aside class="sidebar">
-        <div class="logo-wrap">
-            <img src="" alt="Immaspark" class="logo-img">
-        </div>
-
-        <hr class="sidebar-divider">
-
-        <nav class="sidebar-nav">
-            <a href="explore.php" class="nav-item">
-                <i class="fas fa-globe"></i>
-                <span>Explore</span>
-            </a>
-            <a href="latest.php" class="nav-item">
-                <i class="fas fa-sun"></i>
-                <span>Latest</span>
-            </a>
-            <a href="pinned.php" class="nav-item">
-                <i class="fas fa-star"></i>
-                <span>Pinned</span>
-            </a>
-            <a href="popular.php" class="nav-item">
-                <i class="fas fa-circle-notch"></i>
-                <span>Popular</span>
-            </a>
-        </nav>
-
-        <hr class="sidebar-divider">
-
-        <nav class="sidebar-nav">
-            <a href="create-post.php" class="nav-item">
-                <i class="fas fa-pen-to-square"></i>
-                <span>Create a Post</span>
-            </a>
-            <a href="your-posts.php" class="nav-item">
-                <i class="fas fa-paste"></i>
-                <span>Your Posts</span>
-            </a>
-            <a href="notifications.php" class="nav-item active">
-                <i class="fas fa-bell"></i>
-                <span>Notifications</span>
-            </a>
-        </nav>
-
-        <hr class="sidebar-divider">
-
-        <div class="sidebar-nav">
-            <div class="nav-item toggle-item">
-                <i class="fas fa-a"></i>
-                <span>Dyslexic</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="dyslexicToggle" <?php echo $is_dyslexic ? 'checked' : ''; ?>>
-                    <span class="toggle-slider"></span>
-                </label>
-            </div>
-        </div>
-
-        <hr class="sidebar-divider">
-
-        <nav class="sidebar-nav">
-            <a href="logout.php" class="nav-item">
-                <i class="fas fa-right-from-bracket"></i>
-                <span>Logout</span>
-            </a>
-        </nav>
-
-    </aside>
-
-    <main class="main-content">
-
-        <div class="bg-deco">
-            <div class="bg-blob bg-blob-red"></div>
-            <div class="bg-blob bg-blob-blue"></div>
-        </div>
-
-        <div class="search-wrap">
-            <div class="search-bar">
-                <i class="fas fa-magnifying-glass search-icon"></i>
-                <input type="text" placeholder="Enter search terms" class="search-input">
-            </div>
-        </div>
-
-        <div class="notif-container">
-            <?php if (empty($notifications)): ?>
-                <div class="notif-empty">
-                    <i class="fas fa-bell-slash"></i>
-                    <p>Tidak ada notifikasi.</p>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-badge" style="background: <?= htmlspecialchars($logo_bg) ?>;">
+                    <!-- Random geometric logo using SVG inline -->
+                    <svg width="52" height="52" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="52" height="52" rx="14" fill="<?= htmlspecialchars($logo_bg) ?>" />
+                        <!-- Shield shape -->
+                        <path d="M26 8 L38 13 L38 24 C38 32 32 38 26 41 C20 38 14 32 14 24 L14 13 Z"
+                            fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" />
+                        <!-- IS text -->
+                        <text x="22" y="30" font-family="'Space Mono', monospace" font-size="10" font-weight="700"
+                            fill="white" letter-spacing="-0.5">IS</text>
+                    </svg>
                 </div>
-            <?php else: ?>
-                <?php foreach ($notifications as $notif): ?>
-                    <div class="notif-item">
-                        <div class="notif-row notif-row-top">
-                            <div class="notif-user">
-                                <div class="notif-avatar">
-                                    <i class="fas fa-user-circle"></i>
-                                </div>
-                                <span class="notif-title">
-                                    <?php echo htmlspecialchars($notif['from_user']); ?>
-                                    <?php echo htmlspecialchars($notif['action']); ?>
-                                </span>
-                            </div>
-                            <span class="notif-date"><?php echo htmlspecialchars($notif['date']); ?></span>
-                        </div>
-                        <div class="notif-row notif-row-bottom">
-                            <span class="notif-desc"><?php echo htmlspecialchars($notif['description']); ?></span>
-                            <a href="post.php?id=<?php echo (int) $notif['post_id']; ?>" class="btn-reply">Reply</a>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
+                <div style="line-height:1.15;">
+                    <div
+                        style="color:#fff;font-family:'Space Mono',monospace;font-size:14px;font-weight:700;letter-spacing:-0.5px;">
+                        Imma</div>
+                    <div
+                        style="color:rgba(255,255,255,0.7);font-family:'Space Mono',monospace;font-size:14px;font-weight:400;letter-spacing:-0.5px;">
+                        Spark</div>
+                </div>
+            </div>
 
-    </main>
+            <div class="sidebar-divider"></div>
+
+            <!-- Nav: Discover -->
+            <nav class="nav-section" style="margin-bottom:10px;">
+                <a href="#" class="nav-item <?= $current_page === 'explore' ? 'active' : '' ?>">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                        <path d="M2 12h20" />
+                    </svg>
+                    <span>Explore</span>
+                </a>
+                <a href="#" class="nav-item <?= $current_page === 'latest' ? 'active' : '' ?>">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5" />
+                        <line x1="12" y1="1" x2="12" y2="3" />
+                        <line x1="12" y1="21" x2="12" y2="23" />
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                        <line x1="1" y1="12" x2="3" y2="12" />
+                        <line x1="21" y1="12" x2="23" y2="12" />
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                    </svg>
+                    <span>Latest</span>
+                </a>
+                <a href="#" class="nav-item <?= $current_page === 'pinned' ? 'active' : '' ?>">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polygon
+                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                    <span>Pinned</span>
+                </a>
+                <a href="#" class="nav-item <?= $current_page === 'popular' ? 'active' : '' ?>">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 6v6l4 2" />
+                    </svg>
+                    <span>Popular</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-divider"></div>
+
+            <!-- Nav: User -->
+            <nav class="nav-section" style="margin-top:10px;">
+                <a href="#" class="nav-item <?= $current_page === 'create' ? 'active' : '' ?>">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                    </svg>
+                    <span>Create a Post</span>
+                </a>
+                <a href="#" class="nav-item <?= $current_page === 'your_posts' ? 'active' : '' ?>">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                    <span>Your Posts</span>
+                </a>
+                <a href="#" class="nav-item <?= $current_page === 'notifications' ? 'active' : '' ?>">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                    </svg>
+                    <span>Notifications</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-spacer"></div>
+            <div class="sidebar-divider"></div>
+            <label class="toggle-row" title="Toggle Dark Mode">
+                <span class="toggle-row-left">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg>
+                    <span>Dark Mode</span>
+                </span>
+                <div class="toggle-switch">
+                    <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode(this)">
+                    <div class="toggle-track"></div>
+                </div>
+            </label>
+
+            <label class="toggle-row" title="Toggle Dyslexic Font">
+                <span class="toggle-row-left">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="4 7 4 4 20 4 20 7" />
+                        <line x1="9" y1="20" x2="15" y2="20" />
+                        <line x1="12" y1="4" x2="12" y2="20" />
+                    </svg>
+                    <span>Dyslexic</span>
+                </span>
+                <div class="toggle-switch">
+                    <input type="checkbox" id="dyslexicToggle" onchange="toggleDyslexic(this)">
+                    <div class="toggle-track"></div>
+                </div>
+            </label>
+
+            <div class="sidebar-divider"></div>
+
+            <!-- Logout -->
+            <nav class="nav-section" style="margin-top:6px;">
+                <a href="#" class="nav-item" onclick="return confirm('Yakin logout?');">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
+                    </svg>
+                    <span>Logout</span>
+                </a>
+            </nav>
+
+        </aside>
+        <main class="main-content">
+            <div class="content-wrapper">
+                <div class="search-bar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    <input type="text" placeholder="Enter search terms" id="searchInput"
+                        oninput="filterNotifications(this.value)">
+                </div>
+
+                <div class="notifications-card" id="notificationsCard">
+
+                    <?php if (empty($notifications)): ?>
+                        <div class="empty-state">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                            </svg>
+                            <span>Tidak ada notifikasi</span>
+                        </div>
+                    <?php else: ?>
+                        <?php foreach ($notifications as $notif): ?>
+                            <div class="notif-item <?= $notif['unread'] ? 'unread' : '' ?>"
+                                data-title="<?= htmlspecialchars(strtolower($notif['user'] . ' ' . $notif['action'] . ' ' . $notif['body'])) ?>"
+                                id="notif-<?= (int) $notif['id'] ?>">
+
+                                <div class="notif-top-row">
+                                    <div class="notif-left">
+                                        <!-- Random avatar via DiceBear -->
+                                        <img class="avatar" src="<?= htmlspecialchars(avatarUrl($notif['seed'])) ?>"
+                                            alt="Avatar <?= htmlspecialchars($notif['user']) ?>"
+                                            onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($notif['user']) ?>&background=1A56DB&color=fff&size=80&bold=true&rounded=true';"
+                                            width="38" height="38" loading="lazy">
+                                        <span class="notif-title">
+                                            <?= htmlspecialchars($notif['user']) ?>
+                                            <?= htmlspecialchars($notif['action']) ?>
+                                        </span>
+                                    </div>
+                                    <span class="notif-date"><?= htmlspecialchars($notif['date']) ?></span>
+                                </div>
+
+                                <div class="notif-bottom-row">
+                                    <span class="notif-body"><?= htmlspecialchars($notif['body']) ?></span>
+                                    <button class="btn-reply" onclick="handleReply(<?= (int) $notif['id'] ?>, this)"
+                                        title="Reply to <?= htmlspecialchars($notif['user']) ?>">
+                                        Reply
+                                    </button>
+                                </div>
+
+                                <!-- Unread indicator dot -->
+                                <div class="unread-dot"></div>
+
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+
+                </div>
+            </div>
+        </main>
+    </div>
 
     <script>
-        const dyslexicToggle = document.getElementById('dyslexicToggle');
-        dyslexicToggle.addEventListener('change', () => {
-            document.body.classList.toggle('dyslexic', dyslexicToggle.checked);
-            fetch('toggle-dyslexic.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ is_dyslexic: dyslexicToggle.checked ? 1 : 0 })
+        function handleReply(notifId, btn) {
+            const item = document.getElementById('notif-' + notifId);
+            if (!item) return;
+            item.classList.remove('unread');
+            btn.textContent = '✓ Replied';
+            btn.style.background = '#047857';
+            btn.style.boxShadow = '0 3px 10px rgba(4,120,87,0.3)';
+            btn.disabled = true;
+            btn.style.cursor = 'default';
+        }
+        function filterNotifications(query) {
+            const q = query.trim().toLowerCase();
+            const items = document.querySelectorAll('.notif-item');
+            let anyVisible = false;
+
+            items.forEach(function (item) {
+                const text = item.getAttribute('data-title') || '';
+                const match = !q || text.includes(q);
+                item.style.display = match ? '' : 'none';
+                if (match) anyVisible = true;
             });
-        });
+
+            let emptyState = document.getElementById('filterEmptyState');
+            if (!anyVisible) {
+                if (!emptyState) {
+                    emptyState = document.createElement('div');
+                    emptyState.id = 'filterEmptyState';
+                    emptyState.className = 'empty-state';
+                    emptyState.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="48" height="48"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Tidak ada notifikasi yang cocok</span>';
+                    document.getElementById('notificationsCard').appendChild(emptyState);
+                }
+                emptyState.style.display = 'flex';
+            } else if (emptyState) {
+                emptyState.style.display = 'none';
+            }
+        }
+
+        function toggleDarkMode(checkbox) {
+            if (checkbox.checked) {
+                document.documentElement.style.setProperty('--white', '#1E293B');
+                document.documentElement.style.setProperty('--gray-100', '#263244');
+                document.documentElement.style.setProperty('--gray-200', '#2D3748');
+                document.documentElement.style.setProperty('--text-dark', '#F1F5F9');
+                document.documentElement.style.setProperty('--text-muted', '#94A3B8');
+                document.documentElement.style.setProperty('--gray-500', '#64748B');
+            } else {
+                document.documentElement.style.setProperty('--white', '#ffffff');
+                document.documentElement.style.setProperty('--gray-100', '#F7F9FC');
+                document.documentElement.style.setProperty('--gray-200', '#EDF2F7');
+                document.documentElement.style.setProperty('--text-dark', '#1A202C');
+                document.documentElement.style.setProperty('--text-muted', '#4A5568');
+                document.documentElement.style.setProperty('--gray-500', '#718096');
+            }
+        }
+
+        function toggleDyslexic(checkbox) {
+            if (checkbox.checked) {
+                document.body.style.fontFamily = "'OpenDyslexic', 'Comic Sans MS', cursive";
+                document.querySelectorAll('.notif-title, .notif-body, .notif-date, .nav-item, .btn-reply').forEach(function (el) {
+                    el.style.fontFamily = "'OpenDyslexic', 'Comic Sans MS', cursive";
+                });
+            } else {
+                document.body.style.fontFamily = "";
+                document.querySelectorAll('.notif-title, .notif-body, .notif-date, .nav-item, .btn-reply').forEach(function (el) {
+                    el.style.fontFamily = "";
+                });
+            }
+        }
     </script>
+
 </body>
 
 </html>
