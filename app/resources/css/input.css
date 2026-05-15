@@ -76,3 +76,11 @@ select::picker-icon {
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
 }
+
+/* Dyslexic mode */
+.dyslexic-mode,
+.dyslexic-mode * {
+    font-family: 'Comic Sans MS' !important;
+    letter-spacing: 0.05em !important;
+    line-height: 1.5 !important;
+}

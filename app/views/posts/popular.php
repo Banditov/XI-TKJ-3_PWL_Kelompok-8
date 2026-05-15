@@ -90,7 +90,7 @@
                         </form>
                     <?php else: ?>
                         <form action="/posts/<?= $post['id'] ?>/pin" method="POST" class="inline">
-                            <button type="submit" class="text-gray-500 rounded-full hover:text-yellow-500 hover:bg-yellow-100 transition flex items-center gap-2">
+                            <button type="submit" class="text-[#545F71] rounded-full hover:text-yellow-500 hover:bg-yellow-100 transition flex items-center gap-2">
                                 <?= icon('star', 'w-10 h-10') ?>
                             </button>
                         </form>
