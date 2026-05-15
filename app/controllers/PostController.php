@@ -16,7 +16,6 @@ class PostController extends Controller
         $tagModel->deleteUnusedTags();
 
         $allTags = $tagModel->getTags();
-
         $uniqueTags = [];
         foreach ($allTags as $tag) {
             $name = $tag['name'];
@@ -36,6 +35,8 @@ class PostController extends Controller
         ];
 
         $posts = $postModel->getPosts($filters);
+
+        shuffle($posts);
 
         $_SESSION['filter_tags']    = $tags;
         $_SESSION['filter_filters'] = $filters;
@@ -325,6 +326,202 @@ class PostController extends Controller
 
         $_SESSION['success'] = 'Post deleted successfully!';
         header("Location: /posts");
+        exit;
+    }
+
+    public function latest()
+    {
+        $postModel = new Post();
+        $tagModel  = new Tag();
+        $tagModel->deleteUnusedTags();
+
+        $allTags = $tagModel->getTags();
+        $uniqueTags = [];
+        foreach ($allTags as $tag) {
+            $name = $tag['name'];
+            if (!isset($uniqueTags[$name])) {
+                $uniqueTags[$name] = $tag;
+            }
+        }
+        $tags = array_values($uniqueTags);
+
+        $filters = [
+            'search'     => $_GET['search']     ?? '',
+            'tag'        => $_GET['tag']        ?? '',
+            'votes_min'  => $_GET['votes_min']  ?? '',
+            'votes_max'  => $_GET['votes_max']  ?? '',
+            'views_min'  => $_GET['views_min']  ?? '',
+            'views_max'  => $_GET['views_max']  ?? '',
+        ];
+
+        $posts = $postModel->getLatestPosts($filters);
+
+        $_SESSION['filter_tags']    = $tags;
+        $_SESSION['filter_filters'] = $filters;
+
+        $this->view('posts.latest', [
+            'posts'   => $posts,
+            'tags'    => $tags,
+            'filters' => $filters
+        ]);
+    }
+
+    public function popular()
+    {
+        $postModel = new Post();
+        $tagModel  = new Tag();
+        $tagModel->deleteUnusedTags();
+
+        $allTags = $tagModel->getTags();
+        $uniqueTags = [];
+        foreach ($allTags as $tag) {
+            $name = $tag['name'];
+            if (!isset($uniqueTags[$name])) {
+                $uniqueTags[$name] = $tag;
+            }
+        }
+        $tags = array_values($uniqueTags);
+
+        $filters = [
+            'search'     => $_GET['search']     ?? '',
+            'tag'        => $_GET['tag']        ?? '',
+            'votes_min'  => $_GET['votes_min']  ?? '',
+            'votes_max'  => $_GET['votes_max']  ?? '',
+            'views_min'  => $_GET['views_min']  ?? '',
+            'views_max'  => $_GET['views_max']  ?? '',
+        ];
+
+        $posts = $postModel->getPopularPosts($filters);
+
+        $_SESSION['filter_tags']    = $tags;
+        $_SESSION['filter_filters'] = $filters;
+
+        $this->view('posts.popular', [
+            'posts'   => $posts,
+            'tags'    => $tags,
+            'filters' => $filters
+        ]);
+    }
+
+    public function myPosts()
+    {
+        if (!isset($_SESSION['account_id'])) {
+            header("Location: /login");
+            exit;
+        }
+
+        $postModel = new Post();
+        $tagModel  = new Tag();
+        $tagModel->deleteUnusedTags();
+
+        $allTags = $tagModel->getTags();
+        $uniqueTags = [];
+        foreach ($allTags as $tag) {
+            $name = $tag['name'];
+            if (!isset($uniqueTags[$name])) {
+                $uniqueTags[$name] = $tag;
+            }
+        }
+        $tags = array_values($uniqueTags);
+
+        $filters = [
+            'search'     => $_GET['search']     ?? '',
+            'tag'        => $_GET['tag']        ?? '',
+            'votes_min'  => $_GET['votes_min']  ?? '',
+            'votes_max'  => $_GET['votes_max']  ?? '',
+            'views_min'  => $_GET['views_min']  ?? '',
+            'views_max'  => $_GET['views_max']  ?? '',
+        ];
+
+        $posts = $postModel->getMyPosts($_SESSION['account_id'], $filters);
+
+        $_SESSION['filter_tags']    = $tags;
+        $_SESSION['filter_filters'] = $filters;
+
+        $this->view('posts.mypost', [
+            'posts'   => $posts,
+            'tags'    => $tags,
+            'filters' => $filters
+        ]);
+    }
+
+    public function pinned()
+    {
+        $postModel = new Post();
+        $tagModel  = new Tag();
+
+        $allTags = $tagModel->getTags();
+        $uniqueTags = [];
+        foreach ($allTags as $tag) {
+            if (strtolower($tag['name']) === 'pinned') continue;
+            
+            $name = $tag['name'];
+            if (!isset($uniqueTags[$name])) {
+                $uniqueTags[$name] = $tag;
+            }
+        }
+        $tags = array_values($uniqueTags);
+
+        $filters = [
+            'search'     => $_GET['search']     ?? '',
+            'tag'        => $_GET['tag']        ?? '',
+            'votes_min'  => $_GET['votes_min']  ?? '',
+            'votes_max'  => $_GET['votes_max']  ?? '',
+            'views_min'  => $_GET['views_min']  ?? '',
+            'views_max'  => $_GET['views_max']  ?? '',
+        ];
+
+        $posts = $postModel->getPinnedPosts($filters);
+
+        $_SESSION['filter_tags']    = $tags;
+        $_SESSION['filter_filters'] = $filters;
+
+        $this->view('posts.pinned', [
+            'posts'   => $posts,
+            'tags'    => $tags,
+            'filters' => $filters
+        ]);
+    }
+
+    public function pin(string $id)
+    {
+        if (!isset($_SESSION['account_id']) || ($_SESSION['is_admin'] ?? 0) != 1) {
+            $_SESSION['error'] = 'Unauthorized action';
+            header("Location: /posts/{$id}");
+            exit;
+        }
+
+        $tagModel = new Tag();
+        $result = $tagModel->pinPost(intval($id));
+
+        if ($result) {
+            $_SESSION['success'] = 'Post pinned successfully!';
+        } else {
+            $_SESSION['error'] = 'Failed to pin post';
+        }
+
+        header("Location: /posts/{$id}");
+        exit;
+    }
+
+    public function unpin(string $id)
+    {
+        if (!isset($_SESSION['account_id']) || ($_SESSION['is_admin'] ?? 0) != 1) {
+            $_SESSION['error'] = 'Unauthorized action';
+            header("Location: /posts/{$id}");
+            exit;
+        }
+
+        $tagModel = new Tag();
+        $result = $tagModel->unpinPost(intval($id));
+
+        if ($result) {
+            $_SESSION['success'] = 'Post unpinned successfully!';
+        } else {
+            $_SESSION['error'] = 'Failed to unpin post';
+        }
+
+        header("Location: /posts/{$id}");
         exit;
     }
 }

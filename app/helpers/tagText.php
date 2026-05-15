@@ -21,5 +21,5 @@ function tagTextColor(string $colorTop, string $colorBottom): string
 
     $luminance = (0.299 * $r + 0.587 * $g + 0.114 * $b) / 255;
 
-    return $luminance > 0.7 ? '#1f2937' : '#ffffff';
+    return $luminance > 0.8 ? '#1f2937' : '#ffffff';
 }

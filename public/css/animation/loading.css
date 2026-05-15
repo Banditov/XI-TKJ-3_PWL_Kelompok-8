@@ -1,0 +1,32 @@
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes waveLeftRight {
+    0% {
+        transform: translateY(0);
+    }
+    25% {
+        transform: translateY(-10px);
+    }
+    50% {
+        transform: translateY(0);
+    }
+    75% {
+        transform: translateY(10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+#textWave span:nth-child(1) { animation: waveLeftRight 2s ease-in-out infinite; animation-delay: 0s; }
+#textWave span:nth-child(2) { animation: waveLeftRight 2s ease-in-out infinite; animation-delay: 0.1s; }
+#textWave span:nth-child(3) { animation: waveLeftRight 2s ease-in-out infinite; animation-delay: 0.2s; }
+#textWave span:nth-child(4) { animation: waveLeftRight 2s ease-in-out infinite; animation-delay: 0.3s; }
+#textWave span:nth-child(5) { animation: waveLeftRight 2s ease-in-out infinite; animation-delay: 0.4s; }
+#textWave span:nth-child(6) { animation: waveLeftRight 2s ease-in-out infinite; animation-delay: 0.5s; }
+#textWave span:nth-child(7) { animation: waveLeftRight 2s ease-in-out infinite; animation-delay: 0.6s; }
+#textWave span:nth-child(8) { animation: waveLeftRight 2s ease-in-out infinite; animation-delay: 0.7s; }
+#textWave span:nth-child(9) { animation: waveLeftRight 2s ease-in-out infinite; animation-delay: 0.8s; }

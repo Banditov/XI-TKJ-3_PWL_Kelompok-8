@@ -38,26 +38,67 @@ class Tag extends Database
 
     public function createTag(int $postId, string $name, string $colorTop, string $colorBottom, string $icon = 'tag')
     {
+        if (strtolower($name) === 'pinned') {
+            return false;
+        }
+        
         $name = mysqli_real_escape_string($this->connection, $name);
         $colorTop = mysqli_real_escape_string($this->connection, $colorTop);
         $colorBottom = mysqli_real_escape_string($this->connection, $colorBottom);
         $icon = mysqli_real_escape_string($this->connection, $icon);
         
         $query = "INSERT INTO {$this->table} (post_id, name, color_top, color_bottom, icon) 
-                  VALUES ('$postId', '$name', '$colorTop', '$colorBottom', '$icon')";
+                VALUES ('$postId', '$name', '$colorTop', '$colorBottom', '$icon')";
         mysqli_query($this->connection, $query);
         return mysqli_insert_id($this->connection);
+    }
+
+    public function deleteUnusedTags()
+    {
+        $query = "DELETE FROM {$this->table} 
+                WHERE post_id IS NULL 
+                AND LOWER(name) != 'pinned'";
+        return mysqli_query($this->connection, $query);
+    }
+
+    public function pinPost(int $postId)
+    {
+        $check = mysqli_query($this->connection, 
+            "SELECT id FROM {$this->table} WHERE post_id = '$postId' AND LOWER(name) = 'pinned'"
+        );
+        
+        if (mysqli_num_rows($check) === 0) {
+            $query = "INSERT INTO {$this->table} (post_id, name, color_top, color_bottom, icon) 
+                    VALUES ('$postId', 'Pinned', 'FFD700', 'FFA500', 'star')";
+            return mysqli_query($this->connection, $query);
+        }
+        return true;
+    }
+
+    public function unpinPost(int $postId)
+    {
+        $query = "DELETE FROM {$this->table} WHERE post_id = '$postId' AND LOWER(name) = 'pinned'";
+        return mysqli_query($this->connection, $query);
+    }
+
+    public function getPinnedPosts()
+    {
+        $query = "SELECT p.*, 
+                        a.name AS account_name,
+                        c.name AS class_name
+                FROM posts p
+                LEFT JOIN accounts a ON a.id = p.account_id
+                LEFT JOIN classes c ON c.id = a.class_id
+                WHERE EXISTS (SELECT 1 FROM tags t WHERE t.post_id = p.id AND LOWER(t.name) = 'pinned')
+                ORDER BY p.date DESC";
+        
+        $result = mysqli_query($this->connection, $query);
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 
     public function deleteTagsByPostId(int $postId)
     {
         $query = "DELETE FROM {$this->table} WHERE post_id = '$postId'";
-        return mysqli_query($this->connection, $query);
-    }
-
-    public function deleteUnusedTags()
-    {
-        $query = "DELETE FROM {$this->table} WHERE post_id IS NULL";
         return mysqli_query($this->connection, $query);
     }
 

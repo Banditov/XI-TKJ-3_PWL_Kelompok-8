@@ -1,7 +1,9 @@
 <title><?= htmlspecialchars($post['title']) ?> | ImmaSpark</title>
 <link rel="stylesheet" href="/css/responsive/main.css">
 
-<?php include __DIR__ . '/../../../app/views/layouts/partials/navbar/navbar.php'; ?>
+<script type="module" src="/js/animation/post.js"></script>
+
+<?php include __DIR__ . '/../../../app/views/layouts/partials/navbar.php'; ?>
 <?php include __DIR__ . '/../../../app/helpers/tagText.php'; ?>
 
 <div id="xIconSvg" class="hidden"><?= essIcon('x', 'w-6 h-6 cursor-pointer') ?></div>
@@ -37,13 +39,13 @@
                 </div>
                 <div class="flex items-center gap-5">
                     <div class="vote-container flex px-4 py-2 bg-[#2C7CFF] text-white rounded-full items-center gap-3" data-post-id="<?= $post['id'] ?>" data-type="post">
-                        <button type="button" class="vote-btn vote-up flex items-center justify-center" data-vote="up" data-current-vote="<?= $post['user_vote'] == 1 ? 'up' : ($post['user_vote'] == -1 ? 'down' : '') ?>">
+                        <button type="button" class="vote-btn vote-up flex items-center justify-center cursor-pointer" data-vote="up" data-current-vote="<?= $post['user_vote'] == 1 ? 'up' : ($post['user_vote'] == -1 ? 'down' : '') ?>">
                             <span style="<?= $post['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
                                 <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
                             </span>
                         </button>
                         <p class="vote-count text-2xl"><?= $post['votes'] ?></p>
-                        <button type="button" class="vote-btn vote-down flex items-center justify-center" data-vote="down" data-current-vote="<?= $post['user_vote'] == 1 ? 'up' : ($post['user_vote'] == -1 ? 'down' : '') ?>">
+                        <button type="button" class="vote-btn vote-down flex items-center justify-center cursor-pointer" data-vote="down" data-current-vote="<?= $post['user_vote'] == 1 ? 'up' : ($post['user_vote'] == -1 ? 'down' : '') ?>">
                             <span style="<?= $post['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
                                 <?= essIcon('arrow', 'w-7 h-7') ?>
                             </span>
@@ -74,7 +76,7 @@
             </div>
             <p class="text-4xl font-bold"><?= $post['title'] ?></p>
         </div>
-    <?php include __DIR__ . '/../layouts/partials/carousel/carousel.php'; ?>
+    <?php include __DIR__ . '/../layouts/partials/carousel.php'; ?>
         <div class="md:p-10 p-7 <?= ($post['imgs']) ? '' : 'pt-0!' ?> flex flex-col md:gap-7 gap-5">
             <div class="revert-tailwind">
                 <?= $post['description'] ?>
@@ -103,7 +105,7 @@
     <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg post md:p-10 p-7 flex flex-col md:gap-5 gap-3">
         <form action="/posts/<?= $post['id'] ?>/comments" method="POST" id="commentForm" data-post-id="<?= $post['id'] ?>" class="flex gap-3 items-center">
             <input type="text" name="description" placeholder="Share your thoughts!" class="p-3 pl-8 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white" required>
-            <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full font-bold">Post</button>
+            <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full font-bold hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Post</button>
         </form>
 
         <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
@@ -125,7 +127,7 @@
 <!-- Desktop Comment -->
         <div class="comments-list-desktop">
     <?php foreach ($comments as $comment): ?>
-            <div class="hidden md:flex flex-col border-2 border-[#545F71] rounded-4xl comment-item mb-5" data-comment-id="<?= $comment['id'] ?>">
+            <div class="hidden md:flex flex-col border-2 border-[#545F71] rounded-4xl comment-item" data-comment-id="<?= $comment['id'] ?>">
                 <div class="flex items-center justify-between p-5 border-b-2 border-[#545F71]">
                     <div class="flex gap-5 items-center">
                         <img src="/assets/image/account/<?= $comment['account_id'] ?>.jpg" class="w-10 h-10 object-cover rounded-full drop-shadow-lg">
@@ -142,13 +144,13 @@
                             <p class="text-2xl">Reply</p>
                         </label>
                         <div class="vote-container flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3" data-comment-id="<?= $comment['id'] ?>" data-type="comment">
-                            <button type="button" class="vote-btn vote-up flex items-center justify-center" data-vote="up" data-current-vote="<?= $comment['user_vote'] == 1 ? 'up' : ($comment['user_vote'] == -1 ? 'down' : '') ?>">
+                            <button type="button" class="vote-btn vote-up flex items-center justify-center cursor-pointer" data-vote="up" data-current-vote="<?= $comment['user_vote'] == 1 ? 'up' : ($comment['user_vote'] == -1 ? 'down' : '') ?>">
                                 <span style="<?= $comment['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
                                     <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
                                 </span>
                             </button>
                             <p class="vote-count text-2xl"><?= $comment['votes'] ?></p>
-                            <button type="button" class="vote-btn vote-down flex items-center justify-center" data-vote="down" data-current-vote="<?= $comment['user_vote'] == 1 ? 'up' : ($comment['user_vote'] == -1 ? 'down' : '') ?>">
+                            <button type="button" class="vote-btn vote-down flex items-center justify-center cursor-pointer" data-vote="down" data-current-vote="<?= $comment['user_vote'] == 1 ? 'up' : ($comment['user_vote'] == -1 ? 'down' : '') ?>">
                                 <span style="<?= $comment['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
                                     <?= essIcon('arrow', 'w-7 h-7') ?>
                                 </span>
@@ -188,13 +190,13 @@
                                 <p class="text-2xl font-bold"><?= $reply['date'] ?></p>
                             </div>
                             <div class="vote-container flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3" data-reply-id="<?= $reply['id'] ?>" data-type="reply">
-                                <button type="button" class="vote-btn vote-up flex items-center justify-center" data-vote="up" data-current-vote="<?= $reply['user_vote'] == 1 ? 'up' : ($reply['user_vote'] == -1 ? 'down' : '') ?>">
+                                <button type="button" class="vote-btn vote-up flex items-center justify-center cursor-pointer" data-vote="up" data-current-vote="<?= $reply['user_vote'] == 1 ? 'up' : ($reply['user_vote'] == -1 ? 'down' : '') ?>">
                                     <span style="<?= $reply['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
                                         <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
                                     </span>
                                 </button>
                                 <p class="vote-count text-2xl"><?= $reply['votes'] ?></p>
-                                <button type="button" class="vote-btn vote-down flex items-center justify-center" data-vote="down" data-current-vote="<?= $reply['user_vote'] == 1 ? 'up' : ($reply['user_vote'] == -1 ? 'down' : '') ?>">
+                                <button type="button" class="vote-btn vote-down flex items-center justify-center cursor-pointer" data-vote="down" data-current-vote="<?= $reply['user_vote'] == 1 ? 'up' : ($reply['user_vote'] == -1 ? 'down' : '') ?>">
                                     <span style="<?= $reply['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
                                         <?= essIcon('arrow', 'w-7 h-7') ?>
                                     </span>
@@ -215,7 +217,7 @@
 <!-- Comment Mobile -->
         <div class="comments-list-mobile">
     <?php foreach ($comments as $comment): ?>
-            <div class="flex md:hidden flex-col border-2 border-[#545F71] rounded-4xl comment-item mb-5" data-comment-id="<?= $comment['id'] ?>">
+            <div class="flex md:hidden flex-col border-2 border-[#545F71] rounded-4xl comment-item" data-comment-id="<?= $comment['id'] ?>">
                 <div class="p-5 border-b-2 border-[#545F71]">
                     <div class="flex gap-5 items-center justify-between w-full">
                         <div class="flex gap-5 items-center">
@@ -237,13 +239,13 @@
                         <p class="text-2xl">Reply</p>
                     </label>
                     <div class="vote-container flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3" data-comment-id="<?= $comment['id'] ?>" data-type="comment">
-                        <button type="button" class="vote-btn vote-up flex items-center justify-center" data-vote="up" data-current-vote="<?= $comment['user_vote'] == 1 ? 'up' : ($comment['user_vote'] == -1 ? 'down' : '') ?>">
+                        <button type="button" class="vote-btn vote-up flex items-center justify-center cursor-pointer" data-vote="up" data-current-vote="<?= $comment['user_vote'] == 1 ? 'up' : ($comment['user_vote'] == -1 ? 'down' : '') ?>">
                             <span style="<?= $comment['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
                                 <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
                             </span>
                         </button>
                         <p class="vote-count text-2xl"><?= $comment['votes'] ?></p>
-                        <button type="button" class="vote-btn vote-down flex items-center justify-center" data-vote="down" data-current-vote="<?= $comment['user_vote'] == 1 ? 'up' : ($comment['user_vote'] == -1 ? 'down' : '') ?>">
+                        <button type="button" class="vote-btn vote-down flex items-center justify-center cursor-pointer" data-vote="down" data-current-vote="<?= $comment['user_vote'] == 1 ? 'up' : ($comment['user_vote'] == -1 ? 'down' : '') ?>">
                             <span style="<?= $comment['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
                                 <?= essIcon('arrow', 'w-7 h-7') ?>
                             </span>
@@ -258,7 +260,7 @@
                 <div id="inputReply-<?= $comment['id'] ?>-m" class="hidden px-5 <?= !empty($comment['replies']) ? 'pb-8' : 'pb-5' ?>">
                     <form action="/posts/<?= $post['id'] ?>/comments/<?= $comment['id'] ?>/replies" method="POST" class="flex gap-3 items-center">
                         <input type="text" name="description" placeholder="Replying..." class="p-3 pl-8 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white" required>
-                        <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full shrink-0 font-bold">Post</button>
+                        <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full shrink-0 font-bold cursor-pointer hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Post</button>
                     </form>
                 </div>
         <?php if (!empty($comment['replies'])): ?>
@@ -285,13 +287,13 @@
                         </div>
                         <div class="flex gap-5 items-center p-5 pt-0 justify-end">
                             <div class="vote-container flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3" data-reply-id="<?= $reply['id'] ?>" data-type="reply">
-                                <button type="button" class="vote-btn vote-up flex items-center justify-center" data-vote="up" data-current-vote="<?= $reply['user_vote'] == 1 ? 'up' : ($reply['user_vote'] == -1 ? 'down' : '') ?>">
+                                <button type="button" class="vote-btn vote-up flex items-center justify-center cursor-pointer" data-vote="up" data-current-vote="<?= $reply['user_vote'] == 1 ? 'up' : ($reply['user_vote'] == -1 ? 'down' : '') ?>">
                                     <span style="<?= $reply['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
                                         <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
                                     </span>
                                 </button>
                                 <p class="vote-count text-2xl"><?= $reply['votes'] ?></p>
-                                <button type="button" class="vote-btn vote-down flex items-center justify-center" data-vote="down" data-current-vote="<?= $reply['user_vote'] == 1 ? 'up' : ($reply['user_vote'] == -1 ? 'down' : '') ?>">
+                                <button type="button" class="vote-btn vote-down flex items-center justify-center cursor-pointer" data-vote="down" data-current-vote="<?= $reply['user_vote'] == 1 ? 'up' : ($reply['user_vote'] == -1 ? 'down' : '') ?>">
                                     <span style="<?= $reply['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
                                         <?= essIcon('arrow', 'w-7 h-7') ?>
                                     </span>

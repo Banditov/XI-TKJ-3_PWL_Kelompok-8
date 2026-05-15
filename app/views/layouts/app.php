@@ -1,3 +1,8 @@
+<?php 
+    $currentPath = $_SERVER['REQUEST_URI'] ?? '';
+    $isIntroPage = ($currentPath === '/' || $currentPath === '/intro'); 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,10 +16,18 @@
         <link href="https://fonts.googleapis.com/css2?family=Allerta&family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
     </head>
     <body class="m-0 bg-[url('/assets/image/texture/background-l.png')] bg-size-[150%] **:select-none">
+        <!-- Loading Screen -->
+        <?php if (!$isIntroPage): ?>
+            <?php require_once __DIR__ . '/../../../app/views/layouts/partials/loading.php'; ?>
+        <?php endif; ?>
+
         <!-- Error Screen -->
         <?php require_once __DIR__ . '/../../../app/views/error/screen/error.php'; ?>
 
         <!-- Content -->
         <?= $content ?>
+
+        <!-- Scripts -->
+        <script src="/js/global.js"></script>
     </body>
 </html>

@@ -7,15 +7,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let controller = null;
     let debounce = null;
 
+    const currentPath = window.location.pathname;
+    const baseUrl = currentPath;
+
     async function applyFilters(params) {
         try {
+            if (window.showLoading) window.showLoading();
+
             if (controller) {
                 controller.abort();
             }
 
             controller = new AbortController();
 
-            const url = '/posts?' + new URLSearchParams(params).toString();
+            const url = baseUrl + '?' + new URLSearchParams(params).toString();
 
             postsContainer.style.opacity = '0.5';
 
@@ -35,8 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!newPosts) return;
 
-            postsContainer.style.minHeight =
-                postsContainer.offsetHeight + 'px';
+            postsContainer.style.minHeight = postsContainer.offsetHeight + 'px';
 
             const fragment = document.createRange()
                 .createContextualFragment(newPosts.innerHTML);
@@ -47,14 +51,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.initVoteHandlers();
             }
 
+            if (window.initCarousels) {
+                window.initCarousels();
+            }
+
+            if (window.initPostAnimations) {
+                window.initPostAnimations();
+            }
+
+            if (window.initImagePreviewOnMedia) {
+                window.initImagePreviewOnMedia();
+            }
+
             requestAnimationFrame(() => {
                 postsContainer.style.opacity = '1';
                 postsContainer.style.minHeight = '';
             });
 
-            if (window.initCarousels) {
-                window.initCarousels();
-            }
+            if (window.hideLoading) window.hideLoading();
 
         } catch (err) {
             if (err.name !== 'AbortError') {
@@ -62,6 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             postsContainer.style.opacity = '1';
+
+            if (window.hideLoading) window.hideLoading();
         }
     }
 
@@ -85,53 +101,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function debounceSearch(callback, delay = 300) {
         clearTimeout(debounce);
-
         debounce = setTimeout(callback, delay);
     }
 
-    // Desktop search
     if (searchForm) {
         const input = searchForm.querySelector('#search');
 
-        input?.addEventListener('input', () => {
-            debounceSearch(() => {
-                applyFilters(
-                    getFormData(searchForm, filterForm)
-                );
+        if (input) {
+            input.addEventListener('input', () => {
+                debounceSearch(() => {
+                    applyFilters(
+                        getFormData(searchForm, filterForm)
+                    );
+                });
             });
-        });
+        }
 
         searchForm.addEventListener('submit', e => {
             e.preventDefault();
-
             applyFilters(
                 getFormData(searchForm, filterForm)
             );
         });
     }
 
-    // Mobile search
     if (searchMobile) {
         const input = searchMobile.querySelector('#searchMobile');
 
-        input?.addEventListener('input', () => {
-            debounceSearch(() => {
-                applyFilters(
-                    getFormData(searchMobile, filterForm)
-                );
+        if (input) {
+            input.addEventListener('input', () => {
+                debounceSearch(() => {
+                    applyFilters(
+                        getFormData(searchMobile, filterForm)
+                    );
+                });
             });
-        });
+        }
 
         searchMobile.addEventListener('submit', e => {
             e.preventDefault();
-
             applyFilters(
                 getFormData(searchMobile, filterForm)
             );
         });
     }
 
-    // Filters
     if (filterForm) {
         const inputs = filterForm.querySelectorAll(
             'select, input[type="number"]'

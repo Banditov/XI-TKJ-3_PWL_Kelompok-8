@@ -1,4 +1,4 @@
-<title>Home | ImmaSpark</title>
+<title>My Posts | ImmaSpark</title>
 <link rel="stylesheet" href="/css/responsive/main.css">
 
 <script type="module" src="/js/animation/post.js"></script>
@@ -10,7 +10,7 @@
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
     <div id="searchBar" class="z-2 sticky top-10 w-full md:block hidden opacity-60 hover:opacity-100 transition">
-        <form method="GET" action="/posts" id="searchForm">
+        <form method="GET" action="/mypost" id="searchForm">
             <input type="hidden" name="tag"       value="<?= htmlspecialchars($filters['tag'] ?? '') ?>">
             <input type="hidden" name="votes_min" value="<?= htmlspecialchars($filters['votes_min'] ?? '') ?>">
             <input type="hidden" name="votes_max" value="<?= htmlspecialchars($filters['votes_max'] ?? '') ?>">
@@ -19,15 +19,15 @@
             <label for="search">
                 <?= essIcon('search', 'w-8 absolute left-4 top-1/2 -translate-y-4 z-2') ?>
             </label>
-            <input type="text" id="search" name="search" value="<?= htmlspecialchars($filters['search'] ?? '') ?>" placeholder="Search..." class="p-4 pl-14 w-full text-white placeholder:text-white/60 rounded-full border border-white/20 backdrop-blur-md bg-gray-900/25">
+            <input type="text" id="search" name="search" value="<?= htmlspecialchars($filters['search'] ?? '') ?>" placeholder="Search your posts..." class="p-4 pl-14 w-full text-white placeholder:text-white/60 rounded-full border border-white/20 backdrop-blur-md bg-gray-900/25">
         </form>
     </div>
 
     <div id="postsContainer" class="flex flex-col gap-10">
 <?php if (empty($posts)): ?>
         <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg p-10 text-center">
-            <p class="text-2xl">No posts found</p>
-            <a href="/posts/create" class="inline-block mt-4 px-6 py-3 bg-[#2C7CFF] text-white rounded-full hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Create the first post!</a>
+            <p class="text-2xl">You haven't created any posts yet</p>
+            <a href="/posts/create" class="inline-block mt-4 px-6 py-3 bg-[#2C7CFF] text-white rounded-full hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Create your first post!</a>
         </div>
 <?php else: ?>
 <?php foreach ($posts as $index => $post): ?>
@@ -35,7 +35,7 @@
             <div class="md:pt-10 md:pr-10 md:pl-10 pb-7 pt-7 pr-7 pl-7 flex flex-col md:gap-3 gap-5">
                 <div class="flex justify-between items-center">
                     <div class="flex gap-5 items-center">
-                        <img src="/assets/image/account/<?= htmlspecialchars($post['account_id']) ?>.jpg" class="w-15 h-15 object-cover rounded-full drop-shadow-lg">
+                        <img src="/assets/image/account/<?= htmlspecialchars($post['account_id']) ?>.jpg" class="w-15 h-15 object-cover rounded-full drop-shadow-lg" onerror="this.src='/assets/image/account/default.jpg'">
                         <div>
                             <p class="text-3xl font-bold"><?= htmlspecialchars($post['account_name']) ?></p>
                             <p><?= htmlspecialchars($post['class_name']) ?></p>
@@ -72,30 +72,6 @@
                                 </span>
                             </button>
                         </div>
-                <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1): ?>
-                    <?php 
-                        $isPinned = false;
-                        foreach ($post['tags'] as $tag) {
-                            if (strtolower($tag['name']) === 'pinned') {
-                                $isPinned = true;
-                                break;
-                            }
-                        }
-                    ?>
-                    <?php if ($isPinned): ?>
-                        <form action="/posts/<?= $post['id'] ?>/unpin" method="POST" class="inline">
-                            <button type="submit" class="text-yellow-500 rounded-full hover:text-yellow-600 hover:bg-yellow-100 transition flex items-center gap-2">
-                                <?= icon('star', 'w-10 h-10') ?>
-                            </button>
-                        </form>
-                    <?php else: ?>
-                        <form action="/posts/<?= $post['id'] ?>/pin" method="POST" class="inline">
-                            <button type="submit" class="text-gray-500 rounded-full hover:text-yellow-500 hover:bg-yellow-100 transition flex items-center gap-2">
-                                <?= icon('star', 'w-10 h-10') ?>
-                            </button>
-                        </form>
-                    <?php endif; ?>
-                <?php endif; ?>
                         <div class="flex gap-1 items-center">
                             <?= essIcon('eye', 'w-10 h-10') ?>
                             <p class="text-2xl"><?= $post['views'] ?></p>
@@ -104,11 +80,9 @@
                             <?= essIcon('comment', 'w-10 h-10') ?>
                             <p class="text-2xl"><?= $post['comment_count'] ?></p>
                         </div>
-                    <?php if (isset($_SESSION['account_id']) && $_SESSION['account_id'] == $post['account_id']): ?>
                         <a href="/posts/<?= $post['id'] ?>/edit" class="flex items-center gap-1 hover:opacity-70 transition">
                             <?= essIcon('create', 'w-10 h-10') ?>
                         </a>
-                    <?php endif; ?>
                         <button class="shareBtn hover:opacity-70 transition cursor-pointer" data-url="<?= 'http://' . $_SERVER['HTTP_HOST'] . '/posts/' . $post['id'] ?>">
                             <?= essIcon('share', 'w-10 h-10') ?>
                         </button>
@@ -125,7 +99,7 @@
         </div>
 <?php endforeach; ?>
         <div id="endMsg" class="w-full p-3 flex justify-center bg-white rounded-full drop-shadow-lg">
-            <p class="text-xl font-bold text-[#545F71]">End of the line!</p>
+            <p class="text-xl font-bold text-[#545F71]">End of your posts</p>
         </div>
 <?php endif; ?>
     </div>

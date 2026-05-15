@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const b = (parseInt(hexTop.slice(4,6), 16) + parseInt(hexBottom.slice(4,6), 16)) / 2;
 
         const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-        return luminance > 0.7 ? '#1f2937' : '#ffffff';
+        return luminance > 0.8 ? '#1f2937' : '#ffffff';
     }
 
     function updatePreview() {
@@ -142,7 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 tagPreview.appendChild(tag);
             }
 
-            // Clear inputs
             if (tagNameInput) tagNameInput.value = '';
             if (colorTopInput) colorTopInput.value = '';
             if (colorBottomInput) colorBottomInput.value = '';
@@ -157,7 +156,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Link & Image modal
+    document.querySelectorAll('.remove-tag').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const tagDiv = this.closest('.tag-preview-item');
+            if (tagDiv) {
+                const hiddenInputs = tagDiv.querySelectorAll('input[type="hidden"]');
+                hiddenInputs.forEach(input => input.remove());
+                tagDiv.remove();
+            }
+        });
+    });
+
+    document.querySelectorAll('.remove-media').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const mediaDiv = this.closest('.media-item');
+            if (mediaDiv) {
+                mediaDiv.remove();
+            }
+        });
+    });
+
     const addLinkImgModal = document.getElementById('addLinkImg');
     const mediaPreview = document.getElementById('mediaPreview');
     const openAddLinkImg = document.getElementById('openAddLinkImg');
@@ -174,7 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Image
     const imageUploadArea = document.getElementById('imageUploadArea');
     const imageFileInput = document.getElementById('imageFileInput');
 
@@ -188,6 +207,26 @@ document.addEventListener('DOMContentLoaded', () => {
         imageFileInput.addEventListener('change', async function() {
             const file = this.files[0];
             if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const previewRow = document.createElement('div');
+                previewRow.className = 'media-item flex items-center gap-2 text-[#545F71] preview-item w-fit';
+                previewRow.innerHTML = `
+                    <span>●</span>
+                    <img src="${e.target.result}" class="w-10 h-10 object-cover rounded cursor-pointer">
+                    <span class="flex-1 truncate">${escapeHtml(file.name)}</span>
+                    <span class="text-xs text-yellow-500">(uploading...)</span>
+                    <button type="button" class="remove-media text-red-500 cursor-pointer hover:text-red-700 scale-200">&times;</button>
+                `;
+
+                previewRow.querySelector('.remove-media').addEventListener('click', () => {
+                    previewRow.remove();
+                });
+
+                if (mediaPreview) mediaPreview.appendChild(previewRow);
+            };
+            reader.readAsDataURL(file);
 
             const formData = new FormData();
             formData.append('image', file);
@@ -206,28 +245,39 @@ document.addEventListener('DOMContentLoaded', () => {
                         imageUploadArea.innerHTML = `<p class="text-red-500">${data.error}</p>`;
                         imageUploadArea.classList.remove('pointer-events-none');
                     }
+                    const previewItem = document.querySelector('.preview-item');
+                    if (previewItem) previewItem.remove();
                     return;
                 }
 
-                const hiddenImg = document.createElement('input');
-                hiddenImg.type = 'hidden';
-                hiddenImg.name = 'imgs[]';
-                hiddenImg.value = data.filename;
-                hiddenImg.id = 'img_' + data.filename;
-                postForm.appendChild(hiddenImg);
+                const previewItem = document.querySelector('.preview-item');
+                if (previewItem) {
+                    previewItem.innerHTML = `
+                        <span>●</span>
+                        <img src="/assets/image/post/${data.filename}" class="w-10 h-10 object-cover rounded cursor-pointer">
+                        <span class="flex-1 truncate">${escapeHtml(data.filename)}</span>
+                        <button type="button" class="remove-media text-red-500 cursor-pointer hover:text-red-700 scale-200">&times;</button>
+                        <input type="hidden" name="imgs[]" value="${escapeHtml(data.filename)}">
+                    `;
+                    previewItem.classList.remove('preview-item');
 
-                const imgRow = document.createElement('div');
-                imgRow.className = 'flex items-center gap-3 text-[#545F71]';
-                imgRow.innerHTML = `
-                    <img src="/assets/image/post/${data.filename}" class="w-12 h-12 object-cover rounded-lg">
-                    <p class="flex-1 truncate">${escapeHtml(data.filename)}</p>
-                    <button type="button" class="text-red-400 font-bold hover:text-red-600">✕</button>
-                `;
-                imgRow.querySelector('button').addEventListener('click', () => {
-                    imgRow.remove();
-                    document.getElementById('img_' + data.filename)?.remove();
-                });
-                if (mediaPreview) mediaPreview.appendChild(imgRow);
+                    const removeBtn = previewItem.querySelector('.remove-media');
+                    if (removeBtn) {
+                        removeBtn.addEventListener('click', () => {
+                            previewItem.remove();
+                        });
+                    }
+
+                    const img = previewItem.querySelector('img');
+                    if (img) {
+                        img.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            openImagePreview(img.src);
+                        });
+                    }
+                }
+
 
                 if (imageUploadArea) {
                     imageUploadArea.innerHTML = `
@@ -240,16 +290,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 if (imageFileInput) imageFileInput.value = '';
 
+                if (addLinkImgModal) addLinkImgModal.classList.add('hidden');
+
             } catch (err) {
                 if (imageUploadArea) {
                     imageUploadArea.innerHTML = '<p class="text-red-500">Upload failed</p>';
                     imageUploadArea.classList.remove('pointer-events-none');
                 }
+                const previewItem = document.querySelector('.preview-item');
+                if (previewItem) previewItem.remove();
             }
         });
     }
 
-    // Link
+    // Add link
     const addLinkBtn = document.getElementById('addLinkBtn');
     const linkUrl = document.getElementById('linkUrl');
     const linkText = document.getElementById('linkText');
@@ -259,9 +313,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const url = linkUrl ? linkUrl.value.trim() : '';
             const text = linkText ? linkText.value.trim() : '';
 
-            if (!url) return;
+            if (!url) {
+                alert('Please enter a URL');
+                return;
+            }
 
             const display = text || url;
+
+            const linkContainer = document.createElement('div');
+            linkContainer.classList.add('link-hidden-inputs');
+            
             const hiddenUrl = document.createElement('input');
             hiddenUrl.type = 'hidden';
             hiddenUrl.name = 'link_url[]';
@@ -272,26 +333,23 @@ document.addEventListener('DOMContentLoaded', () => {
             hiddenText.name = 'link_text[]';
             hiddenText.value = display;
 
-            const linkContainer = document.createElement('div');
-            linkContainer.classList.add('link-hidden-inputs');
             linkContainer.appendChild(hiddenUrl);
             linkContainer.appendChild(hiddenText);
             postForm.appendChild(linkContainer);
 
             const linkRow = document.createElement('div');
-            linkRow.className = 'flex items-center gap-3 text-[#545F71]';
+            linkRow.className = 'media-item flex items-center gap-2 text-[#545F71] w-fit';
             linkRow.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 015.656 0l4-4a4 4 0 01-5.656-5.656l-1.1 1.1"/>
-                </svg>
+                <span>●</span>
                 <a href="${escapeHtml(url)}" target="_blank" class="flex-1 truncate hover:underline">${escapeHtml(display)}</a>
-                <button type="button" class="text-red-400 font-bold hover:text-red-600">✕</button>
+                <button type="button" class="remove-media text-red-500 cursor-pointer hover:text-red-700 scale-200">&times;</button>
             `;
-            linkRow.querySelector('button').addEventListener('click', () => {
+
+            linkRow.querySelector('.remove-media').addEventListener('click', () => {
                 linkRow.remove();
                 linkContainer.remove();
             });
+
             if (mediaPreview) mediaPreview.appendChild(linkRow);
 
             if (linkUrl) linkUrl.value = '';
@@ -304,7 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
         postForm.addEventListener('submit', function(e) {
             const titleInput = document.querySelector('input[name="title"]');
             const title = titleInput ? titleInput.value.trim() : '';
-            
+
             if (!title) {
                 e.preventDefault();
                 alert('Please enter a post title');
@@ -333,6 +391,81 @@ document.addEventListener('DOMContentLoaded', () => {
             return true;
         });
     }
+
+    function openImagePreview(src) {
+        const overlay = document.getElementById('imgOverlay');
+        const overlayImg = document.getElementById('overlayImg');
+
+        if (!overlay) {
+            const xIcon = document.getElementById('xIconSvg')?.innerHTML || '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+
+            const newOverlay = document.createElement('div');
+            newOverlay.id = 'imgOverlay';
+            newOverlay.className = 'fixed inset-0 z-50 backdrop-blur-md bg-gray-900/70 items-center justify-center transition-opacity duration-200';
+            newOverlay.style.display = 'none';
+            newOverlay.style.opacity = '0';
+            newOverlay.innerHTML = `
+                <button id="overlayClose" class="absolute top-6 right-6 text-white font-bold hover:opacity-70 z-50">
+                    ${xIcon}
+                </button>
+                <img id="overlayImg" src="" class="max-w-[90vw] max-h-[90vh] object-contain rounded-2xl drop-shadow-2xl">
+            `;
+            document.body.appendChild(newOverlay);
+
+            const newOverlayImg = document.getElementById('overlayImg');
+            const newOverlayClose = document.getElementById('overlayClose');
+
+            newOverlayClose.addEventListener('click', () => {
+                newOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    newOverlay.style.display = 'none';
+                    newOverlayImg.src = '';
+                }, 200);
+            });
+
+            newOverlay.addEventListener('click', (e) => {
+                if (e.target === newOverlay) {
+                    newOverlay.style.opacity = '0';
+                    setTimeout(() => {
+                        newOverlay.style.display = 'none';
+                        newOverlayImg.src = '';
+                    }, 200);
+                }
+            });
+
+            newOverlayImg.src = src;
+            newOverlay.style.display = 'flex';
+            requestAnimationFrame(() => { newOverlay.style.opacity = '1'; });
+        } else {
+            overlayImg.src = src;
+            overlay.style.display = 'flex';
+            requestAnimationFrame(() => { overlay.style.opacity = '1'; });
+        }
+    }
+
+    function initImagePreviewOnMedia() {
+        document.querySelectorAll('.media-item img').forEach(img => {
+            if (!img.hasClickListener) {
+                img.hasClickListener = true;
+                img.style.cursor = 'pointer';
+                img.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const src = img.getAttribute('src');
+                    if (src) {
+                        openImagePreview(src);
+                    }
+                });
+            }
+        });
+    }
+
+    initImagePreviewOnMedia();
+
+    const observer = new MutationObserver(() => {
+        initImagePreviewOnMedia();
+    });
+    observer.observe(mediaPreview, { childList: true, subtree: true });
 
     function escapeHtml(text) {
         const div = document.createElement('div');

@@ -5,6 +5,7 @@
 <meta http-equiv="refresh" content="3;url=<?= $redirect ?>">
 <title>Welcome to ImmaSpark!</title>
 <link rel="stylesheet" href="/css/responsive/main.css">
+<link rel="stylesheet" href="/css/animation/intro.css">
 
 <script type="module" src="/js/animation/intro.js"></script>
 

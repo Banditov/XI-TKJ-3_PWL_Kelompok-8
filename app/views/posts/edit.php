@@ -1,11 +1,19 @@
 <title>Edit Post | ImmaSpark</title>
 <link rel="stylesheet" href="/css/responsive/main.css">
+<link rel="stylesheet" href="/css/responsive/iconPick.css">
 
-<?php include __DIR__ . '/../../../app/views/layouts/partials/navbar/navbar.php'; ?>
+<script type="module" src="/js/animation/post.js"></script>
+
+<?php include __DIR__ . '/../../../app/views/layouts/partials/navbar.php'; ?>
 <?php include __DIR__ . '/../../../app/helpers/tagText.php'; ?>
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
     <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg p-10 flex flex-col gap-5 create post">
+<?php if (isset($_GET['error']) && $_GET['error'] === 'duplicate_title'): ?>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            A post with this title already exists. Please use a different title.
+        </div>
+<?php endif; ?>
         <form action="/posts/<?= $post['id'] ?>/update" method="POST" id="postForm" class="flex flex-col gap-5">
             <div class="flex flex-col gap-2">
                 <p class="text-2xl font-bold">Title</p>
@@ -37,7 +45,7 @@
                         <p>Icon</p>
                         <input type="hidden" id="iconInput" value="tag">
                     </div>
-                    <button type="button" id="addTagBtn" class="px-6 py-4 bg-[#2C7CFF] text-white rounded-full self-start">Add Tag</button>
+                    <button type="button" id="addTagBtn" class="px-6 py-4 bg-[#2C7CFF] text-white rounded-full self-start hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Add Tag</button>
                 </div>
                 <div id="tagPreview" class="flex gap-3 flex-wrap mt-2">
             <?php if (!empty($post['tags']) && is_array($post['tags'])): ?>
@@ -64,23 +72,26 @@
                         <?= essIcon('linked', 'w-6 h-6') ?>
                         <p class="text-2xl font-bold">Links & Images</p>
                     </div>
-                    <button type="button" id="openAddLinkImg" class="px-4 py-2 bg-[#2C7CFF] text-white rounded-full text-sm">Add +</button>
+                    <button type="button" id="openAddLinkImg" class="px-4 py-2 bg-[#2C7CFF] text-white rounded-full text-sm hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Add +</button>
                 </div>
                 <div id="mediaPreview" class="flex flex-col gap-2 mt-1">
             <?php if (!empty($post['imgs'])): ?>
                 <?php foreach ($post['imgs'] as $img): ?>
-                    <div class="media-item flex items-center gap-2">
-                        <span>📷 <?= htmlspecialchars($img['file_name']) ?></span>
-                        <button type="button" class="remove-media text-red-500">&times;</button>
-                        <input type="hidden" name="existing_images[]" value="<?= $img['file_name'] ?>">
+                    <div class="media-item flex items-center gap-2 text-[#545F71] w-fit">
+                        <span>●</span>
+                        <img src="/assets/image/post/<?= htmlspecialchars($img['file_name']) ?>" class="w-10 h-10 object-cover rounded">
+                        <span class="flex-1 truncate"><?= htmlspecialchars($img['file_name']) ?></span>
+                        <button type="button" class="remove-media text-red-500 cursor-pointer hover:text-red-700 scale-200">&times;</button>
+                        <input type="hidden" name="existing_images[]" value="<?= htmlspecialchars($img['file_name']) ?>">
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
             <?php if (!empty($post['links'])): ?>
                 <?php foreach ($post['links'] as $link): ?>
-                    <div class="media-item flex items-center gap-2">
-                        <span>🔗 <?= htmlspecialchars($link['link']) ?></span>
-                        <button type="button" class="remove-media text-red-500">&times;</button>
+                    <div class="media-item flex items-center gap-2 text-[#545F71] w-fit">
+                        <span>●</span>
+                        <a href="<?= htmlspecialchars($link['link']) ?>" target="_blank" class="flex-1 truncate hover:underline"><?= htmlspecialchars($link['link_text'] ?? $link['link']) ?></a>
+                        <button type="button" class="remove-media text-red-500 cursor-pointer hover:text-red-700 scale-200">&times;</button>
                         <input type="hidden" name="existing_links[]" value="<?= htmlspecialchars($link['link']) ?>">
                         <input type="hidden" name="existing_link_texts[]" value="<?= htmlspecialchars($link['link_text'] ?? $link['link']) ?>">
                     </div>
@@ -89,9 +100,9 @@
                 </div>
             </div>
             <div class="flex gap-4 w-full flex-col">
-                <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full w-full">Update Post</button>
-                <button type="button" id="deletePostBtn" class="px-6 py-3 bg-red-600 text-white rounded-full w-full hover:bg-red-700 transition">DELETE POST</button>
-                <a href="/posts/<?= $post['id'] ?>" class="text-[#545F71] rounded-full w-full text-center">Cancel</a>
+                <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full w-full cursor-pointer hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Update Post</button>
+                <button type="button" onclick="showDeletePostModal(<?= $post['id'] ?>)" class="px-6 py-3 bg-red-600 text-white rounded-full w-full hover:bg-white hover:text-red-600 hover:ring-2 transition cursor-pointer">Delete Post</button>
+                <p class="text-[#545F71] rounded-full w-full text-center hover:underline cursor-pointer" onclick="goBack()">Cancel</p>
             </div>
         </form>
     </div>
@@ -99,7 +110,7 @@
 
 <!-- Icon Picker -->
 <div class="w-screen h-screen bg-black/50 backdrop-blur-2xl z-10 flex justify-center items-center fixed top-0 left-0 hidden" id="iconPicker">
-    <div class="w-50 bg-white rounded-4xl p-5 flex flex-col gap-5 text-[#545F71] items-center">
+    <div id="iconPick" class="w-100 bg-white rounded-4xl p-5 flex flex-col gap-5 text-[#545F71] items-center">
         <div class="flex justify-between border-b-2 border-[#545F71] pb-2 w-full">
             <p>Icons</p>
             <?= essIcon('x', 'w-6 h-6 cursor-pointer close-icon-picker') ?>
@@ -139,7 +150,26 @@
             <b class="text-left">Add Link</b>
             <input type="text" id="linkUrl" placeholder="https://example.com" class="p-2 w-full text-gray-700 rounded-xl border border-gray-500">
             <input type="text" id="linkText" placeholder="Display text (optional)" class="p-2 w-full text-gray-700 rounded-xl border border-gray-500">
-            <button type="button" id="addLinkBtn" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full w-full">Add Link</button>
+            <button type="button" id="addLinkBtn" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full w-full hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Add Link</button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Post Confirmation -->
+<div id="deletePostModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm transition-all duration-300">
+    <div class="w-80 bg-white rounded-3xl p-6 flex flex-col gap-5 text-[#545F71] items-center shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="deletePostModalContent">
+        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+            <?= icon('important', 'w-10 text-red-500'); ?>
+        </div>
+        <p class="text-xl font-bold text-center">Delete Post</p>
+        <p class="text-center text-gray-500">Are you sure you want to delete this post? This action cannot be undone and will delete all comments, replies, images, and links associated with this post.</p>
+        <div class="flex gap-3 w-full mt-2">
+            <button id="confirmDeletePostBtn" class="flex-1 px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition font-medium cursor-pointer">
+                Yes, Delete
+            </button>
+            <button id="cancelDeletePostBtn" class="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition font-medium cursor-pointer">
+                Cancel
+            </button>
         </div>
     </div>
 </div>
@@ -147,3 +177,4 @@
 <script src="/js/library/tinymce/tinymce.min.js"></script>
 <script src="/js/tinymce.js"></script>
 <script src="/js/post/edit.js"></script>
+<script src="/js/post/delete.js"></script>

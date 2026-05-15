@@ -19,9 +19,9 @@ class UploadController extends Controller
             exit;
         }
 
-        $file     = $_FILES['image'];
-        $allowed  = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-        $maxSize  = 5 * 1024 * 1024; // 5MB
+        $file = $_FILES['image'];
+        $allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        $maxSize = 10 * 1024 * 1024;
 
         if ($file['error'] !== UPLOAD_ERR_OK) {
             echo json_encode(['error' => 'Upload error: ' . $file['error']]);
@@ -34,20 +34,126 @@ class UploadController extends Controller
         }
 
         if ($file['size'] > $maxSize) {
-            echo json_encode(['error' => 'File too large (max 5MB)']);
+            echo json_encode(['error' => 'File too large (max 10MB)']);
             exit;
         }
 
-        $ext      = pathinfo($file['name'], PATHINFO_EXTENSION);
-        $filename = uniqid('post_', true) . '.' . $ext;
+        $config = [
+            'max_width' => 1920,
+            'max_height' => 1920,
+            'quality' => 80,
+            'original_size' => $file['size']
+        ];
+
+        $imageInfo = getimagesize($file['tmp_name']);
+        if (!$imageInfo) {
+            echo json_encode(['error' => 'Invalid image file']);
+            exit;
+        }
+
+        $origWidth = $imageInfo[0];
+        $origHeight = $imageInfo[1];
+        $mimeType = $file['type'];
+
+        if ($origWidth <= $config['max_width'] && $origHeight <= $config['max_height']) {
+            $newWidth = $origWidth;
+            $newHeight = $origHeight;
+        } else {
+            list($newWidth, $newHeight) = $this->calculateDimensions($origWidth, $origHeight, $config);
+        }
+
+        $sourceImage = $this->createImageFromFile($file['tmp_name'], $mimeType);
+        if (!$sourceImage) {
+            echo json_encode(['error' => 'Failed to process image']);
+            exit;
+        }
+
+        $resizedImage = imagecreatetruecolor($newWidth, $newHeight);
+
+        $this->preserveTransparency($resizedImage, $sourceImage, $mimeType, $newWidth, $newHeight);
+
+        imagecopyresampled($resizedImage, $sourceImage, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
+
+        $filename = 'post_' . uniqid() . '.webp';
         $dest = __DIR__ . '/../../public/assets/image/post/' . $filename;
 
-        if (!move_uploaded_file($file['tmp_name'], $dest)) {
-            echo json_encode(['error' => 'Failed to save file']);
+        $dir = dirname($dest);
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        imagewebp($resizedImage, $dest, $config['quality']);
+
+        unset($sourceImage);
+        unset($resizedImage);
+
+        if (!file_exists($dest)) {
+            echo json_encode(['error' => 'Failed to save optimized image']);
             exit;
         }
 
-        echo json_encode(['filename' => $filename]);
+        $newSize = filesize($dest);
+        $savedPercentage = round((1 - $newSize / $file['size']) * 100, 2);
+
+        echo json_encode([
+            'success' => true,
+            'filename' => $filename,
+            'original_size' => $file['size'],
+            'new_size' => $newSize,
+            'saved_percentage' => $savedPercentage,
+            'width' => $newWidth,
+            'height' => $newHeight,
+            'quality' => $config['quality']
+        ]);
         exit;
+    }
+
+    private function createImageFromFile($path, $mimeType)
+    {
+        switch ($mimeType) {
+            case 'image/jpeg':
+                return imagecreatefromjpeg($path);
+            case 'image/png':
+                return imagecreatefrompng($path);
+            case 'image/gif':
+                return imagecreatefromgif($path);
+            case 'image/webp':
+                return imagecreatefromwebp($path);
+            default:
+                return null;
+        }
+    }
+
+    private function calculateDimensions($width, $height, $config)
+    {
+        $newWidth = $width;
+        $newHeight = $height;
+
+        if ($width > $config['max_width']) {
+            $newWidth = $config['max_width'];
+            $newHeight = intval($height * ($config['max_width'] / $width));
+        }
+
+        if ($newHeight > $config['max_height']) {
+            $newHeight = $config['max_height'];
+            $newWidth = intval($newWidth * ($config['max_height'] / $newHeight));
+        }
+
+        return [$newWidth, $newHeight];
+    }
+
+    private function preserveTransparency($resizedImage, $sourceImage, $mimeType, $width, $height)
+    {
+        if ($mimeType === 'image/png') {
+            imagealphablending($resizedImage, false);
+            imagesavealpha($resizedImage, true);
+            $transparent = imagecolorallocatealpha($resizedImage, 255, 255, 255, 127);
+            imagefilledrectangle($resizedImage, 0, 0, $width, $height, $transparent);
+        } elseif ($mimeType === 'image/gif') {
+            imagealphablending($resizedImage, false);
+            imagesavealpha($resizedImage, true);
+            $transparent = imagecolorallocatealpha($resizedImage, 0, 0, 0, 127);
+            imagefilledrectangle($resizedImage, 0, 0, $width, $height, $transparent);
+        }
     }
 }
