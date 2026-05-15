@@ -85,7 +85,7 @@ function avatarUrl(string $seed): string
     return "https://api.dicebear.com/7.x/avataaars/svg?seed=" . urlencode($seed) . "&backgroundColor=b6e3f4,c0aede,d1d4f9";
 }
 
-// Current page (for nav active state)
+
 $current_page = 'notifications';
 ?>
 <!DOCTYPE html>
@@ -96,41 +96,26 @@ $current_page = 'notifications';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notifications — ImmaSpark</title>
     <link rel="stylesheet" href="/css/responsive/notifications.css">
-    <!-- Favicon -->
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%231A56DB'/><text x='16' y='22' font-size='14' text-anchor='middle' fill='white' font-family='monospace' font-weight='bold'>IS</text></svg>">
 </head>
 
 <body>
-
     <div class="layout">
         <aside class="sidebar">
             <div class="sidebar-logo">
                 <div class="logo-badge" style="background: <?= htmlspecialchars($logo_bg) ?>;">
-                    <!-- Random geometric logo using SVG inline -->
-                    <svg width="52" height="52" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="52" height="52" rx="14" fill="<?= htmlspecialchars($logo_bg) ?>" />
-                        <!-- Shield shape -->
-                        <path d="M26 8 L38 13 L38 24 C38 32 32 38 26 41 C20 38 14 32 14 24 L14 13 Z"
-                            fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" />
-                        <!-- IS text -->
-                        <text x="22" y="30" font-family="'Space Mono', monospace" font-size="10" font-weight="700"
-                            fill="white" letter-spacing="-0.5">IS</text>
-                    </svg>
+                                                   <img src="/assets/image/logo/logo.png" alt="">
                 </div>
                 <div style="line-height:1.15;">
                     <div
-                        style="color:#fff;font-family:'Space Mono',monospace;font-size:14px;font-weight:700;letter-spacing:-0.5px;">
-                        Imma</div>
-                    <div
                         style="color:rgba(255,255,255,0.7);font-family:'Space Mono',monospace;font-size:14px;font-weight:400;letter-spacing:-0.5px;">
-                        Spark</div>
+                        </div>
                 </div>
             </div>
 
             <div class="sidebar-divider"></div>
 
-            <!-- Nav: Discover -->
             <nav class="nav-section" style="margin-bottom:10px;">
                 <a href="#" class="nav-item <?= $current_page === 'explore' ? 'active' : '' ?>">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -175,8 +160,6 @@ $current_page = 'notifications';
             </nav>
 
             <div class="sidebar-divider"></div>
-
-            <!-- Nav: User -->
             <nav class="nav-section" style="margin-top:10px;">
                 <a href="#" class="nav-item <?= $current_page === 'create' ? 'active' : '' ?>">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
