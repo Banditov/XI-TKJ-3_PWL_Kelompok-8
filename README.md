@@ -360,6 +360,13 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 <details>
    <summary>May</summary>
 
+### 15/05/2026 - 0.10.0
+<details>
+
+   - Menambahkan animasi
+   - Memperbaiki style di halaman edit/create
+</details>
+
 ### 14/05/2026 - 0.9.0
 <details>
 

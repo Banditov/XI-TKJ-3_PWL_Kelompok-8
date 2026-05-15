@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function applyFilters(params) {
         try {
+            if (window.showLoading) window.showLoading();
+
             if (controller) {
                 controller.abort();
             }
@@ -35,8 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!newPosts) return;
 
-            postsContainer.style.minHeight =
-                postsContainer.offsetHeight + 'px';
+            postsContainer.style.minHeight = postsContainer.offsetHeight + 'px';
 
             const fragment = document.createRange()
                 .createContextualFragment(newPosts.innerHTML);
@@ -47,14 +48,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.initVoteHandlers();
             }
 
+            if (window.initCarousels) {
+                window.initCarousels();
+            }
+
+            if (window.initPostAnimations) {
+                window.initPostAnimations();
+            }
+
             requestAnimationFrame(() => {
                 postsContainer.style.opacity = '1';
                 postsContainer.style.minHeight = '';
             });
 
-            if (window.initCarousels) {
-                window.initCarousels();
-            }
+            if (window.hideLoading) window.hideLoading();
 
         } catch (err) {
             if (err.name !== 'AbortError') {
@@ -62,6 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             postsContainer.style.opacity = '1';
+
+            if (window.hideLoading) window.hideLoading();
         }
     }
 
@@ -89,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
         debounce = setTimeout(callback, delay);
     }
 
-    // Desktop search
     if (searchForm) {
         const input = searchForm.querySelector('#search');
 
@@ -110,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Mobile search
     if (searchMobile) {
         const input = searchMobile.querySelector('#searchMobile');
 
@@ -131,7 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Filters
     if (filterForm) {
         const inputs = filterForm.querySelectorAll(
             'select, input[type="number"]'

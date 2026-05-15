@@ -1,7 +1,9 @@
 <title>Home | ImmaSpark</title>
 <link rel="stylesheet" href="/css/responsive/main.css">
 
-<?php include __DIR__ . '/../../../app/views/layouts/partials/navbar/navbar.php'; ?>
+<script type="module" src="/js/animation/post.js"></script>
+
+<?php include __DIR__ . '/../../../app/views/layouts/partials/navbar.php'; ?>
 <?php include __DIR__ . '/../../../app/helpers/tagText.php'; ?>
 
 <div id="xIconSvg" class="hidden"><?= essIcon('x', 'w-6 h-6 cursor-pointer') ?></div>
@@ -95,7 +97,7 @@
                     </div>
                 </a>
             </div>
-    <?php include __DIR__ . '/../layouts/partials/carousel/carousel.php'; ?>
+    <?php include __DIR__ . '/../layouts/partials/carousel.php'; ?>
         </div>
 <?php endforeach; ?>
         <div id="endMsg" class="w-full p-3 flex justify-center bg-white rounded-full drop-shadow-lg">

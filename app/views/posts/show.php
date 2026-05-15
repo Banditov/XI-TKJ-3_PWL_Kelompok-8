@@ -1,7 +1,9 @@
 <title><?= htmlspecialchars($post['title']) ?> | ImmaSpark</title>
 <link rel="stylesheet" href="/css/responsive/main.css">
 
-<?php include __DIR__ . '/../../../app/views/layouts/partials/navbar/navbar.php'; ?>
+<script type="module" src="/js/animation/post.js"></script>
+
+<?php include __DIR__ . '/../../../app/views/layouts/partials/navbar.php'; ?>
 <?php include __DIR__ . '/../../../app/helpers/tagText.php'; ?>
 
 <div id="xIconSvg" class="hidden"><?= essIcon('x', 'w-6 h-6 cursor-pointer') ?></div>
@@ -74,7 +76,7 @@
             </div>
             <p class="text-4xl font-bold"><?= $post['title'] ?></p>
         </div>
-    <?php include __DIR__ . '/../layouts/partials/carousel/carousel.php'; ?>
+    <?php include __DIR__ . '/../layouts/partials/carousel.php'; ?>
         <div class="md:p-10 p-7 <?= ($post['imgs']) ? '' : 'pt-0!' ?> flex flex-col md:gap-7 gap-5">
             <div class="revert-tailwind">
                 <?= $post['description'] ?>
@@ -125,7 +127,7 @@
 <!-- Desktop Comment -->
         <div class="comments-list-desktop">
     <?php foreach ($comments as $comment): ?>
-            <div class="hidden md:flex flex-col border-2 border-[#545F71] rounded-4xl comment-item mb-5" data-comment-id="<?= $comment['id'] ?>">
+            <div class="hidden md:flex flex-col border-2 border-[#545F71] rounded-4xl comment-item" data-comment-id="<?= $comment['id'] ?>">
                 <div class="flex items-center justify-between p-5 border-b-2 border-[#545F71]">
                     <div class="flex gap-5 items-center">
                         <img src="/assets/image/account/<?= $comment['account_id'] ?>.jpg" class="w-10 h-10 object-cover rounded-full drop-shadow-lg">
@@ -215,7 +217,7 @@
 <!-- Comment Mobile -->
         <div class="comments-list-mobile">
     <?php foreach ($comments as $comment): ?>
-            <div class="flex md:hidden flex-col border-2 border-[#545F71] rounded-4xl comment-item mb-5" data-comment-id="<?= $comment['id'] ?>">
+            <div class="flex md:hidden flex-col border-2 border-[#545F71] rounded-4xl comment-item" data-comment-id="<?= $comment['id'] ?>">
                 <div class="p-5 border-b-2 border-[#545F71]">
                     <div class="flex gap-5 items-center justify-between w-full">
                         <div class="flex gap-5 items-center">
