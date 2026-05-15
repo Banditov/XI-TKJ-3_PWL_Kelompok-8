@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Edit.js loaded');
-
     function cleanColor(value) {
         return value.replace('#', '');
     }
@@ -256,17 +254,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (previewItem) {
                     previewItem.innerHTML = `
                         <span>●</span>
-                        <img src="/assets/image/post/${data.filename}" class="w-10 h-10 object-cover rounded">
+                        <img src="/assets/image/post/${data.filename}" class="w-10 h-10 object-cover rounded cursor-pointer">
                         <span class="flex-1 truncate">${escapeHtml(data.filename)}</span>
                         <button type="button" class="remove-media text-red-500 cursor-pointer hover:text-red-700 scale-200">&times;</button>
                         <input type="hidden" name="imgs[]" value="${escapeHtml(data.filename)}">
                     `;
                     previewItem.classList.remove('preview-item');
-                    
-                    previewItem.querySelector('.remove-media').addEventListener('click', () => {
-                        previewItem.remove();
-                        document.getElementById('img_' + data.filename)?.remove();
-                    });
+
+                    const removeBtn = previewItem.querySelector('.remove-media');
+                    if (removeBtn) {
+                        removeBtn.addEventListener('click', () => {
+                            previewItem.remove();
+                        });
+                    }
+
+                    const img = previewItem.querySelector('img');
+                    if (img) {
+                        img.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            openImagePreview(img.src);
+                        });
+                    }
                 }
 
                 if (imageUploadArea) {
@@ -355,34 +364,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     updatePreview();
-
-    const deletePostBtn = document.getElementById('deletePostBtn');
-    if (deletePostBtn) {
-        deletePostBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            if (confirm('Are you sure you want to delete this post? This action cannot be undone and will delete all comments, replies, images, and links associated with this post.')) {
-                const postId = window.location.pathname.split('/')[2];
-                
-                fetch(`/posts/${postId}/delete`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                }).then(response => {
-                    if (response.redirected) {
-                        window.location.href = response.url;
-                    } else {
-                        window.location.href = '/posts';
-                    }
-                }).catch(error => {
-                    console.error('Delete error:', error);
-                    window.location.href = '/posts';
-                });
-            }
-        });
-    }
 
     function openImagePreview(src) {
         const overlay = document.getElementById('imgOverlay');

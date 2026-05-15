@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let controller = null;
     let debounce = null;
 
+    const currentPath = window.location.pathname;
+    const baseUrl = currentPath;
+
     async function applyFilters(params) {
         try {
             if (window.showLoading) window.showLoading();
@@ -17,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             controller = new AbortController();
 
-            const url = '/posts?' + new URLSearchParams(params).toString();
+            const url = baseUrl + '?' + new URLSearchParams(params).toString();
 
             postsContainer.style.opacity = '0.5';
 
@@ -54,6 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (window.initPostAnimations) {
                 window.initPostAnimations();
+            }
+
+            if (window.initImagePreviewOnMedia) {
+                window.initImagePreviewOnMedia();
             }
 
             requestAnimationFrame(() => {
@@ -94,24 +101,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function debounceSearch(callback, delay = 300) {
         clearTimeout(debounce);
-
         debounce = setTimeout(callback, delay);
     }
 
     if (searchForm) {
         const input = searchForm.querySelector('#search');
 
-        input?.addEventListener('input', () => {
-            debounceSearch(() => {
-                applyFilters(
-                    getFormData(searchForm, filterForm)
-                );
+        if (input) {
+            input.addEventListener('input', () => {
+                debounceSearch(() => {
+                    applyFilters(
+                        getFormData(searchForm, filterForm)
+                    );
+                });
             });
-        });
+        }
 
         searchForm.addEventListener('submit', e => {
             e.preventDefault();
-
             applyFilters(
                 getFormData(searchForm, filterForm)
             );
@@ -121,17 +128,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (searchMobile) {
         const input = searchMobile.querySelector('#searchMobile');
 
-        input?.addEventListener('input', () => {
-            debounceSearch(() => {
-                applyFilters(
-                    getFormData(searchMobile, filterForm)
-                );
+        if (input) {
+            input.addEventListener('input', () => {
+                debounceSearch(() => {
+                    applyFilters(
+                        getFormData(searchMobile, filterForm)
+                    );
+                });
             });
-        });
+        }
 
         searchMobile.addEventListener('submit', e => {
             e.preventDefault();
-
             applyFilters(
                 getFormData(searchMobile, filterForm)
             );

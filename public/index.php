@@ -30,6 +30,10 @@ $router->add('GET', '/posts', 'PostController', 'index');
 $router->add('GET', '/posts/create', 'PostController', 'create');
 $router->add('GET', '/posts/{id}', 'PostController', 'show');
 $router->add('GET', '/posts/{id}/edit', 'PostController', 'edit');
+$router->add('GET', '/latest', 'PostController', 'latest');
+$router->add('GET', '/popular', 'PostController', 'popular');
+$router->add('GET', '/mypost', 'PostController', 'myPosts');
+$router->add('GET', '/pinned', 'PostController', 'pinned');
 
 // Post creation
 $router->add('POST', '/posts', 'PostController', 'store');
@@ -52,6 +56,9 @@ $router->add('POST', '/replies/{id}/vote',  'VoteController', 'voteReply');
 // Image upload
 $router->add('POST', '/upload/image', 'UploadController', 'image');
 
+// Image optimizer
+$router->add('POST', '/admin/optimize', 'OptimizeController', 'optimizeExisting');
+
 // Post edit
 $router->add('POST', '/posts/{id}/update', 'PostController', 'update');
 $router->add('POST', '/posts/{id}/delete', 'PostController', 'delete');
@@ -59,5 +66,9 @@ $router->add('POST', '/posts/{id}/delete', 'PostController', 'delete');
 // Cleanup
 $router->add('GET', '/admin/cleanup', 'CleanupController', 'showCleanupPage');
 $router->add('POST', '/admin/cleanup/run', 'CleanupController', 'removeUnusedImages');
+
+// Admin pin
+$router->add('POST', '/posts/{id}/pin', 'PostController', 'pin');
+$router->add('POST', '/posts/{id}/unpin', 'PostController', 'unpin');
 
 $router->run();

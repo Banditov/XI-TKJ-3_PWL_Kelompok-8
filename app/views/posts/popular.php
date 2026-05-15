@@ -1,4 +1,4 @@
-<title>Home | ImmaSpark</title>
+<title>Popular Posts | ImmaSpark</title>
 <link rel="stylesheet" href="/css/responsive/main.css">
 
 <script type="module" src="/js/animation/post.js"></script>
@@ -10,7 +10,7 @@
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
     <div id="searchBar" class="z-2 sticky top-10 w-full md:block hidden opacity-60 hover:opacity-100 transition">
-        <form method="GET" action="/posts" id="searchForm">
+        <form method="GET" action="/popular" id="searchForm">
             <input type="hidden" name="tag"       value="<?= htmlspecialchars($filters['tag'] ?? '') ?>">
             <input type="hidden" name="votes_min" value="<?= htmlspecialchars($filters['votes_min'] ?? '') ?>">
             <input type="hidden" name="votes_max" value="<?= htmlspecialchars($filters['votes_max'] ?? '') ?>">
@@ -26,8 +26,8 @@
     <div id="postsContainer" class="flex flex-col gap-10">
 <?php if (empty($posts)): ?>
         <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg p-10 text-center">
-            <p class="text-2xl">No posts found</p>
-            <a href="/posts/create" class="inline-block mt-4 px-6 py-3 bg-[#2C7CFF] text-white rounded-full hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Create the first post!</a>
+            <p class="text-2xl">No popular posts found yet</p>
+            <a href="/posts/create" class="inline-block mt-4 px-6 py-3 bg-[#2C7CFF] text-white rounded-full hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Be the first to create a post!</a>
         </div>
 <?php else: ?>
 <?php foreach ($posts as $index => $post): ?>
@@ -35,7 +35,7 @@
             <div class="md:pt-10 md:pr-10 md:pl-10 pb-7 pt-7 pr-7 pl-7 flex flex-col md:gap-3 gap-5">
                 <div class="flex justify-between items-center">
                     <div class="flex gap-5 items-center">
-                        <img src="/assets/image/account/<?= htmlspecialchars($post['account_id']) ?>.jpg" class="w-15 h-15 object-cover rounded-full drop-shadow-lg">
+                        <img src="/assets/image/account/<?= htmlspecialchars($post['account_id']) ?>.jpg" class="w-15 h-15 object-cover rounded-full drop-shadow-lg" onerror="this.src='/assets/image/account/default.jpg'">
                         <div>
                             <p class="text-3xl font-bold"><?= htmlspecialchars($post['account_name']) ?></p>
                             <p><?= htmlspecialchars($post['class_name']) ?></p>

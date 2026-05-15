@@ -101,8 +101,8 @@
             </div>
             <div class="flex gap-4 w-full flex-col">
                 <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full w-full cursor-pointer hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Update Post</button>
-                <button type="button" id="deletePostBtn" class="px-6 py-3 bg-red-600 text-white rounded-full w-full hover:bg-white hover:text-red-600 hover:ring-2 transition cursor-pointer">Delete Post</button>
-                <p class="text-[#545F71] rounded-full w-full text-center hover:underline" onclick="goBack()">Cancel</p>
+                <button type="button" onclick="showDeletePostModal(<?= $post['id'] ?>)" class="px-6 py-3 bg-red-600 text-white rounded-full w-full hover:bg-white hover:text-red-600 hover:ring-2 transition cursor-pointer">Delete Post</button>
+                <p class="text-[#545F71] rounded-full w-full text-center hover:underline cursor-pointer" onclick="goBack()">Cancel</p>
             </div>
         </form>
     </div>
@@ -155,6 +155,26 @@
     </div>
 </div>
 
+<!-- Delete Post Confirmation -->
+<div id="deletePostModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm transition-all duration-300">
+    <div class="w-80 bg-white rounded-3xl p-6 flex flex-col gap-5 text-[#545F71] items-center shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="deletePostModalContent">
+        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+            <?= icon('important', 'w-10 text-red-500'); ?>
+        </div>
+        <p class="text-xl font-bold text-center">Delete Post</p>
+        <p class="text-center text-gray-500">Are you sure you want to delete this post? This action cannot be undone and will delete all comments, replies, images, and links associated with this post.</p>
+        <div class="flex gap-3 w-full mt-2">
+            <button id="confirmDeletePostBtn" class="flex-1 px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition font-medium cursor-pointer">
+                Yes, Delete
+            </button>
+            <button id="cancelDeletePostBtn" class="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition font-medium cursor-pointer">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
 <script src="/js/library/tinymce/tinymce.min.js"></script>
 <script src="/js/tinymce.js"></script>
 <script src="/js/post/edit.js"></script>
+<script src="/js/post/delete.js"></script>

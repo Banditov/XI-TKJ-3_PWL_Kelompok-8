@@ -252,4 +252,304 @@ class Post extends Database
         $query = "DELETE FROM {$this->table_imgs} WHERE file_name = '$filename'";
         return mysqli_query($this->connection, $query);
     }
+
+    public function getLatestPosts(array $filters = [])
+    {
+        $where = [];
+
+        if (!empty($filters['tag'])) {
+            $tag = mysqli_real_escape_string($this->connection, $filters['tag']);
+            $where[] = "EXISTS (SELECT 1 FROM tags t WHERE t.post_id = p.id AND t.name = '$tag')";
+        }
+
+        if (!empty($filters['votes_min'])) {
+            $min = intval($filters['votes_min']);
+            $where[] = "p.votes >= $min";
+        }
+
+        if (!empty($filters['votes_max'])) {
+            $max = intval($filters['votes_max']);
+            $where[] = "p.votes <= $max";
+        }
+
+        if (!empty($filters['views_min'])) {
+            $min = intval($filters['views_min']);
+            $where[] = "p.views >= $min";
+        }
+
+        if (!empty($filters['views_max'])) {
+            $max = intval($filters['views_max']);
+            $where[] = "p.views <= $max";
+        }
+
+        if (!empty($filters['search'])) {
+            $search  = mysqli_real_escape_string($this->connection, $filters['search']);
+            $where[] = "(p.title LIKE '%$search%' OR p.description LIKE '%$search%')";
+        }
+
+        $whereClause = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
+
+        $query = "SELECT p.*, 
+                        a.name AS account_name,
+                        c.name AS class_name,
+                        (SELECT COUNT(*) FROM comments WHERE post_id = p.id) +
+                        (SELECT COUNT(*) FROM replies WHERE post_id = p.id) AS comment_count
+                FROM {$this->table} p
+                LEFT JOIN accounts a ON a.id = p.account_id
+                LEFT JOIN classes c ON c.id = a.class_id
+                $whereClause
+                ORDER BY p.date DESC, p.id DESC";
+
+        $result = mysqli_query($this->connection, $query);
+
+        $accountId = $_SESSION['account_id'];
+
+        $posts = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $id = $row['id'];
+
+            $imgResult = mysqli_query($this->connection, "SELECT file_name FROM {$this->table_imgs} WHERE post_id = '$id'");
+            $row['imgs'] = mysqli_fetch_all($imgResult, MYSQLI_ASSOC);
+
+            $linkResult = mysqli_query($this->connection, "SELECT link FROM {$this->table_links} WHERE post_id = '$id'");
+            $row['links'] = mysqli_fetch_all($linkResult, MYSQLI_ASSOC);
+
+            $tagResult = mysqli_query($this->connection, "SELECT * FROM tags WHERE post_id = '$id'");
+            $row['tags'] = mysqli_fetch_all($tagResult, MYSQLI_ASSOC);
+
+            $voteResult = mysqli_query($this->connection, "SELECT vote FROM post_votes WHERE post_id = '$id' AND account_id = '$accountId'");
+            $voteRow = mysqli_fetch_assoc($voteResult);
+            $row['user_vote'] = $voteRow ? $voteRow['vote'] : 0;
+
+            $posts[] = $row;
+        }
+
+        return $posts;
+    }
+
+    public function getPopularPosts(array $filters = [])
+    {
+        $where = [];
+
+        if (!empty($filters['tag'])) {
+            $tag = mysqli_real_escape_string($this->connection, $filters['tag']);
+            $where[] = "EXISTS (SELECT 1 FROM tags t WHERE t.post_id = p.id AND t.name = '$tag')";
+        }
+
+        if (!empty($filters['votes_min'])) {
+            $min = intval($filters['votes_min']);
+            $where[] = "p.votes >= $min";
+        }
+
+        if (!empty($filters['votes_max'])) {
+            $max = intval($filters['votes_max']);
+            $where[] = "p.votes <= $max";
+        }
+
+        if (!empty($filters['views_min'])) {
+            $min = intval($filters['views_min']);
+            $where[] = "p.views >= $min";
+        }
+
+        if (!empty($filters['views_max'])) {
+            $max = intval($filters['views_max']);
+            $where[] = "p.views <= $max";
+        }
+
+        if (!empty($filters['search'])) {
+            $search  = mysqli_real_escape_string($this->connection, $filters['search']);
+            $where[] = "(p.title LIKE '%$search%' OR p.description LIKE '%$search%')";
+        }
+
+        $whereClause = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
+
+        $query = "SELECT p.*, 
+                        a.name AS account_name,
+                        c.name AS class_name,
+                        (SELECT COUNT(*) FROM comments WHERE post_id = p.id) +
+                        (SELECT COUNT(*) FROM replies WHERE post_id = p.id) AS comment_count,
+                        (p.votes + p.views) AS popularity_score
+                FROM {$this->table} p
+                LEFT JOIN accounts a ON a.id = p.account_id
+                LEFT JOIN classes c ON c.id = a.class_id
+                $whereClause
+                ORDER BY p.votes DESC, p.views DESC, p.date DESC";
+
+        $result = mysqli_query($this->connection, $query);
+
+        $accountId = $_SESSION['account_id'];
+
+        $posts = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $id = $row['id'];
+
+            $imgResult = mysqli_query($this->connection, "SELECT file_name FROM {$this->table_imgs} WHERE post_id = '$id'");
+            $row['imgs'] = mysqli_fetch_all($imgResult, MYSQLI_ASSOC);
+
+            $linkResult = mysqli_query($this->connection, "SELECT link FROM {$this->table_links} WHERE post_id = '$id'");
+            $row['links'] = mysqli_fetch_all($linkResult, MYSQLI_ASSOC);
+
+            $tagResult = mysqli_query($this->connection, "SELECT * FROM tags WHERE post_id = '$id'");
+            $row['tags'] = mysqli_fetch_all($tagResult, MYSQLI_ASSOC);
+
+            $voteResult = mysqli_query($this->connection, "SELECT vote FROM post_votes WHERE post_id = '$id' AND account_id = '$accountId'");
+            $voteRow = mysqli_fetch_assoc($voteResult);
+            $row['user_vote'] = $voteRow ? $voteRow['vote'] : 0;
+
+            $posts[] = $row;
+        }
+
+        return $posts;
+    }
+
+    public function getMyPosts(int $accountId, array $filters = [])
+    {
+        $where = ["p.account_id = '$accountId'"];
+
+        if (!empty($filters['tag'])) {
+            $tag = mysqli_real_escape_string($this->connection, $filters['tag']);
+            $where[] = "EXISTS (SELECT 1 FROM tags t WHERE t.post_id = p.id AND t.name = '$tag')";
+        }
+
+        if (!empty($filters['votes_min'])) {
+            $min = intval($filters['votes_min']);
+            $where[] = "p.votes >= $min";
+        }
+
+        if (!empty($filters['votes_max'])) {
+            $max = intval($filters['votes_max']);
+            $where[] = "p.votes <= $max";
+        }
+
+        if (!empty($filters['views_min'])) {
+            $min = intval($filters['views_min']);
+            $where[] = "p.views >= $min";
+        }
+
+        if (!empty($filters['views_max'])) {
+            $max = intval($filters['views_max']);
+            $where[] = "p.views <= $max";
+        }
+
+        if (!empty($filters['search'])) {
+            $search  = mysqli_real_escape_string($this->connection, $filters['search']);
+            $where[] = "(p.title LIKE '%$search%' OR p.description LIKE '%$search%')";
+        }
+
+        $whereClause = 'WHERE ' . implode(' AND ', $where);
+
+        $query = "SELECT p.*, 
+                        a.name AS account_name,
+                        c.name AS class_name,
+                        (SELECT COUNT(*) FROM comments WHERE post_id = p.id) +
+                        (SELECT COUNT(*) FROM replies WHERE post_id = p.id) AS comment_count
+                FROM {$this->table} p
+                LEFT JOIN accounts a ON a.id = p.account_id
+                LEFT JOIN classes c ON c.id = a.class_id
+                $whereClause
+                ORDER BY p.date DESC, p.id DESC";
+
+        $result = mysqli_query($this->connection, $query);
+
+        $posts = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $id = $row['id'];
+
+            $imgResult = mysqli_query($this->connection, "SELECT file_name FROM {$this->table_imgs} WHERE post_id = '$id'");
+            $row['imgs'] = mysqli_fetch_all($imgResult, MYSQLI_ASSOC);
+
+            $linkResult = mysqli_query($this->connection, "SELECT link FROM {$this->table_links} WHERE post_id = '$id'");
+            $row['links'] = mysqli_fetch_all($linkResult, MYSQLI_ASSOC);
+
+            $tagResult = mysqli_query($this->connection, "SELECT * FROM tags WHERE post_id = '$id'");
+            $row['tags'] = mysqli_fetch_all($tagResult, MYSQLI_ASSOC);
+
+            $voteResult = mysqli_query($this->connection, "SELECT vote FROM post_votes WHERE post_id = '$id' AND account_id = '$accountId'");
+            $voteRow = mysqli_fetch_assoc($voteResult);
+            $row['user_vote'] = $voteRow ? $voteRow['vote'] : 0;
+
+            $posts[] = $row;
+        }
+
+        return $posts;
+    }
+
+    public function getPinnedPosts(array $filters = [])
+    {
+        $where = ["EXISTS (SELECT 1 FROM tags t WHERE t.post_id = p.id AND LOWER(t.name) = 'pinned')"];
+
+        if (!empty($filters['tag']) && strtolower($filters['tag']) !== 'pinned') {
+            $tag = mysqli_real_escape_string($this->connection, $filters['tag']);
+            $where[] = "EXISTS (SELECT 1 FROM tags t2 WHERE t2.post_id = p.id AND t2.name = '$tag')";
+        }
+
+        if (!empty($filters['tag']) && strtolower($filters['tag']) !== 'pinned') {
+            $tag = mysqli_real_escape_string($this->connection, $filters['tag']);
+            $where[] = "EXISTS (SELECT 1 FROM tags t2 WHERE t2.post_id = p.id AND t2.name = '$tag')";
+        }
+
+        if (!empty($filters['votes_min'])) {
+            $min = intval($filters['votes_min']);
+            $where[] = "p.votes >= $min";
+        }
+
+        if (!empty($filters['votes_max'])) {
+            $max = intval($filters['votes_max']);
+            $where[] = "p.votes <= $max";
+        }
+
+        if (!empty($filters['views_min'])) {
+            $min = intval($filters['views_min']);
+            $where[] = "p.views >= $min";
+        }
+
+        if (!empty($filters['views_max'])) {
+            $max = intval($filters['views_max']);
+            $where[] = "p.views <= $max";
+        }
+
+        if (!empty($filters['search'])) {
+            $search  = mysqli_real_escape_string($this->connection, $filters['search']);
+            $where[] = "(p.title LIKE '%$search%' OR p.description LIKE '%$search%')";
+        }
+
+        $whereClause = 'WHERE ' . implode(' AND ', $where);
+
+        $query = "SELECT p.*, 
+                        a.name AS account_name,
+                        c.name AS class_name,
+                        (SELECT COUNT(*) FROM comments WHERE post_id = p.id) +
+                        (SELECT COUNT(*) FROM replies WHERE post_id = p.id) AS comment_count
+                FROM {$this->table} p
+                LEFT JOIN accounts a ON a.id = p.account_id
+                LEFT JOIN classes c ON c.id = a.class_id
+                $whereClause
+                ORDER BY p.date DESC, p.id DESC";
+
+        $result = mysqli_query($this->connection, $query);
+
+        $accountId = $_SESSION['account_id'];
+
+        $posts = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $id = $row['id'];
+
+            $imgResult = mysqli_query($this->connection, "SELECT file_name FROM {$this->table_imgs} WHERE post_id = '$id'");
+            $row['imgs'] = mysqli_fetch_all($imgResult, MYSQLI_ASSOC);
+
+            $linkResult = mysqli_query($this->connection, "SELECT link, link_text FROM {$this->table_links} WHERE post_id = '$id'");
+            $row['links'] = mysqli_fetch_all($linkResult, MYSQLI_ASSOC);
+
+            $tagResult = mysqli_query($this->connection, "SELECT * FROM tags WHERE post_id = '$id'");
+            $row['tags'] = mysqli_fetch_all($tagResult, MYSQLI_ASSOC);
+
+            $voteResult = mysqli_query($this->connection, "SELECT vote FROM post_votes WHERE post_id = '$id' AND account_id = '$accountId'");
+            $voteRow = mysqli_fetch_assoc($voteResult);
+            $row['user_vote'] = $voteRow ? $voteRow['vote'] : 0;
+
+            $posts[] = $row;
+        }
+
+        return $posts;
+    }
 }

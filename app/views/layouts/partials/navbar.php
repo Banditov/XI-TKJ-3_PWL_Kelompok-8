@@ -39,10 +39,10 @@
             <?= navLink('/notification', 'Notification', 'notif') ?>
         </div>
 
-    <?php if ($currentPath === '/posts'): ?>
+    <?php if (in_array($currentPath, ['/posts', '/latest', '/popular', '/pinned', '/mypost'])): ?>
         <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
 
-        <form method="GET" action="/posts" id="filterForm">
+        <form method="GET" action="" id="filterForm">
             <input type="hidden" name="search" value="<?= htmlspecialchars($navFilters['search'] ?? '') ?>">
             <div class="font-bold text-lg rounded-2xl flex items-center">
                 <?= essIcon('filter', 'w-8 mr-2') ?>
@@ -114,10 +114,10 @@
 
         <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
 
-        <a class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent w-full hover:text-[#2C7CFF]" href="/logout">
+        <p class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent w-full hover:text-[#2C7CFF] cursor-pointer" onclick="showLogoutModal()">
             <?= essIcon('logout', 'w-8 mr-2 fill-current') ?>
             Logout
-        </a>
+        </p>
     </header>
 </aside>
 
@@ -164,7 +164,7 @@
             <?= navLink('/notification', 'Notification', 'notif') ?>
         </div>
 
-    <?php if ($currentPath === '/posts'): ?>
+    <?php if (in_array($currentPath, ['/posts', '/latest', '/popular', '/pinned', '/mypost'])): ?>
         <div class="flex flex-col gap-1 w-full">
             <div class="font-bold text-lg rounded-2xl flex items-center">
                 <?= essIcon('filter', 'w-8 mr-2') ?>
@@ -244,4 +244,24 @@
     </div>
 </div>
 
+<!-- Logout Confirmation -->
+<div id="logoutModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm transition-all duration-300">
+    <div class="w-80 bg-white rounded-3xl p-6 flex flex-col gap-5 text-[#545F71] items-center shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="logoutModalContent">
+        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+            <?= icon('important', 'w-10 text-red-500'); ?>
+        </div>
+        <p class="text-xl font-bold text-center">Logout Confirmation</p>
+        <p class="text-center text-gray-500">Are you sure you want to logout from ImmaSpark?</p>
+        <div class="flex gap-3 w-full mt-2">
+            <button id="confirmLogoutBtn" class="flex-1 px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition font-medium cursor-pointer">
+                Yes, Logout
+            </button>
+            <button id="cancelLogoutBtn" class="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition font-medium cursor-pointer">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
 <script src="/js/header/mobileHeader.js"></script>
+<script src="/js/header/logout.js"></script>

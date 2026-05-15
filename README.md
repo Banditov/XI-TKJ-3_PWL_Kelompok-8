@@ -364,10 +364,14 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 <details>
 
    - Menambahkan animasi
+   - Implement loading screen
    - Memperbaiki dan menambahkan style di berbagai halaman
    - Implement preview untuk img pada halaman create dan edit
    - Implement penghapus image tidak digunakan
    - Perbaikan kecil
+   - Implement optimizer image
+   - Implement konfirmasi logout & hapus post
+   - Implement halaman my post, latest, pinned, & popular
 </details>
 
 ### 14/05/2026 - 0.9.0

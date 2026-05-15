@@ -1,4 +1,4 @@
-<title>Home | ImmaSpark</title>
+<title>Latest Posts | ImmaSpark</title>
 <link rel="stylesheet" href="/css/responsive/main.css">
 
 <script type="module" src="/js/animation/post.js"></script>
@@ -10,7 +10,7 @@
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
     <div id="searchBar" class="z-2 sticky top-10 w-full md:block hidden opacity-60 hover:opacity-100 transition">
-        <form method="GET" action="/posts" id="searchForm">
+        <form method="GET" action="/latest" id="searchForm">
             <input type="hidden" name="tag"       value="<?= htmlspecialchars($filters['tag'] ?? '') ?>">
             <input type="hidden" name="votes_min" value="<?= htmlspecialchars($filters['votes_min'] ?? '') ?>">
             <input type="hidden" name="votes_max" value="<?= htmlspecialchars($filters['votes_max'] ?? '') ?>">
