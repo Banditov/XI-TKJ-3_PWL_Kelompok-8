@@ -9,7 +9,7 @@
 <div id="xIconSvg" class="hidden"><?= essIcon('x', 'w-6 h-6 cursor-pointer') ?></div>
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
-    <div id="searchBar" class="z-2 sticky top-10 w-full md:block hidden">
+    <div id="searchBar" class="z-2 sticky top-10 w-full md:block hidden opacity-60 hover:opacity-100 transition">
         <form method="GET" action="/posts" id="searchForm">
             <input type="hidden" name="tag"       value="<?= htmlspecialchars($filters['tag'] ?? '') ?>">
             <input type="hidden" name="votes_min" value="<?= htmlspecialchars($filters['votes_min'] ?? '') ?>">
@@ -25,7 +25,7 @@
 
     <div id="postsContainer" class="flex flex-col gap-10">
 <?php foreach ($posts as $index => $post): ?>
-        <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg post">
+        <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg post hover:drop-shadow-[0_0_10px_rgba(0,0,0,0.5)] transition">
             <div class="md:pt-10 md:pr-10 md:pl-10 pb-7 pt-7 pr-7 pl-7 flex flex-col md:gap-3 gap-5">
                 <div class="flex justify-between items-center">
                     <div class="flex gap-5 items-center">
@@ -54,19 +54,13 @@
                     </div>
                     <div class="flex items-center gap-5">
                         <div class="flex px-4 py-2 bg-[#2C7CFF] text-white rounded-full items-center gap-3 vote-container" data-type="post" data-post-id="<?= $post['id'] ?>">
-                            <button type="button" 
-                                    class="vote-btn vote-up flex items-center justify-center"
-                                    data-vote="up"
-                                    data-current-vote="<?= ($post['user_vote'] ?? 0) == 1 ? 'up' : (($post['user_vote'] ?? 0) == -1 ? 'down' : '') ?>">
+                            <button type="button" class="vote-btn vote-up flex items-center justify-center cursor-pointer" data-vote="up" data-current-vote="<?= ($post['user_vote'] ?? 0) == 1 ? 'up' : (($post['user_vote'] ?? 0) == -1 ? 'down' : '') ?>">
                                 <span style="<?= ($post['user_vote'] ?? 0) == 1 ? 'color: #FFE500' : '' ?>">
                                     <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
                                 </span>
                             </button>
                             <p class="vote-count text-2xl"><?= $post['votes'] ?></p>
-                            <button type="button"
-                                    class="vote-btn vote-down flex items-center justify-center"
-                                    data-vote="down"
-                                    data-current-vote="<?= ($post['user_vote'] ?? 0) == 1 ? 'up' : (($post['user_vote'] ?? 0) == -1 ? 'down' : '') ?>">
+                            <button type="button" class="vote-btn vote-down flex items-center justify-center cursor-pointer" data-vote="down" data-current-vote="<?= ($post['user_vote'] ?? 0) == 1 ? 'up' : (($post['user_vote'] ?? 0) == -1 ? 'down' : '') ?>">
                                 <span style="<?= ($post['user_vote'] ?? 0) == -1 ? 'color: #FFE500' : '' ?>">
                                     <?= essIcon('arrow', 'w-7 h-7') ?>
                                 </span>

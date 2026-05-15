@@ -26,5 +26,8 @@
 
         <!-- Content -->
         <?= $content ?>
+
+        <!-- Scripts -->
+        <script src="/js/global.js"></script>
     </body>
 </html>

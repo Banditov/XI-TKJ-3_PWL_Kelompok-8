@@ -234,4 +234,22 @@ class Post extends Database
 
         return true;
     }
+
+    public function getAllUsedImages()
+    {
+        $query = "SELECT DISTINCT file_name FROM {$this->table_imgs}";
+        $result = mysqli_query($this->connection, $query);
+        $images = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $images[] = $row['file_name'];
+        }
+        return $images;
+    }
+
+    public function deleteImageByFilename($filename)
+    {
+        $filename = mysqli_real_escape_string($this->connection, $filename);
+        $query = "DELETE FROM {$this->table_imgs} WHERE file_name = '$filename'";
+        return mysqli_query($this->connection, $query);
+    }
 }

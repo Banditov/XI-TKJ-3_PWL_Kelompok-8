@@ -56,4 +56,8 @@ $router->add('POST', '/upload/image', 'UploadController', 'image');
 $router->add('POST', '/posts/{id}/update', 'PostController', 'update');
 $router->add('POST', '/posts/{id}/delete', 'PostController', 'delete');
 
+// Cleanup
+$router->add('GET', '/admin/cleanup', 'CleanupController', 'showCleanupPage');
+$router->add('POST', '/admin/cleanup/run', 'CleanupController', 'removeUnusedImages');
+
 $router->run();

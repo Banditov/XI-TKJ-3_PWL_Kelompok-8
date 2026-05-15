@@ -9,6 +9,11 @@
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
     <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg p-10 flex flex-col gap-5 create post">
+<?php if (isset($_GET['error']) && $_GET['error'] === 'duplicate_title'): ?>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            A post with this title already exists. Please use a different title.
+        </div>
+<?php endif; ?>
         <form action="/posts/<?= $post['id'] ?>/update" method="POST" id="postForm" class="flex flex-col gap-5">
             <div class="flex flex-col gap-2">
                 <p class="text-2xl font-bold">Title</p>
@@ -40,7 +45,7 @@
                         <p>Icon</p>
                         <input type="hidden" id="iconInput" value="tag">
                     </div>
-                    <button type="button" id="addTagBtn" class="px-6 py-4 bg-[#2C7CFF] text-white rounded-full self-start">Add Tag</button>
+                    <button type="button" id="addTagBtn" class="px-6 py-4 bg-[#2C7CFF] text-white rounded-full self-start hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Add Tag</button>
                 </div>
                 <div id="tagPreview" class="flex gap-3 flex-wrap mt-2">
             <?php if (!empty($post['tags']) && is_array($post['tags'])): ?>
@@ -67,23 +72,26 @@
                         <?= essIcon('linked', 'w-6 h-6') ?>
                         <p class="text-2xl font-bold">Links & Images</p>
                     </div>
-                    <button type="button" id="openAddLinkImg" class="px-4 py-2 bg-[#2C7CFF] text-white rounded-full text-sm">Add +</button>
+                    <button type="button" id="openAddLinkImg" class="px-4 py-2 bg-[#2C7CFF] text-white rounded-full text-sm hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Add +</button>
                 </div>
                 <div id="mediaPreview" class="flex flex-col gap-2 mt-1">
             <?php if (!empty($post['imgs'])): ?>
                 <?php foreach ($post['imgs'] as $img): ?>
-                    <div class="media-item flex items-center gap-2">
-                        <span>📷 <?= htmlspecialchars($img['file_name']) ?></span>
-                        <button type="button" class="remove-media text-red-500">&times;</button>
-                        <input type="hidden" name="existing_images[]" value="<?= $img['file_name'] ?>">
+                    <div class="media-item flex items-center gap-2 text-[#545F71] w-fit">
+                        <span>●</span>
+                        <img src="/assets/image/post/<?= htmlspecialchars($img['file_name']) ?>" class="w-10 h-10 object-cover rounded">
+                        <span class="flex-1 truncate"><?= htmlspecialchars($img['file_name']) ?></span>
+                        <button type="button" class="remove-media text-red-500 cursor-pointer hover:text-red-700 scale-200">&times;</button>
+                        <input type="hidden" name="existing_images[]" value="<?= htmlspecialchars($img['file_name']) ?>">
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
             <?php if (!empty($post['links'])): ?>
                 <?php foreach ($post['links'] as $link): ?>
-                    <div class="media-item flex items-center gap-2">
-                        <span>🔗 <?= htmlspecialchars($link['link']) ?></span>
-                        <button type="button" class="remove-media text-red-500">&times;</button>
+                    <div class="media-item flex items-center gap-2 text-[#545F71] w-fit">
+                        <span>●</span>
+                        <a href="<?= htmlspecialchars($link['link']) ?>" target="_blank" class="flex-1 truncate hover:underline"><?= htmlspecialchars($link['link_text'] ?? $link['link']) ?></a>
+                        <button type="button" class="remove-media text-red-500 cursor-pointer hover:text-red-700 scale-200">&times;</button>
                         <input type="hidden" name="existing_links[]" value="<?= htmlspecialchars($link['link']) ?>">
                         <input type="hidden" name="existing_link_texts[]" value="<?= htmlspecialchars($link['link_text'] ?? $link['link']) ?>">
                     </div>
@@ -92,9 +100,9 @@
                 </div>
             </div>
             <div class="flex gap-4 w-full flex-col">
-                <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full w-full">Update Post</button>
-                <button type="button" id="deletePostBtn" class="px-6 py-3 bg-red-600 text-white rounded-full w-full hover:bg-red-700 transition">DELETE POST</button>
-                <a href="/posts/<?= $post['id'] ?>" class="text-[#545F71] rounded-full w-full text-center">Cancel</a>
+                <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full w-full cursor-pointer hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Update Post</button>
+                <button type="button" id="deletePostBtn" class="px-6 py-3 bg-red-600 text-white rounded-full w-full hover:bg-white hover:text-red-600 hover:ring-2 transition cursor-pointer">Delete Post</button>
+                <p class="text-[#545F71] rounded-full w-full text-center hover:underline" onclick="goBack()">Cancel</p>
             </div>
         </form>
     </div>
@@ -142,7 +150,7 @@
             <b class="text-left">Add Link</b>
             <input type="text" id="linkUrl" placeholder="https://example.com" class="p-2 w-full text-gray-700 rounded-xl border border-gray-500">
             <input type="text" id="linkText" placeholder="Display text (optional)" class="p-2 w-full text-gray-700 rounded-xl border border-gray-500">
-            <button type="button" id="addLinkBtn" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full w-full">Add Link</button>
+            <button type="button" id="addLinkBtn" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full w-full hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Add Link</button>
         </div>
     </div>
 </div>

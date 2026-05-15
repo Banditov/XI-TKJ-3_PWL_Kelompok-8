@@ -26,6 +26,21 @@
     all: revert;
 }
 
+select {
+    appearance: base-select;
+}
+
+::picker(select) {
+    appearance: base-select;
+    border-radius: 5px;
+    border: 2px solid #545F71;
+    bottom: -95px;
+}
+
+select::picker-icon {
+    display: none;
+}
+
 /* Login */
 .name {
     font-family: 'Source Serif Pro';
