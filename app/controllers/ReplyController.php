@@ -3,6 +3,8 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Models\Reply;
+use App\Models\Comment;
+use App\Models\Notification;
 
 class ReplyController extends Controller
 {
@@ -29,6 +31,14 @@ class ReplyController extends Controller
 
         $replyModel = new Reply();
         $replyId = $replyModel->createReply($postId, $commentId, $accountId, $description);
+
+        $commentModel = new Comment();
+        $comment = $commentModel->getCommentById($commentId);
+
+        if ($comment && $comment['account_id'] != $accountId) {
+            $notificationModel = new Notification();
+            $notificationModel->createReplyNotification($comment['account_id'], $replyId);
+        }
 
         $reply = $replyModel->getReplyById($replyId);
 

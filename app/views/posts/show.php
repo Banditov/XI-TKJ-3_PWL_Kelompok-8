@@ -149,7 +149,7 @@
     <?php endif; ?>
 
 <!-- Desktop Comment -->
-        <div class="comments-list-desktop">
+        <div class="comments-list-desktop flex flex-col gap-5">
     <?php foreach ($comments as $comment): ?>
             <div class="hidden md:flex flex-col border-2 border-[#545F71] rounded-4xl comment-item" data-comment-id="<?= $comment['id'] ?>">
                 <div class="flex items-center justify-between p-5 border-b-2 border-[#545F71]">
@@ -239,7 +239,7 @@
         </div>
 
 <!-- Comment Mobile -->
-        <div class="comments-list-mobile">
+        <div class="comments-list-mobile flex flex-col gap-5">
     <?php foreach ($comments as $comment): ?>
             <div class="flex md:hidden flex-col border-2 border-[#545F71] rounded-4xl comment-item" data-comment-id="<?= $comment['id'] ?>">
                 <div class="p-5 border-b-2 border-[#545F71]">

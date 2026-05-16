@@ -129,7 +129,7 @@
 
         <div class="w-full h-0.75 bg-[#545F71] rounded-full seperator"></div>
 
-        <p class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent w-full hover:text-[#2C7CFF] cursor-pointer" onclick="showLogoutModal()">
+        <p class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-red-500 bg-transparent w-full hover:text-red-500 red cursor-pointer" onclick="showLogoutModal()">
             <?= essIcon('logout', 'w-8 mr-2 fill-current') ?>
             Logout
         </p>

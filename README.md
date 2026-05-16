@@ -368,6 +368,7 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
    - Implement mode dark
    - Perbaiki load mode dyslexic
    - Perbaiki otentikasi
+   - Implement halaman notifikasi beserta fungsinya
 </details>
 
 ### 15/05/2026 - 0.10.0
