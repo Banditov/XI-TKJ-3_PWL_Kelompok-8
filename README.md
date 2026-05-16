@@ -363,7 +363,7 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 
 ### 16/05/2026 - 0.11.0
 <details>
-a
+
    - Perbaiki fitur di mobile yang hilang
    - Ubah font untuk dyslexic mode dari comic sans jadi open dyslexic
    - Implement mode dark
