@@ -50,6 +50,9 @@
                 <div id="tagPreview" class="flex gap-3 flex-wrap mt-2">
             <?php if (!empty($post['tags']) && is_array($post['tags'])): ?>
                 <?php foreach ($post['tags'] as $tag): ?>
+                    <?php if (strtolower($tag['name'] ?? '') === 'pinned' && ($_SESSION['is_admin'] ?? 0) != 1): ?>
+                        <?php continue; ?>
+                    <?php endif; ?>
                     <div class="tag-preview-item px-4 py-2 rounded-full flex gap-2 items-center" 
                         style="background: linear-gradient(to bottom, #<?= $tag['color_top'] ?? 'CCCCCC' ?>, #<?= $tag['color_bottom'] ?? 'CCCCCC' ?>); 
                                 color: <?= tagTextColor($tag['color_top'] ?? 'CCCCCC', $tag['color_bottom'] ?? 'CCCCCC') ?>">
