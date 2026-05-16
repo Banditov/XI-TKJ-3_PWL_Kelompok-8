@@ -19,13 +19,15 @@ $router = new Router();
 $GLOBALS['tags']    = [];
 $GLOBALS['filters'] = [];
 
+
+// Views
 // Intro
 $router->add('GET', '/', 'IntroController', 'index');
 
-// Login view
+// Login
 $router->add('GET', '/login', 'AuthController', 'login');
 
-// Post views
+// Post
 $router->add('GET', '/posts', 'PostController', 'index');
 $router->add('GET', '/posts/create', 'PostController', 'create');
 $router->add('GET', '/posts/{id}', 'PostController', 'show');
@@ -35,6 +37,11 @@ $router->add('GET', '/popular', 'PostController', 'popular');
 $router->add('GET', '/mypost', 'PostController', 'myPosts');
 $router->add('GET', '/pinned', 'PostController', 'pinned');
 
+// Notification
+$router->add('GET', '/notification', 'NotificationController', 'index');
+
+
+// Functions
 // Post creation
 $router->add('POST', '/posts', 'PostController', 'store');
 
@@ -56,26 +63,25 @@ $router->add('POST', '/replies/{id}/vote',  'VoteController', 'voteReply');
 // Image upload
 $router->add('POST', '/upload/image', 'UploadController', 'image');
 
-// Image optimizer
-$router->add('POST', '/admin/optimize', 'OptimizeController', 'optimizeExisting');
-
 // Post edit
 $router->add('POST', '/posts/{id}/update', 'PostController', 'update');
 $router->add('POST', '/posts/{id}/delete', 'PostController', 'delete');
-
-// Cleanup
-$router->add('GET', '/admin/cleanup', 'CleanupController', 'showCleanupPage');
-$router->add('POST', '/admin/cleanup/run', 'CleanupController', 'removeUnusedImages');
-
-// Admin pin
-$router->add('POST', '/posts/{id}/pin', 'PostController', 'pin');
-$router->add('POST', '/posts/{id}/unpin', 'PostController', 'unpin');
 
 // Settings
 $router->add('POST', '/settings/dyslexic', 'SettingsController', 'toggleDyslexic');
 $router->add('POST', '/settings/dark', 'SettingsController', 'toggleDark');
 
-// Notification
-$router->add('GET', '/notifications', 'NotificationController', 'notifications');
+$router->add('POST', '/notification/delete', 'NotificationController', 'delete');
+$router->add('POST', '/notification/clear-all', 'NotificationController', 'clearAll');
+
+
+// Admin functions
+// Pin
+$router->add('POST', '/posts/{id}/pin', 'PostController', 'pin');
+$router->add('POST', '/posts/{id}/unpin', 'PostController', 'unpin');
+
+// Cleanup
+$router->add('GET', '/admin/cleanup', 'CleanupController', 'showCleanupPage');
+$router->add('POST', '/admin/cleanup/run', 'CleanupController', 'removeUnusedImages');
 
 $router->run();

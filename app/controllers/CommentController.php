@@ -3,10 +3,12 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Models\Comment;
+use App\Models\Post;
+use App\Models\Notification;
 
 class CommentController extends Controller
 {
-    public function store(string $postId)
+        public function store(string $postId)
     {
         $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
                   strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
@@ -28,6 +30,18 @@ class CommentController extends Controller
         $commentModel = new Comment();
         $commentId = $commentModel->createComment($postId, $accountId, $description);
 
+        try {
+            $postModel = new Post();
+            $post = $postModel->getPostById($postId);
+
+            if ($post && isset($post['account_id']) && $post['account_id'] != $accountId) {
+                $notificationModel = new Notification();
+                $notificationModel->createCommentNotification($post['account_id'], $commentId);
+            }
+        } catch (\Exception $e) {
+            error_log("Notification error: " . $e->getMessage());
+        }
+
         $comment = $commentModel->getCommentById($commentId);
 
         if ($isAjax) {
@@ -36,8 +50,8 @@ class CommentController extends Controller
                 'success' => true,
                 'comment' => [
                     'id' => $comment['id'],
-                    'account_name' => $comment['account_name'],
-                    'class_name' => $comment['class_name'],
+                    'account_name' => $comment['account_name'] ?? $_SESSION['account_name'],
+                    'class_name' => $comment['class_name'] ?? '',
                     'account_id' => $comment['account_id'],
                     'description' => htmlspecialchars($comment['description']),
                     'date' => $comment['date'],
