@@ -36,6 +36,31 @@ class Reply extends Database
         return $replies;
     }
 
+    public function getReplyById(int $replyId)
+    {
+        $accountId = $_SESSION['account_id'];
+
+        $query = "SELECT r.*, 
+                        a.name AS account_name,
+                        cl.name AS class_name
+                FROM {$this->table} r
+                LEFT JOIN accounts a ON a.id = r.account_id
+                LEFT JOIN classes cl ON cl.id = a.class_id
+                WHERE r.id = '$replyId'";
+
+        $result = mysqli_query($this->connection, $query);
+        $reply = mysqli_fetch_assoc($result);
+
+        if ($reply) {
+            $voteResult = mysqli_query($this->connection, 
+                "SELECT vote FROM reply_votes WHERE reply_id = '$replyId' AND account_id = '$accountId'");
+            $voteRow = mysqli_fetch_assoc($voteResult);
+            $reply['user_vote'] = $voteRow ? $voteRow['vote'] : 0;
+        }
+
+        return $reply;
+    }
+
     public function createReply(string $postId, string $commentId, string $accountId, string $description)
     {
         $date        = date('Y-m-d');
