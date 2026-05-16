@@ -3,7 +3,8 @@
     "@fontsource/opendyslexic": "^5.2.5",
     "@tailwindcss/cli": "^4.2.1",
     "animejs": "^4.3.6",
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "^4.2.1",
+    "three": "^0.184.0"
   },
   "scripts": {
     "dev": "npx @tailwindcss/cli -i ./app/resources/css/input.css -o ./public/css/output.css --watch"

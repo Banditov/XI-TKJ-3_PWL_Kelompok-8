@@ -103,6 +103,10 @@ class PostController extends Controller
             exit;
         }
 
+        if (!empty($_POST['model_3d'])) {
+            $postModel->add3DModel($postId, $_POST['model_3d']);
+        }
+
         if (!empty($_POST['tag_name']) && is_array($_POST['tag_name'])) {
             $tagModel = new Tag();
             foreach ($_POST['tag_name'] as $index => $tagName) {
@@ -279,6 +283,15 @@ class PostController extends Controller
                 $linkText = $_POST['link_text'][$index] ?? '';
                 $postModel->addLink(intval($id), $url, $linkText);
             }
+        }
+
+        if (!empty($_POST['model_3d'])) {
+            $modelFilename = $_POST['model_3d'];
+            $postModel->add3DModel(intval($id), $modelFilename);
+        }
+
+        if (isset($_POST['remove_model']) && $_POST['remove_model'] == 1) {
+            $postModel->remove3DModel(intval($id));
         }
 
         $_SESSION['success'] = 'Post updated successfully!';

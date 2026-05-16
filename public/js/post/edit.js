@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
     function cleanColor(value) {
         return value.replace('#', '');
     }
@@ -439,4 +445,111 @@ document.addEventListener('DOMContentLoaded', () => {
         initImagePreviewOnMedia();
     });
     observer.observe(mediaPreview, { childList: true, subtree: true });
+
+    // 3D model upload
+    const modelUploadArea = document.getElementById('modelUploadArea');
+    const modelFileInput = document.getElementById('modelFileInput');
+    const modelPreview = document.getElementById('modelPreview');
+
+    if (modelUploadArea) {
+        modelUploadArea.addEventListener('click', () => {
+            if (modelFileInput) modelFileInput.click();
+        });
+    }
+
+    if (modelFileInput) {
+        modelFileInput.addEventListener('change', async function() {
+            const file = this.files[0];
+            if (!file) return;
+
+            const allowedTypes = ['.glb', '.gltf', '.obj'];
+            const ext = '.' + file.name.split('.').pop().toLowerCase();
+            
+            if (!allowedTypes.includes(ext)) {
+                alert('Please upload .glb, .gltf, or .obj files only');
+                this.value = '';
+                return;
+            }
+
+            if (file.size > 10 * 1024 * 1024) {
+                alert('File too large. Maximum size is 10MB');
+                this.value = '';
+                return;
+            }
+
+            if (modelPreview) {
+                modelPreview.innerHTML = `<div class="flex items-center gap-2 text-green-600">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                    <span>${escapeHtml(file.name)} (${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+                    <button type="button" class="remove-model text-red-500 ml-2">&times;</button>
+                </div>`;
+                
+                const removeBtn = modelPreview.querySelector('.remove-model');
+                if (removeBtn) {
+                    removeBtn.addEventListener('click', () => {
+                        modelPreview.innerHTML = '';
+                        modelFileInput.value = '';
+                    });
+                }
+            }
+
+            const formData = new FormData();
+            formData.append('model_3d', file);
+
+            if (modelPreview) {
+                const uploadingSpan = modelPreview.querySelector('span');
+                if (uploadingSpan) {
+                    uploadingSpan.innerHTML = `${escapeHtml(file.name)} (uploading...)`;
+                }
+            }
+
+            try {
+                const res = await fetch('/upload/model', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+
+                if (data.error) {
+                    alert(data.error);
+                    modelPreview.innerHTML = '';
+                    modelFileInput.value = '';
+                    return;
+                }
+
+                const hiddenModel = document.createElement('input');
+                hiddenModel.type = 'hidden';
+                hiddenModel.name = 'model_3d';
+                hiddenModel.value = data.filename;
+                postForm.appendChild(hiddenModel);
+
+                if (modelPreview) {
+                    modelPreview.innerHTML = `<div class="flex items-center gap-2 text-green-600">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        <span>${escapeHtml(data.filename)} (${(data.size / 1024 / 1024).toFixed(2)} MB)</span>
+                        <button type="button" class="remove-model text-red-500 ml-2">&times;</button>
+                    </div>`;
+                    
+                    const removeBtn = modelPreview.querySelector('.remove-model');
+                    if (removeBtn) {
+                        removeBtn.addEventListener('click', () => {
+                            modelPreview.innerHTML = '';
+                            modelFileInput.value = '';
+                            document.getElementById('model_3d_' + data.filename)?.remove();
+                        });
+                    }
+                }
+
+            } catch (err) {
+                console.error('Upload error:', err);
+                alert('Failed to upload 3D model');
+                modelPreview.innerHTML = '';
+                modelFileInput.value = '';
+            }
+        });
+    }
 });

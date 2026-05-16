@@ -547,4 +547,35 @@ class Post extends Database
 
         return $posts;
     }
+
+    public function get3DModel(int $postId)
+    {
+        $query = "SELECT model_3d FROM {$this->table} WHERE id = '$postId'";
+        $result = mysqli_query($this->connection, $query);
+        $row = mysqli_fetch_assoc($result);
+        return $row['model_3d'] ?? null;
+    }
+
+    public function add3DModel(int $postId, string $filename)
+    {
+        $filename = mysqli_real_escape_string($this->connection, $filename);
+        $query = "UPDATE {$this->table} SET model_3d = '$filename' WHERE id = '$postId'";
+        return mysqli_query($this->connection, $query);
+    }
+
+    public function remove3DModel(int $postId)
+    {
+        $result = mysqli_query($this->connection, "SELECT model_3d FROM {$this->table} WHERE id = '$postId'");
+        $row = mysqli_fetch_assoc($result);
+
+        if ($row && $row['model_3d']) {
+            $filePath = __DIR__ . '/../../public/assets/models/' . $row['model_3d'];
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+        }
+
+        $query = "UPDATE {$this->table} SET model_3d = NULL WHERE id = '$postId'";
+        return mysqli_query($this->connection, $query);
+    }
 }

@@ -73,7 +73,7 @@
                 <div class="flex items-center gap-5">
                     <div class="flex items-center gap-2">
                         <?= essIcon('linked', 'w-6 h-6') ?>
-                        <p class="text-2xl font-bold">Links & Images</p>
+                        <p class="text-2xl font-bold">Links, Images, & 3D Models</p>
                     </div>
                     <button type="button" id="openAddLinkImg" class="px-4 py-2 bg-[#2C7CFF] text-white rounded-full text-sm hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Add +</button>
                 </div>
@@ -133,9 +133,9 @@
 
 <!-- Link & Image -->
 <div class="w-screen h-screen bg-black/50 backdrop-blur-2xl z-10 flex justify-center items-center fixed top-0 left-0 hidden" id="addLinkImg">
-    <div class="w-75 bg-white rounded-4xl p-5 flex flex-col gap-5 text-[#545F71] items-center">
+    <div class="w-75 bg-white rounded-4xl p-5 flex flex-col gap-5 text-[#545F71] items-center max-h-[90vh] overflow-y-auto">
         <div class="w-full flex justify-between items-center border-b-2 border-[#545F71] pb-3">
-            <b>Links & Images</b>
+            <b>Links, Images & 3D Models</b>
             <?= essIcon('x', 'w-6 h-6 cursor-pointer close-media-picker') ?>
         </div>
 
@@ -149,6 +149,20 @@
                 <p>Add Image</p>
             </div>
             <input type="file" id="imageFileInput" accept="image/*" class="hidden" multiple>
+        </div>
+
+        <!-- 3D Model upload -->
+        <div class="w-full flex flex-col gap-3 border-t-2 border-[#545F71] pt-3">
+            <b class="text-left">Add 3D Model</b>
+            <div id="modelUploadArea" class="flex flex-col items-center justify-center text-[#545F71] p-10 rounded-lg bg-gray-100 hover:bg-gray-200 border-2 border-dashed border-[#545F71] cursor-pointer w-full gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                <p>Add 3D Model (.glb, .gltf, .obj)</p>
+                <p class="text-xs text-gray-400">Max 10MB</p>
+            </div>
+            <input type="file" id="modelFileInput" accept=".glb,.gltf,.obj" class="hidden">
+            <div id="modelPreview" class="w-full text-sm text-gray-500"></div>
         </div>
 
         <!-- Link add -->

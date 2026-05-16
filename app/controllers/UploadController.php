@@ -156,4 +156,61 @@ class UploadController extends Controller
             imagefilledrectangle($resizedImage, 0, 0, $width, $height, $transparent);
         }
     }
+
+    public function model3d()
+    {
+        header('Content-Type: application/json');
+
+        if (!isset($_SESSION['account_id'])) {
+            echo json_encode(['error' => 'Unauthorized']);
+            exit;
+        }
+
+        if (empty($_FILES['model_3d'])) {
+            echo json_encode(['error' => 'No file received']);
+            exit;
+        }
+
+        $file = $_FILES['model_3d'];
+        $allowed = ['glb', 'gltf', 'obj'];
+        $maxSize = 10 * 1024 * 1024; // 10MB
+
+        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            echo json_encode(['error' => 'Upload error: ' . $file['error']]);
+            exit;
+        }
+
+        if (!in_array($ext, $allowed)) {
+            echo json_encode(['error' => 'Invalid file type. Use .glb, .gltf, or .obj']);
+            exit;
+        }
+
+        if ($file['size'] > $maxSize) {
+            echo json_encode(['error' => 'File too large (max 10MB)']);
+            exit;
+        }
+
+        $filename = 'model_' . uniqid() . '.' . $ext;
+        $uploadDir = __DIR__ . '/../../public/assets/models/';
+        
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        $destination = $uploadDir . $filename;
+
+        if (!move_uploaded_file($file['tmp_name'], $destination)) {
+            echo json_encode(['error' => 'Failed to save file']);
+            exit;
+        }
+
+        echo json_encode([
+            'success' => true,
+            'filename' => $filename,
+            'size' => $file['size']
+        ]);
+        exit;
+    }
 }
