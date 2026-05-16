@@ -75,4 +75,7 @@ $router->add('POST', '/posts/{id}/unpin', 'PostController', 'unpin');
 $router->add('POST', '/settings/dyslexic', 'SettingsController', 'toggleDyslexic');
 $router->add('POST', '/settings/dark', 'SettingsController', 'toggleDark');
 
+// Notification
+$router->add('GET', '/notifications', 'NotificationController', 'notifications');
+
 $router->run();
