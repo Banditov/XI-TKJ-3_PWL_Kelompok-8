@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 14, 2026 at 03:19 PM
+-- Generation Time: May 16, 2026 at 10:41 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -43,8 +43,8 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `name`, `email`, `password`, `class_id`, `is_admin`, `is_dark`, `is_dyslexic`) VALUES
-(1, 'TEST1', 'test.001@ski.sch.id', 'test', 7, 0, 1, 0),
-(2, 'TEST2', 'test.002@ski.sch.id', 'test2', 7, 0, 0, 0);
+(1, 'TEST1', 'test.001@ski.sch.id', 'test', 7, 1, 0, 0),
+(2, 'TEST2', 'test.002@ski.sch.id', 'test2', 7, 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -95,6 +95,14 @@ CREATE TABLE `comments` (
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `account_id`, `post_id`, `description`, `votes`, `date`) VALUES
+(32, 2, 106, 'Cool', 0, '2026-05-16'),
+(33, 1, 108, 'Halo', 0, '2026-05-16');
+
 -- --------------------------------------------------------
 
 --
@@ -106,6 +114,28 @@ CREATE TABLE `comment_votes` (
   `account_id` int NOT NULL,
   `comment_id` int NOT NULL,
   `vote` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `comment_votes`
+--
+
+INSERT INTO `comment_votes` (`id`, `account_id`, `comment_id`, `vote`) VALUES
+(11, 1, 22, -1),
+(12, 2, 22, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notification`
+--
+
+CREATE TABLE `notification` (
+  `id` int NOT NULL,
+  `account_id` int NOT NULL,
+  `comment_id` int DEFAULT NULL,
+  `reply_id` int DEFAULT NULL,
+  `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -124,6 +154,17 @@ CREATE TABLE `posts` (
   `views` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `posts`
+--
+
+INSERT INTO `posts` (`id`, `title`, `account_id`, `votes`, `description`, `date`, `views`) VALUES
+(99, 'TEST', 1, 0, '<h1 style=\"text-align: center;\">Very Nice</h1>', '2026-05-14', 2),
+(100, 'TEST1', 1, 1, '<p>TEST1</p>', '2026-05-15', 2),
+(101, 'TEST2', 1, 0, '<p>TEST2</p>', '2026-05-15', 1),
+(106, 'Beautiful Landscape', 1, 0, '<p>Just a photo of a simple scenery.</p>', '2026-05-15', 2),
+(108, 'NOTIF TEST', 2, 0, '<p>NOTIF TEST</p>', '2026-05-16', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -135,6 +176,16 @@ CREATE TABLE `post_imgs` (
   `file_name` varchar(255) NOT NULL,
   `post_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `post_imgs`
+--
+
+INSERT INTO `post_imgs` (`id`, `file_name`, `post_id`) VALUES
+(16, 'post_6a065dd85aebf8.04040176.jpg', 99),
+(17, 'post_6a065dda435fa5.71599202.jpg', 99),
+(18, 'post_6a065ddb58dde2.42505819.jpg', 99),
+(25, 'post_6a06fe71ba094.webp', 106);
 
 -- --------------------------------------------------------
 
@@ -149,6 +200,13 @@ CREATE TABLE `post_links` (
   `post_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `post_links`
+--
+
+INSERT INTO `post_links` (`id`, `link`, `link_text`, `post_id`) VALUES
+(21, 'https://youtu.be/wcaZcbain2s?si=J8f6RFpUjUOGdi9K', 'Test', 99);
+
 -- --------------------------------------------------------
 
 --
@@ -160,6 +218,21 @@ CREATE TABLE `post_views` (
   `account_id` int NOT NULL,
   `post_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `post_views`
+--
+
+INSERT INTO `post_views` (`id`, `account_id`, `post_id`) VALUES
+(41, 1, 99),
+(43, 1, 100),
+(44, 1, 101),
+(48, 1, 106),
+(53, 1, 108),
+(42, 2, 99),
+(50, 2, 100),
+(52, 2, 106),
+(51, 2, 108);
 
 -- --------------------------------------------------------
 
@@ -173,6 +246,14 @@ CREATE TABLE `post_votes` (
   `post_id` int NOT NULL,
   `vote` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `post_votes`
+--
+
+INSERT INTO `post_votes` (`id`, `account_id`, `post_id`, `vote`) VALUES
+(29, 1, 99, 1),
+(30, 2, 99, -1);
 
 -- --------------------------------------------------------
 
@@ -203,6 +284,13 @@ CREATE TABLE `reply_votes` (
   `vote` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `reply_votes`
+--
+
+INSERT INTO `reply_votes` (`id`, `account_id`, `reply_id`, `vote`) VALUES
+(6, 1, 13, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -217,6 +305,16 @@ CREATE TABLE `tags` (
   `icon` varchar(255) NOT NULL,
   `post_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `tags`
+--
+
+INSERT INTO `tags` (`id`, `name`, `color_top`, `color_bottom`, `icon`, `post_id`) VALUES
+(48, 'Test', '00fff0', '0083fe', 'lock', 99),
+(58, 'Scenery', '00F260', '0575E6', 'happy', 106),
+(62, 'Pinned', 'FFD700', 'FFA500', 'star', 106),
+(66, 'Pinned', 'FFD700', 'FFA500', 'star', 101);
 
 --
 -- Indexes for dumped tables
@@ -249,6 +347,12 @@ ALTER TABLE `comments`
 ALTER TABLE `comment_votes`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `account_comment` (`account_id`,`comment_id`);
+
+--
+-- Indexes for table `notification`
+--
+ALTER TABLE `notification`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `posts`
@@ -322,61 +426,67 @@ ALTER TABLE `classes`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `comment_votes`
 --
 ALTER TABLE `comment_votes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `notification`
+--
+ALTER TABLE `notification`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 
 --
 -- AUTO_INCREMENT for table `post_imgs`
 --
 ALTER TABLE `post_imgs`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `post_links`
 --
 ALTER TABLE `post_links`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `post_views`
 --
 ALTER TABLE `post_views`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `post_votes`
 --
 ALTER TABLE `post_votes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `replies`
 --
 ALTER TABLE `replies`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `reply_votes`
 --
 ALTER TABLE `reply_votes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
