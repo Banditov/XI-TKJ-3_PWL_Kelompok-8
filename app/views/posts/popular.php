@@ -9,7 +9,7 @@
 <div id="xIconSvg" class="hidden"><?= essIcon('x', 'w-6 h-6 cursor-pointer') ?></div>
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
-    <div id="searchBar" class="z-2 sticky top-10 w-full md:block hidden opacity-60 hover:opacity-100 transition">
+    <div id="searchBar" class="z-2 sticky top-10 w-full md:block hidden opacity-60 hover:opacity-100 transition rounded-full">
         <form method="GET" action="/popular" id="searchForm">
             <input type="hidden" name="tag"       value="<?= htmlspecialchars($filters['tag'] ?? '') ?>">
             <input type="hidden" name="votes_min" value="<?= htmlspecialchars($filters['votes_min'] ?? '') ?>">
@@ -83,13 +83,13 @@
                         }
                     ?>
                     <?php if ($isPinned): ?>
-                        <form action="/posts/<?= $post['id'] ?>/unpin" method="POST" class="inline">
+                        <form action="/posts/<?= $post['id'] ?>/unpin" method="POST" class="inline pinBtn">
                             <button type="submit" class="text-yellow-500 rounded-full hover:text-yellow-600 hover:bg-yellow-100 transition flex items-center gap-2">
                                 <?= icon('star', 'w-10 h-10') ?>
                             </button>
                         </form>
                     <?php else: ?>
-                        <form action="/posts/<?= $post['id'] ?>/pin" method="POST" class="inline">
+                        <form action="/posts/<?= $post['id'] ?>/pin" method="POST" class="inline pinBtn">
                             <button type="submit" class="text-[#545F71] rounded-full hover:text-yellow-500 hover:bg-yellow-100 transition flex items-center gap-2">
                                 <?= icon('star', 'w-10 h-10') ?>
                             </button>

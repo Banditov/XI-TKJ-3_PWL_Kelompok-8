@@ -73,5 +73,6 @@ $router->add('POST', '/posts/{id}/unpin', 'PostController', 'unpin');
 
 // Settings
 $router->add('POST', '/settings/dyslexic', 'SettingsController', 'toggleDyslexic');
+$router->add('POST', '/settings/dark', 'SettingsController', 'toggleDark');
 
 $router->run();

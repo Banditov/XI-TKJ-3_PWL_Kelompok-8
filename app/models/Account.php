@@ -19,7 +19,6 @@ class Account extends Database
     {
         $field = mysqli_real_escape_string($this->connection, $field);
         $value = intval($value);
-        
         $query = "UPDATE accounts SET $field = $value WHERE id = '$accountId'";
         return mysqli_query($this->connection, $query);
     }

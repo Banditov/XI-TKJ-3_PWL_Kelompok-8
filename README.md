@@ -360,6 +360,14 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 <details>
    <summary>May</summary>
 
+### 16/05/2026 - 0.11.0
+<details>
+
+   - Perbaiki fitur di mobile yang hilang
+   - Ubah font untuk dyslexic mode dari comic sans jadi open dyslexic
+   - Implement mode dark
+</details>
+
 ### 15/05/2026 - 0.10.0
 <details>
 
@@ -372,6 +380,7 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
    - Implement optimizer image
    - Implement konfirmasi logout & hapus post
    - Implement halaman my post, latest, pinned, & popular
+   - Implement mode dyslexic
 </details>
 
 ### 14/05/2026 - 0.9.0
