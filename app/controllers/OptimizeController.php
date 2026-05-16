@@ -8,10 +8,7 @@ class OptimizeController extends Controller
 {
     public function optimizeExisting()
     {
-        if (!isset($_SESSION['account_id']) || ($_SESSION['is_admin'] ?? 0) != 1) {
-            echo json_encode(['error' => 'Unauthorized']);
-            return;
-        }
+        $this->requireAdmin();
 
         $uploadDir = __DIR__ . '/../../public/assets/image/post/';
         $files = scandir($uploadDir);

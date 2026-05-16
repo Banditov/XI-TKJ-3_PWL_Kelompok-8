@@ -8,6 +8,8 @@ class ReplyController extends Controller
 {
     public function store(string $postId, string $commentId)
     {
+        $this->requireLogin();
+
         $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
                   strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 

@@ -31,6 +31,9 @@ function hideLogoutModal() {
 
 if (confirmLogoutBtn) {
     confirmLogoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('darkMode');
+        localStorage.removeItem('dyslexicMode');
+
         window.location.href = '/logout';
     });
 }

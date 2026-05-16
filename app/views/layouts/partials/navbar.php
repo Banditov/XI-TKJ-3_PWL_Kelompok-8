@@ -25,6 +25,8 @@
 
 <script>
     window.userLoggedIn = <?= isset($_SESSION['account_id']) ? 'true' : 'false' ?>;
+    window.sessionDark = <?= ($_SESSION['is_dark'] ?? 0) ? 'true' : 'false' ?>;
+    window.sessionDyslexic = <?= ($_SESSION['is_dyslexic'] ?? 0) ? 'true' : 'false' ?>;
 </script>
 <script src="/js/modes.js"></script>
 

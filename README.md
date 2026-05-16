@@ -366,6 +366,7 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
    - Perbaiki fitur di mobile yang hilang
    - Ubah font untuk dyslexic mode dari comic sans jadi open dyslexic
    - Implement mode dark
+   - Perbaiki otentikasi
 </details>
 
 ### 15/05/2026 - 0.10.0
