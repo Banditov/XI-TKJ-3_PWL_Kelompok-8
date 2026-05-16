@@ -371,6 +371,8 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
    - Implement halaman notifikasi beserta 
    - Implement penghapus comment/reply
    - Optimisasi kode
+   - Perbaiki bug
+   - Ubah style halaman 404
 </details>
 
 ### 15/05/2026 - 0.10.0
