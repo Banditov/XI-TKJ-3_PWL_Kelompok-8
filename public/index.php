@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+date_default_timezone_set('Asia/Jakarta');
+
 spl_autoload_register(function ($class) {
     $class = str_replace('App\\', '', $class);
     $class = str_replace('\\', '/', $class);
@@ -54,6 +56,8 @@ $router->add('GET', '/logout', 'AuthController', 'logout');
 // Comment
 $router->add('POST', '/posts/{id}/comments', 'CommentController', 'store');
 $router->add('POST', '/posts/{id}/comments/{commentId}/replies', 'ReplyController', 'store');
+$router->add('POST', '/comments/{id}/delete', 'CommentController', 'delete');
+$router->add('POST', '/replies/{id}/delete', 'ReplyController', 'delete');
 
 // Voting
 $router->add('POST', '/posts/{id}/vote', 'VoteController', 'votePost');

@@ -483,11 +483,6 @@ class Post extends Database
             $where[] = "EXISTS (SELECT 1 FROM tags t2 WHERE t2.post_id = p.id AND t2.name = '$tag')";
         }
 
-        if (!empty($filters['tag']) && strtolower($filters['tag']) !== 'pinned') {
-            $tag = mysqli_real_escape_string($this->connection, $filters['tag']);
-            $where[] = "EXISTS (SELECT 1 FROM tags t2 WHERE t2.post_id = p.id AND t2.name = '$tag')";
-        }
-
         if (!empty($filters['votes_min'])) {
             $min = intval($filters['votes_min']);
             $where[] = "p.votes >= $min";

@@ -39,11 +39,11 @@ class AuthController extends Controller
 
         session_regenerate_id(true);
 
-        $_SESSION['account_id']   = $account['id'];
+        $_SESSION['account_id'] = $account['id'];
         $_SESSION['account_name'] = $account['name'];
-        $_SESSION['is_admin']     = $account['is_admin'];
-        $_SESSION['is_dark']      = $account['is_dark'] ?? 0;
-        $_SESSION['is_dyslexic']  = $account['is_dyslexic'] ?? 0;
+        $_SESSION['is_admin'] = $account['is_admin'];
+        $_SESSION['is_dark'] = $account['is_dark'] ?? 0;
+        $_SESSION['is_dyslexic'] = $account['is_dyslexic'] ?? 0;
 
         if ($keep) {
             $expiry = time() + (60 * 60 * 24 * 30); // 30 days

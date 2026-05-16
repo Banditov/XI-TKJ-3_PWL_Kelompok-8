@@ -63,4 +63,32 @@ class ReplyController extends Controller
         header("Location: /posts/$postId");
         exit;
     }
+
+    public function delete(string $replyId)
+    {
+        $this->requireLogin();
+
+        $replyModel = new Reply();
+        $reply = $replyModel->getReplyById($replyId);
+
+        if (!$reply) {
+            header("Location: /posts");
+            exit;
+        }
+
+        $isOwner = ($reply['account_id'] == $_SESSION['account_id']);
+        $isAdmin = ($_SESSION['is_admin'] ?? 0) == 1;
+        
+        if (!$isOwner && !$isAdmin) {
+            $_SESSION['error'] = 'You cannot delete this reply';
+            header("Location: /posts/{$reply['post_id']}");
+            exit;
+        }
+
+        $replyModel->deleteReplyById(intval($replyId));
+
+        $_SESSION['success'] = 'Reply deleted successfully!';
+        header("Location: /posts/{$reply['post_id']}");
+        exit;
+    }
 }

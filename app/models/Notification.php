@@ -1,46 +1,24 @@
 <?php
 namespace App\Models;
 
-use App\Core\Database;
-
-class Notification extends Database
+class Notification extends BaseModel
 {
     protected $table = 'notification';
 
     public function createCommentNotification(int $postOwnerId, int $commentId)
     {
         $date = date('Y-m-d');
-
         $query = "INSERT INTO {$this->table} (account_id, comment_id, date) 
                   VALUES ('$postOwnerId', '$commentId', '$date')";
-
-        $result = mysqli_query($this->connection, $query);
-
-        if ($result) {
-            error_log("Notification inserted: postOwnerId=$postOwnerId, commentId=$commentId");
-        } else {
-            error_log("Notification insert failed: " . mysqli_error($this->connection));
-        }
-
-        return $result;
+        return mysqli_query($this->connection, $query);
     }
 
     public function createReplyNotification(int $commentOwnerId, int $replyId)
     {
         $date = date('Y-m-d');
-
         $query = "INSERT INTO {$this->table} (account_id, reply_id, date) 
                   VALUES ('$commentOwnerId', '$replyId', '$date')";
-
-        $result = mysqli_query($this->connection, $query);
-
-        if ($result) {
-            error_log("Reply notification inserted: commentOwnerId=$commentOwnerId, replyId=$replyId");
-        } else {
-            error_log("Reply notification insert failed: " . mysqli_error($this->connection));
-        }
-
-        return $result;
+        return mysqli_query($this->connection, $query);
     }
 
     public function getNotificationsByUser(int $accountId)

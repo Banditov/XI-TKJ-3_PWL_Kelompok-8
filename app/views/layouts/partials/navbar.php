@@ -129,7 +129,7 @@
 
         <div class="w-full h-0.75 bg-[#545F71] rounded-full seperator"></div>
 
-        <p class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-red-500 bg-transparent w-full hover:text-red-500 red cursor-pointer" onclick="showLogoutModal()">
+        <p class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-red-500 bg-transparent w-full hover:text-red-500 red cursor-pointer" onclick="showConfirmationModal('Logout Confirmation', 'Are you sure you want to logout from ImmaSpark?', () => window.location.href='/logout')">
             <?= essIcon('logout', 'w-8 mr-2 fill-current') ?>
             Logout
         </p>
@@ -157,7 +157,7 @@
             <div class="w-full"></div>
         <?php endif; ?>
             <?= essIcon('settings', 'w-12 cursor-pointer hover:opacity-60') ?>
-            <div onclick="showLogoutModal()">
+            <div onclick="showConfirmationModal('Logout Confirmation', 'Are you sure you want to logout from ImmaSpark?', () => window.location.href='/logout')">
                 <?= essIcon('logout', 'w-10 fill-[#ffffff] cursor-pointer hover:opacity-60') ?>
             </div>
         </div>
@@ -258,7 +258,7 @@
                 <div class="flex items-center justify-between w-full">
                     <label for="mobileSwitchDyslexic" class="text-xl cursor-pointer textLbl">Dyslexic</label>
                     <div class="relative inline-block w-11 h-5">
-                        <input id="mobileSwitchDyslexic" type="checkbox" class="peer appearance-none w-11 h-5 bg-slate-100 rounded-full checked:bg-[#2C7CFF] cursor-pointer transition-colors duration-300" <?= $isDark ? 'checked' : '' ?>/>
+                        <input id="mobileSwitchDyslexic" type="checkbox" class="peer appearance-none w-11 h-5 bg-slate-100 rounded-full checked:bg-[#2C7CFF] cursor-pointer transition-colors duration-300" <?= $isDyslexic ? 'checked' : '' ?>/>
                         <label for="mobileSwitchDyslexic" class="absolute top-0 left-0 w-5 h-5 bg-white rounded-full border border-slate-300 shadow-sm transition-transform duration-300 peer-checked:translate-x-6 peer-checked:border-[#2C7CFF] cursor-pointer">
                         </label>
                     </div>
@@ -270,19 +270,19 @@
     </div>
 </div>
 
-<!-- Logout Confirmation -->
-<div id="logoutModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm transition-all duration-300">
-    <div class="w-80 bg-white rounded-3xl p-6 flex flex-col gap-5 text-[#545F71] items-center shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="logoutModalContent">
-        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+<!-- Generic confirmation -->
+<div id="confirmationModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm transition-all duration-300">
+    <div class="w-80 bg-white dark:bg-[#1B1B1B] rounded-3xl p-6 flex flex-col gap-5 text-[#545F71] dark:text-white items-center shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="confirmationModalContent">
+        <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center" id="confirmationIcon">
             <?= icon('important', 'w-10 text-red-500'); ?>
         </div>
-        <p class="text-xl font-bold text-center">Logout Confirmation</p>
-        <p class="text-center text-gray-500">Are you sure you want to logout from ImmaSpark?</p>
+        <p class="text-xl font-bold text-center" id="confirmationTitle">Confirm Action</p>
+        <p class="text-center text-gray-500 dark:text-gray-400" id="confirmationMessage">Are you sure?</p>
         <div class="flex gap-3 w-full mt-2">
-            <button id="confirmLogoutBtn" class="flex-1 px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition font-medium cursor-pointer">
-                Yes, Logout
+            <button id="confirmActionBtn" class="flex-1 px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition font-medium cursor-pointer">
+                Yes, Confirm
             </button>
-            <button id="cancelLogoutBtn" class="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition font-medium cursor-pointer">
+            <button id="cancelActionBtn" class="flex-1 px-4 py-2 bg-gray-200 dark:bg-[#2C2C2C] text-gray-700 dark:text-gray-300 rounded-full hover:bg-gray-300 dark:hover:bg-[#3F3F3F] transition font-medium cursor-pointer">
                 Cancel
             </button>
         </div>
@@ -290,4 +290,3 @@
 </div>
 
 <script src="/js/header/mobileHeader.js"></script>
-<script src="/js/header/logout.js"></script>

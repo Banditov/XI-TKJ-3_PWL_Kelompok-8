@@ -181,9 +181,15 @@
                             </button>
                         </div>
                 <?php if (!empty($comment['replies'])): ?>
-                            <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full text-white cursor-pointer transition-transform duration-300" onclick="toggleReplies('<?= $comment['id'] ?>')">
-                                <?= essIcon('arrow', 'w-7 h-7 transform') ?>
-                            </div>
+                        <div class="bg-[#747474] w-9 h-9 flex justify-center items-center rounded-full text-white cursor-pointer transition-transform duration-300" onclick="toggleReplies('<?= $comment['id'] ?>')">
+                            <?= essIcon('arrow', 'w-7 h-7 transform') ?>
+                        </div>
+                <?php endif; ?>
+                <?php if ($comment['account_id'] == $_SESSION['account_id'] || ($_SESSION['is_admin'] ?? 0) == 1): ?>
+                        <button type="button" onclick="showConfirmationModal('Delete Comment', 'Are you sure you want to delete this comment? This action cannot be undone.', () => document.getElementById('deleteCommentForm-<?= $comment['id'] ?>').submit())" class="text-red-500 hover:text-red-700 transition red dark:hover:bg-transparent! dark:hover:opacity-60">
+                            <?= essIcon('delete', 'w-8 h-8') ?>
+                        </button>
+                        <form id="deleteCommentForm-<?= $comment['id'] ?>" action="/comments/<?= $comment['id'] ?>/delete" method="POST" class="hidden"></form>
                 <?php endif; ?>
                     </div>
                 </div>
@@ -213,18 +219,26 @@
                                 <div class="w-2 h-2 bg-[#545F71] rounded-full seperatorLight"></div>
                                 <p class="text-2xl font-bold"><?= $reply['date'] ?></p>
                             </div>
-                            <div class="vote-container flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3" data-reply-id="<?= $reply['id'] ?>" data-type="reply">
-                                <button type="button" class="vote-btn vote-up flex items-center justify-center cursor-pointer" data-vote="up" data-current-vote="<?= $reply['user_vote'] == 1 ? 'up' : ($reply['user_vote'] == -1 ? 'down' : '') ?>">
-                                    <span style="<?= $reply['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
-                                        <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
-                                    </span>
+                            <div class="flex gap-5 items-center">
+                                <div class="vote-container flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3" data-reply-id="<?= $reply['id'] ?>" data-type="reply">
+                                    <button type="button" class="vote-btn vote-up flex items-center justify-center cursor-pointer" data-vote="up" data-current-vote="<?= $reply['user_vote'] == 1 ? 'up' : ($reply['user_vote'] == -1 ? 'down' : '') ?>">
+                                        <span style="<?= $reply['user_vote'] == 1 ? 'color: #FFE500' : '' ?>">
+                                            <?= essIcon('arrow', 'w-7 h-7 transform rotate-180') ?>
+                                        </span>
+                                    </button>
+                                    <p class="vote-count text-2xl"><?= $reply['votes'] ?></p>
+                                    <button type="button" class="vote-btn vote-down flex items-center justify-center cursor-pointer" data-vote="down" data-current-vote="<?= $reply['user_vote'] == 1 ? 'up' : ($reply['user_vote'] == -1 ? 'down' : '') ?>">
+                                        <span style="<?= $reply['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
+                                            <?= essIcon('arrow', 'w-7 h-7') ?>
+                                        </span>
+                                    </button>
+                                </div>
+                        <?php if ($reply['account_id'] == $_SESSION['account_id'] || ($_SESSION['is_admin'] ?? 0) == 1): ?>
+                                <button type="button" onclick="showConfirmationModal('Delete Reply', 'Are you sure you want to delete this reply? This action cannot be undone.', () => document.getElementById('deleteReplyForm-<?= $reply['id'] ?>').submit())" class="text-red-500 hover:text-red-700 transition red dark:hover:bg-transparent! dark:hover:opacity-60">
+                                    <?= essIcon('delete', 'w-8 h-8') ?>
                                 </button>
-                                <p class="vote-count text-2xl"><?= $reply['votes'] ?></p>
-                                <button type="button" class="vote-btn vote-down flex items-center justify-center cursor-pointer" data-vote="down" data-current-vote="<?= $reply['user_vote'] == 1 ? 'up' : ($reply['user_vote'] == -1 ? 'down' : '') ?>">
-                                    <span style="<?= $reply['user_vote'] == -1 ? 'color: #FFE500' : '' ?>">
-                                        <?= essIcon('arrow', 'w-7 h-7') ?>
-                                    </span>
-                                </button>
+                                <form id="deleteReplyForm-<?= $reply['id'] ?>" action="/replies/<?= $reply['id'] ?>/delete" method="POST" class="hidden"></form>
+                        <?php endif; ?>
                             </div>
                         </div>
                         <div class="p-5">
@@ -280,6 +294,12 @@
                             <?= essIcon('arrow', 'w-7 h-7 transform') ?>
                         </div>
                     <?php endif; ?>
+                    <?php if ($comment['account_id'] == $_SESSION['account_id'] || ($_SESSION['is_admin'] ?? 0) == 1): ?>
+                        <button type="button" onclick="showConfirmationModal('Delete Reply', 'Are you sure you want to delete this reply? This action cannot be undone.', () => document.getElementById('deleteReplyForm-<?= $reply['id'] ?>').submit())" class="text-red-500 hover:text-red-700 transition red dark:hover:bg-transparent! dark:hover:opacity-60">
+                            <?= essIcon('delete', 'w-8 h-8') ?>
+                        </button>
+                        <form id="deleteReplyForm-<?= $reply['id'] ?>" action="/replies/<?= $reply['id'] ?>/delete" method="POST" class="hidden"></form>
+                    <?php endif; ?>
                 </div>
                 <div id="inputReply-<?= $comment['id'] ?>-m" class="hidden px-5 <?= !empty($comment['replies']) ? 'pb-8' : 'pb-5' ?>">
                     <form action="/posts/<?= $post['id'] ?>/comments/<?= $comment['id'] ?>/replies" method="POST" class="flex gap-3 items-center">
@@ -323,6 +343,12 @@
                                     </span>
                                 </button>
                             </div>
+                    <?php if ($reply['account_id'] == $_SESSION['account_id'] || ($_SESSION['is_admin'] ?? 0) == 1): ?>
+                        <button type="button" onclick="showConfirmationModal('Delete Comment', 'Are you sure you want to delete this comment? This action cannot be undone.', () => document.getElementById('deleteCommentForm-<?= $comment['id'] ?>').submit())" class="text-red-500 hover:text-red-700 transition red dark:hover:bg-transparent! dark:hover:opacity-60">
+                            <?= essIcon('delete', 'w-8 h-8') ?>
+                        </button>
+                        <form id="deleteCommentForm-<?= $comment['id'] ?>" action="/comments/<?= $comment['id'] ?>/delete" method="POST" class="hidden"></form>
+                    <?php endif; ?>
                         </div>
                     </div>
             <?php endforeach; ?>

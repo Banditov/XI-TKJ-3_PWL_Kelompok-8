@@ -3,29 +3,15 @@ namespace App\Models;
 
 use App\Core\Database;
 
-class Tag extends Database
+class Tag extends BaseModel
 {
     protected $table = 'tags';
-
-    public function getTags()
-    {
-        $query = "SELECT * FROM {$this->table} ORDER BY name ASC";
-        $result = mysqli_query($this->connection, $query);
-        return mysqli_fetch_all($result, MYSQLI_ASSOC);
-    }
 
     public function getTagsByPostId(string $postId)
     {
         $query = "SELECT * FROM {$this->table} WHERE post_id = '$postId'";
         $result = mysqli_query($this->connection, $query);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
-    }
-
-    public function getTagById(int $tagId)
-    {
-        $query = "SELECT * FROM {$this->table} WHERE id = '$tagId'";
-        $result = mysqli_query($this->connection, $query);
-        return mysqli_fetch_assoc($result);
     }
 
     public function getTagByName(string $tagName)
@@ -41,12 +27,12 @@ class Tag extends Database
         if (strtolower($name) === 'pinned') {
             return false;
         }
-        
+
         $name = mysqli_real_escape_string($this->connection, $name);
         $colorTop = mysqli_real_escape_string($this->connection, $colorTop);
         $colorBottom = mysqli_real_escape_string($this->connection, $colorBottom);
         $icon = mysqli_real_escape_string($this->connection, $icon);
-        
+
         $query = "INSERT INTO {$this->table} (post_id, name, color_top, color_bottom, icon) 
                 VALUES ('$postId', '$name', '$colorTop', '$colorBottom', '$icon')";
         mysqli_query($this->connection, $query);
@@ -66,7 +52,7 @@ class Tag extends Database
         $check = mysqli_query($this->connection, 
             "SELECT id FROM {$this->table} WHERE post_id = '$postId' AND LOWER(name) = 'pinned'"
         );
-        
+
         if (mysqli_num_rows($check) === 0) {
             $query = "INSERT INTO {$this->table} (post_id, name, color_top, color_bottom, icon) 
                     VALUES ('$postId', 'Pinned', 'FFD700', 'FFA500', 'star')";
@@ -81,43 +67,25 @@ class Tag extends Database
         return mysqli_query($this->connection, $query);
     }
 
-    public function getPinnedPosts()
-    {
-        $query = "SELECT p.*, 
-                        a.name AS account_name,
-                        c.name AS class_name
-                FROM posts p
-                LEFT JOIN accounts a ON a.id = p.account_id
-                LEFT JOIN classes c ON c.id = a.class_id
-                WHERE EXISTS (SELECT 1 FROM tags t WHERE t.post_id = p.id AND LOWER(t.name) = 'pinned')
-                ORDER BY p.date DESC";
-        
-        $result = mysqli_query($this->connection, $query);
-        return mysqli_fetch_all($result, MYSQLI_ASSOC);
-    }
-
     public function deleteTagsByPostId(int $postId)
     {
         $query = "DELETE FROM {$this->table} WHERE post_id = '$postId'";
         return mysqli_query($this->connection, $query);
     }
 
-    public function updateTag(int $tagId, string $name, string $colorTop, string $colorBottom, string $icon)
+    public function getUniqueTagsForFilter()
     {
-        $name = mysqli_real_escape_string($this->connection, $name);
-        $colorTop = mysqli_real_escape_string($this->connection, $colorTop);
-        $colorBottom = mysqli_real_escape_string($this->connection, $colorBottom);
-        $icon = mysqli_real_escape_string($this->connection, $icon);
+        $allTags = $this->getAll();
+        $unique = [];
+        foreach ($allTags as $tag) {
+            if (strtolower($tag['name']) === 'pinned') {
+                continue;
+            }
 
-        $query = "UPDATE {$this->table} 
-                  SET name = '$name', color_top = '$colorTop', color_bottom = '$colorBottom', icon = '$icon' 
-                  WHERE id = '$tagId'";
-        return mysqli_query($this->connection, $query);
-    }
-
-    public function deleteTag(int $tagId)
-    {
-        $query = "DELETE FROM {$this->table} WHERE id = '$tagId'";
-        return mysqli_query($this->connection, $query);
+            if (!isset($unique[$tag['name']])) {
+                $unique[$tag['name']] = $tag;
+            }
+        }
+        return array_values($unique);
     }
 }
