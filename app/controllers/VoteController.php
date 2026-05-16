@@ -11,6 +11,8 @@ class VoteController extends Controller
 {
     public function votePost(string $postId)
     {
+        $this->requireLogin();
+
         $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
                   strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 
@@ -68,6 +70,8 @@ class VoteController extends Controller
 
     public function voteComment(string $commentId)
     {
+        $this->requireLogin();
+
         $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
                   strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 
@@ -133,6 +137,8 @@ class VoteController extends Controller
 
     public function voteReply(string $replyId)
     {
+        $this->requireLogin();
+
         $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
                   strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 

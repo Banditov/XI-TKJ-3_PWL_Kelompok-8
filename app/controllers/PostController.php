@@ -11,6 +11,8 @@ class PostController extends Controller
 {
     public function index()
     {
+        $this->requireLogin();
+
         $postModel = new Post();
         $tagModel  = new Tag();
         $tagModel->deleteUnusedTags();
@@ -50,6 +52,8 @@ class PostController extends Controller
 
     public function show(string $id)
     {
+        $this->requireLogin();
+
         $id = intval($id);
 
         $postModel    = new Post();
@@ -73,16 +77,14 @@ class PostController extends Controller
 
     public function create()
     {
+        $this->requireLogin();
         $this->view('posts.create',[
         ]);
     }
 
     public function store()
     {
-        if (!isset($_SESSION['account_id'])) {
-            header("Location: /login");
-            exit;
-        }
+        $this->requireLogin();
 
         $title = trim($_POST['title'] ?? '');
         $description = trim($_POST['description'] ?? '');
@@ -165,10 +167,7 @@ class PostController extends Controller
 
     public function edit(string $id)
     {
-        if (!isset($_SESSION['account_id'])) {
-            header("Location: /login");
-            exit;
-        }
+        $this->requireLogin();
 
         $postModel = new Post();
         $post = $postModel->getPostById($id);
@@ -194,10 +193,7 @@ class PostController extends Controller
 
     public function update(string $id)
     {
-        if (!isset($_SESSION['account_id'])) {
-            header("Location: /login");
-            exit;
-        }
+        $this->requireLogin();
 
         $postModel = new Post();
         $post = $postModel->getPostById($id);
@@ -304,10 +300,7 @@ class PostController extends Controller
 
     public function delete(string $id)
     {
-        if (!isset($_SESSION['account_id'])) {
-            header("Location: /login");
-            exit;
-        }
+        $this->requireLogin();
 
         $postModel = new Post();
         $post = $postModel->getPostById($id);
@@ -331,6 +324,8 @@ class PostController extends Controller
 
     public function latest()
     {
+        $this->requireLogin();
+
         $postModel = new Post();
         $tagModel  = new Tag();
         $tagModel->deleteUnusedTags();
@@ -368,6 +363,8 @@ class PostController extends Controller
 
     public function popular()
     {
+        $this->requireLogin();
+
         $postModel = new Post();
         $tagModel  = new Tag();
         $tagModel->deleteUnusedTags();
@@ -405,10 +402,7 @@ class PostController extends Controller
 
     public function myPosts()
     {
-        if (!isset($_SESSION['account_id'])) {
-            header("Location: /login");
-            exit;
-        }
+        $this->requireLogin();
 
         $postModel = new Post();
         $tagModel  = new Tag();
@@ -485,11 +479,7 @@ class PostController extends Controller
 
     public function pin(string $id)
     {
-        if (!isset($_SESSION['account_id']) || ($_SESSION['is_admin'] ?? 0) != 1) {
-            $_SESSION['error'] = 'Unauthorized action';
-            header("Location: /posts/{$id}");
-            exit;
-        }
+        $this->requireAdmin();
 
         $tagModel = new Tag();
         $result = $tagModel->pinPost(intval($id));
@@ -506,11 +496,7 @@ class PostController extends Controller
 
     public function unpin(string $id)
     {
-        if (!isset($_SESSION['account_id']) || ($_SESSION['is_admin'] ?? 0) != 1) {
-            $_SESSION['error'] = 'Unauthorized action';
-            header("Location: /posts/{$id}");
-            exit;
-        }
+        $this->requireAdmin();
 
         $tagModel = new Tag();
         $result = $tagModel->unpinPost(intval($id));

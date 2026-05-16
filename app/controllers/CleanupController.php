@@ -8,11 +8,7 @@ class CleanupController extends Controller
 {
     public function removeUnusedImages()
     {
-        if (!isset($_SESSION['account_id']) || ($_SESSION['is_admin'] ?? 0) != 1) {
-            http_response_code(403);
-            echo json_encode(['error' => 'Unauthorized']);
-            return;
-        }
+        $this->requireAdmin();
 
         $postModel = new Post();
 
@@ -43,10 +39,7 @@ class CleanupController extends Controller
     
     public function showCleanupPage()
     {
-        if (!isset($_SESSION['account_id']) || ($_SESSION['is_admin'] ?? 0) != 1) {
-            header("Location: /posts");
-            exit;
-        }
+        $this->requireAdmin();
 
         $postModel = new Post();
 

@@ -9,7 +9,7 @@
 <div id="xIconSvg" class="hidden"><?= essIcon('x', 'w-6 h-6 cursor-pointer') ?></div>
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
-    <div id="searchBar" class="z-2 sticky top-10 w-full md:block hidden opacity-60 hover:opacity-100 transition">
+    <div id="searchBar" class="z-2 sticky top-10 w-full md:block hidden opacity-60 hover:opacity-100 transition rounded-full">
         <form method="GET" action="/mypost" id="searchForm">
             <input type="hidden" name="tag"       value="<?= htmlspecialchars($filters['tag'] ?? '') ?>">
             <input type="hidden" name="votes_min" value="<?= htmlspecialchars($filters['votes_min'] ?? '') ?>">

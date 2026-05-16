@@ -51,6 +51,30 @@
                             </span>
                         </button>
                     </div>
+                <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1): ?>
+                    <?php 
+                        $isPinned = false;
+                        foreach ($post['tags'] as $tag) {
+                            if (strtolower($tag['name']) === 'pinned') {
+                                $isPinned = true;
+                                break;
+                            }
+                        }
+                    ?>
+                    <?php if ($isPinned): ?>
+                        <form action="/posts/<?= $post['id'] ?>/unpin" method="POST" class="inline pinBtn">
+                            <button type="submit" class="text-yellow-500 rounded-full hover:text-yellow-600 hover:bg-yellow-100 transition flex items-center gap-2">
+                                <?= icon('star', 'w-10 h-10') ?>
+                            </button>
+                        </form>
+                    <?php else: ?>
+                        <form action="/posts/<?= $post['id'] ?>/pin" method="POST" class="inline pinBtn">
+                            <button type="submit" class="text-[#545F71] rounded-full hover:text-yellow-500 hover:bg-yellow-100 transition flex items-center gap-2">
+                                <?= icon('star', 'w-10 h-10') ?>
+                            </button>
+                        </form>
+                    <?php endif; ?>
+                <?php endif; ?>
                     <div class="flex gap-1 items-center">
                         <?= essIcon('eye', 'w-10 h-10') ?>
                         <p class="text-2xl"><?= $post['views'] ?></p>
@@ -108,7 +132,7 @@
             <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full font-bold hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Post</button>
         </form>
 
-        <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
+        <div class="w-full h-0.75 bg-[#545F71] rounded-full seperatorLight"></div>
 
         <div class="flex gap-1 items-center">
             <?= essIcon('comment', 'w-10 h-10') ?>
@@ -135,7 +159,7 @@
                             <p class="text-2xl font-bold"><?= htmlspecialchars($comment['account_name']) ?></p>
                             <p class="text-sm"><?= htmlspecialchars($comment['class_name']) ?></p>
                         </div>
-                        <div class="w-2 h-2 bg-[#545F71] rounded-full"></div>
+                        <div class="w-2 h-2 bg-[#545F71] rounded-full seperatorLight"></div>
                         <p class="text-2xl font-bold"><?= $comment['date'] ?></p>
                     </div>
                     <div class="flex gap-5 items-center">
@@ -186,7 +210,7 @@
                                     <p class="text-2xl font-bold"><?= htmlspecialchars($reply['account_name']) ?></p>
                                     <p class="text-sm"><?= htmlspecialchars($reply['class_name']) ?></p>
                                 </div>
-                                <div class="w-2 h-2 bg-[#545F71] rounded-full"></div>
+                                <div class="w-2 h-2 bg-[#545F71] rounded-full seperatorLight"></div>
                                 <p class="text-2xl font-bold"><?= $reply['date'] ?></p>
                             </div>
                             <div class="vote-container flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3" data-reply-id="<?= $reply['id'] ?>" data-type="reply">

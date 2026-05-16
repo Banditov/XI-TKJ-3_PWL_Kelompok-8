@@ -101,7 +101,7 @@
             </div>
             <div class="flex gap-4 w-full flex-col">
                 <button type="submit" class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full w-full cursor-pointer hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Update Post</button>
-                <button type="button" onclick="showDeletePostModal(<?= $post['id'] ?>)" class="px-6 py-3 bg-red-600 text-white rounded-full w-full hover:bg-white hover:text-red-600 hover:ring-2 transition cursor-pointer">Delete Post</button>
+                <button type="button" onclick="showDeletePostModal(<?= $post['id'] ?>)" class="px-6 py-3 bg-red-600 text-white rounded-full w-full hover:bg-white hover:text-red-600 hover:ring-2 red transition cursor-pointer">Delete Post</button>
                 <p class="text-[#545F71] rounded-full w-full text-center hover:underline cursor-pointer" onclick="goBack()">Cancel</p>
             </div>
         </form>

@@ -6,7 +6,7 @@
         $isActive = $currentPath === $href;
         $class = $isActive
             ? 'bg-[#2C7CFF] text-white'
-            : 'bg-transparent hover:outline-2 hover:outline-[#2C7CFF] hover:text-[#2C7CFF]';
+            : 'bg-transparent hover:outline-2 hover:outline-[#2C7CFF] hover:text-[#2C7CFF]!';
         echo "<a href=\"$href\" class=\"font-bold text-lg p-2 rounded-2xl flex items-center $class\">
                 " . essIcon($icon, 'w-8 mr-2') . "
                 <p>$label</p>
@@ -15,13 +15,26 @@
 
     $navFilters = $_SESSION['filter_filters'] ?? [];
     $navTags    = $_SESSION['filter_tags']    ?? [];
+
+    $isDark     = isset($_SESSION['is_dark'])     && $_SESSION['is_dark']     == 1;
+    $isDyslexic = isset($_SESSION['is_dyslexic']) && $_SESSION['is_dyslexic'] == 1;
+
+    $allowedSearchPages = ['/posts', '/latest', '/popular', '/pinned', '/mypost'];
+    $showSearchBar = in_array($currentPath, $allowedSearchPages);
 ?>
+
+<script>
+    window.userLoggedIn = <?= isset($_SESSION['account_id']) ? 'true' : 'false' ?>;
+    window.sessionDark = <?= ($_SESSION['is_dark'] ?? 0) ? 'true' : 'false' ?>;
+    window.sessionDyslexic = <?= ($_SESSION['is_dyslexic'] ?? 0) ? 'true' : 'false' ?>;
+</script>
+<script src="/js/modes.js"></script>
 
 <aside class="fixed top-0 left-0 w-64 h-full bg-white overflow-y-scroll drop-shadow-lg **:transition-all **:duration-200 hidden md:block">
     <header class="text-[#545F71] flex items-center p-6 flex-col gap-5">
         <div>
             <img src="/assets/image/logo/logo.png" class="object-contain">
-            <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
+            <div class="w-full h-0.75 bg-[#545F71] rounded-full seperator"></div>
         </div>
 
         <div class="flex flex-col gap-1 w-full">
@@ -31,7 +44,7 @@
             <?= navLink('/popular', 'Popular', 'popular') ?>
         </div>
         
-        <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
+        <div class="w-full h-0.75 bg-[#545F71] rounded-full seperator"></div>
 
         <div class="flex flex-col gap-1 w-full">
             <?= navLink('/posts/create', 'Create a Post', 'create') ?>
@@ -40,7 +53,7 @@
         </div>
 
     <?php if (in_array($currentPath, ['/posts', '/latest', '/popular', '/pinned', '/mypost'])): ?>
-        <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
+        <div class="w-full h-0.75 bg-[#545F71] rounded-full seperator"></div>
 
         <form method="GET" action="" id="filterForm">
             <input type="hidden" name="search" value="<?= htmlspecialchars($navFilters['search'] ?? '') ?>">
@@ -54,9 +67,11 @@
                     <select name="tag" class="w-full p-2 rounded-lg border-2 border-[#545F71] cursor-pointer hover:border-[#2C7CFF] hover:text-[#2C7CFF]" onchange="document.getElementById('filterForm').submit()">
                         <option value="">All Tags</option>
                 <?php foreach ($navTags as $t): ?>
-                            <option value="<?= htmlspecialchars($t['name']) ?>" <?= ($navFilters['tag'] ?? '') === $t['name'] ? 'selected' : '' ?>>
-                                <?= htmlspecialchars($t['name']) ?>
-                            </option>
+                    <?php if (strtolower($t['name']) !== 'pinned'): ?>
+                        <option value="<?= htmlspecialchars($t['name']) ?>" <?= ($navFilters['tag'] ?? '') === $t['name'] ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($t['name']) ?>
+                        </option>
+                    <?php endif; ?>
                 <?php endforeach; ?>
                     </select>
                 </div>
@@ -78,15 +93,15 @@
         </form>
     <?php endif; ?>
 
-        <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
+        <div class="w-full h-0.75 bg-[#545F71] rounded-full seperator"></div>
 
         <div class="flex items-start flex-col w-full gap-2 font-bold">
             <div class="flex items-center gap-2 w-full hover:text-[#2C7CFF]">
                 <?= essIcon('dark', 'w-10') ?>
                 <div class="flex items-center justify-between w-full">
-                    <label for="switch-dark-on" class="text-xl cursor-pointer">Dark Mode</label>
+                    <label for="switch-dark-on" class="text-xl cursor-pointer textLbl">Dark Mode</label>
                     <div class="relative inline-block w-11 h-5">
-                        <input id="switch-dark-on" type="checkbox" class="peer appearance-none w-11 h-5 bg-slate-100 rounded-full checked:bg-[#2C7CFF] cursor-pointer transition-colors duration-300" />
+                        <input id="switch-dark-on" type="checkbox" class="peer appearance-none w-11 h-5 bg-slate-100 rounded-full checked:bg-[#2C7CFF] cursor-pointer transition-colors duration-300" <?= $isDark ? 'checked' : '' ?>/>
                         <label for="switch-dark-on" class="absolute top-0 left-0 w-5 h-5 bg-white rounded-full border border-slate-300 shadow-sm transition-transform duration-300 peer-checked:translate-x-6 peer-checked:border-[#2C7CFF] cursor-pointer">
                         </label>
                     </div>
@@ -95,9 +110,9 @@
             <div class="flex items-center gap-2 w-full hover:text-[#2C7CFF]">
                 <?= essIcon('dyslexic', 'w-10') ?>
                 <div class="flex items-center justify-between w-full">
-                    <label for="switch-dyslexic-on" class="text-xl cursor-pointer">Dyslexic</label>
+                    <label for="switch-dyslexic-on" class="text-xl cursor-pointer textLbl">Dyslexic</label>
                     <div class="relative inline-block w-11 h-5">
-                        <input id="switch-dyslexic-on" type="checkbox" class="peer appearance-none w-11 h-5 bg-slate-100 rounded-full checked:bg-[#2C7CFF] cursor-pointer transition-colors duration-300" />
+                        <input id="switch-dyslexic-on" type="checkbox" class="peer appearance-none w-11 h-5 bg-slate-100 rounded-full checked:bg-[#2C7CFF] cursor-pointer transition-colors duration-300" <?= $isDyslexic ? 'checked' : '' ?>/>
                         <label for="switch-dyslexic-on" class="absolute top-0 left-0 w-5 h-5 bg-white rounded-full border border-slate-300 shadow-sm transition-transform duration-300 peer-checked:translate-x-6 peer-checked:border-[#2C7CFF] cursor-pointer">
                         </label>
                     </div>
@@ -106,13 +121,13 @@
         </div>
 
     <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1): ?>
-        <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
+        <div class="w-full h-0.75 bg-[#545F71] rounded-full seperator"></div>
         <div class="flex flex-col gap-1 w-full">
             <?= navLink('/admin/cleanup', 'Cleanup Images', 'clean') ?>
         </div>
     <?php endif; ?>
 
-        <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
+        <div class="w-full h-0.75 bg-[#545F71] rounded-full seperator"></div>
 
         <p class="font-bold text-lg p-2 rounded-2xl flex items-center hover:outline-2 hover:outline-[#2C7CFF] bg-transparent w-full hover:text-[#2C7CFF] cursor-pointer" onclick="showLogoutModal()">
             <?= essIcon('logout', 'w-8 mr-2 fill-current') ?>
@@ -126,19 +141,25 @@
     <header class="text-[#545F71] flex items-center p-10 flex-col gap-5 w-full">
         <div class="flex items-center gap-3 w-full">
             <?= essIcon('dropMenu', 'w-12 cursor-pointer hover:opacity-60') ?>
+        <?php if ($showSearchBar): ?>
             <div id="searchBar" class="w-full">
-                <form method="GET" action="/posts" id="searchFormMobile">
+                <form method="GET" action="<?= $currentPath ?>" id="searchFormMobile">
                     <input type="hidden" name="tag"       value="<?= htmlspecialchars($navFilters['tag'] ?? '') ?>">
                     <input type="hidden" name="votes_min" value="<?= htmlspecialchars($navFilters['votes_min'] ?? '') ?>">
                     <input type="hidden" name="votes_max" value="<?= htmlspecialchars($navFilters['votes_max'] ?? '') ?>">
                     <input type="hidden" name="views_min" value="<?= htmlspecialchars($navFilters['views_min'] ?? '') ?>">
                     <input type="hidden" name="views_max" value="<?= htmlspecialchars($navFilters['views_max'] ?? '') ?>">
-                    <?= essIcon('searchMbl', 'w-8 absolute left-25 top-1/2 -translate-y-4 z-2') ?>
+                    <?= essIcon('searchMbl', 'w-8 absolute left-25 top-1/2 -translate-y-4 z-2 searchMbl') ?>
                     <input type="text" id="searchMobile" name="search" value="<?= htmlspecialchars($navFilters['search'] ?? '') ?>" placeholder="Search..." class="p-3 pl-13 w-full text-[#545F71] rounded-full border border-[#545F71] bg-white/50 hover:bg-white/70" onchange="this.form.submit()">
                 </form>
             </div>
+        <?php else: ?>
+            <div class="w-full"></div>
+        <?php endif; ?>
             <?= essIcon('settings', 'w-12 cursor-pointer hover:opacity-60') ?>
-            <?= essIcon('logout', 'w-12 fill-[#ffffff] cursor-pointer hover:opacity-60') ?>
+            <div onclick="showLogoutModal()">
+                <?= essIcon('logout', 'w-10 fill-[#ffffff] cursor-pointer hover:opacity-60') ?>
+            </div>
         </div>
     </header>
 </aside>
@@ -148,7 +169,7 @@
     <div class="text-[#545F71] flex items-center p-6 flex-col gap-8 bg-white overflow-y-auto max-h-[80vh] w-80 rounded-3xl drop-shadow-lg [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <div>
             <img src="/assets/image/logo/logo.png" class="object-contain">
-            <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
+            <div class="w-full h-0.75 bg-[#545F71] rounded-full seperator"></div>
         </div>
 
         <div class="flex flex-col gap-1 w-full">
@@ -173,27 +194,32 @@
             <div class="flex flex-col gap-1">
                 <div class="flex flex-col gap-1">
                     <p>Tag</p>
-                    <select id="filter" class="w-full p-2 rounded-lg border-2 border-[#545F71]">
+                    <select name="tag" id="mobileTag" class="w-full p-2 rounded-lg border-2 border-[#545F71] cursor-pointer hover:border-[#2C7CFF] hover:text-[#2C7CFF]">
                         <option value="">All Tags</option>
-                        <option value="technology">Technology</option>
-                        <option value="design">Design</option>
-                        <option value="business">Business</option>
+                <?php foreach ($navTags as $t): ?>
+                    <?php if (strtolower($t['name']) !== 'pinned'): ?>
+                        <option value="<?= htmlspecialchars($t['name']) ?>" <?= ($navFilters['tag'] ?? '') === $t['name'] ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($t['name']) ?>
+                        </option>
+                    <?php endif; ?>
+                <?php endforeach; ?>
                     </select>
                 </div>
                 <div>
                     <p>Votes</p>
                     <div class="flex gap-2">
-                        <input type="number" id="votesMin" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Min">
-                        <input type="number" id="votesMax" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Max">
+                        <input type="number" id="mobileVotesMin" name="votes_min" value="<?= htmlspecialchars($navFilters['votes_min'] ?? '') ?>" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Min">
+                        <input type="number" id="mobileVotesMax" name="votes_max" value="<?= htmlspecialchars($navFilters['votes_max'] ?? '') ?>" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Max">
                     </div>
                 </div>
                 <div>
                     <p>Views</p>
                     <div class="flex gap-2">
-                        <input type="number" id="viewsMin" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Min">
-                        <input type="number" id="viewsMax" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Max">
+                        <input type="number" id="mobileViewsMin" name="views_min" value="<?= htmlspecialchars($navFilters['views_min'] ?? '') ?>" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Min">
+                        <input type="number" id="mobileViewsMax" name="views_max" value="<?= htmlspecialchars($navFilters['views_max'] ?? '') ?>" class="w-full p-2 rounded-lg border-2 border-[#545F71] placeholder:text-[#545F71]" placeholder="Max">
                     </div>
                 </div>
+                <button id="mobileApplyFilters" class="mt-2 px-4 py-2 bg-[#2C7CFF] text-white rounded-full w-full hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Apply Filters</button>
             </div>
         </div>
     <?php endif; ?>
@@ -212,16 +238,16 @@
     <div class="text-[#545F71] flex items-center p-6 flex-col gap-8 bg-white w-80 rounded-3xl drop-shadow-lg">
         <div>
             <img src="/assets/image/logo/logo.png" class="object-contain">
-            <div class="w-full h-0.75 bg-[#545F71] rounded-full"></div>
+            <div class="w-full h-0.75 bg-[#545F71] rounded-full seperator"></div>
         </div>
 
         <div class="flex items-start flex-col w-full gap-2 font-bold">
             <div class="flex items-center gap-2 w-full hover:text-[#2C7CFF]">
                 <?= essIcon('dark', 'w-10') ?>
                 <div class="flex items-center justify-between w-full">
-                    <label for="mobileSwitchDark" class="text-xl cursor-pointer">Dark Mode</label>
+                    <label for="mobileSwitchDark" class="text-xl cursor-pointer textLbl">Dark Mode</label>
                     <div class="relative inline-block w-11 h-5">
-                        <input id="mobileSwitchDark" type="checkbox" class="peer appearance-none w-11 h-5 bg-slate-100 rounded-full checked:bg-[#2C7CFF] cursor-pointer transition-colors duration-300" />
+                        <input id="mobileSwitchDark" type="checkbox" class="peer appearance-none w-11 h-5 bg-slate-100 rounded-full checked:bg-[#2C7CFF] cursor-pointer transition-colors duration-300" <?= $isDark ? 'checked' : '' ?>/>
                         <label for="mobileSwitchDark" class="absolute top-0 left-0 w-5 h-5 bg-white rounded-full border border-slate-300 shadow-sm transition-transform duration-300 peer-checked:translate-x-6 peer-checked:border-[#2C7CFF] cursor-pointer">
                         </label>
                     </div>
@@ -230,9 +256,9 @@
             <div class="flex items-center gap-2 w-full hover:text-[#2C7CFF]">
                 <?= essIcon('dyslexic', 'w-10') ?>
                 <div class="flex items-center justify-between w-full">
-                    <label for="mobileSwitchDyslexic" class="text-xl cursor-pointer">Dyslexic</label>
+                    <label for="mobileSwitchDyslexic" class="text-xl cursor-pointer textLbl">Dyslexic</label>
                     <div class="relative inline-block w-11 h-5">
-                        <input id="mobileSwitchDyslexic" type="checkbox" class="peer appearance-none w-11 h-5 bg-slate-100 rounded-full checked:bg-[#2C7CFF] cursor-pointer transition-colors duration-300" />
+                        <input id="mobileSwitchDyslexic" type="checkbox" class="peer appearance-none w-11 h-5 bg-slate-100 rounded-full checked:bg-[#2C7CFF] cursor-pointer transition-colors duration-300" <?= $isDark ? 'checked' : '' ?>/>
                         <label for="mobileSwitchDyslexic" class="absolute top-0 left-0 w-5 h-5 bg-white rounded-full border border-slate-300 shadow-sm transition-transform duration-300 peer-checked:translate-x-6 peer-checked:border-[#2C7CFF] cursor-pointer">
                         </label>
                     </div>
