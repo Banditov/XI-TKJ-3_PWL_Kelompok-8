@@ -17,15 +17,7 @@ class PostController extends Controller
         $tagModel  = new Tag();
         $tagModel->deleteUnusedTags();
 
-        $allTags = $tagModel->getTags();
-        $uniqueTags = [];
-        foreach ($allTags as $tag) {
-            $name = $tag['name'];
-            if (!isset($uniqueTags[$name])) {
-                $uniqueTags[$name] = $tag;
-            }
-        }
-        $tags = array_values($uniqueTags);
+        $tags = $tagModel->getUniqueTagsForFilter();
 
         $filters = [
             'search'     => $_GET['search']     ?? '',
@@ -182,12 +174,8 @@ class PostController extends Controller
             exit;
         }
 
-        $tagModel = new Tag();
-        $tags = $tagModel->getTags();
-
         $this->view('posts/edit', [
-            'post' => $post,
-            'tags' => $tags
+            'post' => $post
         ]);
     }
 
@@ -330,15 +318,7 @@ class PostController extends Controller
         $tagModel  = new Tag();
         $tagModel->deleteUnusedTags();
 
-        $allTags = $tagModel->getTags();
-        $uniqueTags = [];
-        foreach ($allTags as $tag) {
-            $name = $tag['name'];
-            if (!isset($uniqueTags[$name])) {
-                $uniqueTags[$name] = $tag;
-            }
-        }
-        $tags = array_values($uniqueTags);
+        $tags = $tagModel->getUniqueTagsForFilter();
 
         $filters = [
             'search'     => $_GET['search']     ?? '',
@@ -369,15 +349,7 @@ class PostController extends Controller
         $tagModel  = new Tag();
         $tagModel->deleteUnusedTags();
 
-        $allTags = $tagModel->getTags();
-        $uniqueTags = [];
-        foreach ($allTags as $tag) {
-            $name = $tag['name'];
-            if (!isset($uniqueTags[$name])) {
-                $uniqueTags[$name] = $tag;
-            }
-        }
-        $tags = array_values($uniqueTags);
+        $tags = $tagModel->getUniqueTagsForFilter();
 
         $filters = [
             'search'     => $_GET['search']     ?? '',
@@ -408,15 +380,7 @@ class PostController extends Controller
         $tagModel  = new Tag();
         $tagModel->deleteUnusedTags();
 
-        $allTags = $tagModel->getTags();
-        $uniqueTags = [];
-        foreach ($allTags as $tag) {
-            $name = $tag['name'];
-            if (!isset($uniqueTags[$name])) {
-                $uniqueTags[$name] = $tag;
-            }
-        }
-        $tags = array_values($uniqueTags);
+        $tags = $tagModel->getUniqueTagsForFilter();
 
         $filters = [
             'search'     => $_GET['search']     ?? '',
@@ -444,17 +408,7 @@ class PostController extends Controller
         $postModel = new Post();
         $tagModel  = new Tag();
 
-        $allTags = $tagModel->getTags();
-        $uniqueTags = [];
-        foreach ($allTags as $tag) {
-            if (strtolower($tag['name']) === 'pinned') continue;
-            
-            $name = $tag['name'];
-            if (!isset($uniqueTags[$name])) {
-                $uniqueTags[$name] = $tag;
-            }
-        }
-        $tags = array_values($uniqueTags);
+        $tags = $tagModel->getUniqueTagsForFilter();
 
         $filters = [
             'search'     => $_GET['search']     ?? '',
@@ -511,5 +465,3 @@ class PostController extends Controller
         exit;
     }
 }
-
-

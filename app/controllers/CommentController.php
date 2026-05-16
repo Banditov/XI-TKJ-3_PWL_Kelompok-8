@@ -8,7 +8,7 @@ use App\Models\Notification;
 
 class CommentController extends Controller
 {
-        public function store(string $postId)
+    public function store(string $postId)
     {
         $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
                   strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
@@ -39,7 +39,6 @@ class CommentController extends Controller
                 $notificationModel->createCommentNotification($post['account_id'], $commentId);
             }
         } catch (\Exception $e) {
-            error_log("Notification error: " . $e->getMessage());
         }
 
         $comment = $commentModel->getCommentById($commentId);
@@ -112,5 +111,33 @@ class CommentController extends Controller
             'new_user_vote' => $result
         ]);
         return;
+    }
+
+    public function delete(string $commentId)
+    {
+        $this->requireLogin();
+
+        $commentModel = new Comment();
+        $comment = $commentModel->getCommentById($commentId);
+
+        if (!$comment) {
+            header("Location: /posts");
+            exit;
+        }
+
+        $isOwner = ($comment['account_id'] == $_SESSION['account_id']);
+        $isAdmin = ($_SESSION['is_admin'] ?? 0) == 1;
+        
+        if (!$isOwner && !$isAdmin) {
+            $_SESSION['error'] = 'You cannot delete this comment';
+            header("Location: /posts/{$comment['post_id']}");
+            exit;
+        }
+
+        $commentModel->deleteCommentById(intval($commentId));
+
+        $_SESSION['success'] = 'Comment deleted successfully!';
+        header("Location: /posts/{$comment['post_id']}");
+        exit;
     }
 }

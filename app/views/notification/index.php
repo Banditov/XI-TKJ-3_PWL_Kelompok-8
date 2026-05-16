@@ -60,42 +60,4 @@
     </div>
 </main>
 
-<!-- Delete Notification Confirmation -->
-<div id="deleteNotifModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm transition-all duration-300">
-    <div class="w-80 bg-white dark:bg-[#1B1B1B] rounded-3xl p-6 flex flex-col gap-5 text-[#545F71] dark:text-white items-center shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="deleteNotifModalContent">
-        <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
-            <?= icon('important', 'w-10 text-red-500'); ?>
-        </div>
-        <p class="text-xl font-bold text-center">Remove Notification</p>
-        <p class="text-center text-gray-500 dark:text-gray-400">Are you sure you want to remove this notification?</p>
-        <div class="flex gap-3 w-full mt-2">
-            <button id="confirmDeleteNotifBtn" class="flex-1 px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 red transition font-medium cursor-pointer">
-                Yes, Remove
-            </button>
-            <button id="cancelDeleteNotifBtn" class="flex-1 px-4 py-2 bg-gray-200 dark:bg-[#2C2C2C] text-gray-700 dark:text-gray-300 rounded-full hover:bg-gray-300 dark:hover:bg-[#3F3F3F] transition font-medium cursor-pointer">
-                Cancel
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- Clear All Notifications Confirmation -->
-<div id="clearAllModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm transition-all duration-300">
-    <div class="w-80 bg-white dark:bg-[#1B1B1B] rounded-3xl p-6 flex flex-col gap-5 text-[#545F71] dark:text-white items-center shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="clearAllModalContent">
-        <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
-            <?= icon('important', 'w-10 text-red-500'); ?>
-        </div>
-        <p class="text-xl font-bold text-center">Clear All Notifications</p>
-        <p class="text-center text-gray-500 dark:text-gray-400">Are you sure you want to clear all notifications? This action cannot be undone.</p>
-        <div class="flex gap-3 w-full mt-2">
-            <button id="confirmClearAllBtn" class="flex-1 px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 red transition font-medium cursor-pointer">
-                Yes, Clear All
-            </button>
-            <button id="cancelClearAllBtn" class="flex-1 px-4 py-2 bg-gray-200 dark:bg-[#2C2C2C] text-gray-700 dark:text-gray-300 rounded-full hover:bg-gray-300 dark:hover:bg-[#3F3F3F] transition font-medium cursor-pointer">
-                Cancel
-            </button>
-        </div>
-    </div>
-</div>
-
 <script src="/js/notification.js"></script>

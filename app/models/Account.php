@@ -3,9 +3,14 @@ namespace App\Models;
 
 use App\Core\Database;
 
-class Account extends Database
+class Account extends BaseModel
 {
     protected $table = 'accounts';
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     public function getByEmail(string $email)
     {
