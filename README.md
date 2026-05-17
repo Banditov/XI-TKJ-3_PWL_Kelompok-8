@@ -1,4 +1,3 @@
-
 <h1 align="center">ImmaSpark</h1>
 <!-- 
 <p align="center">Sebuah website untuk ATK sekolah khusus SMK Kristen Immanuel.</p> -->
@@ -17,6 +16,9 @@
    </a>
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#kontributor">
       <img src="https://img.shields.io/badge/Contributor-3-yellow">
+   </a><br>
+   <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
+      <img src="https://img.shields.io/badge/Hosted Version-wip--0.12.0-11164b">
    </a>
 </div>
 
@@ -340,7 +342,7 @@ Website ATK SKI digunakan sebagai sarana pembelian alat tulis dan buku secara le
 ![Threejs](https://img.shields.io/badge/Three.js-black?style=flat&logo=three.js&logoColor=white)
 
 <b>-- Hosting --</b> <br>
-![Free-Hosting.org](.github/image/badges/freehostingorg.svg)
+![InfinityFree](https://img.shields.io/badge/InfinityFree-6f42c1?style=flat&logo=data:image/png;base64,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)
 
 
 ## Kontributor
@@ -370,6 +372,7 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
    - Membuat limit upload model menjadi 1
    - Memperbaiki model tidak dapat dihapus
    - Integrasi fitur experimental 3D viewer
+   - Mulai hosting
 </details>
 
 ### 16/05/2026 - 0.11.0
