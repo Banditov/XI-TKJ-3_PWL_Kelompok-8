@@ -67,8 +67,9 @@ $router->add('POST', '/replies/{id}/vote',  'VoteController', 'voteReply');
 // Image upload
 $router->add('POST', '/upload/image', 'UploadController', 'image');
 
-// 3D model upload
+// 3D model upload and delete
 $router->add('POST', '/upload/model', 'UploadController', 'model3d');
+$router->add('POST', '/upload/model/delete', 'UploadController', 'deleteModel');
 
 // Post edit
 $router->add('POST', '/posts/{id}/update', 'PostController', 'update');

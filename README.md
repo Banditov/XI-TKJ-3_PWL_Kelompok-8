@@ -367,6 +367,10 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
    - Implement penghapus model tidak digunakan
    - Integrasi style halaman show dengan 3D
    - Menambahkan beberapa style hover
+   - Optimisasi kode
+   - Membuat limit upload model menjadi 1
+   - Memperbaiki model tidak dapat dihapus
+   - Integrasi fitur experimental 3D viewer
 </details>
 
 ### 16/05/2026 - 0.11.0

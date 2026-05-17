@@ -11,7 +11,7 @@
 <?php if (!empty($post['imgs']) || !empty($post['model_3d'])): ?>
     <div class="relative overflow-hidden rounded-4xl carousel-wrapper group" data-post-id="<?= $post['id'] ?>">
 
-        <div class="flex gap-2 absolute top-2 left-1/2 transform -translate-x-1/2 z-10">
+        <div class="flex gap-2 absolute top-2 left-1/2 transform -translate-x-1/2 z-10 opacity-0 transition group-hover:opacity-100">
     <?php if (!empty($post['imgs']) && !empty($post['model_3d'])): ?>
             <button type="button" class="carousel-tab px-3 py-1 text-white drop-shadow-lg backdrop-blur-md bg-gray-800/25 border border-white z-1 rounded-full text-sm font-medium transition hover:bg-white hover:text-black" data-tab="images">
                 Images
@@ -61,9 +61,7 @@
                 data-model-type="<?= pathinfo($post['model_3d'], PATHINFO_EXTENSION) ?>"
                 onclick="load3DModel(this)">
                 <div class="text-center text-white">
-                    <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                    </svg>
+                    <?= icon('cube', 'w-15 h-15 mx-auto mb-4') ?>
                     <p class="text-lg font-medium">Click to load 3D model</p>
                     <p class="text-sm opacity-70 mt-1">Drag to rotate • Right-click to pan • Scroll to zoom</p>
                 </div>

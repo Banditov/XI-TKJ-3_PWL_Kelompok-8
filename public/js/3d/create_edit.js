@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getTextColor(hexTop, hexBottom) {
-        hexTop    = expandHex(hexTop    || 'ffffff');
+        hexTop = expandHex(hexTop || 'ffffff');
         hexBottom = expandHex(hexBottom || 'ffffff');
 
         const r = (parseInt(hexTop.slice(0,2), 16) + parseInt(hexBottom.slice(0,2), 16)) / 2;
@@ -29,34 +29,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updatePreview() {
-        const top = document.getElementById('colorTop');
-        const bottom = document.getElementById('colorBottom');
-        if (top && bottom) {
-            const topVal = cleanColor(top.value);
-            const bottomVal = cleanColor(bottom.value);
-            const preview = document.querySelector('.color-preview');
-            if (preview) {
-                preview.style.background = `linear-gradient(to bottom, #${topVal}, #${bottomVal})`;
-            }
+        const topElement = document.getElementById('colorTop');
+        const bottomElement = document.getElementById('colorBottom');
+        const previewElement = document.querySelector('.color-preview');
+        
+        if (topElement && bottomElement && previewElement) {
+            const top = cleanColor(topElement.value);
+            const bottom = cleanColor(bottomElement.value);
+            previewElement.style.background = `linear-gradient(to bottom, #${top || 'CCCCCC'}, #${bottom || 'CCCCCC'})`;
         }
     }
 
-    // Colour preview
-    const colorTop = document.getElementById('colorTop');
-    const colorBottom = document.getElementById('colorBottom');
+    // Color inputs
+    const colorTopInput = document.getElementById('colorTop');
+    const colorBottomInput = document.getElementById('colorBottom');
     const colorTopDiv = document.querySelector('.color-top');
     const colorBottomDiv = document.querySelector('.color-bottom');
 
-    if (colorTop) {
-        colorTop.addEventListener('input', function() {
-            if (colorTopDiv) colorTopDiv.style.backgroundColor = '#' + cleanColor(this.value);
+    if (colorTopInput) {
+        colorTopInput.addEventListener('input', function() {
+            if (colorTopDiv) {
+                colorTopDiv.style.backgroundColor = '#' + cleanColor(this.value);
+            }
             updatePreview();
         });
     }
 
-    if (colorBottom) {
-        colorBottom.addEventListener('input', function() {
-            if (colorBottomDiv) colorBottomDiv.style.backgroundColor = '#' + cleanColor(this.value);
+    if (colorBottomInput) {
+        colorBottomInput.addEventListener('input', function() {
+            if (colorBottomDiv) {
+                colorBottomDiv.style.backgroundColor = '#' + cleanColor(this.value);
+            }
             updatePreview();
         });
     }
@@ -88,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Add tag
+    // Tag
     const addTagBtn = document.getElementById('addTagBtn');
     const tagPreview = document.getElementById('tagPreview');
     const postForm = document.getElementById('postForm');
@@ -97,8 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (addTagBtn) {
         addTagBtn.addEventListener('click', () => {
             const name = tagNameInput ? tagNameInput.value.trim() : '';
-            const colorTopVal = colorTop ? cleanColor(colorTop.value) : 'ffffff';
-            const colorBotVal = colorBottom ? cleanColor(colorBottom.value) : 'ffffff';
+            const colorTopVal = colorTopInput ? cleanColor(colorTopInput.value) : 'ffffff';
+            const colorBotVal = colorBottomInput ? cleanColor(colorBottomInput.value) : 'ffffff';
             const iconName = iconInput ? iconInput.value : 'tag';
             const iconSvg = iconPreview ? iconPreview.innerHTML : '';
 
@@ -116,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <input type="hidden" name="tag_name[]" value="${escapeHtml(name)}">
                 <input type="hidden" name="tag_color_top[]" value="${colorTopVal}">
                 <input type="hidden" name="tag_color_bottom[]" value="${colorBotVal}">
-                <input type="hidden" name="tag_icon[]" value="${iconName}">
+                <input type="hidden" name="tag_icon[]" value="${escapeHtml(iconName)}">
             `;
             if (postForm) postForm.appendChild(hiddenContainer);
 
@@ -126,8 +129,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tag.style.color = textColor;
             tag.innerHTML = `
                 <div class="w-6 h-6">${iconSvg}</div>
-                <span>${escapeHtml(name)}</span>
-                <button type="button" class="remove-tag ml-1 font-bold hover:opacity-60">✕</button>
+                <p>${escapeHtml(name)}</p>
+                <button type="button" class="remove-tag ml-1 font-bold hover:opacity-60 cursor-pointer">✕</button>
             `;
 
             const removeBtn = tag.querySelector('.remove-tag');
@@ -147,13 +150,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (tagNameInput) tagNameInput.value = '';
-            if (colorTop) colorTop.value = '';
-            if (colorBottom) colorBottom.value = '';
+            if (colorTopInput) colorTopInput.value = '';
+            if (colorBottomInput) colorBottomInput.value = '';
             if (colorTopDiv) colorTopDiv.style.backgroundColor = '';
             if (colorBottomDiv) colorBottomDiv.style.backgroundColor = '';
-            if (document.querySelector('.color-preview')) {
-                document.querySelector('.color-preview').style.background = '';
-            }
+
+            const colorPreview = document.querySelector('.color-preview');
+            if (colorPreview) colorPreview.style.background = '';
+
             if (iconInput) iconInput.value = 'tag';
             if (iconPreview) iconPreview.innerHTML = defaultIconSvg;
         });
@@ -183,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Link & Image modal
+    // Link & image modal
     const addLinkImgModal = document.getElementById('addLinkImg');
     const mediaPreview = document.getElementById('mediaPreview');
     const openAddLinkImg = document.getElementById('openAddLinkImg');
@@ -200,6 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Image upload
     const imageUploadArea = document.getElementById('imageUploadArea');
     const imageFileInput = document.getElementById('imageFileInput');
 
@@ -220,16 +225,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 previewRow.className = 'media-item flex items-center gap-2 text-[#545F71] preview-item w-fit';
                 previewRow.innerHTML = `
                     <span>●</span>
-                    <img src="${e.target.result}" class="w-10 h-10 object-cover rounded">
+                    <img src="${e.target.result}" class="w-10 h-10 object-cover rounded cursor-pointer">
                     <span class="flex-1 truncate">${escapeHtml(file.name)}</span>
                     <span class="text-xs text-yellow-500">(uploading...)</span>
-                    <button type="button" class="remove-media text-red-500 cursor-pointer hover:text-red-700 scale-200">&times;</button>
+                    <button type="button" class="remove-media text-red-500 cursor-pointer hover:text-red-700">✕</button>
                 `;
-                
+
                 previewRow.querySelector('.remove-media').addEventListener('click', () => {
                     previewRow.remove();
                 });
-                
+
                 if (mediaPreview) mediaPreview.appendChild(previewRow);
             };
             reader.readAsDataURL(file);
@@ -262,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span>●</span>
                         <img src="/assets/image/post/${data.filename}" class="w-10 h-10 object-cover rounded cursor-pointer">
                         <span class="flex-1 truncate">${escapeHtml(data.filename)}</span>
-                        <button type="button" class="remove-media text-red-500 cursor-pointer hover:text-red-700 scale-200">&times;</button>
+                        <button type="button" class="remove-media text-red-500 cursor-pointer hover:text-red-700">✕</button>
                         <input type="hidden" name="imgs[]" value="${escapeHtml(data.filename)}">
                     `;
                     previewItem.classList.remove('preview-item');
@@ -308,7 +313,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Add link
     const addLinkBtn = document.getElementById('addLinkBtn');
     const linkUrl = document.getElementById('linkUrl');
     const linkText = document.getElementById('linkText');
@@ -347,7 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
             linkRow.innerHTML = `
                 <span>●</span>
                 <a href="${escapeHtml(url)}" target="_blank" class="flex-1 truncate hover:underline">${escapeHtml(display)}</a>
-                <button type="button" class="remove-media text-red-500 cursor-pointer hover:text-red-700 scale-200">&times;</button>
+                <button type="button" class="remove-media text-red-500 cursor-pointer hover:text-red-700">✕</button>
             `;
 
             linkRow.querySelector('.remove-media').addEventListener('click', () => {
@@ -363,13 +367,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
+    if (postForm) {
+        postForm.addEventListener('submit', function(e) {
+            const titleInput = document.querySelector('input[name="title"]');
+            const title = titleInput ? titleInput.value.trim() : '';
 
-    updatePreview();
+            if (!title) {
+                e.preventDefault();
+                alert('Please enter a post title');
+                if (titleInput) titleInput.focus();
+                return false;
+            }
+
+            let description = '';
+            if (typeof tinymce !== 'undefined' && tinymce.get('mytextarea')) {
+                description = tinymce.get('mytextarea').getContent().trim();
+            } else {
+                const descTextarea = document.querySelector('textarea[name="description"]');
+                if (descTextarea) {
+                    description = descTextarea.value.trim();
+                }
+            }
+
+            if (!description) {
+                e.preventDefault();
+                alert('Please enter a post description');
+                if (typeof tinymce !== 'undefined' && tinymce.get('mytextarea')) {
+                    tinymce.get('mytextarea').focus();
+                }
+                return false;
+            }
+            return true;
+        });
+    }
 
     function openImagePreview(src) {
         const overlay = document.getElementById('imgOverlay');
@@ -444,21 +474,79 @@ document.addEventListener('DOMContentLoaded', () => {
     const observer = new MutationObserver(() => {
         initImagePreviewOnMedia();
     });
-    observer.observe(mediaPreview, { childList: true, subtree: true });
+    if (mediaPreview) {
+        observer.observe(mediaPreview, { childList: true, subtree: true });
+    }
 
-    // 3D model upload
+    // 3D Model upload
     const modelUploadArea = document.getElementById('modelUploadArea');
     const modelFileInput = document.getElementById('modelFileInput');
     const modelPreview = document.getElementById('modelPreview');
+    let currentModelFile = null;
+
+    const existingModel = document.querySelector('input[name="model_3d"]');
+    if (existingModel && existingModel.value) {
+        currentModelFile = existingModel.value;
+        showModelInfo(currentModelFile);
+        if (modelUploadArea) modelUploadArea.style.display = 'none';
+    }
+
+    function showModelInfo(filename) {
+        if (modelPreview) {
+            modelPreview.innerHTML = `
+                <div class="model-info flex flex-col gap-3 p-3 bg-green-50 dark:bg-green-900/30 rounded-lg border border-green-300 dark:border-green-700 w-full">
+                    <div class="flex items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="100 100 700 700" class="fill-current stroke-current w-8 h-8">
+                            <path stroke-width="8" d="M443.5 206.1c-14.3 4.7-207.3 103.8-210 107.7-3 4.4-3 4.4-3.3 133.5-.3 137.1-.4 134 4.5 140.5 4.7 6.2 207 106.6 215 106.6 9.3.1 211.8-101 216.8-108.2 3-4.4 3-4.4 3.3-133.5.2-94.9 0-130.3-.8-133.2-2.7-9.1 1.5-6.8-109.2-62.1-109.7-54.9-108-54.1-116.3-51.3zm84 80.1c42.1 21.1 76.5 38.5 76.5 38.8s-34.6 17.8-77 39l-77 38.5-77-38.5c-42.3-21.2-77-38.7-77-39 0-.7 152.2-76.9 153.7-76.9.7-.1 35.7 17.1 77.8 38.1zm-177 111.5 79.5 39.8v102.2c0 56.3-.2 102.3-.5 102.3s-36.3-17.9-80-39.7L270 562.5V460.3c0-56.3.2-102.3.5-102.3s36.3 17.9 80 39.7zM630 460.3v102.2l-79.5 39.8c-43.7 21.8-79.7 39.7-80 39.7s-.5-46-.5-102.3V437.5l79.3-39.7c43.5-21.8 79.5-39.7 80-39.7.4-.1.7 45.9.7 102.2z"/>
+                        </svg>
+                        <div class="min-w-0 flex-1">
+                            <p class="font-medium truncate">${escapeHtml(filename)}</p>
+                        </div>
+                    </div>
+                    <button type="button" class="remove-model-btn px-3 py-1.5 bg-red-200 dark:bg-red-900 text-red-400 dark:text-red-200! dark:hover:bg-red-700! rounded-lg hover:bg-red-500 hover:text-white ring-1 hover:ring-0 red transition text-sm cursor-pointer w-full font-bold">
+                        Remove Model
+                    </button>
+                </div>
+            `;
+
+            const removeBtn = modelPreview.querySelector('.remove-model-btn');
+            if (removeBtn) {
+                removeBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    removeModel();
+                });
+            }
+        }
+    }
+
+    function removeModel() {
+        const hiddenModel = document.querySelector('input[name="model_3d"]');
+        if (hiddenModel) hiddenModel.remove();
+        if (modelPreview) modelPreview.innerHTML = '';
+        if (modelUploadArea) modelUploadArea.style.display = 'flex';
+        currentModelFile = null;
+        if (modelFileInput) modelFileInput.value = '';
+    }
 
     if (modelUploadArea) {
         modelUploadArea.addEventListener('click', () => {
+            if (currentModelFile) {
+                alert('You already have a 3D model. Remove it first to upload a new one.');
+                return;
+            }
             if (modelFileInput) modelFileInput.click();
         });
     }
 
     if (modelFileInput) {
         modelFileInput.addEventListener('change', async function() {
+            if (currentModelFile) {
+                alert('You already have a 3D model. Remove it first to upload a new one.');
+                this.value = '';
+                return;
+            }
+            
             const file = this.files[0];
             if (!file) return;
 
@@ -478,43 +566,24 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (modelPreview) {
-                modelPreview.innerHTML = `<div class="flex items-center gap-2 text-green-600">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                    </svg>
-                    <span>${escapeHtml(file.name)} (${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
-                    <button type="button" class="remove-model text-red-500 ml-2">&times;</button>
-                </div>`;
-                
-                const removeBtn = modelPreview.querySelector('.remove-model');
-                if (removeBtn) {
-                    removeBtn.addEventListener('click', () => {
-                        modelPreview.innerHTML = '';
-                        modelFileInput.value = '';
-                    });
-                }
+                modelPreview.innerHTML = `
+                    <div class="flex items-center gap-2 p-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg">
+                        <div class="loading-spinner-small w-5 h-5 border-2 border-yellow-500 border-t-transparent rounded-full animate-spin"></div>
+                        <span>Uploading ${escapeHtml(file.name)}...</span>
+                    </div>
+                `;
             }
 
             const formData = new FormData();
             formData.append('model_3d', file);
 
-            if (modelPreview) {
-                const uploadingSpan = modelPreview.querySelector('span');
-                if (uploadingSpan) {
-                    uploadingSpan.innerHTML = `${escapeHtml(file.name)} (uploading...)`;
-                }
-            }
-
             try {
-                const res = await fetch('/upload/model', {
-                    method: 'POST',
-                    body: formData
-                });
+                const res = await fetch('/upload/model', { method: 'POST', body: formData });
                 const data = await res.json();
 
                 if (data.error) {
                     alert(data.error);
-                    modelPreview.innerHTML = '';
+                    if (modelPreview) modelPreview.innerHTML = '';
                     modelFileInput.value = '';
                     return;
                 }
@@ -523,33 +592,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 hiddenModel.type = 'hidden';
                 hiddenModel.name = 'model_3d';
                 hiddenModel.value = data.filename;
-                postForm.appendChild(hiddenModel);
+                if (postForm) postForm.appendChild(hiddenModel);
 
-                if (modelPreview) {
-                    modelPreview.innerHTML = `<div class="flex items-center gap-2 text-green-600">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                        </svg>
-                        <span>${escapeHtml(data.filename)} (${(data.size / 1024 / 1024).toFixed(2)} MB)</span>
-                        <button type="button" class="remove-model text-red-500 ml-2">&times;</button>
-                    </div>`;
-                    
-                    const removeBtn = modelPreview.querySelector('.remove-model');
-                    if (removeBtn) {
-                        removeBtn.addEventListener('click', () => {
-                            modelPreview.innerHTML = '';
-                            modelFileInput.value = '';
-                            document.getElementById('model_3d_' + data.filename)?.remove();
-                        });
-                    }
-                }
+                currentModelFile = data.filename;
+
+                if (modelUploadArea) modelUploadArea.style.display = 'none';
+                showModelInfo(data.filename);
 
             } catch (err) {
                 console.error('Upload error:', err);
                 alert('Failed to upload 3D model');
-                modelPreview.innerHTML = '';
+                if (modelPreview) modelPreview.innerHTML = '';
                 modelFileInput.value = '';
             }
         });
+    }
+
+    function initExistingModel() {
+        const existingModelInput = document.querySelector('input[name="model_3d"]');
+        if (existingModelInput && existingModelInput.value) {
+            currentModelFile = existingModelInput.value;
+            showModelInfo(currentModelFile);
+            if (modelUploadArea) modelUploadArea.style.display = 'none';
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initExistingModel);
+    } else {
+        initExistingModel();
     }
 });

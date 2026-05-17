@@ -45,7 +45,7 @@
                         <p>Icon</p>
                         <input type="hidden" id="iconInput" value="tag">
                     </div>
-                    <button type="button" id="addTagBtn" class="px-6 py-4 bg-[#2C7CFF] text-white rounded-full self-start hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Add Tag</button>
+                    <button type="button" id="addTagBtn" class="px-6 py-4 bg-[#2C7CFF] text-white rounded-full self-start hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition cursor-pointer">Add Tag</button>
                 </div>
                 <div id="tagPreview" class="flex gap-3 flex-wrap mt-2">
             <?php if (!empty($post['tags']) && is_array($post['tags'])): ?>
@@ -73,9 +73,9 @@
                 <div class="flex items-center gap-5">
                     <div class="flex items-center gap-2">
                         <?= essIcon('linked', 'w-6 h-6') ?>
-                        <p class="text-2xl font-bold">Links, Images, & 3D Models</p>
+                        <p class="text-2xl font-bold">Links, Images, & 3D Model</p>
                     </div>
-                    <button type="button" id="openAddLinkImg" class="px-4 py-2 bg-[#2C7CFF] text-white rounded-full text-sm hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Add +</button>
+                    <button type="button" id="openAddLinkImg" class="px-4 py-2 bg-[#2C7CFF] text-white rounded-full text-sm hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition cursor-pointer">Add +</button>
                 </div>
                 <div id="mediaPreview" class="flex flex-col gap-2 mt-1">
             <?php if (!empty($post['imgs'])): ?>
@@ -114,28 +114,13 @@
     </div>
 </main>
 
-<!-- Icon Picker -->
-<div class="w-screen h-screen bg-black/50 backdrop-blur-2xl z-10 flex justify-center items-center fixed top-0 left-0 hidden" id="iconPicker">
-    <div id="iconPick" class="w-100 bg-white rounded-4xl p-5 flex flex-col gap-5 text-[#545F71] items-center">
-        <div class="flex justify-between border-b-2 border-[#545F71] pb-2 w-full">
-            <p>Icons</p>
-            <?= essIcon('x', 'w-6 h-6 cursor-pointer close-icon-picker') ?>
-        </div>
-        <div class="flex flex-wrap gap-2">
-            <?php foreach (icon() as $i): ?>
-                <div class="iconOption cursor-pointer p-1 rounded-lg hover:bg-gray-100" data-icon="<?= $i ?>">
-                    <?= icon($i, 'w-6 h-6') ?>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</div>
+<?php include __DIR__ . '/../../../app/views/layouts/partials/iconPicker.php'; ?>
 
 <!-- Link & Image -->
 <div class="w-screen h-screen bg-black/50 backdrop-blur-2xl z-10 flex justify-center items-center fixed top-0 left-0 hidden" id="addLinkImg">
     <div class="w-75 bg-white rounded-4xl p-5 flex flex-col gap-5 text-[#545F71] items-center max-h-[90vh] overflow-y-auto">
         <div class="w-full flex justify-between items-center border-b-2 border-[#545F71] pb-3">
-            <b>Links, Images & 3D Models</b>
+            <b>Links, Images & 3D Model</b>
             <?= essIcon('x', 'w-6 h-6 cursor-pointer close-media-picker') ?>
         </div>
 
@@ -143,9 +128,7 @@
         <div class="w-full flex flex-col gap-3">
             <b class="text-left">Add Image</b>
             <div id="imageUploadArea" class="flex flex-col items-center justify-center text-[#545F71] p-10 rounded-lg bg-gray-100 hover:bg-gray-200 border-2 border-dashed border-[#545F71] cursor-pointer w-full gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                </svg>
+                <?= essIcon('x', 'w-8 h-8 transform rotate-45') ?>
                 <p>Add Image</p>
             </div>
             <input type="file" id="imageFileInput" accept="image/*" class="hidden" multiple>
@@ -153,13 +136,15 @@
 
         <!-- 3D Model upload -->
         <div class="w-full flex flex-col gap-3 border-t-2 border-[#545F71] pt-3">
-            <b class="text-left">Add 3D Model</b>
-            <div id="modelUploadArea" class="flex flex-col items-center justify-center text-[#545F71] p-10 rounded-lg bg-gray-100 hover:bg-gray-200 border-2 border-dashed border-[#545F71] cursor-pointer w-full gap-1">
-                <?= icon('cube', 'w-8 h-8 mb-1') ?>
-                <p class="text-center">Add 3D Model (.glb, .gltf, .obj)</p>
-                <p class="text-xs text-gray-400">Max 10MB</p>
+            <b class="text-left">Add 3D Model (Max 1)</b>
+            <div id="modelUploadArea" class="flex flex-col items-center justify-center text-[#545F71] p-10 rounded-lg bg-gray-100 hover:bg-gray-200 border-2 border-dashed border-[#545F71] cursor-pointer w-full gap-1 text-center">
+                <?= icon('cube', 'w-8 h-8') ?>
+                <p>Add 3D Model (.glb, .gltf, .obj)</p>
+                <p class="text-xs text-gray-400">Max 10MB. Only one model allowed.</p>
             </div>
-            <input type="file" id="modelFileInput" accept=".glb,.gltf,.obj" class="hidden">
+        <?php if (!empty($post['model_3d'])): ?>
+            <input type="hidden" name="model_3d" value="<?= htmlspecialchars($post['model_3d']) ?>">
+        <?php endif; ?>
             <div id="modelPreview" class="w-full text-sm text-gray-500"></div>
         </div>
 
@@ -175,5 +160,5 @@
 
 <script src="/js/library/tinymce/tinymce.min.js"></script>
 <script src="/js/tinymce.js"></script>
-<script src="/js/post/edit.js"></script>
+<script src="/js/3d/create_edit.js"></script>
 <script src="/js/post/delete.js"></script>
