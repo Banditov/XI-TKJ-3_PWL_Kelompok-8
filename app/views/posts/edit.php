@@ -155,10 +155,8 @@
         <div class="w-full flex flex-col gap-3 border-t-2 border-[#545F71] pt-3">
             <b class="text-left">Add 3D Model</b>
             <div id="modelUploadArea" class="flex flex-col items-center justify-center text-[#545F71] p-10 rounded-lg bg-gray-100 hover:bg-gray-200 border-2 border-dashed border-[#545F71] cursor-pointer w-full gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                </svg>
-                <p>Add 3D Model (.glb, .gltf, .obj)</p>
+                <?= icon('cube', 'w-8 h-8 mb-1') ?>
+                <p class="text-center">Add 3D Model (.glb, .gltf, .obj)</p>
                 <p class="text-xs text-gray-400">Max 10MB</p>
             </div>
             <input type="file" id="modelFileInput" accept=".glb,.gltf,.obj" class="hidden">

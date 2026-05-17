@@ -578,4 +578,17 @@ class Post extends Database
         $query = "UPDATE {$this->table} SET model_3d = NULL WHERE id = '$postId'";
         return mysqli_query($this->connection, $query);
     }
+
+    public function getAllUsedModels()
+    {
+        $query = "SELECT model_3d FROM {$this->table} WHERE model_3d IS NOT NULL AND model_3d != ''";
+        $result = mysqli_query($this->connection, $query);
+        $models = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            if ($row['model_3d']) {
+                $models[] = $row['model_3d'];
+            }
+        }
+        return $models;
+    }
 }

@@ -123,7 +123,7 @@
     <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1): ?>
         <div class="w-full h-0.75 bg-[#545F71] rounded-full seperator"></div>
         <div class="flex flex-col gap-1 w-full">
-            <?= navLink('/admin/cleanup', 'Cleanup Images', 'clean') ?>
+            <?= navLink('/admin/cleanup', 'Cleanup Assets', 'clean') ?>
         </div>
     <?php endif; ?>
 
@@ -226,7 +226,7 @@
 
     <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1): ?>
         <div class="flex flex-col gap-1 w-full">
-            <?= navLink('/admin/cleanup', 'Cleanup Images', 'clean') ?>
+            <?= navLink('/admin/cleanup', 'Cleanup Assets', 'clean') ?>
         </div>
     <?php endif; ?>
 

@@ -361,6 +361,14 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 <details>
    <summary>May</summary>
 
+### 17/05/2026 - 0.12.0
+<details>
+
+   - Implement penghapus model tidak digunakan
+   - Integrasi style halaman show dengan 3D
+   - Menambahkan beberapa style hover
+</details>
+
 ### 16/05/2026 - 0.11.0
 <details>
 

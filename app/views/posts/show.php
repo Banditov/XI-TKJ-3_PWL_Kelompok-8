@@ -1,16 +1,6 @@
 <title><?= htmlspecialchars($post['title']) ?> | ImmaSpark</title>
 <link rel="stylesheet" href="/css/responsive/main.css">
 
-<script type="module" src="/js/animation/post.js"></script>
-<script type="importmap">
-{
-    "imports": {
-        "three": "/js/library/three/three.module.js",
-        "three/addons/": "/js/library/jsm/"
-    }
-}
-</script>
-
 <?php include __DIR__ . '/../../../app/views/layouts/partials/navbar.php'; ?>
 <?php include __DIR__ . '/../../../app/helpers/tagText.php'; ?>
 
@@ -131,18 +121,6 @@
             </div>
     <?php endif; ?>
         </div>
-<?php if (!empty($post['model_3d'])): ?>
-        <div class="mt-6">
-            <div class="flex items-center gap-2 mb-3">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                </svg>
-                <p class="text-2xl font-bold">3D Model Viewer</p>
-                <span class="text-sm text-gray-500 ml-2">Drag to rotate • Right-click to pan • Scroll to zoom</span>
-            </div>
-            <div id="modelViewer" class="w-full h-125 rounded-xl overflow-hidden bg-linear-to-br from-gray-900 to-gray-800 relative"></div>
-        </div>
-<?php endif; ?>
     </div>
 
 <!-- Comment Section -->
@@ -380,19 +358,7 @@
     </div>
 </main>
 
-<?php if (!empty($post['model_3d'])): ?>
-    <script type="module">
-        import { init3DViewer } from '/js/3d/viewer.js';
-
-        const modelUrl = '/assets/models/<?= $post['model_3d'] ?>';
-        const fileType = '<?= pathinfo($post['model_3d'], PATHINFO_EXTENSION) ?>';
-
-        init3DViewer('modelViewer', modelUrl, fileType);
-    </script>
-<?php endif; ?>
-
 <script src="/js/post/comment.js"></script>
 <script src="/js/post/postReply.js"></script>
 <script src="/js/post/share.js"></script>
-<script src="/js/post/carousel.js"></script>
 <script src="/js/post/vote.js"></script>

@@ -89,6 +89,7 @@ $router->add('POST', '/posts/{id}/unpin', 'PostController', 'unpin');
 
 // Cleanup
 $router->add('GET', '/admin/cleanup', 'CleanupController', 'showCleanupPage');
-$router->add('POST', '/admin/cleanup/run', 'CleanupController', 'removeUnusedImages');
+$router->add('POST', '/admin/cleanup/images', 'CleanupController', 'removeUnusedImages');
+$router->add('POST', '/admin/cleanup/models', 'CleanupController', 'removeUnusedModels');
 
 $router->run();
