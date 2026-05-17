@@ -17,7 +17,7 @@
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#kontributor">
       <img src="https://img.shields.io/badge/Contributor-3-yellow">
    </a><br>
-   <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
+   <a href="http://immaspark.page.gd">
       <img src="https://img.shields.io/badge/Hosted Version-wip--0.12.0-11164b">
    </a>
 </div>
