@@ -67,6 +67,10 @@ $router->add('POST', '/replies/{id}/vote',  'VoteController', 'voteReply');
 // Image upload
 $router->add('POST', '/upload/image', 'UploadController', 'image');
 
+// 3D model upload and delete
+$router->add('POST', '/upload/model', 'UploadController', 'model3d');
+$router->add('POST', '/upload/model/delete', 'UploadController', 'deleteModel');
+
 // Post edit
 $router->add('POST', '/posts/{id}/update', 'PostController', 'update');
 $router->add('POST', '/posts/{id}/delete', 'PostController', 'delete');
@@ -86,6 +90,7 @@ $router->add('POST', '/posts/{id}/unpin', 'PostController', 'unpin');
 
 // Cleanup
 $router->add('GET', '/admin/cleanup', 'CleanupController', 'showCleanupPage');
-$router->add('POST', '/admin/cleanup/run', 'CleanupController', 'removeUnusedImages');
+$router->add('POST', '/admin/cleanup/images', 'CleanupController', 'removeUnusedImages');
+$router->add('POST', '/admin/cleanup/models', 'CleanupController', 'removeUnusedModels');
 
 $router->run();

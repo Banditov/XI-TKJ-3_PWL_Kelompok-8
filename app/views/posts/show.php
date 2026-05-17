@@ -1,8 +1,6 @@
 <title><?= htmlspecialchars($post['title']) ?> | ImmaSpark</title>
 <link rel="stylesheet" href="/css/responsive/main.css">
 
-<script type="module" src="/js/animation/post.js"></script>
-
 <?php include __DIR__ . '/../../../app/views/layouts/partials/navbar.php'; ?>
 <?php include __DIR__ . '/../../../app/helpers/tagText.php'; ?>
 
@@ -363,5 +361,4 @@
 <script src="/js/post/comment.js"></script>
 <script src="/js/post/postReply.js"></script>
 <script src="/js/post/share.js"></script>
-<script src="/js/post/carousel.js"></script>
 <script src="/js/post/vote.js"></script>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 16, 2026 at 10:41 AM
+-- Generation Time: May 17, 2026 at 04:37 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `immaspark`
+-- Database: `immasparkexp`
 --
 
 -- --------------------------------------------------------
@@ -44,7 +44,8 @@ CREATE TABLE `accounts` (
 
 INSERT INTO `accounts` (`id`, `name`, `email`, `password`, `class_id`, `is_admin`, `is_dark`, `is_dyslexic`) VALUES
 (1, 'TEST1', 'test.001@ski.sch.id', 'test', 7, 1, 0, 0),
-(2, 'TEST2', 'test.002@ski.sch.id', 'test2', 7, 0, 1, 0);
+(2, 'TEST2', 'test.002@ski.sch.id', 'test2', 7, 0, 1, 0),
+(3, 'admin', 'admin@ski.sch.id', 'admin', 17, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -101,7 +102,9 @@ CREATE TABLE `comments` (
 
 INSERT INTO `comments` (`id`, `account_id`, `post_id`, `description`, `votes`, `date`) VALUES
 (32, 2, 106, 'Cool', 0, '2026-05-16'),
-(33, 1, 108, 'Halo', 0, '2026-05-16');
+(35, 1, 99, 'TEST', 0, '2026-05-16'),
+(36, 2, 106, 'TEST', 0, '2026-05-16'),
+(37, 1, 114, 'Very awesome', 0, '2026-05-16');
 
 -- --------------------------------------------------------
 
@@ -150,6 +153,7 @@ CREATE TABLE `posts` (
   `account_id` int NOT NULL,
   `votes` int NOT NULL DEFAULT '0',
   `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `model_3d` varchar(255) DEFAULT NULL,
   `date` date NOT NULL,
   `views` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -158,12 +162,15 @@ CREATE TABLE `posts` (
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`id`, `title`, `account_id`, `votes`, `description`, `date`, `views`) VALUES
-(99, 'TEST', 1, 0, '<h1 style=\"text-align: center;\">Very Nice</h1>', '2026-05-14', 2),
-(100, 'TEST1', 1, 1, '<p>TEST1</p>', '2026-05-15', 2),
-(101, 'TEST2', 1, 0, '<p>TEST2</p>', '2026-05-15', 1),
-(106, 'Beautiful Landscape', 1, 0, '<p>Just a photo of a simple scenery.</p>', '2026-05-15', 2),
-(108, 'NOTIF TEST', 2, 0, '<p>NOTIF TEST</p>', '2026-05-16', 2);
+INSERT INTO `posts` (`id`, `title`, `account_id`, `votes`, `description`, `model_3d`, `date`, `views`) VALUES
+(99, 'TEST', 1, 0, '<h1 style=\"text-align: center;\">Very Nice</h1>', NULL, '2026-05-14', 2),
+(100, 'TEST1', 1, 1, '<p>TEST1</p>', NULL, '2026-05-15', 2),
+(106, 'Beautiful Landscape', 1, 0, '<p>Just a photo of a simple scenery.</p>', NULL, '2026-05-15', 2),
+(108, 'NOTIF TEST', 2, 0, '<p>NOTIF TEST</p>', NULL, '2026-05-16', 2),
+(109, '3D test', 1, 0, '<p>3D viewer test</p>', 'model_6a08708abc255.glb', '2026-05-16', 2),
+(111, 'testtttt', 1, 0, '<p>test</p>', NULL, '2026-05-16', 1),
+(112, 'test223', 1, 0, '<p>test</p>', NULL, '2026-05-16', 1),
+(114, 'Test 3D', 1, 0, '<p>1 jam kerja ini jak</p>', 'model_6a0935e76cc5f.glb', '2026-05-16', 1);
 
 -- --------------------------------------------------------
 
@@ -185,7 +192,12 @@ INSERT INTO `post_imgs` (`id`, `file_name`, `post_id`) VALUES
 (16, 'post_6a065dd85aebf8.04040176.jpg', 99),
 (17, 'post_6a065dda435fa5.71599202.jpg', 99),
 (18, 'post_6a065ddb58dde2.42505819.jpg', 99),
-(25, 'post_6a06fe71ba094.webp', 106);
+(25, 'post_6a06fe71ba094.webp', 106),
+(27, 'post_6a086eb733dfb.webp', 109),
+(29, 'post_6a092b4d81214.webp', 109),
+(30, 'post_6a092b50d1f01.webp', 109),
+(31, 'post_6a093566b7c1d.webp', 114),
+(32, 'post_6a093569a0f72.webp', 114);
 
 -- --------------------------------------------------------
 
@@ -205,7 +217,8 @@ CREATE TABLE `post_links` (
 --
 
 INSERT INTO `post_links` (`id`, `link`, `link_text`, `post_id`) VALUES
-(21, 'https://youtu.be/wcaZcbain2s?si=J8f6RFpUjUOGdi9K', 'Test', 99);
+(21, 'https://youtu.be/wcaZcbain2s?si=J8f6RFpUjUOGdi9K', 'Test', 99),
+(32, 'https://youtu.be/FV_-8DWuq5w?si=Vo6Knuke7H3GC1-c', 'Ploho - Вечер грустных пар', 109);
 
 -- --------------------------------------------------------
 
@@ -226,13 +239,17 @@ CREATE TABLE `post_views` (
 INSERT INTO `post_views` (`id`, `account_id`, `post_id`) VALUES
 (41, 1, 99),
 (43, 1, 100),
-(44, 1, 101),
 (48, 1, 106),
 (53, 1, 108),
+(55, 1, 109),
+(57, 1, 111),
+(58, 1, 112),
+(60, 1, 114),
 (42, 2, 99),
 (50, 2, 100),
 (52, 2, 106),
-(51, 2, 108);
+(51, 2, 108),
+(62, 3, 109);
 
 -- --------------------------------------------------------
 
@@ -314,7 +331,8 @@ INSERT INTO `tags` (`id`, `name`, `color_top`, `color_bottom`, `icon`, `post_id`
 (48, 'Test', '00fff0', '0083fe', 'lock', 99),
 (58, 'Scenery', '00F260', '0575E6', 'happy', 106),
 (62, 'Pinned', 'FFD700', 'FFA500', 'star', 106),
-(66, 'Pinned', 'FFD700', 'FFA500', 'star', 101);
+(72, '3D', 'B5B9FF', '2B2C49', 'cube', 109),
+(74, '3Dih', 'fdcf58', 'ff0000', 'cube', 114);
 
 --
 -- Indexes for dumped tables
@@ -414,7 +432,7 @@ ALTER TABLE `tags`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `classes`
@@ -426,43 +444,43 @@ ALTER TABLE `classes`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `comment_votes`
 --
 ALTER TABLE `comment_votes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT for table `post_imgs`
 --
 ALTER TABLE `post_imgs`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `post_links`
 --
 ALTER TABLE `post_links`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `post_views`
 --
 ALTER TABLE `post_views`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `post_votes`
@@ -474,7 +492,7 @@ ALTER TABLE `post_votes`
 -- AUTO_INCREMENT for table `replies`
 --
 ALTER TABLE `replies`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `reply_votes`
@@ -486,7 +504,7 @@ ALTER TABLE `reply_votes`
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
