@@ -18,6 +18,9 @@ spl_autoload_register(function ($class) {
 
 require_once __DIR__ . '/../app/resources/icons/icon.php';
 
+// HOSTING
+// require_once __DIR__ . '/app/resources/icons/icon.php';
+
 use app\core\router;
 
 $router = new router();
