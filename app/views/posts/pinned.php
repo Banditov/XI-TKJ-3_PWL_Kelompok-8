@@ -6,6 +6,16 @@
 <?php include __DIR__ . '/../../../app/views/layouts/partials/navbar.php'; ?>
 <?php include __DIR__ . '/../../../app/helpers/tagText.php'; ?>
 
+<script type="module" src="/js/animation/post.js"></script>
+<script type="importmap">
+{
+    "imports": {
+        "three": "/js/library/three/three.module.js",
+        "three/addons/": "/js/library/jsm/"
+    }
+}
+</script>
+
 <div id="xIconSvg" class="hidden"><?= essIcon('x', 'w-6 h-6 cursor-pointer') ?></div>
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
@@ -32,11 +42,6 @@
 <?php else: ?>
 <?php foreach ($posts as $index => $post): ?>
         <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg post hover:drop-shadow-[0_0_10px_rgba(0,0,0,0.5)] transition relative">
-            <!-- Pin badge -->
-            <div class="absolute -top-3 -right-3 bg-yellow-400 text-gray-800 rounded-full px-3 py-1 flex items-center gap-1 shadow-lg">
-                <?= icon('pin', 'w-4 h-4') ?>
-                <span class="text-xs font-bold">PINNED</span>
-            </div>
             <div class="md:pt-10 md:pr-10 md:pl-10 pb-7 pt-7 pr-7 pl-7 flex flex-col md:gap-3 gap-5">
                 <div class="flex justify-between items-center">
                     <div class="flex gap-5 items-center">
@@ -91,7 +96,7 @@
                             <?= essIcon('create', 'w-10 h-10') ?>
                         </a>
                     <?php endif; ?>
-                        <button class="shareBtn hover:opacity-70 transition cursor-pointer" data-url="<?= 'http://' . $_SERVER['HTTP_HOST'] . '/posts/' . $post['id'] ?>">
+                        <button class="shareBtn hover:opacity-70 transition cursor-pointer rounded-full" data-url="<?= 'http://' . $_SERVER['HTTP_HOST'] . '/posts/' . $post['id'] ?>">
                             <?= essIcon('share', 'w-10 h-10') ?>
                         </button>
                     </div>
@@ -114,6 +119,6 @@
 </main>
 
 <script src="/js/post/share.js"></script>
-<script src="/js/post/carousel.js"></script>
 <script src="/js/post/filter.js"></script>
 <script src="/js/post/vote.js"></script>
+<script src="/js/post/carousel.js"></script>

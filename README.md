@@ -6,7 +6,7 @@
 <br>
 <div align="center">
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
-      <img src="https://img.shields.io/badge/GitHub Version-wip--0.12.0-red">
+      <img src="https://img.shields.io/badge/GitHub Version-wip--0.12.1-red">
    </a>
    <!-- <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
       <img src="https://img.shields.io/badge/Latest Release-None-green">
@@ -361,6 +361,14 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 
 <details>
    <summary>May</summary>
+
+### 19/05/2026 - 0.12.1
+<details>
+
+   - Perbaiki duplicate carousel script called dan import Three.js
+   - Perbaiki tombol share tidak berfungsi
+   - Perbaiki style TinyMCE saat ganti mode dark/light
+</details>
 
 ### 17/05/2026 - 0.12.0
 <details>

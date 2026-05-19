@@ -4,6 +4,16 @@
 <?php include __DIR__ . '/../../../app/views/layouts/partials/navbar.php'; ?>
 <?php include __DIR__ . '/../../../app/helpers/tagText.php'; ?>
 
+<script type="module" src="/js/animation/post.js"></script>
+<script type="importmap">
+{
+    "imports": {
+        "three": "/js/library/three/three.module.js",
+        "three/addons/": "/js/library/jsm/"
+    }
+}
+</script>
+
 <div id="xIconSvg" class="hidden"><?= essIcon('x', 'w-6 h-6 cursor-pointer') ?></div>
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
@@ -91,7 +101,7 @@
                         <?= essIcon('create', 'w-10 h-10') ?>
                     </a>
                 <?php endif; ?>
-                    <button class="shareBtn hover:opacity-70 transition cursor-pointer" data-url="<?= 'http://' . $_SERVER['HTTP_HOST'] . '/posts/' . $post['id'] ?>">
+                    <button class="shareBtn hover:opacity-70 transition cursor-pointer rounded-full" data-url="<?= 'http://' . $_SERVER['HTTP_HOST'] . '/posts/' . $post['id'] ?>">
                         <?= essIcon('share', 'w-10 h-10') ?>
                     </button>
                 </div>
@@ -362,3 +372,4 @@
 <script src="/js/post/postReply.js"></script>
 <script src="/js/post/share.js"></script>
 <script src="/js/post/vote.js"></script>
+<script src="/js/post/carousel.js"></script>

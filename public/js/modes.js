@@ -28,7 +28,6 @@
             const link = document.createElement('link');
             link.id = 'dyslexic-font';
             link.rel = 'stylesheet';
-            link.href = 'https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/opendyslexic.css';
             document.head.appendChild(link);
         }
     } else {
@@ -96,10 +95,8 @@
                             content_css: enabled ? 'dark' : 'default',
                             content_style: `
                                 body {
-                                    background-color: ${enabled ? '#1B1B1B' : '#ffffff'} !important;
-                                    color: ${enabled ? '#FFFFFF' : '#545F71'} !important;
-                                    font-family: 'Anonymous Pro', monospace;
-                                    padding: 10px;
+                                    background-color: ${document.documentElement.classList.contains('dark') ? '#2c2c2c' : '#ffffff'};
+                                    color: ${document.documentElement.classList.contains('dark') ? '#cbd5e1' : '#000000'};
                                 }
                             `,
                             setup: function(editor) {

@@ -1,13 +1,3 @@
-<script type="module" src="/js/animation/post.js"></script>
-<script type="importmap">
-{
-    "imports": {
-        "three": "/js/library/three/three.module.js",
-        "three/addons/": "/js/library/jsm/"
-    }
-}
-</script>
-
 <?php if (!empty($post['imgs']) || !empty($post['model_3d'])): ?>
     <div class="relative overflow-hidden rounded-4xl carousel-wrapper group" data-post-id="<?= $post['id'] ?>">
 
@@ -71,6 +61,3 @@
 
     </div>
 <?php endif; ?>
-
-
-<script src="/js/post/carousel.js"></script>
