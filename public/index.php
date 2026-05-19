@@ -28,4 +28,5 @@ $router->add('GET', '/posts/{id}', 'PostController', 'show');
 
 $router->add('POST', '/posts', 'PostController', 'store');
 
+
 $router->run();
