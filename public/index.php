@@ -7,8 +7,9 @@ session_start();
 
 date_default_timezone_set('Asia/Jakarta');
 
+// SELF-HOSTING
 spl_autoload_register(function ($class) {
-    $class = str_replace('App\\', '', $class);
+    $class = str_replace('app\\', '', $class);
     $class = str_replace('\\', '/', $class);
     $file = __DIR__ . '/../app/' . strtolower($class) . '.php';
     if (file_exists($file)) {
@@ -19,6 +20,16 @@ spl_autoload_register(function ($class) {
 require_once __DIR__ . '/../app/resources/icons/icon.php';
 
 // HOSTING
+// spl_autoload_register(function ($class) {
+//     $class = str_replace('\\', '/', $class);
+//     $file = __DIR__ . '/' . $class . '.php';
+//     if (file_exists($file)) {
+//         require_once $file;
+//     } else {
+//         die("Missing: " . $file);
+//     }
+// });
+
 // require_once __DIR__ . '/app/resources/icons/icon.php';
 
 use app\core\router;

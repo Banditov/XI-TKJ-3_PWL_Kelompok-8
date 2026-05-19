@@ -3,7 +3,7 @@ namespace app\core;
 
 use mysqli;
 
-require_once '../app/config/app.php';
+require_once __DIR__ . '/../../app/config/app.php';
 
 class database
 {
