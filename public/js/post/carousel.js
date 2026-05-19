@@ -44,9 +44,7 @@ function handleTabClick(e) {
     const wrapper = btn.closest('.carousel-wrapper');
     const tabName = btn.dataset.tab;
 
-    // Update active tab style
     wrapper.querySelectorAll('.carousel-tab').forEach(tab => {
-        // Remove active classes
         tab.classList.remove('active');
         tab.classList.remove('bg-white/30');
         tab.classList.remove('border-white/60');
@@ -54,7 +52,6 @@ function handleTabClick(e) {
         tab.classList.remove('bg-white/20');
         tab.classList.remove('scale-105');
 
-        // Reset to default style
         tab.classList.add('bg-white/10');
         tab.classList.add('border-white/20');
         tab.classList.remove('bg-black/60');
