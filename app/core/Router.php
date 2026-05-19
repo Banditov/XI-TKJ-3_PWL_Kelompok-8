@@ -8,10 +8,10 @@ class Router
     public function add(string $method, string $uri, string $controller, string $function)
     {
         $this->routes[] = [
-            'method'     => strtoupper($method),
-            'uri'        => $uri,
+            'method' => strtoupper($method),
+            'uri' => $uri,
             'controller' => $controller,
-            'function'   => $function
+            'function' => $function
         ];
     }
 

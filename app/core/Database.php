@@ -5,7 +5,8 @@ use mysqli;
 
 require_once '../app/config/app.php';
 
-class Database {
+class Database
+{
     protected $connection;
 
     public function __construct()

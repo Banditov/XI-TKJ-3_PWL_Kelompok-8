@@ -12,12 +12,12 @@ let currentAction = null;
 function showConfirmationModal(title, message, onConfirm) {
     const titleEl = document.getElementById('confirmationTitle');
     const messageEl = document.getElementById('confirmationMessage');
-    
+
     if (titleEl) titleEl.textContent = title;
     if (messageEl) messageEl.textContent = message;
-    
+
     currentAction = onConfirm;
-    
+
     confirmationModal.classList.remove('hidden');
     confirmationModal.classList.add('flex');
     setTimeout(() => {

@@ -2,10 +2,10 @@
 function tagTextColor(string $colorTop, string $colorBottom): string
 {
     if (strlen($colorTop) === 3) {
-        $colorTop = $colorTop[0].$colorTop[0].$colorTop[1].$colorTop[1].$colorTop[2].$colorTop[2];
+        $colorTop = $colorTop[0] . $colorTop[0] . $colorTop[1] . $colorTop[1] . $colorTop[2] . $colorTop[2];
     }
     if (strlen($colorBottom) === 3) {
-        $colorBottom = $colorBottom[0].$colorBottom[0].$colorBottom[1].$colorBottom[1].$colorBottom[2].$colorBottom[2];
+        $colorBottom = $colorBottom[0] . $colorBottom[0] . $colorBottom[1] . $colorBottom[1] . $colorBottom[2] . $colorBottom[2];
     }
 
     $r1 = hexdec(substr($colorTop, 0, 2));

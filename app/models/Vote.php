@@ -9,7 +9,8 @@ class Vote extends Database
 
     public function votePost(int $postId, int $accountId, int $vote)
     {
-        $existing = mysqli_fetch_assoc(mysqli_query($this->connection,
+        $existing = mysqli_fetch_assoc(mysqli_query(
+            $this->connection,
             "SELECT * FROM post_votes WHERE post_id = '$postId' AND account_id = '$accountId'"
         ));
 
@@ -30,7 +31,8 @@ class Vote extends Database
 
     public function voteComment(int $commentId, int $accountId, int $vote)
     {
-        $existing = mysqli_fetch_assoc(mysqli_query($this->connection,
+        $existing = mysqli_fetch_assoc(mysqli_query(
+            $this->connection,
             "SELECT * FROM comment_votes WHERE comment_id = '$commentId' AND account_id = '$accountId'"
         ));
 
@@ -51,7 +53,8 @@ class Vote extends Database
 
     public function voteReply(int $replyId, int $accountId, int $vote)
     {
-        $existing = mysqli_fetch_assoc(mysqli_query($this->connection,
+        $existing = mysqli_fetch_assoc(mysqli_query(
+            $this->connection,
             "SELECT * FROM reply_votes WHERE reply_id = '$replyId' AND account_id = '$accountId'"
         ));
 

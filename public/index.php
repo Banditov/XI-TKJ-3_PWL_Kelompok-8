@@ -6,7 +6,7 @@ date_default_timezone_set('Asia/Jakarta');
 spl_autoload_register(function ($class) {
     $class = str_replace('App\\', '', $class);
     $class = str_replace('\\', '/', $class);
-    $file  = __DIR__ . '/../app/' . strtolower($class) . '.php';
+    $file = __DIR__ . '/../app/' . strtolower($class) . '.php';
     if (file_exists($file)) {
         require_once $file;
     }
@@ -18,7 +18,7 @@ use App\Core\Router;
 
 $router = new Router();
 
-$GLOBALS['tags']    = [];
+$GLOBALS['tags'] = [];
 $GLOBALS['filters'] = [];
 
 
@@ -62,7 +62,7 @@ $router->add('POST', '/replies/{id}/delete', 'ReplyController', 'delete');
 // Voting
 $router->add('POST', '/posts/{id}/vote', 'VoteController', 'votePost');
 $router->add('POST', '/comments/{id}/vote', 'VoteController', 'voteComment');
-$router->add('POST', '/replies/{id}/vote',  'VoteController', 'voteReply');
+$router->add('POST', '/replies/{id}/vote', 'VoteController', 'voteReply');
 
 // Image upload
 $router->add('POST', '/upload/image', 'UploadController', 'image');

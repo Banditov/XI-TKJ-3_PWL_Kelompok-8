@@ -368,6 +368,9 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
    - Perbaiki duplicate carousel script called dan import Three.js
    - Perbaiki tombol share tidak berfungsi
    - Perbaiki style TinyMCE saat ganti mode dark/light
+   - Reformat semua file
+   - Perbaiki masalah saat komen/reply tombol delete tidak terlihat
+   - Menambahkan animasi
 </details>
 
 ### 17/05/2026 - 0.12.0

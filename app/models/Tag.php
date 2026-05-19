@@ -49,7 +49,8 @@ class Tag extends BaseModel
 
     public function pinPost(int $postId)
     {
-        $check = mysqli_query($this->connection, 
+        $check = mysqli_query(
+            $this->connection,
             "SELECT id FROM {$this->table} WHERE post_id = '$postId' AND LOWER(name) = 'pinned'"
         );
 

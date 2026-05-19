@@ -13,12 +13,12 @@ class VoteController extends Controller
     {
         $this->requireLogin();
 
-        $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
-                  strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+        $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 
         if (!$isAjax) {
             $accountId = $_SESSION['account_id'];
-            $vote      = intval($_POST['vote']);
+            $vote = intval($_POST['vote']);
 
             if (!in_array($vote, [1, -1])) {
                 header("Location: /posts");
@@ -37,7 +37,7 @@ class VoteController extends Controller
 
         if (!isset($_SESSION['account_id'])) {
             echo json_encode([
-                'success' => false, 
+                'success' => false,
                 'error' => 'Not logged in'
             ]);
             return;
@@ -62,7 +62,7 @@ class VoteController extends Controller
 
         echo json_encode([
             'success' => true,
-            'new_votes' => (int)$post['votes'],
+            'new_votes' => (int) $post['votes'],
             'new_user_vote' => $result
         ]);
         return;
@@ -72,12 +72,12 @@ class VoteController extends Controller
     {
         $this->requireLogin();
 
-        $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
-                  strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+        $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 
         if (!$isAjax) {
             $accountId = $_SESSION['account_id'];
-            $vote      = intval($_POST['vote']);
+            $vote = intval($_POST['vote']);
 
             if (!in_array($vote, [1, -1])) {
                 header("Location: /posts");
@@ -96,7 +96,7 @@ class VoteController extends Controller
 
         if (!isset($_SESSION['account_id'])) {
             echo json_encode([
-                'success' => false, 
+                'success' => false,
                 'error' => 'Not logged in'
             ]);
             return;
@@ -129,7 +129,7 @@ class VoteController extends Controller
 
         echo json_encode([
             'success' => true,
-            'new_votes' => (int)$comment['votes'],
+            'new_votes' => (int) $comment['votes'],
             'new_user_vote' => $result
         ]);
         return;
@@ -139,12 +139,12 @@ class VoteController extends Controller
     {
         $this->requireLogin();
 
-        $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
-                  strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+        $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 
         if (!$isAjax) {
             $accountId = $_SESSION['account_id'];
-            $vote      = intval($_POST['vote']);
+            $vote = intval($_POST['vote']);
 
             if (!in_array($vote, [1, -1])) {
                 header("Location: /posts");
@@ -163,7 +163,7 @@ class VoteController extends Controller
 
         if (!isset($_SESSION['account_id'])) {
             echo json_encode([
-                'success' => false, 
+                'success' => false,
                 'error' => 'Not logged in'
             ]);
             return;
@@ -196,7 +196,7 @@ class VoteController extends Controller
 
         echo json_encode([
             'success' => true,
-            'new_votes' => (int)$reply['votes'],
+            'new_votes' => (int) $reply['votes'],
             'new_user_vote' => $result
         ]);
         return;

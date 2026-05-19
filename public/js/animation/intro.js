@@ -14,51 +14,51 @@ const gravity = 0.3;
 const COLORS = ['#1D7BC5', '#FFCD56', '#FF4040'];
 
 class Ball {
-constructor(angle, distance) {
-    this.angle = angle;
-    this.distance = distance;
-    this.initialDistance = distance;
-    this.x = centerX + Math.cos(angle) * distance;
-    this.y = centerY + Math.sin(angle) * distance;
-    this.radius = Math.random() * 100 + 70;
-    this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
-    this.opacity = 1;
-    this.vx = 0;
-    this.vy = 0;
-    this.hasGravity = false;
-    this.active = true;
-}
+    constructor(angle, distance) {
+        this.angle = angle;
+        this.distance = distance;
+        this.initialDistance = distance;
+        this.x = centerX + Math.cos(angle) * distance;
+        this.y = centerY + Math.sin(angle) * distance;
+        this.radius = Math.random() * 100 + 70;
+        this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+        this.opacity = 1;
+        this.vx = 0;
+        this.vy = 0;
+        this.hasGravity = false;
+        this.active = true;
+    }
 
-explode() {
-    this.hasGravity = true;
-    const speed = Math.random() * 10 + 6;
-    const angle = Math.atan2(this.y - centerY, this.x - centerX);
-    const upwardBias = Math.random() * 0.6;
-    this.vx = Math.cos(angle) * speed * (Math.random() + 0.5);
-    this.vy = Math.sin(angle) * speed * (Math.random() + 0.5) - upwardBias * 6;
-    this.vx += (Math.random() - 0.5) * 3;
-    this.vy += (Math.random() - 0.5) * 2;
-}
+    explode() {
+        this.hasGravity = true;
+        const speed = Math.random() * 10 + 6;
+        const angle = Math.atan2(this.y - centerY, this.x - centerX);
+        const upwardBias = Math.random() * 0.6;
+        this.vx = Math.cos(angle) * speed * (Math.random() + 0.5);
+        this.vy = Math.sin(angle) * speed * (Math.random() + 0.5) - upwardBias * 6;
+        this.vx += (Math.random() - 0.5) * 3;
+        this.vy += (Math.random() - 0.5) * 2;
+    }
 
-applyGravity() {
-    if (!this.hasGravity) return;
+    applyGravity() {
+        if (!this.hasGravity) return;
         this.vy += gravity;
         this.x += this.vx;
         this.y += this.vy;
-    if (this.y - this.radius > height) {
-        this.active = false;
+        if (this.y - this.radius > height) {
+            this.active = false;
+        }
     }
-}
 
-update() {
-    if (this.hasGravity && this.active) {
-        this.applyGravity();
-        this.opacity = Math.max(0, this.opacity - 0.002);
+    update() {
+        if (this.hasGravity && this.active) {
+            this.applyGravity();
+            this.opacity = Math.max(0, this.opacity - 0.002);
+        }
     }
-}
 
-draw() {
-    if (!this.active) return;
+    draw() {
+        if (!this.active) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fillStyle = this.color;
@@ -102,7 +102,7 @@ function drawScene() {
         if (b.active) {
             b.update();
             b.draw();
-        return true;
+            return true;
         }
         return false;
     });

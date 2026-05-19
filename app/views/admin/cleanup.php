@@ -30,19 +30,24 @@
                         <div class="flex items-center gap-3 p-2 border-b dark:border-gray-700">
                             <img src="/assets/image/post/<?= htmlspecialchars($img) ?>" class="w-12 h-12 object-cover rounded">
                             <span class="flex-1"><?= htmlspecialchars($img) ?></span>
-                            <span class="text-xs text-gray-500"><?= round(filesize(__DIR__ . '/../../../public/assets/image/post/' . $img) / 1024, 2) ?> KB</span>
+                            <span
+                                class="text-xs text-gray-500"><?= round(filesize(__DIR__ . '/../../../public/assets/image/post/' . $img) / 1024, 2) ?>
+                                KB</span>
                         </div>
                     <?php endforeach; ?>
                 </div>
             </div>
 
-            <form action="/admin/cleanup/images" method="POST" onsubmit="return confirm('Are you sure you want to delete <?= $unusedImageCount ?> unused image(s)? This action cannot be undone.')">
-                <button type="submit" class="px-6 py-3 bg-red-600 text-white rounded-full hover:bg-white hover:text-red-600 red hover:ring-2 transition cursor-pointer w-full">
+            <form action="/admin/cleanup/images" method="POST"
+                onsubmit="return confirm('Are you sure you want to delete <?= $unusedImageCount ?> unused image(s)? This action cannot be undone.')">
+                <button type="submit"
+                    class="px-6 py-3 bg-red-600 text-white rounded-full hover:bg-white hover:text-red-600 red hover:ring-2 transition cursor-pointer w-full">
                     Delete <?= $unusedImageCount ?> Unused Image(s)
                 </button>
             </form>
         <?php else: ?>
-            <div class="bg-green-100 dark:bg-green-950 border border-green-400 dark:border-green-200 dark:text-green-200 text-green-700 px-4 py-3 rounded">
+            <div
+                class="bg-green-100 dark:bg-green-950 border border-green-400 dark:border-green-200 dark:text-green-200 text-green-700 px-4 py-3 rounded">
                 No unused images found! All images are being used.
             </div>
         <?php endif; ?>
@@ -73,19 +78,24 @@
                     <?php foreach ($unusedModels as $model): ?>
                         <div class="flex items-center gap-3 p-2 border-b dark:border-gray-700">
                             <span class="flex-1"><?= htmlspecialchars($model) ?></span>
-                            <span class="text-xs text-gray-500"><?= round(filesize(__DIR__ . '/../../../public/assets/models/' . $model) / 1024, 2) ?> KB</span>
+                            <span
+                                class="text-xs text-gray-500"><?= round(filesize(__DIR__ . '/../../../public/assets/models/' . $model) / 1024, 2) ?>
+                                KB</span>
                         </div>
                     <?php endforeach; ?>
                 </div>
             </div>
 
-            <form action="/admin/cleanup/models" method="POST" onsubmit="return confirm('Are you sure you want to delete <?= $unusedModelCount ?> unused 3D model(s)? This action cannot be undone.')">
-                <button type="submit" class="px-6 py-3 bg-red-600 text-white rounded-full hover:bg-white hover:text-red-600 red hover:ring-2 transition cursor-pointer w-full">
+            <form action="/admin/cleanup/models" method="POST"
+                onsubmit="return confirm('Are you sure you want to delete <?= $unusedModelCount ?> unused 3D model(s)? This action cannot be undone.')">
+                <button type="submit"
+                    class="px-6 py-3 bg-red-600 text-white rounded-full hover:bg-white hover:text-red-600 red hover:ring-2 transition cursor-pointer w-full">
                     Delete <?= $unusedModelCount ?> Unused Model(s)
                 </button>
             </form>
         <?php else: ?>
-            <div class="bg-green-100 dark:bg-green-950 border border-green-400 dark:border-green-200 dark:text-green-200 text-green-700 px-4 py-3 rounded">
+            <div
+                class="bg-green-100 dark:bg-green-950 border border-green-400 dark:border-green-200 dark:text-green-200 text-green-700 px-4 py-3 rounded">
                 No unused models found! All models are being used.
             </div>
         <?php endif; ?>

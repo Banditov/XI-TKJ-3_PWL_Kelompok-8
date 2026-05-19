@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function expandHex(hex) {
         if (hex.length === 3) {
-            return hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+            return hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
         }
         return hex;
     }
@@ -20,9 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
         hexTop = expandHex(hexTop || 'ffffff');
         hexBottom = expandHex(hexBottom || 'ffffff');
 
-        const r = (parseInt(hexTop.slice(0,2), 16) + parseInt(hexBottom.slice(0,2), 16)) / 2;
-        const g = (parseInt(hexTop.slice(2,4), 16) + parseInt(hexBottom.slice(2,4), 16)) / 2;
-        const b = (parseInt(hexTop.slice(4,6), 16) + parseInt(hexBottom.slice(4,6), 16)) / 2;
+        const r = (parseInt(hexTop.slice(0, 2), 16) + parseInt(hexBottom.slice(0, 2), 16)) / 2;
+        const g = (parseInt(hexTop.slice(2, 4), 16) + parseInt(hexBottom.slice(2, 4), 16)) / 2;
+        const b = (parseInt(hexTop.slice(4, 6), 16) + parseInt(hexBottom.slice(4, 6), 16)) / 2;
 
         const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
         return luminance > 0.8 ? '#1f2937' : '#ffffff';
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const topElement = document.getElementById('colorTop');
         const bottomElement = document.getElementById('colorBottom');
         const previewElement = document.querySelector('.color-preview');
-        
+
         if (topElement && bottomElement && previewElement) {
             const top = cleanColor(topElement.value);
             const bottom = cleanColor(bottomElement.value);
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const colorBottomDiv = document.querySelector('.color-bottom');
 
     if (colorTopInput) {
-        colorTopInput.addEventListener('input', function() {
+        colorTopInput.addEventListener('input', function () {
             if (colorTopDiv) {
                 colorTopDiv.style.backgroundColor = '#' + cleanColor(this.value);
             }
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (colorBottomInput) {
-        colorBottomInput.addEventListener('input', function() {
+        colorBottomInput.addEventListener('input', function () {
             if (colorBottomDiv) {
                 colorBottomDiv.style.backgroundColor = '#' + cleanColor(this.value);
             }
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.querySelectorAll('.iconOption').forEach(option => {
-        option.addEventListener('click', function() {
+        option.addEventListener('click', function () {
             if (iconInput) iconInput.value = this.dataset.icon;
             if (iconPreview) iconPreview.innerHTML = this.querySelector('svg').outerHTML;
             if (iconPicker) iconPicker.classList.add('hidden');
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Remove tag
     document.querySelectorAll('.remove-tag').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', function (e) {
             e.preventDefault();
             const tagDiv = this.closest('.tag-preview-item');
             if (tagDiv) {
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Remove media
     document.querySelectorAll('.remove-media').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', function (e) {
             e.preventDefault();
             const mediaDiv = this.closest('.media-item');
             if (mediaDiv) {
@@ -215,12 +215,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (imageFileInput) {
-        imageFileInput.addEventListener('change', async function() {
+        imageFileInput.addEventListener('change', async function () {
             const file = this.files[0];
             if (!file) return;
 
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 const previewRow = document.createElement('div');
                 previewRow.className = 'media-item flex items-center gap-2 text-[#545F71] preview-item w-fit';
                 previewRow.innerHTML = `
@@ -368,7 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (postForm) {
-        postForm.addEventListener('submit', function(e) {
+        postForm.addEventListener('submit', function (e) {
             const titleInput = document.querySelector('input[name="title"]');
             const title = titleInput ? titleInput.value.trim() : '';
 
@@ -540,19 +540,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (modelFileInput) {
-        modelFileInput.addEventListener('change', async function() {
+        modelFileInput.addEventListener('change', async function () {
             if (currentModelFile) {
                 alert('You already have a 3D model. Remove it first to upload a new one.');
                 this.value = '';
                 return;
             }
-            
+
             const file = this.files[0];
             if (!file) return;
 
             const allowedTypes = ['.glb', '.gltf', '.obj'];
             const ext = '.' + file.name.split('.').pop().toLowerCase();
-            
+
             if (!allowedTypes.includes(ext)) {
                 alert('Please upload .glb, .gltf, or .obj files only');
                 this.value = '';

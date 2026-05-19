@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     function toggleReply(commentId) {
         const input = document.getElementById(`inputReply-${commentId}`);
         if (input) {
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function toggleReplies(commentId) {
         const replies = document.getElementById(`replies-${commentId}`);
-        const button  = document.querySelector(`[onclick*="toggleReplies('${commentId}')"]`);
+        const button = document.querySelector(`[onclick*="toggleReplies('${commentId}')"]`);
 
         if (replies) {
             replies.classList.toggle('hidden');

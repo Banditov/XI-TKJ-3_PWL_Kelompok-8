@@ -40,7 +40,7 @@ class Post extends Database
         }
 
         if (!empty($filters['search'])) {
-            $search  = mysqli_real_escape_string($this->connection, $filters['search']);
+            $search = mysqli_real_escape_string($this->connection, $filters['search']);
             $where[] = "(p.title LIKE '%$search%' OR p.description LIKE '%$search%')";
         }
 
@@ -86,7 +86,7 @@ class Post extends Database
     public function getPostById(string $id)
     {
         $accountId = $_SESSION['account_id'];
-        
+
         $query = "SELECT p.*, 
                         a.name AS account_name,
                         c.name AS class_name
@@ -120,10 +120,10 @@ class Post extends Database
 
     public function createPost(string $title, string $description, string $accountId)
     {
-        $date        = date('Y-m-d');
-        $title       = mysqli_real_escape_string($this->connection, $title);
+        $date = date('Y-m-d');
+        $title = mysqli_real_escape_string($this->connection, $title);
         $description = mysqli_real_escape_string($this->connection, $description);
-        $accountId   = mysqli_real_escape_string($this->connection, $accountId);
+        $accountId = mysqli_real_escape_string($this->connection, $accountId);
 
         $query = "INSERT INTO {$this->table} (title, account_id, votes, description, date) 
                 VALUES ('$title', '$accountId', 0, '$description', '$date')";
@@ -141,15 +141,18 @@ class Post extends Database
 
     public function incrementViews(int $postId, int $accountId)
     {
-        $check = mysqli_query($this->connection,
+        $check = mysqli_query(
+            $this->connection,
             "SELECT id FROM post_views WHERE account_id = '$accountId' AND post_id = '$postId'"
         );
 
         if (mysqli_num_rows($check) === 0) {
-            mysqli_query($this->connection,
+            mysqli_query(
+                $this->connection,
                 "INSERT INTO post_views (account_id, post_id) VALUES ('$accountId', '$postId')"
             );
-            mysqli_query($this->connection,
+            mysqli_query(
+                $this->connection,
                 "UPDATE {$this->table} SET views = views + 1 WHERE id = '$postId'"
             );
         }
@@ -157,19 +160,21 @@ class Post extends Database
 
     public function addImage(string $postId, string $fileName)
     {
-        $postId   = mysqli_real_escape_string($this->connection, $postId);
+        $postId = mysqli_real_escape_string($this->connection, $postId);
         $fileName = mysqli_real_escape_string($this->connection, $fileName);
-        mysqli_query($this->connection, 
+        mysqli_query(
+            $this->connection,
             "INSERT INTO {$this->table_imgs} (post_id, file_name) VALUES ('$postId', '$fileName')"
         );
     }
 
     public function addLink(string $postId, string $link, string $linkText = '')
     {
-        $postId   = mysqli_real_escape_string($this->connection, $postId);
-        $link     = mysqli_real_escape_string($this->connection, $link);
+        $postId = mysqli_real_escape_string($this->connection, $postId);
+        $link = mysqli_real_escape_string($this->connection, $link);
         $linkText = mysqli_real_escape_string($this->connection, $linkText ?: $link);
-        mysqli_query($this->connection,
+        mysqli_query(
+            $this->connection,
             "INSERT INTO {$this->table_links} (post_id, link, link_text) VALUES ('$postId', '$link', '$linkText')"
         );
     }
@@ -283,7 +288,7 @@ class Post extends Database
         }
 
         if (!empty($filters['search'])) {
-            $search  = mysqli_real_escape_string($this->connection, $filters['search']);
+            $search = mysqli_real_escape_string($this->connection, $filters['search']);
             $where[] = "(p.title LIKE '%$search%' OR p.description LIKE '%$search%')";
         }
 
@@ -357,7 +362,7 @@ class Post extends Database
         }
 
         if (!empty($filters['search'])) {
-            $search  = mysqli_real_escape_string($this->connection, $filters['search']);
+            $search = mysqli_real_escape_string($this->connection, $filters['search']);
             $where[] = "(p.title LIKE '%$search%' OR p.description LIKE '%$search%')";
         }
 
@@ -432,7 +437,7 @@ class Post extends Database
         }
 
         if (!empty($filters['search'])) {
-            $search  = mysqli_real_escape_string($this->connection, $filters['search']);
+            $search = mysqli_real_escape_string($this->connection, $filters['search']);
             $where[] = "(p.title LIKE '%$search%' OR p.description LIKE '%$search%')";
         }
 
@@ -504,7 +509,7 @@ class Post extends Database
         }
 
         if (!empty($filters['search'])) {
-            $search  = mysqli_real_escape_string($this->connection, $filters['search']);
+            $search = mysqli_real_escape_string($this->connection, $filters['search']);
             $where[] = "(p.title LIKE '%$search%' OR p.description LIKE '%$search%')";
         }
 

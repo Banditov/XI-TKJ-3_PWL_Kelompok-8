@@ -1,6 +1,6 @@
 const overlay = document.createElement('div');
-const xIcon   = document.getElementById('xIconSvg').innerHTML;
-overlay.id        = 'imgOverlay';
+const xIcon = document.getElementById('xIconSvg').innerHTML;
+overlay.id = 'imgOverlay';
 overlay.className = 'fixed inset-0 z-50 backdrop-blur-md bg-gray-900/70 items-center justify-center transition-opacity duration-200';
 overlay.style.display = 'none';
 overlay.style.opacity = '0';
@@ -12,7 +12,7 @@ overlay.innerHTML = `
 `;
 document.body.appendChild(overlay);
 
-const overlayImg   = document.getElementById('overlayImg');
+const overlayImg = document.getElementById('overlayImg');
 const overlayClose = document.getElementById('overlayClose');
 
 function openOverlay(src) {
@@ -43,7 +43,7 @@ function handleTabClick(e) {
     const btn = e.currentTarget;
     const wrapper = btn.closest('.carousel-wrapper');
     const tabName = btn.dataset.tab;
-    
+
     // Update active tab style
     wrapper.querySelectorAll('.carousel-tab').forEach(tab => {
         // Remove active classes
@@ -53,7 +53,7 @@ function handleTabClick(e) {
         tab.classList.remove('shadow-lg');
         tab.classList.remove('bg-white/20');
         tab.classList.remove('scale-105');
-        
+
         // Reset to default style
         tab.classList.add('bg-white/10');
         tab.classList.add('border-white/20');
@@ -125,7 +125,7 @@ function initCarousels() {
 
             setTimeout(() => { animating = false; }, 350);
         }
-        
+
         if (prev) prev.addEventListener('click', () => goTo(current === 0 ? total - 1 : current - 1));
         if (next) next.addEventListener('click', () => goTo(current === total - 1 ? 0 : current + 1));
         dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
@@ -136,7 +136,7 @@ function initCarousels() {
     });
 }
 
-window.load3DModel = async function(element) {
+window.load3DModel = async function (element) {
     if (element.dataset.loading === 'true' || element.dataset.loaded === 'true') {
         return;
     }

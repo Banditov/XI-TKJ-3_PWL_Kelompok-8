@@ -18,7 +18,8 @@ class CleanupController extends Controller
         $deletedCount = 0;
 
         foreach ($allFiles as $file) {
-            if ($file === '.' || $file === '..') continue;
+            if ($file === '.' || $file === '..')
+                continue;
             if (!in_array($file, $usedImages)) {
                 $filePath = $uploadDir . $file;
                 if (is_file($filePath) && unlink($filePath)) {
@@ -50,7 +51,8 @@ class CleanupController extends Controller
         $deletedCount = 0;
 
         foreach ($allFiles as $file) {
-            if ($file === '.' || $file === '..') continue;
+            if ($file === '.' || $file === '..')
+                continue;
             if (!in_array($file, $usedModels)) {
                 $filePath = $modelDir . $file;
                 if (is_file($filePath) && unlink($filePath)) {
@@ -78,7 +80,8 @@ class CleanupController extends Controller
         $unusedImages = [];
 
         foreach ($allImageFiles as $file) {
-            if ($file === '.' || $file === '..') continue;
+            if ($file === '.' || $file === '..')
+                continue;
             $totalImages++;
             if (!in_array($file, $usedImages)) {
                 $unusedImages[] = $file;
@@ -93,7 +96,8 @@ class CleanupController extends Controller
         $unusedModels = [];
 
         foreach ($allModelFiles as $file) {
-            if ($file === '.' || $file === '..') continue;
+            if ($file === '.' || $file === '..')
+                continue;
             $totalModels++;
             if (!in_array($file, $usedModels)) {
                 $unusedModels[] = $file;

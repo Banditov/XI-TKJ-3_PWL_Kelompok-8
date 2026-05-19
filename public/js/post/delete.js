@@ -22,7 +22,7 @@ function showDeletePostModal(postId) {
     window.showConfirmationModal(
         'Delete Post',
         'Are you sure you want to delete this post? This action cannot be undone and will delete all comments, replies, images, and links associated with this post.',
-        function() {
+        function () {
             deletePost(postId);
         }
     );

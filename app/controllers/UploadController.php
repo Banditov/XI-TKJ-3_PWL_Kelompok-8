@@ -194,7 +194,7 @@ class UploadController extends Controller
 
         $filename = 'model_' . uniqid() . '.' . $ext;
         $uploadDir = __DIR__ . '/../../public/assets/models/';
-        
+
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }

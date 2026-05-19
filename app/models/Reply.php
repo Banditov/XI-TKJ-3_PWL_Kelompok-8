@@ -71,8 +71,10 @@ class Reply extends BaseModel
         $reply = mysqli_fetch_assoc($result);
 
         if ($reply) {
-            $voteResult = mysqli_query($this->connection, 
-                "SELECT vote FROM reply_votes WHERE reply_id = '$replyId' AND account_id = '$accountId'");
+            $voteResult = mysqli_query(
+                $this->connection,
+                "SELECT vote FROM reply_votes WHERE reply_id = '$replyId' AND account_id = '$accountId'"
+            );
             $voteRow = mysqli_fetch_assoc($voteResult);
             $reply['user_vote'] = $voteRow ? $voteRow['vote'] : 0;
         }

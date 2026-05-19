@@ -10,8 +10,8 @@ class CommentController extends Controller
 {
     public function store(string $postId)
     {
-        $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
-                  strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+        $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 
         $description = trim($_POST['description'] ?? '');
 
@@ -67,8 +67,8 @@ class CommentController extends Controller
 
     public function vote(string $commentId)
     {
-        $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
-                strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+        $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 
         if (!$isAjax) {
             $accountId = $_SESSION['account_id'];
@@ -107,7 +107,7 @@ class CommentController extends Controller
 
         echo json_encode([
             'success' => true,
-            'new_votes' => (int)$comment['votes'],
+            'new_votes' => (int) $comment['votes'],
             'new_user_vote' => $result
         ]);
         return;
@@ -127,7 +127,7 @@ class CommentController extends Controller
 
         $isOwner = ($comment['account_id'] == $_SESSION['account_id']);
         $isAdmin = ($_SESSION['is_admin'] ?? 0) == 1;
-        
+
         if (!$isOwner && !$isAdmin) {
             $_SESSION['error'] = 'You cannot delete this comment';
             header("Location: /posts/{$comment['post_id']}");
