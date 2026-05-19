@@ -18,7 +18,7 @@
       <img src="https://img.shields.io/badge/Contributor-3-yellow">
    </a><br>
    <a href="http://immaspark.page.gd">
-      <img src="https://img.shields.io/badge/Hosted Version-wip--0.12.0-11164b">
+      <img src="https://img.shields.io/badge/Hosted Version-wip--0.12.1-11164b">
    </a>
 </div>
 
