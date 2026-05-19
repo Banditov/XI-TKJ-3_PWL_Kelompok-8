@@ -1,9 +1,9 @@
 <?php
-namespace App\Models;
+namespace app\models;
 
-use App\Core\Database;
+use app\core\database;
 
-class BaseModel extends Database
+class basemodel extends database
 {
     protected $table;
 

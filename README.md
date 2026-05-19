@@ -372,6 +372,7 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
    - Perbaiki masalah saat komen/reply tombol delete tidak terlihat
    - Menambahkan animasi
    - Perbaiki tombol carousel tidak terlihat pada screen mobile
+   - Perbaiki masalah case-sensitive pada saat hosting
 </details>
 
 ### 17/05/2026 - 0.12.0

@@ -1,9 +1,9 @@
 <?php
-namespace App\Models;
+namespace app\models;
 
-use App\Core\Database;
+use app\core\database;
 
-class Vote extends Database
+class vote extends database
 {
     protected $table = 'post_votes';
 

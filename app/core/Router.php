@@ -1,7 +1,7 @@
 <?php
-namespace App\Core;
+namespace app\core;
 
-class Router
+class router
 {
     private array $routes = [];
 
@@ -39,14 +39,14 @@ class Router
 
             require_once __DIR__ . '/../controllers/' . $route['controller'] . '.php';
 
-            $controller = new ('App\\Controllers\\' . $route['controller'])();
+            $controller = new ('app\\controllers\\' . $route['controller'])();
 
             call_user_func_array([$controller, $route['function']], $matches);
             return;
         }
 
         http_response_code(404);
-        (new \App\Controllers\ErrorController())->error404();
+        (new \app\controllers\errorcontroller())->error404();
         exit;
     }
 }

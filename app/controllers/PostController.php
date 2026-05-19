@@ -1,20 +1,20 @@
 <?php
-namespace App\Controllers;
+namespace app\controllers;
 
-use App\Core\Controller;
-use App\Models\Post;
-use App\Models\Tag;
-use App\Models\Comment;
-use App\Models\Reply;
+use app\core\controller;
+use app\models\post;
+use app\models\tag;
+use app\models\comment;
+use app\models\reply;
 
-class PostController extends Controller
+class postcontroller extends controller
 {
     public function index()
     {
         $this->requireLogin();
 
-        $postModel = new Post();
-        $tagModel = new Tag();
+        $postModel = new post();
+        $tagModel = new tag();
         $tagModel->deleteUnusedTags();
 
         $tags = $tagModel->getUniqueTagsForFilter();
@@ -48,9 +48,9 @@ class PostController extends Controller
 
         $id = intval($id);
 
-        $postModel = new Post();
-        $commentModel = new Comment();
-        $replyModel = new Reply();
+        $postModel = new post();
+        $commentModel = new comment();
+        $replyModel = new reply();
 
         $postModel->incrementViews($id, $_SESSION['account_id']);
 
@@ -94,7 +94,7 @@ class PostController extends Controller
             exit;
         }
 
-        $postModel = new Post();
+        $postModel = new post();
         $postId = $postModel->createPost($title, $description, $accountId);
 
         if (!$postId) {
@@ -108,7 +108,7 @@ class PostController extends Controller
         }
 
         if (!empty($_POST['tag_name']) && is_array($_POST['tag_name'])) {
-            $tagModel = new Tag();
+            $tagModel = new tag();
             foreach ($_POST['tag_name'] as $index => $tagName) {
                 $tagName = trim($tagName);
                 if (empty($tagName))
@@ -168,7 +168,7 @@ class PostController extends Controller
     {
         $this->requireLogin();
 
-        $postModel = new Post();
+        $postModel = new post();
         $post = $postModel->getPostById($id);
 
         if (!$post) {
@@ -190,7 +190,7 @@ class PostController extends Controller
     {
         $this->requireLogin();
 
-        $postModel = new Post();
+        $postModel = new post();
         $post = $postModel->getPostById($id);
 
         if (!$post) {
@@ -226,7 +226,7 @@ class PostController extends Controller
             exit;
         }
 
-        $tagModel = new Tag();
+        $tagModel = new tag();
         $tagModel->deleteTagsByPostId(intval($id));
 
         if (!empty($_POST['tag_name']) && is_array($_POST['tag_name'])) {
@@ -334,8 +334,8 @@ class PostController extends Controller
     {
         $this->requireLogin();
 
-        $postModel = new Post();
-        $tagModel = new Tag();
+        $postModel = new post();
+        $tagModel = new tag();
         $tagModel->deleteUnusedTags();
 
         $tags = $tagModel->getUniqueTagsForFilter();
@@ -365,8 +365,8 @@ class PostController extends Controller
     {
         $this->requireLogin();
 
-        $postModel = new Post();
-        $tagModel = new Tag();
+        $postModel = new post();
+        $tagModel = new tag();
         $tagModel->deleteUnusedTags();
 
         $tags = $tagModel->getUniqueTagsForFilter();
@@ -396,8 +396,8 @@ class PostController extends Controller
     {
         $this->requireLogin();
 
-        $postModel = new Post();
-        $tagModel = new Tag();
+        $postModel = new post();
+        $tagModel = new tag();
         $tagModel->deleteUnusedTags();
 
         $tags = $tagModel->getUniqueTagsForFilter();
@@ -425,8 +425,8 @@ class PostController extends Controller
 
     public function pinned()
     {
-        $postModel = new Post();
-        $tagModel = new Tag();
+        $postModel = new post();
+        $tagModel = new tag();
 
         $tags = $tagModel->getUniqueTagsForFilter();
 
@@ -455,7 +455,7 @@ class PostController extends Controller
     {
         $this->requireAdmin();
 
-        $tagModel = new Tag();
+        $tagModel = new tag();
         $result = $tagModel->pinPost(intval($id));
 
         if ($result) {
@@ -472,7 +472,7 @@ class PostController extends Controller
     {
         $this->requireAdmin();
 
-        $tagModel = new Tag();
+        $tagModel = new tag();
         $result = $tagModel->unpinPost(intval($id));
 
         if ($result) {

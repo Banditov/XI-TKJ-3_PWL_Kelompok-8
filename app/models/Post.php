@@ -1,10 +1,10 @@
 <?php
-namespace App\Models;
-require_once __DIR__ . '/../core/Database.php';
+namespace app\models;
+require_once __DIR__ . '/../core/database.php';
 
-use App\Core\Database;
+use app\core\database;
 
-class Post extends Database
+class post extends database
 {
     protected $table = 'posts';
     protected $table_imgs = 'post_imgs';

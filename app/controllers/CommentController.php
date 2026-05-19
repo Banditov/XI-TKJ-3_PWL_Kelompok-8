@@ -1,12 +1,12 @@
 <?php
-namespace App\Controllers;
+namespace app\controllers;
 
-use App\Core\Controller;
-use App\Models\Comment;
-use App\Models\Post;
-use App\Models\Notification;
+use app\core\controller;
+use app\models\comment;
+use app\models\post;
+use app\models\notification;
 
-class CommentController extends Controller
+class commentcontroller extends controller
 {
     public function store(string $postId)
     {
@@ -27,15 +27,15 @@ class CommentController extends Controller
 
         $accountId = $_SESSION['account_id'];
 
-        $commentModel = new Comment();
+        $commentModel = new comment();
         $commentId = $commentModel->createComment($postId, $accountId, $description);
 
         try {
-            $postModel = new Post();
+            $postModel = new post();
             $post = $postModel->getPostById($postId);
 
             if ($post && isset($post['account_id']) && $post['account_id'] != $accountId) {
-                $notificationModel = new Notification();
+                $notificationModel = new notification();
                 $notificationModel->createCommentNotification($post['account_id'], $commentId);
             }
         } catch (\Exception $e) {
@@ -75,7 +75,7 @@ class CommentController extends Controller
             $vote = intval($_POST['vote']);
 
             if (in_array($vote, [1, -1])) {
-                $voteModel = new \App\Models\Vote();
+                $voteModel = new \app\models\vote();
                 $voteModel->voteComment(intval($commentId), intval($accountId), $vote);
             }
 
@@ -99,10 +99,10 @@ class CommentController extends Controller
             return;
         }
 
-        $voteModel = new \App\Models\Vote();
+        $voteModel = new \app\models\vote();
         $result = $voteModel->voteComment(intval($commentId), intval($accountId), $vote);
 
-        $commentModel = new Comment();
+        $commentModel = new comment();
         $comment = $commentModel->getCommentById(intval($commentId));
 
         echo json_encode([
@@ -117,7 +117,7 @@ class CommentController extends Controller
     {
         $this->requireLogin();
 
-        $commentModel = new Comment();
+        $commentModel = new comment();
         $comment = $commentModel->getCommentById($commentId);
 
         if (!$comment) {

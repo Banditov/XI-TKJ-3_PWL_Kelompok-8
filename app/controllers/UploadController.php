@@ -1,9 +1,9 @@
 <?php
-namespace App\Controllers;
+namespace app\controllers;
 
-use App\Core\Controller;
+use app\core\controller;
 
-class UploadController extends Controller
+class uploadcontroller extends controller
 {
     public function image()
     {

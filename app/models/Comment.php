@@ -1,7 +1,7 @@
 <?php
-namespace App\Models;
+namespace app\models;
 
-class Comment extends BaseModel
+class comment extends basemodel
 {
     protected $table = 'comments';
 

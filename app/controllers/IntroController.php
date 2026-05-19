@@ -1,9 +1,9 @@
 <?php
-namespace App\Controllers;
+namespace app\controllers;
 
-use App\Core\Controller;
+use app\core\controller;
 
-class IntroController extends Controller
+class introcontroller extends controller
 {
     public function index()
     {

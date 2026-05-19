@@ -1,11 +1,11 @@
 <?php
-namespace App\Core;
+namespace app\core;
 
 use mysqli;
 
 require_once '../app/config/app.php';
 
-class Database
+class database
 {
     protected $connection;
 

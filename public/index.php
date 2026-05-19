@@ -14,9 +14,9 @@ spl_autoload_register(function ($class) {
 
 require_once __DIR__ . '/../app/resources/icons/icon.php';
 
-use App\Core\Router;
+use app\core\router;
 
-$router = new Router();
+$router = new router();
 
 $GLOBALS['tags'] = [];
 $GLOBALS['filters'] = [];
@@ -24,73 +24,73 @@ $GLOBALS['filters'] = [];
 
 // Views
 // Intro
-$router->add('GET', '/', 'IntroController', 'index');
+$router->add('GET', '/', 'introcontroller', 'index');
 
 // Login
-$router->add('GET', '/login', 'AuthController', 'login');
+$router->add('GET', '/login', 'authcontroller', 'login');
 
 // Post
-$router->add('GET', '/posts', 'PostController', 'index');
-$router->add('GET', '/posts/create', 'PostController', 'create');
-$router->add('GET', '/posts/{id}', 'PostController', 'show');
-$router->add('GET', '/posts/{id}/edit', 'PostController', 'edit');
-$router->add('GET', '/latest', 'PostController', 'latest');
-$router->add('GET', '/popular', 'PostController', 'popular');
-$router->add('GET', '/mypost', 'PostController', 'myPosts');
-$router->add('GET', '/pinned', 'PostController', 'pinned');
+$router->add('GET', '/posts', 'postcontroller', 'index');
+$router->add('GET', '/posts/create', 'postcontroller', 'create');
+$router->add('GET', '/posts/{id}', 'postcontroller', 'show');
+$router->add('GET', '/posts/{id}/edit', 'postcontroller', 'edit');
+$router->add('GET', '/latest', 'postcontroller', 'latest');
+$router->add('GET', '/popular', 'postcontroller', 'popular');
+$router->add('GET', '/mypost', 'postcontroller', 'myPosts');
+$router->add('GET', '/pinned', 'postcontroller', 'pinned');
 
 // Notification
-$router->add('GET', '/notification', 'NotificationController', 'index');
+$router->add('GET', '/notification', 'notificationcontroller', 'index');
 
 
 // Functions
 // Post creation
-$router->add('POST', '/posts', 'PostController', 'store');
+$router->add('POST', '/posts', 'postcontroller', 'store');
 
 // Login
-$router->add('POST', '/login', 'AuthController', 'authenticate');
+$router->add('POST', '/login', 'authcontroller', 'authenticate');
 
 // Logout
-$router->add('GET', '/logout', 'AuthController', 'logout');
+$router->add('GET', '/logout', 'authcontroller', 'logout');
 
 // Comment
-$router->add('POST', '/posts/{id}/comments', 'CommentController', 'store');
-$router->add('POST', '/posts/{id}/comments/{commentId}/replies', 'ReplyController', 'store');
-$router->add('POST', '/comments/{id}/delete', 'CommentController', 'delete');
-$router->add('POST', '/replies/{id}/delete', 'ReplyController', 'delete');
+$router->add('POST', '/posts/{id}/comments', 'commentcontroller', 'store');
+$router->add('POST', '/posts/{id}/comments/{commentId}/replies', 'replycontroller', 'store');
+$router->add('POST', '/comments/{id}/delete', 'commentcontroller', 'delete');
+$router->add('POST', '/replies/{id}/delete', 'replycontroller', 'delete');
 
 // Voting
-$router->add('POST', '/posts/{id}/vote', 'VoteController', 'votePost');
-$router->add('POST', '/comments/{id}/vote', 'VoteController', 'voteComment');
-$router->add('POST', '/replies/{id}/vote', 'VoteController', 'voteReply');
+$router->add('POST', '/posts/{id}/vote', 'votecontroller', 'votePost');
+$router->add('POST', '/comments/{id}/vote', 'votecontroller', 'voteComment');
+$router->add('POST', '/replies/{id}/vote', 'votecontroller', 'voteReply');
 
 // Image upload
-$router->add('POST', '/upload/image', 'UploadController', 'image');
+$router->add('POST', '/upload/image', 'uploadcontroller', 'image');
 
 // 3D model upload and delete
-$router->add('POST', '/upload/model', 'UploadController', 'model3d');
-$router->add('POST', '/upload/model/delete', 'UploadController', 'deleteModel');
+$router->add('POST', '/upload/model', 'uploadcontroller', 'model3d');
+$router->add('POST', '/upload/model/delete', 'uploadcontroller', 'deleteModel');
 
 // Post edit
-$router->add('POST', '/posts/{id}/update', 'PostController', 'update');
-$router->add('POST', '/posts/{id}/delete', 'PostController', 'delete');
+$router->add('POST', '/posts/{id}/update', 'postcontroller', 'update');
+$router->add('POST', '/posts/{id}/delete', 'postcontroller', 'delete');
 
 // Settings
-$router->add('POST', '/settings/dyslexic', 'SettingsController', 'toggleDyslexic');
-$router->add('POST', '/settings/dark', 'SettingsController', 'toggleDark');
+$router->add('POST', '/settings/dyslexic', 'settingscontroller', 'toggleDyslexic');
+$router->add('POST', '/settings/dark', 'settingscontroller', 'toggleDark');
 
-$router->add('POST', '/notification/delete', 'NotificationController', 'delete');
-$router->add('POST', '/notification/clear-all', 'NotificationController', 'clearAll');
+$router->add('POST', '/notification/delete', 'notificationcontroller', 'delete');
+$router->add('POST', '/notification/clear-all', 'notificationcontroller', 'clearAll');
 
 
 // Admin functions
 // Pin
-$router->add('POST', '/posts/{id}/pin', 'PostController', 'pin');
-$router->add('POST', '/posts/{id}/unpin', 'PostController', 'unpin');
+$router->add('POST', '/posts/{id}/pin', 'postcontroller', 'pin');
+$router->add('POST', '/posts/{id}/unpin', 'postcontroller', 'unpin');
 
 // Cleanup
-$router->add('GET', '/admin/cleanup', 'CleanupController', 'showCleanupPage');
-$router->add('POST', '/admin/cleanup/images', 'CleanupController', 'removeUnusedImages');
-$router->add('POST', '/admin/cleanup/models', 'CleanupController', 'removeUnusedModels');
+$router->add('GET', '/admin/cleanup', 'cleanupcontroller', 'showCleanupPage');
+$router->add('POST', '/admin/cleanup/images', 'cleanupcontroller', 'removeUnusedImages');
+$router->add('POST', '/admin/cleanup/models', 'cleanupcontroller', 'removeUnusedModels');
 
 $router->run();

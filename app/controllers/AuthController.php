@@ -1,10 +1,10 @@
 <?php
-namespace App\Controllers;
+namespace app\controllers;
 
-use App\Core\Controller;
-use App\Models\Account;
+use app\core\controller;
+use app\models\account;
 
-class AuthController extends Controller
+class authcontroller extends controller
 {
     public function login()
     {
@@ -21,7 +21,7 @@ class AuthController extends Controller
         $password = $_POST['password'];
         $keep = isset($_POST['keep']);
 
-        $accountModel = new Account();
+        $accountModel = new account();
         $account = $accountModel->getByEmail($email);
 
         if (!$account) {

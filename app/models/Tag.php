@@ -1,9 +1,9 @@
 <?php
-namespace App\Models;
+namespace app\models;
 
-use App\Core\Database;
+use app\core\database;
 
-class Tag extends BaseModel
+class tag extends basemodel
 {
     protected $table = 'tags';
 

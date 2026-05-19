@@ -1,12 +1,12 @@
 <?php
-namespace App\Controllers;
+namespace app\controllers;
 
-use App\Core\Controller;
-use App\Models\Reply;
-use App\Models\Comment;
-use App\Models\Notification;
+use app\core\controller;
+use app\models\reply;
+use app\models\comment;
+use app\models\notification;
 
-class ReplyController extends Controller
+class replycontroller extends controller
 {
     public function store(string $postId, string $commentId)
     {
@@ -29,15 +29,15 @@ class ReplyController extends Controller
 
         $accountId = $_SESSION['account_id'];
 
-        $replyModel = new Reply();
+        $replyModel = new reply();
         $replyId = $replyModel->createReply($postId, $commentId, $accountId, $description);
 
-        $commentModel = new Comment();
+        $commentModel = new comment();
         $comment = $commentModel->getCommentById($commentId);
 
         if ($comment && $comment['account_id'] != $accountId) {
             try {
-                $notificationModel = new Notification();
+                $notificationModel = new notification();
                 $notificationModel->createReplyNotification($comment['account_id'], $replyId);
             } catch (\Exception $e) {
             }
@@ -78,7 +78,7 @@ class ReplyController extends Controller
     {
         $this->requireLogin();
 
-        $replyModel = new Reply();
+        $replyModel = new reply();
         $reply = $replyModel->getReplyById($replyId);
 
         if (!$reply) {

@@ -1,7 +1,7 @@
 <?php
-namespace App\Core;
+namespace app\core;
 
-class Controller
+class controller
 {
     public function view(string $view, array $data = [])
     {

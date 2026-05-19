@@ -1,16 +1,16 @@
 <?php
-namespace App\Controllers;
+namespace app\controllers;
 
-use App\Core\Controller;
-use App\Models\Post;
+use app\core\controller;
+use app\models\post;
 
-class CleanupController extends Controller
+class cleanupcontroller extends controller
 {
     public function removeUnusedImages()
     {
         $this->requireAdmin();
 
-        $postModel = new Post();
+        $postModel = new post();
         $usedImages = $postModel->getAllUsedImages();
         $uploadDir = __DIR__ . '/../../public/assets/image/post/';
         $allFiles = scandir($uploadDir);
@@ -37,7 +37,7 @@ class CleanupController extends Controller
     {
         $this->requireAdmin();
 
-        $postModel = new Post();
+        $postModel = new post();
         $usedModels = $postModel->getAllUsedModels();
         $modelDir = __DIR__ . '/../../public/assets/models/';
 
@@ -70,7 +70,7 @@ class CleanupController extends Controller
     {
         $this->requireAdmin();
 
-        $postModel = new Post();
+        $postModel = new post();
 
         $uploadDir = __DIR__ . '/../../public/assets/image/post/';
         $allImageFiles = is_dir($uploadDir) ? scandir($uploadDir) : [];

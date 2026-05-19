@@ -1,13 +1,13 @@
 <?php
-namespace App\Controllers;
+namespace app\controllers;
 
-use App\Core\Controller;
-use App\Models\Vote;
-use App\Models\Comment;
-use App\Models\Reply;
-use App\Models\Post;
+use app\core\controller;
+use app\models\vote;
+use app\models\comment;
+use app\models\reply;
+use app\models\post;
 
-class VoteController extends Controller
+class votecontroller extends controller
 {
     public function votePost(string $postId)
     {
@@ -25,7 +25,7 @@ class VoteController extends Controller
                 exit;
             }
 
-            $voteModel = new Vote();
+            $voteModel = new vote();
             $voteModel->votePost(intval($postId), intval($accountId), $vote);
 
             $redirect = $_POST['redirect'] ?? '/posts';
@@ -54,10 +54,10 @@ class VoteController extends Controller
             return;
         }
 
-        $voteModel = new Vote();
+        $voteModel = new vote();
         $result = $voteModel->votePost(intval($postId), intval($accountId), $vote);
 
-        $postModel = new Post();
+        $postModel = new post();
         $post = $postModel->getPostById(intval($postId));
 
         echo json_encode([
@@ -84,7 +84,7 @@ class VoteController extends Controller
                 exit;
             }
 
-            $voteModel = new Vote();
+            $voteModel = new vote();
             $voteModel->voteComment(intval($commentId), intval($accountId), $vote);
 
             $redirect = $_POST['redirect'] ?? '/posts';
@@ -113,10 +113,10 @@ class VoteController extends Controller
             return;
         }
 
-        $voteModel = new Vote();
+        $voteModel = new vote();
         $result = $voteModel->voteComment(intval($commentId), intval($accountId), $vote);
 
-        $commentModel = new Comment();
+        $commentModel = new comment();
         $comment = $commentModel->getCommentById(intval($commentId));
 
         if (!$comment) {
@@ -151,7 +151,7 @@ class VoteController extends Controller
                 exit;
             }
 
-            $voteModel = new Vote();
+            $voteModel = new vote();
             $voteModel->voteReply(intval($replyId), intval($accountId), $vote);
 
             $redirect = $_POST['redirect'] ?? '/posts';
@@ -180,10 +180,10 @@ class VoteController extends Controller
             return;
         }
 
-        $voteModel = new Vote();
+        $voteModel = new vote();
         $result = $voteModel->voteReply(intval($replyId), intval($accountId), $vote);
 
-        $replyModel = new Reply();
+        $replyModel = new reply();
         $reply = $replyModel->getReplyById(intval($replyId));
 
         if (!$reply) {

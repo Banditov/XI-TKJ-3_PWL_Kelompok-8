@@ -1,7 +1,7 @@
 <?php
-namespace App\Models;
+namespace app\models;
 
-class Reply extends BaseModel
+class reply extends basemodel
 {
     protected $table = 'replies';
 
