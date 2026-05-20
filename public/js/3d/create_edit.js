@@ -5,8 +5,22 @@ document.addEventListener('DOMContentLoaded', () => {
         return div.innerHTML;
     }
 
+    function isValidHex(hex) {
+        if (!hex) return true;
+        const cleaned = hex.replace('#', '');
+        return /^([0-9A-F]{3}|[0-9A-F]{6})$/i.test(cleaned);
+    }
+
     function cleanColor(value) {
-        return value.replace('#', '');
+        let cleaned = value.replace('#', '');
+        if (!cleaned) return 'CCCCCC';
+        if (cleaned.length === 3) {
+            cleaned = cleaned[0] + cleaned[0] + cleaned[1] + cleaned[1] + cleaned[2] + cleaned[2];
+        }
+        if (!/^[0-9A-F]{6}$/i.test(cleaned)) {
+            return 'CCCCCC';
+        }
+        return cleaned;
     }
 
     function expandHex(hex) {
@@ -36,7 +50,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (topElement && bottomElement && previewElement) {
             const top = cleanColor(topElement.value);
             const bottom = cleanColor(bottomElement.value);
-            previewElement.style.background = `linear-gradient(to bottom, #${top || 'CCCCCC'}, #${bottom || 'CCCCCC'})`;
+            previewElement.style.background = `linear-gradient(to bottom, #${top}, #${bottom})`;
+        }
+    }
+
+    function showInputError(input, isValid) {
+        if (!input) return;
+        if (!isValid && input.value.trim()) {
+            input.classList.add('border-red-500');
+        } else {
+            input.classList.remove('border-red-500');
         }
     }
 
@@ -48,8 +71,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (colorTopInput) {
         colorTopInput.addEventListener('input', function () {
-            if (colorTopDiv) {
+            const isValid = isValidHex(this.value);
+            showInputError(this, isValid);
+
+            if (isValid && colorTopDiv) {
                 colorTopDiv.style.backgroundColor = '#' + cleanColor(this.value);
+            } else if (colorTopDiv && !this.value.trim()) {
+                colorTopDiv.style.backgroundColor = '#CCCCCC';
             }
             updatePreview();
         });
@@ -57,8 +85,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (colorBottomInput) {
         colorBottomInput.addEventListener('input', function () {
-            if (colorBottomDiv) {
+            const isValid = isValidHex(this.value);
+            showInputError(this, isValid);
+
+            if (isValid && colorBottomDiv) {
                 colorBottomDiv.style.backgroundColor = '#' + cleanColor(this.value);
+            } else if (colorBottomDiv && !this.value.trim()) {
+                colorBottomDiv.style.backgroundColor = '#CCCCCC';
             }
             updatePreview();
         });
@@ -100,8 +133,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (addTagBtn) {
         addTagBtn.addEventListener('click', () => {
             const name = tagNameInput ? tagNameInput.value.trim() : '';
-            const colorTopVal = colorTopInput ? cleanColor(colorTopInput.value) : 'ffffff';
-            const colorBotVal = colorBottomInput ? cleanColor(colorBottomInput.value) : 'ffffff';
+            const rawColorTop = colorTopInput ? colorTopInput.value : '';
+            const rawColorBottom = colorBottomInput ? colorBottomInput.value : '';
+
+            if (rawColorTop && !isValidHex(rawColorTop)) {
+                alert('Invalid color format for top color. Use hex format (e.g., FF0000 or F00)');
+                colorTopInput.focus();
+                return;
+            }
+
+            if (rawColorBottom && !isValidHex(rawColorBottom)) {
+                alert('Invalid color format for bottom color. Use hex format (e.g., 00FF00 or 0F0)');
+                colorBottomInput.focus();
+                return;
+            }
+
+            const colorTopVal = cleanColor(rawColorTop);
+            const colorBotVal = cleanColor(rawColorBottom);
             const iconName = iconInput ? iconInput.value : 'tag';
             const iconSvg = iconPreview ? iconPreview.innerHTML : '';
 
@@ -160,6 +208,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (iconInput) iconInput.value = 'tag';
             if (iconPreview) iconPreview.innerHTML = defaultIconSvg;
+
+            colorTopInput?.classList.remove('border-red-500');
+            colorBottomInput?.classList.remove('border-red-500');
         });
     }
 
