@@ -380,13 +380,24 @@ function addReplyToPage(reply, commentId, postId) {
                             <p class="text-2xl font-bold">${reply.date}</p>
                         </div>
                         <div class="flex gap-5 items-center">
-                            <div class="vote-container flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3" data-type="reply" data-reply-id="${reply.id}">
-                                <button type="button" class="vote-btn vote-up flex items-center justify-center" data-vote="up" data-current-vote="">
-                                    <span>${getArrowUpIcon()}</span>
+                            <div class="vote-container flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3"
+                                data-reply-id="${reply.id}" data-type="reply">
+                                <button type="button"
+                                    class="vote-btn vote-up flex items-center justify-center cursor-pointer"
+                                    data-vote="up"
+                                    data-current-vote="${reply.user_vote == 1 ? 'up' : (reply.user_vote == -1 ? 'down' : '')}">
+                                    <span style="${reply.user_vote == 1 ? 'color: #FFE500' : ''}">
+                                        ${getArrowUpIcon()}
+                                    </span>
                                 </button>
-                                <p class="vote-count text-2xl">0</p>
-                                <button type="button" class="vote-btn vote-down flex items-center justify-center" data-vote="down" data-current-vote="">
-                                    <span>${getArrowDownIcon()}</span>
+                                <p class="vote-count text-2xl">${reply.votes || 0}</p>
+                                <button type="button"
+                                    class="vote-btn vote-down flex items-center justify-center cursor-pointer"
+                                    data-vote="down"
+                                    data-current-vote="${reply.user_vote == 1 ? 'up' : (reply.user_vote == -1 ? 'down' : '')}">
+                                    <span style="${reply.user_vote == -1 ? 'color: #FFE500' : ''}">
+                                        ${getArrowDownIcon()}
+                                    </span>
                                 </button>
                             </div>
                             ${reply.can_delete ? `
@@ -435,7 +446,7 @@ function addReplyToPage(reply, commentId, postId) {
         if (repliesContainerMobile) {
             repliesContainerMobile.classList.remove('hidden');
 
-            const replyHtmlDesktop = `
+            const replyHtmlMobile = `
                 <div class="border-t-2 border-dashed reply-item mt-2" data-reply-id="${reply.id}">
                     <div class="flex justify-between items-center p-5 border-b-2 border-[#545F71]">
                         <div class="flex gap-5 items-center">
@@ -444,17 +455,28 @@ function addReplyToPage(reply, commentId, postId) {
                                 <p class="text-2xl font-bold">${escapeHtml(reply.account_name)}</p>
                                 <p class="text-sm">${escapeHtml(reply.class_name)}</p>
                             </div>
-                            <div class="w-2 h-2 bg-[#545F71] rounded-full"></div>
+                            <div class="w-2 h-2 bg-[#545F71] rounded-full dark:bg-white"></div>
                             <p class="text-2xl font-bold">${reply.date}</p>
                         </div>
                         <div class="flex gap-5 items-center">
-                            <div class="vote-container flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3" data-type="reply" data-reply-id="${reply.id}">
-                                <button type="button" class="vote-btn vote-up flex items-center justify-center" data-vote="up" data-current-vote="">
-                                    <span>${getArrowUpIcon()}</span>
+                            <div class="vote-container flex px-4 py-1 bg-[#2C7CFF] text-white rounded-full items-center gap-3"
+                                data-reply-id="${reply.id}" data-type="reply">
+                                <button type="button"
+                                    class="vote-btn vote-up flex items-center justify-center cursor-pointer"
+                                    data-vote="up"
+                                    data-current-vote="${reply.user_vote == 1 ? 'up' : (reply.user_vote == -1 ? 'down' : '')}">
+                                    <span style="${reply.user_vote == 1 ? 'color: #FFE500' : ''}">
+                                        ${getArrowUpIcon()}
+                                    </span>
                                 </button>
-                                <p class="vote-count text-2xl">0</p>
-                                <button type="button" class="vote-btn vote-down flex items-center justify-center" data-vote="down" data-current-vote="">
-                                    <span>${getArrowDownIcon()}</span>
+                                <p class="vote-count text-2xl">${reply.votes || 0}</p>
+                                <button type="button"
+                                    class="vote-btn vote-down flex items-center justify-center cursor-pointer"
+                                    data-vote="down"
+                                    data-current-vote="${reply.user_vote == 1 ? 'up' : (reply.user_vote == -1 ? 'down' : '')}">
+                                    <span style="${reply.user_vote == -1 ? 'color: #FFE500' : ''}">
+                                        ${getArrowDownIcon()}
+                                    </span>
                                 </button>
                             </div>
                             ${reply.can_delete ? `
