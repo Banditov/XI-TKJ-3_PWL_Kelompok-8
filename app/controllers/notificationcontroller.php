@@ -1,52 +1,22 @@
 <?php
-namespace app\controllers;
+namespace App\Controllers;
 
-use app\core\controller;
-use app\models\notification;
+use App\Core\Controller;
+use App\Models\Post;
+use App\Models\Tag;
 
-class notificationcontroller extends controller
+class NotificationController extends Controller
 {
-    public function index()
+    public function notifications()
     {
-        $this->requireLogin();
+        $notifications = [];
+        $is_dyslexic = $_SESSION['is_dyslexic'] ?? false;
+        $user_name = $_SESSION['name'] ?? 'Guest';
 
-        $notificationModel = new notification();
-        $notifications = $notificationModel->getNotificationsByUser($_SESSION['account_id']);
-
-        $this->view('notification.index', [
-            'notifications' => $notifications
+        $this->view('posts/notifications', [
+            'notifications' => $notifications,
+            'is_dyslexic' => $is_dyslexic,
+            'user_name' => $user_name
         ]);
-    }
-
-    public function delete()
-    {
-        $this->requireLogin();
-
-        $notificationId = intval($_POST['notification_id'] ?? 0);
-
-        if ($notificationId) {
-            $notificationModel = new notification();
-            $result = $notificationModel->deleteNotification($notificationId, $_SESSION['account_id']);
-
-            if ($result) {
-                echo json_encode(['success' => true]);
-            } else {
-                echo json_encode(['success' => false, 'error' => 'Failed to delete notification']);
-            }
-        } else {
-            echo json_encode(['success' => false, 'error' => 'Invalid notification ID']);
-        }
-        exit;
-    }
-
-    public function clearAll()
-    {
-        $this->requireLogin();
-
-        $notificationModel = new notification();
-        $result = $notificationModel->clearAllNotifications($_SESSION['account_id']);
-
-        echo json_encode(['success' => $result]);
-        exit;
     }
 }
