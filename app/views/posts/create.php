@@ -5,7 +5,7 @@
 <script type="module" src="/js/animation/post.js"></script>
 
 <?php include __DIR__ . '/../../../app/views/layouts/partials/navbar.php'; ?>
-<?php include __DIR__ . '/../../../app/helpers/tagText.php'; ?>
+<?php include __DIR__ . '/../../../app/helpers/basehelper.php'; ?>
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
     <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg p-10 flex flex-col gap-5 create post">

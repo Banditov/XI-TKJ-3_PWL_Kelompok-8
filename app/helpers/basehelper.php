@@ -23,3 +23,22 @@ function tagTextColor(string $colorTop, string $colorBottom): string
 
     return $luminance > 0.8 ? '#1f2937' : '#ffffff';
 }
+
+function getAvatarUrl($accountId, $name)
+{
+    $uploadDir = __DIR__ . '/../../public/assets/image/account/';
+
+    if (!is_dir($uploadDir) || !is_readable($uploadDir)) {
+        $uploadDir = __DIR__ . '/../../assets/image/account/';
+    }
+
+    $pattern = $uploadDir . $accountId . '.*';
+    $files = glob($pattern);
+
+    if (!empty($files)) {
+        $filename = basename($files[0]);
+        return '/assets/image/account/' . $filename;
+    }
+
+    return 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=2C7CFF&color=fff&size=100&bold=true';
+}

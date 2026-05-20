@@ -4,7 +4,7 @@
 <script type="module" src="/js/animation/post.js"></script>
 
 <?php include __DIR__ . '/../../../app/views/layouts/partials/navbar.php'; ?>
-<?php include __DIR__ . '/../../../app/helpers/tagText.php'; ?>
+<?php include __DIR__ . '/../../../app/helpers/basehelper.php'; ?>
 
 <script type="module" src="/js/animation/post.js"></script>
 <script type="importmap">
@@ -51,8 +51,9 @@
                     <div class="md:pt-10 md:pr-10 md:pl-10 pb-7 pt-7 pr-7 pl-7 flex flex-col md:gap-3 gap-5">
                         <div class="flex justify-between items-center">
                             <div class="flex gap-5 items-center">
-                                <img src="/assets/image/account/<?= htmlspecialchars($post['account_id']) ?>.jpg"
-                                    class="w-15 h-15 object-cover rounded-full drop-shadow-lg">
+                                <img src="<?= getAvatarUrl($post['account_id'], $post['account_name']) ?>"
+                                    class="w-15 h-15 object-cover rounded-full drop-shadow-lg"
+                                    onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($post['account_name']) ?>&background=2C7CFF&color=fff&size=100&bold=true'">
                                 <div>
                                     <p class="text-3xl font-bold"><?= htmlspecialchars($post['account_name']) ?></p>
                                     <p><?= htmlspecialchars($post['class_name']) ?></p>

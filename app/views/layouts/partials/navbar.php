@@ -146,6 +146,8 @@ $showSearchBar = in_array($currentPath, $allowedSearchPages);
             <div class="w-full h-0.75 bg-[#545F71] rounded-full seperator"></div>
             <div class="flex flex-col gap-1 w-full">
                 <?= navLink('/admin/cleanup', 'Cleanup Assets', 'clean') ?>
+                <?= navLink('/admin/users', 'Manage Users', 'people') ?>
+                <?= navLink('/admin/register', 'Register User', 'addPerson') ?>
             </div>
         <?php endif; ?>
 
@@ -277,6 +279,8 @@ $showSearchBar = in_array($currentPath, $allowedSearchPages);
         <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1): ?>
             <div class="flex flex-col gap-1 w-full">
                 <?= navLink('/admin/cleanup', 'Cleanup Assets', 'clean') ?>
+                <?= navLink('/admin/users', 'Manage Users', 'people') ?>
+                <?= navLink('/admin/register', 'Register User', 'addPerson') ?>
             </div>
         <?php endif; ?>
 

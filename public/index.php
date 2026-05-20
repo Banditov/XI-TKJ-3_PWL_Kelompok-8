@@ -111,5 +111,13 @@ $router->add('GET', '/admin/cleanup', 'cleanupcontroller', 'showCleanupPage');
 $router->add('POST', '/admin/cleanup/images', 'cleanupcontroller', 'removeUnusedImages');
 $router->add('POST', '/admin/cleanup/models', 'cleanupcontroller', 'removeUnusedModels');
 
+// Account management
+$router->add('GET', '/admin/register', 'authcontroller', 'register');
+$router->add('POST', '/admin/register/create', 'authcontroller', 'createUser');
+$router->add('GET', '/admin/users', 'authcontroller', 'users');
+$router->add('GET', '/admin/users/{id}/edit', 'authcontroller', 'editUser');
+$router->add('POST', '/admin/users/{id}/update', 'authcontroller', 'updateUser');
+$router->add('POST', '/admin/users/{id}/delete', 'authcontroller', 'deleteUser');
+$router->add('POST', '/upload/avatar', 'uploadcontroller', 'avatar');
 
 $router->run();
