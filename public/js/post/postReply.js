@@ -1,65 +1,74 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const replyButton = document.getElementById('replyBtnC1');
-    const inputContainer = document.getElementById('inputReplyC1');
-    const replyInput = document.getElementById('replyC1');
-
-    function showInput() {
-        if (inputContainer) {
-            inputContainer.classList.remove('hidden');
-            inputContainer.classList.add('block');
-            if (replyInput) {
-                replyInput.focus();
+document.addEventListener('DOMContentLoaded', function () {
+    function toggleReply(commentId) {
+        const input = document.getElementById(`inputReply-${commentId}`);
+        if (input) {
+            input.classList.toggle('hidden');
+            const field = input.querySelector('input');
+            if (field && !input.classList.contains('hidden')) {
+                field.focus();
             }
         }
     }
 
-    function hideInput() {
-        if (inputContainer) {
-            inputContainer.classList.remove('block');
-            inputContainer.classList.add('hidden');
-            if (replyInput) {
-                replyInput.value = '';
+    function toggleReplies(commentId) {
+        const replies = document.getElementById(`replies-${commentId}`);
+        const button = document.querySelector(`[onclick*="toggleReplies('${commentId}')"]`);
+
+        if (replies) {
+            replies.classList.toggle('hidden');
+        }
+
+        if (button) {
+            button.classList.toggle('rotate-180');
+        }
+    }
+
+    function attachReplyInputListeners() {
+        document.querySelectorAll('[id^="inputReply-"] input').forEach(input => {
+            input.removeEventListener('blur', handleBlur);
+            input.removeEventListener('keydown', handleKeydown);
+
+            input.addEventListener('blur', handleBlur);
+            input.addEventListener('keydown', handleKeydown);
+        });
+    }
+
+    function handleBlur() {
+        if (this.value.trim() === '') {
+            const container = this.closest('[id^="inputReply-"]');
+            if (container) {
+                container.classList.add('hidden');
             }
         }
     }
 
-    if (replyButton && inputContainer && replyInput) {
-        replyButton.addEventListener('click', function(e) {
+    function handleKeydown(e) {
+        if (e.key === 'Escape') {
+            this.value = '';
+            const container = this.closest('[id^="inputReply-"]');
+            if (container) {
+                container.classList.add('hidden');
+            }
+        }
+        if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
-            showInput();
-        });
-
-        function submitReply() {
-            const replyText = replyInput.value.trim();
-            if (replyText !== '') {
-                console.log('Reply submitted:', replyText);
-                alert('Reply posted: ' + replyText);
-                hideInput();
-            } else {
-                hideInput();
+            console.log('Reply submitted:', this.value.trim());
+            const form = this.closest('form');
+            if (form && this.value.trim()) {
+                form.dispatchEvent(new Event('submit', { bubbles: true }));
             }
         }
-
-        replyInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                submitReply();
-            }
-        });
-
-        replyInput.addEventListener('blur', function() {
-            if (replyInput.value.trim() === '') {
-                hideInput();
-            }
-        });
-
-        replyInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                e.preventDefault();
-                hideInput();
-            }
-        });
-    } else {
-        console.warn('Required elements not found: replyBtnC1, inputReplyC1, or replyC1');
     }
+
+    function initReplySystem() {
+        attachReplyInputListeners();
+    }
+
+    initReplySystem();
+
+    window.toggleReply = toggleReply;
+    window.toggleReplies = toggleReplies;
+    window.initReplySystem = initReplySystem;
+
+    window.attachReplyInputListeners = attachReplyInputListeners;
 });

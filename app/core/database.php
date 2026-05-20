@@ -1,0 +1,25 @@
+<?php
+namespace app\core;
+
+use mysqli;
+
+require_once __DIR__ . '/../../app/config/app.php';
+
+class database
+{
+    protected $connection;
+
+    public function __construct()
+    {
+        $this->connection = mysqli_connect(
+            DB_HOST,
+            DB_USER,
+            DB_PASS,
+            DB_NAME
+        );
+
+        if (!$this->connection) {
+            die("Connection to database failed: " . mysqli_connect_error());
+        }
+    }
+}
