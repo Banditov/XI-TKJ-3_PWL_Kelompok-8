@@ -1,24 +1,30 @@
 <?php
-namespace App\Controllers;
+namespace app\controllers;
 
-use App\Core\Controller;
-use App\Models\Post;
+use app\core\controller;
+use app\models\post;
 
-class CleanupController extends Controller
+class cleanupcontroller extends controller
 {
     public function removeUnusedImages()
     {
         $this->requireAdmin();
 
-        $postModel = new Post();
+        $postModel = new post();
         $usedImages = $postModel->getAllUsedImages();
         $uploadDir = __DIR__ . '/../../public/assets/image/post/';
+
+        if (!is_dir($uploadDir) || !is_readable($uploadDir)) {
+            $uploadDir = __DIR__ . '/../../assets/image/post/';
+        }
+
         $allFiles = scandir($uploadDir);
 
         $deletedCount = 0;
 
         foreach ($allFiles as $file) {
-            if ($file === '.' || $file === '..') continue;
+            if ($file === '.' || $file === '..')
+                continue;
             if (!in_array($file, $usedImages)) {
                 $filePath = $uploadDir . $file;
                 if (is_file($filePath) && unlink($filePath)) {
@@ -36,9 +42,13 @@ class CleanupController extends Controller
     {
         $this->requireAdmin();
 
-        $postModel = new Post();
+        $postModel = new post();
         $usedModels = $postModel->getAllUsedModels();
         $modelDir = __DIR__ . '/../../public/assets/models/';
+
+        if (!is_dir($modelDir) || !is_readable($modelDir)) {
+            $modelDir = __DIR__ . '/../../assets/models/';
+        }
 
         if (!is_dir($modelDir)) {
             $_SESSION['error'] = "Models directory not found";
@@ -50,7 +60,8 @@ class CleanupController extends Controller
         $deletedCount = 0;
 
         foreach ($allFiles as $file) {
-            if ($file === '.' || $file === '..') continue;
+            if ($file === '.' || $file === '..')
+                continue;
             if (!in_array($file, $usedModels)) {
                 $filePath = $modelDir . $file;
                 if (is_file($filePath) && unlink($filePath)) {
@@ -68,9 +79,14 @@ class CleanupController extends Controller
     {
         $this->requireAdmin();
 
-        $postModel = new Post();
+        $postModel = new post();
 
         $uploadDir = __DIR__ . '/../../public/assets/image/post/';
+
+        if (!is_dir($uploadDir) || !is_readable($uploadDir)) {
+            $uploadDir = __DIR__ . '/../../assets/image/post/';
+        }
+
         $allImageFiles = is_dir($uploadDir) ? scandir($uploadDir) : [];
         $usedImages = $postModel->getAllUsedImages();
 
@@ -78,7 +94,8 @@ class CleanupController extends Controller
         $unusedImages = [];
 
         foreach ($allImageFiles as $file) {
-            if ($file === '.' || $file === '..') continue;
+            if ($file === '.' || $file === '..')
+                continue;
             $totalImages++;
             if (!in_array($file, $usedImages)) {
                 $unusedImages[] = $file;
@@ -86,6 +103,11 @@ class CleanupController extends Controller
         }
 
         $modelDir = __DIR__ . '/../../public/assets/models/';
+
+        if (!is_dir($modelDir) || !is_readable($modelDir)) {
+            $modelDir = __DIR__ . '/../../assets/models/';
+        }
+
         $allModelFiles = is_dir($modelDir) ? scandir($modelDir) : [];
         $usedModels = $postModel->getAllUsedModels();
 
@@ -93,7 +115,8 @@ class CleanupController extends Controller
         $unusedModels = [];
 
         foreach ($allModelFiles as $file) {
-            if ($file === '.' || $file === '..') continue;
+            if ($file === '.' || $file === '..')
+                continue;
             $totalModels++;
             if (!in_array($file, $usedModels)) {
                 $unusedModels[] = $file;

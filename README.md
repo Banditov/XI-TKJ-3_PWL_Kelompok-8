@@ -6,7 +6,7 @@
 <br>
 <div align="center">
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
-      <img src="https://img.shields.io/badge/GitHub Version-wip--0.12.0-red">
+      <img src="https://img.shields.io/badge/GitHub Version-wip--0.12.2-red">
    </a>
    <!-- <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
       <img src="https://img.shields.io/badge/Latest Release-None-green">
@@ -18,7 +18,7 @@
       <img src="https://img.shields.io/badge/Contributor-3-yellow">
    </a><br>
    <a href="http://immaspark.page.gd">
-      <img src="https://img.shields.io/badge/Hosted Version-wip--0.12.0-11164b">
+      <img src="https://img.shields.io/badge/Hosted Version-wip--0.12.1-11164b">
    </a>
 </div>
 
@@ -361,6 +361,28 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 
 <details>
    <summary>May</summary>
+
+### 19/05/2026 - 0.12.2
+<details>
+
+   - Perbaiki icon logout lebih besar daripada halaman lainnya pada header mobile
+   - Membuat file controller kompatibel dengan hosting
+   - Memperbaiki file 3D tidak dapat terlihat pada post apabila tidak ada image
+   - Membuat limit deskripsi pada post halaman utama
+</details>
+
+### 19/05/2026 - 0.12.1
+<details>
+
+   - Perbaiki duplicate carousel script called dan import Three.js
+   - Perbaiki tombol share tidak berfungsi
+   - Perbaiki style TinyMCE saat ganti mode dark/light
+   - Reformat semua file
+   - Perbaiki masalah saat komen/reply tombol delete tidak terlihat
+   - Menambahkan animasi
+   - Perbaiki tombol carousel tidak terlihat pada screen mobile
+   - Perbaiki masalah case-sensitive pada saat hosting
+</details>
 
 ### 17/05/2026 - 0.12.0
 <details>

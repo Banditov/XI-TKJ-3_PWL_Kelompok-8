@@ -1,7 +1,7 @@
 <?php
-namespace App\Models;
+namespace app\models;
 
-class Comment extends BaseModel
+class comment extends basemodel
 {
     protected $table = 'comments';
 
@@ -76,8 +76,10 @@ class Comment extends BaseModel
         $comment = mysqli_fetch_assoc($result);
 
         if ($comment) {
-            $voteResult = mysqli_query($this->connection, 
-                "SELECT vote FROM comment_votes WHERE comment_id = '$commentId' AND account_id = '$accountId'");
+            $voteResult = mysqli_query(
+                $this->connection,
+                "SELECT vote FROM comment_votes WHERE comment_id = '$commentId' AND account_id = '$accountId'"
+            );
             $voteRow = mysqli_fetch_assoc($voteResult);
             $comment['user_vote'] = $voteRow ? $voteRow['vote'] : 0;
         }

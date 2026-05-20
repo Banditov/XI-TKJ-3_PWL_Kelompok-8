@@ -1,9 +1,9 @@
 <?php
-namespace App\Models;
+namespace app\models;
 
-use App\Core\Database;
+use app\core\database;
 
-class Tag extends BaseModel
+class tag extends basemodel
 {
     protected $table = 'tags';
 
@@ -49,7 +49,8 @@ class Tag extends BaseModel
 
     public function pinPost(int $postId)
     {
-        $check = mysqli_query($this->connection, 
+        $check = mysqli_query(
+            $this->connection,
             "SELECT id FROM {$this->table} WHERE post_id = '$postId' AND LOWER(name) = 'pinned'"
         );
 

@@ -1,16 +1,16 @@
 <?php
-namespace App\Controllers;
+namespace app\controllers;
 
-use App\Core\Controller;
-use App\Models\Notification;
+use app\core\controller;
+use app\models\notification;
 
-class NotificationController extends Controller
+class notificationcontroller extends controller
 {
     public function index()
     {
         $this->requireLogin();
 
-        $notificationModel = new Notification();
+        $notificationModel = new notification();
         $notifications = $notificationModel->getNotificationsByUser($_SESSION['account_id']);
 
         $this->view('notification.index', [
@@ -25,7 +25,7 @@ class NotificationController extends Controller
         $notificationId = intval($_POST['notification_id'] ?? 0);
 
         if ($notificationId) {
-            $notificationModel = new Notification();
+            $notificationModel = new notification();
             $result = $notificationModel->deleteNotification($notificationId, $_SESSION['account_id']);
 
             if ($result) {
@@ -43,7 +43,7 @@ class NotificationController extends Controller
     {
         $this->requireLogin();
 
-        $notificationModel = new Notification();
+        $notificationModel = new notification();
         $result = $notificationModel->clearAllNotifications($_SESSION['account_id']);
 
         echo json_encode(['success' => $result]);

@@ -1,4 +1,4 @@
-(function() {
+(function () {
     const isLoggedIn = window.userLoggedIn === true;
 
     if (!isLoggedIn) {
@@ -28,7 +28,6 @@
             const link = document.createElement('link');
             link.id = 'dyslexic-font';
             link.rel = 'stylesheet';
-            link.href = 'https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/opendyslexic.css';
             document.head.appendChild(link);
         }
     } else {
@@ -38,27 +37,27 @@
 
     const modes = [
         {
-            localKey:  'dyslexicMode',
+            localKey: 'dyslexicMode',
             className: 'dyslexic-mode',
-            endpoint:  '/settings/dyslexic',
-            bodyKey:   'dyslexic',
+            endpoint: '/settings/dyslexic',
+            bodyKey: 'dyslexic',
             desktopId: 'switch-dyslexic-on',
-            mobileId:  'mobileSwitchDyslexic',
+            mobileId: 'mobileSwitchDyslexic',
         },
         {
-            localKey:  'darkMode',
+            localKey: 'darkMode',
             className: 'dark',
-            endpoint:  '/settings/dark',
-            bodyKey:   'dark',
+            endpoint: '/settings/dark',
+            bodyKey: 'dark',
             desktopId: 'switch-dark-on',
-            mobileId:  'mobileSwitchDark',
+            mobileId: 'mobileSwitchDark',
         },
     ];
 
-    document.addEventListener('DOMContentLoaded', function() {
-        modes.forEach(function(mode) {
+    document.addEventListener('DOMContentLoaded', function () {
+        modes.forEach(function (mode) {
             const desktopToggle = document.getElementById(mode.desktopId);
-            const mobileToggle  = document.getElementById(mode.mobileId);
+            const mobileToggle = document.getElementById(mode.mobileId);
 
             const isEnabled = document.documentElement.classList.contains(mode.className);
 
@@ -69,7 +68,7 @@
                 document.documentElement.classList.toggle(mode.className, enabled);
 
                 if (desktopToggle) desktopToggle.checked = enabled;
-                if (mobileToggle)  mobileToggle.checked  = enabled;
+                if (mobileToggle) mobileToggle.checked = enabled;
 
                 localStorage.setItem(mode.localKey, enabled ? 'true' : 'false');
 
@@ -96,14 +95,12 @@
                             content_css: enabled ? 'dark' : 'default',
                             content_style: `
                                 body {
-                                    background-color: ${enabled ? '#1B1B1B' : '#ffffff'} !important;
-                                    color: ${enabled ? '#FFFFFF' : '#545F71'} !important;
-                                    font-family: 'Anonymous Pro', monospace;
-                                    padding: 10px;
+                                    background-color: ${document.documentElement.classList.contains('dark') ? '#2c2c2c' : '#ffffff'};
+                                    color: ${document.documentElement.classList.contains('dark') ? '#cbd5e1' : '#000000'};
                                 }
                             `,
-                            setup: function(editor) {
-                                editor.on('init', function() {
+                            setup: function (editor) {
+                                editor.on('init', function () {
                                     editor.setContent(content);
                                 });
                             }
@@ -113,7 +110,7 @@
             }
 
             if (desktopToggle) desktopToggle.addEventListener('change', e => updateMode(e.target.checked));
-            if (mobileToggle)  mobileToggle.addEventListener('change',  e => updateMode(e.target.checked));
+            if (mobileToggle) mobileToggle.addEventListener('change', e => updateMode(e.target.checked));
         });
     });
 })();

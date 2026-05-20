@@ -1,9 +1,9 @@
 <?php
-namespace App\Models;
+namespace app\models;
 
-use App\Core\Database;
+use app\core\database;
 
-class BaseModel extends Database
+class basemodel extends database
 {
     protected $table;
 
@@ -32,7 +32,7 @@ class BaseModel extends Database
         $query = "SELECT COUNT(*) as count FROM {$this->table}";
         $result = mysqli_query($this->connection, $query);
         $row = mysqli_fetch_assoc($result);
-        return (int)$row['count'];
+        return (int) $row['count'];
     }
 
     public function exists(int $id): bool

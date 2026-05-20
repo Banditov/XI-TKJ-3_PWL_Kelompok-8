@@ -1,7 +1,7 @@
 <?php
-namespace App\Models;
+namespace app\models;
 
-class Notification extends BaseModel
+class notification extends basemodel
 {
     protected $table = 'notification';
 

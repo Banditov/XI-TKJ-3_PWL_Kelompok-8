@@ -1,9 +1,9 @@
-(function() {
+(function () {
     const loadingScreen = document.getElementById('loadingScreen');
     let startTime = Date.now();
     let isHidden = false;
 
-    window.showLoading = function() {
+    window.showLoading = function () {
         if (!loadingScreen) return;
         startTime = Date.now();
         isHidden = false;
@@ -12,7 +12,7 @@
         document.body.style.overflow = 'hidden';
     };
 
-    window.hideLoading = function() {
+    window.hideLoading = function () {
         if (!loadingScreen || isHidden) return;
         isHidden = true;
         const elapsed = Date.now() - startTime;

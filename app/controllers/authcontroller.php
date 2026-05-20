@@ -1,10 +1,10 @@
 <?php
-namespace App\Controllers;
+namespace app\controllers;
 
-use App\Core\Controller;
-use App\Models\Account;
+use app\core\controller;
+use app\models\account;
 
-class AuthController extends Controller
+class authcontroller extends controller
 {
     public function login()
     {
@@ -17,12 +17,12 @@ class AuthController extends Controller
 
     public function authenticate()
     {
-        $email    = $_POST['email'];
+        $email = $_POST['email'];
         $password = $_POST['password'];
-        $keep     = isset($_POST['keep']);
+        $keep = isset($_POST['keep']);
 
-        $accountModel = new Account();
-        $account      = $accountModel->getByEmail($email);
+        $accountModel = new account();
+        $account = $accountModel->getByEmail($email);
 
         if (!$account) {
             header('Location: /login?error=invalid');
@@ -30,7 +30,7 @@ class AuthController extends Controller
         }
 
         $valid = password_verify($password, $account['password'])
-                || $password === $account['password'];
+            || $password === $account['password'];
 
         if (!$valid) {
             header('Location: /login?error=invalid');
@@ -60,9 +60,14 @@ class AuthController extends Controller
 
         if (ini_get("session.use_cookies")) {
             $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000,
-                $params["path"], $params["domain"],
-                $params["secure"], $params["httponly"]
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
             );
         }
 

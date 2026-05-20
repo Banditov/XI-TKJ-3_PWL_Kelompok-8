@@ -1,10 +1,10 @@
 <?php
-namespace App\Controllers;
+namespace app\controllers;
 
-use App\Core\Controller;
-use App\Models\Account;
+use app\core\controller;
+use app\models\account;
 
-class SettingsController extends Controller
+class settingscontroller extends controller
 {
     public function toggleDyslexic()
     {
@@ -13,7 +13,7 @@ class SettingsController extends Controller
         $dyslexic = intval($_POST['dyslexic'] ?? 0);
         $_SESSION['is_dyslexic'] = $dyslexic;
 
-        $accountModel = new Account();
+        $accountModel = new account();
         $result = $accountModel->updatePreference($_SESSION['account_id'], 'is_dyslexic', $dyslexic);
 
         echo json_encode(['success' => $result]);
@@ -26,7 +26,7 @@ class SettingsController extends Controller
         $dark = intval($_POST['dark'] ?? 0);
         $_SESSION['is_dark'] = $dark;
 
-        $accountModel = new Account();
+        $accountModel = new account();
         $result = $accountModel->updatePreference($_SESSION['account_id'], 'is_dark', $dark);
 
         echo json_encode(['success' => $result]);

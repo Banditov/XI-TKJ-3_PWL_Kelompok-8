@@ -1,17 +1,17 @@
 <?php
-namespace App\Controllers;
+namespace app\controllers;
 
-use App\Core\Controller;
-use App\Models\Comment;
-use App\Models\Post;
-use App\Models\Notification;
+use app\core\controller;
+use app\models\comment;
+use app\models\post;
+use app\models\notification;
 
-class CommentController extends Controller
+class commentcontroller extends controller
 {
     public function store(string $postId)
     {
-        $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
-                  strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+        $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 
         $description = trim($_POST['description'] ?? '');
 
@@ -27,15 +27,15 @@ class CommentController extends Controller
 
         $accountId = $_SESSION['account_id'];
 
-        $commentModel = new Comment();
+        $commentModel = new comment();
         $commentId = $commentModel->createComment($postId, $accountId, $description);
 
         try {
-            $postModel = new Post();
+            $postModel = new post();
             $post = $postModel->getPostById($postId);
 
             if ($post && isset($post['account_id']) && $post['account_id'] != $accountId) {
-                $notificationModel = new Notification();
+                $notificationModel = new notification();
                 $notificationModel->createCommentNotification($post['account_id'], $commentId);
             }
         } catch (\Exception $e) {
@@ -67,15 +67,15 @@ class CommentController extends Controller
 
     public function vote(string $commentId)
     {
-        $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
-                strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+        $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 
         if (!$isAjax) {
             $accountId = $_SESSION['account_id'];
             $vote = intval($_POST['vote']);
 
             if (in_array($vote, [1, -1])) {
-                $voteModel = new \App\Models\Vote();
+                $voteModel = new \app\models\vote();
                 $voteModel->voteComment(intval($commentId), intval($accountId), $vote);
             }
 
@@ -99,15 +99,15 @@ class CommentController extends Controller
             return;
         }
 
-        $voteModel = new \App\Models\Vote();
+        $voteModel = new \app\models\vote();
         $result = $voteModel->voteComment(intval($commentId), intval($accountId), $vote);
 
-        $commentModel = new Comment();
+        $commentModel = new comment();
         $comment = $commentModel->getCommentById(intval($commentId));
 
         echo json_encode([
             'success' => true,
-            'new_votes' => (int)$comment['votes'],
+            'new_votes' => (int) $comment['votes'],
             'new_user_vote' => $result
         ]);
         return;
@@ -117,7 +117,7 @@ class CommentController extends Controller
     {
         $this->requireLogin();
 
-        $commentModel = new Comment();
+        $commentModel = new comment();
         $comment = $commentModel->getCommentById($commentId);
 
         if (!$comment) {
@@ -127,7 +127,7 @@ class CommentController extends Controller
 
         $isOwner = ($comment['account_id'] == $_SESSION['account_id']);
         $isAdmin = ($_SESSION['is_admin'] ?? 0) == 1;
-        
+
         if (!$isOwner && !$isAdmin) {
             $_SESSION['error'] = 'You cannot delete this comment';
             header("Location: /posts/{$comment['post_id']}");

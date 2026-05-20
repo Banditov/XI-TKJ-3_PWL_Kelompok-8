@@ -1,9 +1,9 @@
 <?php
-namespace App\Controllers;
+namespace app\controllers;
 
-use App\Core\Controller;
+use app\core\controller;
 
-class UploadController extends Controller
+class uploadcontroller extends controller
 {
     public function image()
     {
@@ -76,6 +76,10 @@ class UploadController extends Controller
 
         $filename = 'post_' . uniqid() . '.webp';
         $dest = __DIR__ . '/../../public/assets/image/post/' . $filename;
+
+        if (!is_dir($dest) || !is_readable($dest)) {
+            $dest = __DIR__ . '/../../assets/image/post/' . $filename;
+        }
 
         $dir = dirname($dest);
         if (!is_dir($dir)) {
@@ -194,7 +198,11 @@ class UploadController extends Controller
 
         $filename = 'model_' . uniqid() . '.' . $ext;
         $uploadDir = __DIR__ . '/../../public/assets/models/';
-        
+
+        if (!is_dir($uploadDir) || !is_readable($uploadDir)) {
+            $uploadDir = __DIR__ . '/../../assets/models/';
+        }
+
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }

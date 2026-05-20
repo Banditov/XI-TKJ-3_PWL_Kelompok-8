@@ -43,17 +43,17 @@ async function handleVoteClick(event) {
 
     if (voteType === 'up') {
         if (currentVote === 'up') {
-            if (upSpan) upSpan.style.color = '';
+            if (upSpan) upSpan.style.setProperty('color', '', 'important');
         } else {
-            if (upSpan) upSpan.style.color = '#FFE500';
-            if (downSpan && currentVote === 'down') downSpan.style.color = '';
+            if (upSpan) upSpan.style.setProperty('color', '#FFE500', 'important');
+            if (downSpan && currentVote === 'down') downSpan.style.setProperty('color', '', 'important');
         }
     } else {
         if (currentVote === 'down') {
-            if (downSpan) downSpan.style.color = '';
+            if (downSpan) downSpan.style.setProperty('color', '', 'important');
         } else {
-            if (downSpan) downSpan.style.color = '#FFE500';
-            if (upSpan && currentVote === 'up') upSpan.style.color = '';
+            if (downSpan) downSpan.style.setProperty('color', '#FFE500', 'important');
+            if (upSpan && currentVote === 'up') upSpan.style.setProperty('color', '', 'important');
         }
     }
 

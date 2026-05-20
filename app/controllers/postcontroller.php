@@ -1,43 +1,43 @@
 <?php
-namespace App\Controllers;
+namespace app\controllers;
 
-use App\Core\Controller;
-use App\Models\Post;
-use App\Models\Tag;
-use App\Models\Comment;
-use App\Models\Reply;
+use app\core\controller;
+use app\models\post;
+use app\models\tag;
+use app\models\comment;
+use app\models\reply;
 
-class PostController extends Controller
+class postcontroller extends controller
 {
     public function index()
     {
         $this->requireLogin();
 
-        $postModel = new Post();
-        $tagModel  = new Tag();
+        $postModel = new post();
+        $tagModel = new tag();
         $tagModel->deleteUnusedTags();
 
         $tags = $tagModel->getUniqueTagsForFilter();
 
         $filters = [
-            'search'     => $_GET['search']     ?? '',
-            'tag'        => $_GET['tag']        ?? '',
-            'votes_min'  => $_GET['votes_min']  ?? '',
-            'votes_max'  => $_GET['votes_max']  ?? '',
-            'views_min'  => $_GET['views_min']  ?? '',
-            'views_max'  => $_GET['views_max']  ?? '',
+            'search' => $_GET['search'] ?? '',
+            'tag' => $_GET['tag'] ?? '',
+            'votes_min' => $_GET['votes_min'] ?? '',
+            'votes_max' => $_GET['votes_max'] ?? '',
+            'views_min' => $_GET['views_min'] ?? '',
+            'views_max' => $_GET['views_max'] ?? '',
         ];
 
         $posts = $postModel->getPosts($filters);
 
         shuffle($posts);
 
-        $_SESSION['filter_tags']    = $tags;
+        $_SESSION['filter_tags'] = $tags;
         $_SESSION['filter_filters'] = $filters;
 
         $this->view('posts.index', [
-            'posts'   => $posts,
-            'tags'    => $tags,
+            'posts' => $posts,
+            'tags' => $tags,
             'filters' => $filters
         ]);
     }
@@ -48,13 +48,13 @@ class PostController extends Controller
 
         $id = intval($id);
 
-        $postModel    = new Post();
-        $commentModel = new Comment();
-        $replyModel   = new Reply();
+        $postModel = new post();
+        $commentModel = new comment();
+        $replyModel = new reply();
 
         $postModel->incrementViews($id, $_SESSION['account_id']);
 
-        $post     = $postModel->getPostById($id);
+        $post = $postModel->getPostById($id);
         $comments = $commentModel->getCommentsByPostId($id);
 
         foreach ($comments as &$comment) {
@@ -62,7 +62,7 @@ class PostController extends Controller
         }
 
         $this->view('posts.show', [
-            'post'     => $post,
+            'post' => $post,
             'comments' => $comments
         ]);
     }
@@ -70,7 +70,7 @@ class PostController extends Controller
     public function create()
     {
         $this->requireLogin();
-        $this->view('posts.create',[
+        $this->view('posts.create', [
         ]);
     }
 
@@ -94,7 +94,7 @@ class PostController extends Controller
             exit;
         }
 
-        $postModel = new Post();
+        $postModel = new post();
         $postId = $postModel->createPost($title, $description, $accountId);
 
         if (!$postId) {
@@ -108,10 +108,11 @@ class PostController extends Controller
         }
 
         if (!empty($_POST['tag_name']) && is_array($_POST['tag_name'])) {
-            $tagModel = new Tag();
+            $tagModel = new tag();
             foreach ($_POST['tag_name'] as $index => $tagName) {
                 $tagName = trim($tagName);
-                if (empty($tagName)) continue;
+                if (empty($tagName))
+                    continue;
 
                 $colorTop = $_POST['tag_color_top'][$index] ?? 'CCCCCC';
                 $colorBottom = $_POST['tag_color_bottom'][$index] ?? 'CCCCCC';
@@ -123,6 +124,11 @@ class PostController extends Controller
 
         if (!empty($_FILES['images']['name'][0])) {
             $uploadDir = __DIR__ . '/../../public/assets/image/post/';
+
+            if (!is_dir($uploadDir) || !is_readable($uploadDir)) {
+                $uploadDir = __DIR__ . '/../../assets/image/post/';
+            }
+
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
@@ -131,7 +137,7 @@ class PostController extends Controller
                 if ($_FILES['images']['error'][$key] === UPLOAD_ERR_OK) {
                     $fileName = 'post_' . uniqid() . '_' . $_FILES['images']['name'][$key];
                     $destination = $uploadDir . $fileName;
-                    
+
                     if (move_uploaded_file($tmp_name, $destination)) {
                         $postModel->addImage($postId, $fileName);
                     }
@@ -141,7 +147,8 @@ class PostController extends Controller
 
         if (!empty($_POST['imgs']) && is_array($_POST['imgs'])) {
             foreach ($_POST['imgs'] as $filename) {
-                if (empty($filename)) continue;
+                if (empty($filename))
+                    continue;
                 $postModel->addImage($postId, $filename);
             }
         }
@@ -149,8 +156,9 @@ class PostController extends Controller
         if (!empty($_POST['link_url']) && is_array($_POST['link_url'])) {
             foreach ($_POST['link_url'] as $index => $url) {
                 $url = trim($url);
-                if (empty($url)) continue;
-                
+                if (empty($url))
+                    continue;
+
                 $linkText = $_POST['link_text'][$index] ?? '';
                 $postModel->addLink($postId, $url, $linkText);
             }
@@ -165,7 +173,7 @@ class PostController extends Controller
     {
         $this->requireLogin();
 
-        $postModel = new Post();
+        $postModel = new post();
         $post = $postModel->getPostById($id);
 
         if (!$post) {
@@ -187,7 +195,7 @@ class PostController extends Controller
     {
         $this->requireLogin();
 
-        $postModel = new Post();
+        $postModel = new post();
         $post = $postModel->getPostById($id);
 
         if (!$post) {
@@ -223,13 +231,14 @@ class PostController extends Controller
             exit;
         }
 
-        $tagModel = new Tag();
+        $tagModel = new tag();
         $tagModel->deleteTagsByPostId(intval($id));
 
         if (!empty($_POST['tag_name']) && is_array($_POST['tag_name'])) {
             foreach ($_POST['tag_name'] as $index => $tagName) {
                 $tagName = trim($tagName);
-                if (empty($tagName)) continue;
+                if (empty($tagName))
+                    continue;
 
                 $colorTop = $_POST['tag_color_top'][$index] ?? 'CCCCCC';
                 $colorBottom = $_POST['tag_color_bottom'][$index] ?? 'CCCCCC';
@@ -249,6 +258,11 @@ class PostController extends Controller
         foreach ($currentImages as $img) {
             if (!in_array($img['file_name'], $keepImages)) {
                 $filePath = __DIR__ . '/../../public/assets/image/post/' . $img['file_name'];
+
+                if (!is_dir($filePath) || !is_readable($filePath)) {
+                    $filePath = __DIR__ . '/../../assets/image/post/' . $img['file_name'];
+                }
+
                 if (file_exists($filePath)) {
                     unlink($filePath);
                 }
@@ -258,7 +272,8 @@ class PostController extends Controller
 
         if (!empty($_POST['imgs']) && is_array($_POST['imgs'])) {
             foreach ($_POST['imgs'] as $filename) {
-                if (empty($filename)) continue;
+                if (empty($filename))
+                    continue;
                 $postModel->addImage(intval($id), $filename);
             }
         }
@@ -268,7 +283,8 @@ class PostController extends Controller
         if (!empty($_POST['existing_links']) && is_array($_POST['existing_links'])) {
             foreach ($_POST['existing_links'] as $index => $url) {
                 $url = trim($url);
-                if (empty($url)) continue;
+                if (empty($url))
+                    continue;
 
                 $linkText = $_POST['existing_link_texts'][$index] ?? $url;
                 $postModel->addLink(intval($id), $url, $linkText);
@@ -278,7 +294,8 @@ class PostController extends Controller
         if (!empty($_POST['link_url']) && is_array($_POST['link_url'])) {
             foreach ($_POST['link_url'] as $index => $url) {
                 $url = trim($url);
-                if (empty($url)) continue;
+                if (empty($url))
+                    continue;
 
                 $linkText = $_POST['link_text'][$index] ?? '';
                 $postModel->addLink(intval($id), $url, $linkText);
@@ -327,29 +344,29 @@ class PostController extends Controller
     {
         $this->requireLogin();
 
-        $postModel = new Post();
-        $tagModel  = new Tag();
+        $postModel = new post();
+        $tagModel = new tag();
         $tagModel->deleteUnusedTags();
 
         $tags = $tagModel->getUniqueTagsForFilter();
 
         $filters = [
-            'search'     => $_GET['search']     ?? '',
-            'tag'        => $_GET['tag']        ?? '',
-            'votes_min'  => $_GET['votes_min']  ?? '',
-            'votes_max'  => $_GET['votes_max']  ?? '',
-            'views_min'  => $_GET['views_min']  ?? '',
-            'views_max'  => $_GET['views_max']  ?? '',
+            'search' => $_GET['search'] ?? '',
+            'tag' => $_GET['tag'] ?? '',
+            'votes_min' => $_GET['votes_min'] ?? '',
+            'votes_max' => $_GET['votes_max'] ?? '',
+            'views_min' => $_GET['views_min'] ?? '',
+            'views_max' => $_GET['views_max'] ?? '',
         ];
 
         $posts = $postModel->getLatestPosts($filters);
 
-        $_SESSION['filter_tags']    = $tags;
+        $_SESSION['filter_tags'] = $tags;
         $_SESSION['filter_filters'] = $filters;
 
         $this->view('posts.latest', [
-            'posts'   => $posts,
-            'tags'    => $tags,
+            'posts' => $posts,
+            'tags' => $tags,
             'filters' => $filters
         ]);
     }
@@ -358,29 +375,29 @@ class PostController extends Controller
     {
         $this->requireLogin();
 
-        $postModel = new Post();
-        $tagModel  = new Tag();
+        $postModel = new post();
+        $tagModel = new tag();
         $tagModel->deleteUnusedTags();
 
         $tags = $tagModel->getUniqueTagsForFilter();
 
         $filters = [
-            'search'     => $_GET['search']     ?? '',
-            'tag'        => $_GET['tag']        ?? '',
-            'votes_min'  => $_GET['votes_min']  ?? '',
-            'votes_max'  => $_GET['votes_max']  ?? '',
-            'views_min'  => $_GET['views_min']  ?? '',
-            'views_max'  => $_GET['views_max']  ?? '',
+            'search' => $_GET['search'] ?? '',
+            'tag' => $_GET['tag'] ?? '',
+            'votes_min' => $_GET['votes_min'] ?? '',
+            'votes_max' => $_GET['votes_max'] ?? '',
+            'views_min' => $_GET['views_min'] ?? '',
+            'views_max' => $_GET['views_max'] ?? '',
         ];
 
         $posts = $postModel->getPopularPosts($filters);
 
-        $_SESSION['filter_tags']    = $tags;
+        $_SESSION['filter_tags'] = $tags;
         $_SESSION['filter_filters'] = $filters;
 
         $this->view('posts.popular', [
-            'posts'   => $posts,
-            'tags'    => $tags,
+            'posts' => $posts,
+            'tags' => $tags,
             'filters' => $filters
         ]);
     }
@@ -389,57 +406,57 @@ class PostController extends Controller
     {
         $this->requireLogin();
 
-        $postModel = new Post();
-        $tagModel  = new Tag();
+        $postModel = new post();
+        $tagModel = new tag();
         $tagModel->deleteUnusedTags();
 
         $tags = $tagModel->getUniqueTagsForFilter();
 
         $filters = [
-            'search'     => $_GET['search']     ?? '',
-            'tag'        => $_GET['tag']        ?? '',
-            'votes_min'  => $_GET['votes_min']  ?? '',
-            'votes_max'  => $_GET['votes_max']  ?? '',
-            'views_min'  => $_GET['views_min']  ?? '',
-            'views_max'  => $_GET['views_max']  ?? '',
+            'search' => $_GET['search'] ?? '',
+            'tag' => $_GET['tag'] ?? '',
+            'votes_min' => $_GET['votes_min'] ?? '',
+            'votes_max' => $_GET['votes_max'] ?? '',
+            'views_min' => $_GET['views_min'] ?? '',
+            'views_max' => $_GET['views_max'] ?? '',
         ];
 
         $posts = $postModel->getMyPosts($_SESSION['account_id'], $filters);
 
-        $_SESSION['filter_tags']    = $tags;
+        $_SESSION['filter_tags'] = $tags;
         $_SESSION['filter_filters'] = $filters;
 
         $this->view('posts.mypost', [
-            'posts'   => $posts,
-            'tags'    => $tags,
+            'posts' => $posts,
+            'tags' => $tags,
             'filters' => $filters
         ]);
     }
 
     public function pinned()
     {
-        $postModel = new Post();
-        $tagModel  = new Tag();
+        $postModel = new post();
+        $tagModel = new tag();
 
         $tags = $tagModel->getUniqueTagsForFilter();
 
         $filters = [
-            'search'     => $_GET['search']     ?? '',
-            'tag'        => $_GET['tag']        ?? '',
-            'votes_min'  => $_GET['votes_min']  ?? '',
-            'votes_max'  => $_GET['votes_max']  ?? '',
-            'views_min'  => $_GET['views_min']  ?? '',
-            'views_max'  => $_GET['views_max']  ?? '',
+            'search' => $_GET['search'] ?? '',
+            'tag' => $_GET['tag'] ?? '',
+            'votes_min' => $_GET['votes_min'] ?? '',
+            'votes_max' => $_GET['votes_max'] ?? '',
+            'views_min' => $_GET['views_min'] ?? '',
+            'views_max' => $_GET['views_max'] ?? '',
         ];
 
         $posts = $postModel->getPinnedPosts($filters);
 
-        $_SESSION['filter_tags']    = $tags;
+        $_SESSION['filter_tags'] = $tags;
         $_SESSION['filter_filters'] = $filters;
 
         $this->view('posts.pinned', [
-            'posts'   => $posts,
-            'tags'    => $tags,
+            'posts' => $posts,
+            'tags' => $tags,
             'filters' => $filters
         ]);
     }
@@ -448,7 +465,7 @@ class PostController extends Controller
     {
         $this->requireAdmin();
 
-        $tagModel = new Tag();
+        $tagModel = new tag();
         $result = $tagModel->pinPost(intval($id));
 
         if ($result) {
@@ -465,7 +482,7 @@ class PostController extends Controller
     {
         $this->requireAdmin();
 
-        $tagModel = new Tag();
+        $tagModel = new tag();
         $result = $tagModel->unpinPost(intval($id));
 
         if ($result) {
