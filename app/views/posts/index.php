@@ -61,7 +61,7 @@
                             <p class="text-3xl font-bold"><?= $post['date'] ?></p>
                         </div>
                         <div class="flex justify-between items-center">
-                            <div class="flex gap-5 items-center">
+                            <div class="flex gap-5 items-center flex-wrap">
                                 <?php if (!empty($post['tags'])): ?>
                                     <?php foreach ($post['tags'] as $tag): ?>
                                         <?php $textColor = tagTextColor($tag['color_top'], $tag['color_bottom']); ?>
