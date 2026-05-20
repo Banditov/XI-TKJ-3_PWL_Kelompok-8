@@ -7,7 +7,6 @@ use app\models\tag;
 use app\models\comment;
 use app\models\reply;
 
-// 2 KODE HOSTING
 class postcontroller extends controller
 {
     public function index()
@@ -125,8 +124,10 @@ class postcontroller extends controller
 
         if (!empty($_FILES['images']['name'][0])) {
             $uploadDir = __DIR__ . '/../../public/assets/image/post/';
-            // HOSTING
-            // $uploadDir = __DIR__ . '/../../assets/image/post/';
+
+            if (!is_dir($uploadDir) || !is_readable($uploadDir)) {
+                $uploadDir = __DIR__ . '/../../assets/image/post/';
+            }
 
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
@@ -257,8 +258,10 @@ class postcontroller extends controller
         foreach ($currentImages as $img) {
             if (!in_array($img['file_name'], $keepImages)) {
                 $filePath = __DIR__ . '/../../public/assets/image/post/' . $img['file_name'];
-                // HOSTING
-                // $filePath = __DIR__ . '/../../assets/image/post/' . $img['file_name'];
+
+                if (!is_dir($filePath) || !is_readable($filePath)) {
+                    $filePath = __DIR__ . '/../../assets/image/post/' . $img['file_name'];
+                }
 
                 if (file_exists($filePath)) {
                     unlink($filePath);

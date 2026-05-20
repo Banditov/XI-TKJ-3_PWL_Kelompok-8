@@ -3,7 +3,6 @@ namespace app\controllers;
 
 use app\core\controller;
 
-// 2 KODE HOSTING
 class uploadcontroller extends controller
 {
     public function image()
@@ -77,8 +76,10 @@ class uploadcontroller extends controller
 
         $filename = 'post_' . uniqid() . '.webp';
         $dest = __DIR__ . '/../../public/assets/image/post/' . $filename;
-        // HOSTING
-        // $dest = __DIR__ . '/../../assets/image/post/' . $filename;
+
+        if (!is_dir($dest) || !is_readable($dest)) {
+            $dest = __DIR__ . '/../../assets/image/post/' . $filename;
+        }
 
         $dir = dirname($dest);
         if (!is_dir($dir)) {
@@ -197,8 +198,10 @@ class uploadcontroller extends controller
 
         $filename = 'model_' . uniqid() . '.' . $ext;
         $uploadDir = __DIR__ . '/../../public/assets/models/';
-        // HOSTING
-        // $uploadDir = __DIR__ . '/../../assets/models/';
+
+        if (!is_dir($uploadDir) || !is_readable($uploadDir)) {
+            $uploadDir = __DIR__ . '/../../assets/models/';
+        }
 
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);

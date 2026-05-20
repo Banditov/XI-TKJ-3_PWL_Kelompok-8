@@ -189,8 +189,9 @@ $showSearchBar = in_array($currentPath, $allowedSearchPages);
             <?php endif; ?>
             <?= essIcon('settings', 'w-12 cursor-pointer hover:opacity-60') ?>
             <div
+                class="w-12"
                 onclick="showConfirmationModal('Logout Confirmation', 'Are you sure you want to logout from ImmaSpark?', () => window.location.href='/logout')">
-                <?= essIcon('logout', 'w-10 fill-[#ffffff] cursor-pointer hover:opacity-60') ?>
+                <?= essIcon('logout', 'fill-[#ffffff] cursor-pointer hover:opacity-60') ?>
             </div>
         </div>
     </header>
