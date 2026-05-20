@@ -20,7 +20,7 @@
         </div>
 
         <?php if (!empty($post['imgs'])): ?>
-            <div class="carousel-tab-content" data-tab="images" style="display: block;">
+            <div class="carousel-tab-content" data-tab="images" style="display: <?= empty($post['model_3d']) ? 'none' : 'block' ?>;">
                 <div class="h-75 max-h-75 relative overflow-hidden">
                     <div class="carousel-track flex h-full transition-transform duration-300 ease-in-out"
                         style="width: <?= count($post['imgs']) * 100 ?>%">
@@ -35,11 +35,11 @@
                     </div>
                     <?php if (count($post['imgs']) > 1): ?>
                         <button
-                            class="carousel-prev opacity-100 md:opacity-0 absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full text-white drop-shadow-lg backdrop-blur-md bg-gray-800/25 border border-white hover:bg-white hover:text-black z-1 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer">
+                            class="carousel-prev opacity-0 md:opacity-0 group-hover:opacity-100 absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full text-white drop-shadow-lg backdrop-blur-md bg-gray-800/25 border border-white hover:bg-white hover:text-black z-1 transition-opacity duration-200 cursor-pointer">
                             <?= essIcon('arrow', 'w-6 h-6 transform rotate-90') ?>
                         </button>
                         <button
-                            class="carousel-next opacity-100 md:opacity-0 absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full text-white drop-shadow-lg backdrop-blur-md bg-gray-800/25 border border-white hover:bg-white hover:text-black z-1 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer">
+                            class="carousel-next opacity-0 md:opacity-0 group-hover:opacity-100 absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full text-white drop-shadow-lg backdrop-blur-md bg-gray-800/25 border border-white hover:bg-white hover:text-black z-1 transition-opacity duration-200 cursor-pointer">
                             <?= essIcon('arrow', 'w-6 h-6 transform -rotate-90') ?>
                         </button>
                         <div class="absolute left-1/2 -translate-x-1/2 bottom-4 flex gap-2 z-1">
@@ -54,10 +54,11 @@
         <?php endif; ?>
 
         <?php if (!empty($post['model_3d'])): ?>
-            <div class="carousel-tab-content" data-tab="model" style="display: none;">
+            <div class="carousel-tab-content" data-tab="model" style="display: <?= empty($post['imgs']) ? 'block' : 'none' ?>;">
                 <div class="h-75 max-h-75 relative bg-linear-to-br from-gray-900 to-gray-800 flex items-center justify-center model-placeholder cursor-pointer"
                     data-model-url="/assets/models/<?= $post['model_3d'] ?>"
-                    data-model-type="<?= pathinfo($post['model_3d'], PATHINFO_EXTENSION) ?>" onclick="load3DModel(this)">
+                    data-model-type="<?= pathinfo($post['model_3d'], PATHINFO_EXTENSION) ?>"
+                    onclick="load3DModel(this)">
                     <div class="text-center text-white">
                         <?= icon('cube', 'w-15 h-15 mx-auto mb-4') ?>
                         <p class="text-lg font-medium">Click to load 3D model</p>

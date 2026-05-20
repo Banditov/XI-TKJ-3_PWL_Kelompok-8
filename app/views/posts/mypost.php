@@ -117,7 +117,15 @@
                         <a href="/posts/<?= $post['id'] ?>" class="flex flex-col gap-3">
                             <p class="text-4xl font-bold"><?= $post['title'] ?></p>
                             <div class="revert-tailwind">
-                                <?= $post['description'] ?>
+                                <?php
+                                $description = strip_tags($post['description']);
+                                $maxLength = 600;
+                                if (strlen($description) > $maxLength) {
+                                    echo htmlspecialchars(substr($description, 0, $maxLength)) . '...';
+                                } else {
+                                    echo htmlspecialchars($description);
+                                }
+                                ?>
                             </div>
                         </a>
                     </div>

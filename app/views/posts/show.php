@@ -119,7 +119,7 @@
             <p class="text-4xl font-bold"><?= $post['title'] ?></p>
         </div>
         <?php include __DIR__ . '/../layouts/partials/carousel.php'; ?>
-        <div class="md:p-10 p-7 <?= ($post['imgs']) ? '' : 'pt-0!' ?> flex flex-col md:gap-7 gap-5">
+        <div class="md:p-10 p-7 <?= (empty($post['imgs']) && empty($post['model_3d'])) ? 'pt-0!' : '' ?> flex flex-col md:gap-7 gap-5">
             <div class="revert-tailwind">
                 <?= $post['description'] ?>
             </div>

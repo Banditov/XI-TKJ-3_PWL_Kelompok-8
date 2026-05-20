@@ -367,6 +367,8 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 
    - Perbaiki icon logout lebih besar daripada halaman lainnya pada header mobile
    - Membuat file controller kompatibel dengan hosting
+   - Memperbaiki file 3D tidak dapat terlihat pada post apabila tidak ada image
+   - Membuat limit deskripsi pada post halaman utama
 </details>
 
 ### 19/05/2026 - 0.12.1
