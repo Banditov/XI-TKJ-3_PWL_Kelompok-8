@@ -5,7 +5,7 @@
 <?php include __DIR__ . '/../../../app/helpers/basehelper.php'; ?>
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
-    <div class="w-full rounded-4xl bg-white dark:bg-[#1B1B1B] text-[#545F71] dark:text-white drop-shadow-lg p-10">
+    <div class="w-full rounded-4xl bg-white dark:bg-[#1B1B1B] text-[#545F71] drop-shadow-lg p-10 post">
         <h1 class="text-4xl font-bold mb-6">Register New User</h1>
 
         <?php if (isset($_SESSION['error'])): ?>
@@ -28,7 +28,7 @@
                     <img src="https://ui-avatars.com/api/?name=User&background=2C7CFF&color=fff&size=100&bold=true"
                         id="avatarPreview" class="w-24 h-24 object-cover rounded-full">
                     <button type="button" onclick="document.getElementById('avatarInput').click()"
-                        class="absolute bottom-0 right-0 bg-white text-white p-2 rounded-full">
+                        class="absolute bottom-0 right-0 bg-white text-[#545F71] p-2 rounded-full">
                         <?= icon('pencil', 'w-4 h-4') ?>
                     </button>
                 </div>

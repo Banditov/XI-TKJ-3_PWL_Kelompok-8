@@ -4,10 +4,10 @@
 <br>
 <div align="center">
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
-      <img src="https://img.shields.io/badge/GitHub Version-wip--1.0.0-red">
+      <img src="https://img.shields.io/badge/GitHub Version-wip--1.0.1-red">
    </a>
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
-      <img src="https://img.shields.io/badge/Latest Release-1.0.0-green">
+      <img src="https://img.shields.io/badge/Latest Release-1.0.1-green">
    </a><br>
    <a href="http://unlicense.org/">
       <img src="https://img.shields.io/badge/License-Unlicense-blue.svg">
@@ -16,7 +16,7 @@
       <img src="https://img.shields.io/badge/Contributor-3-yellow">
    </a><br>
    <a href="http://immaspark.page.gd">
-      <img src="https://img.shields.io/badge/Hosted Version-1.0.0-11164b">
+      <img src="https://img.shields.io/badge/Hosted Version-1.0.1-11164b">
    </a>
 </div>
 
@@ -215,6 +215,13 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 
 <details>
    <summary>May</summary>
+
+### 21/05/2026 - 1.0.1
+
+<details>
+
+- Perbaiki responsivitas halaman admin
+</details>
 
 ### 21/05/2026 - 1.0.0
 
