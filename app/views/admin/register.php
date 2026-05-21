@@ -22,7 +22,7 @@
             </div>
         <?php endif; ?>
 
-        <form action="/admin/register/create" method="POST" class="flex flex-col gap-5">
+        <form action="/admin/register/create" method="POST" class="flex flex-col gap-5" enctype="multipart/form-data">
             <div class="flex flex-col gap-2 items-center">
                 <div class="relative">
                     <img src="https://ui-avatars.com/api/?name=User&background=2C7CFF&color=fff&size=100&bold=true"
@@ -34,7 +34,7 @@
                 </div>
                 <input type="file" id="avatarInput" name="avatar" accept="image/*" class="hidden"
                     onchange="previewAvatar(this)">
-                <p class="text-sm text-gray-500">Upload profile picture (Max 2MB)</p>
+                <p class="text-sm text-gray-500">Upload profile picture (Max 10MB)</p>
             </div>
 
             <div class="flex flex-col gap-2">
