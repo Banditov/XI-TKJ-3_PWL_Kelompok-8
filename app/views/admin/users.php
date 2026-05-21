@@ -5,7 +5,7 @@
 <?php include __DIR__ . '/../../../app/helpers/basehelper.php'; ?>
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
-    <div class="w-full rounded-4xl bg-white dark:bg-[#1B1B1B] text-[#545F71] dark:text-white drop-shadow-lg p-10">
+    <div class="w-full rounded-4xl bg-white dark:bg-[#1B1B1B] text-[#545F71] dark:text-white drop-shadow-lg p-10 post">
         <h1 class="text-4xl font-bold mb-6">Users</h1>
 
         <?php if (isset($_SESSION['success'])): ?>
