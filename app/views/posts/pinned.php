@@ -120,12 +120,24 @@
                             <p class="text-4xl font-bold"><?= $post['title'] ?></p>
                             <div class="revert-tailwind">
                                 <?php
-                                $description = strip_tags($post['description']);
                                 $maxLength = 600;
+                                $description = $post['description'];
+
+                                $description = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $description);
+                                $description = preg_replace('/<style\b[^>]*>(.*?)<\/style>/is', '', $description);
+
+                                $allowedTags = '<p><br><div><h1><h2><h3><h4><h5><h6><strong><b><em><i><u><span><ul><ol><li>';
+                                $description = strip_tags($description, $allowedTags);
+
                                 if (strlen($description) > $maxLength) {
-                                    echo htmlspecialchars(substr($description, 0, $maxLength)) . '...';
+                                    $truncated = substr($description, 0, $maxLength);
+                                    $lastSpace = strrpos($truncated, ' ');
+                                    if ($lastSpace !== false) {
+                                        $truncated = substr($truncated, 0, $lastSpace);
+                                    }
+                                    echo $truncated . '...';
                                 } else {
-                                    echo htmlspecialchars($description);
+                                    echo $description;
                                 }
                                 ?>
                             </div>

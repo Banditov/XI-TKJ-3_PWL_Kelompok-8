@@ -223,6 +223,7 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 - Perbaiki responsivitas halaman admin
 - Perbaiki typo pada halaman admin register/edit
 - Perbaiki halaman admin register tidak dapat mengupload pfp
+- Perbaiki deskripsi post yang seharusnya di tengah tidak menengah
 </details>
 
 ### 21/05/2026 - 1.0.0
