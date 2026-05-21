@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="/css/responsive/main.css">
 
 <?php include __DIR__ . '/../../../app/views/layouts/partials/navbar.php'; ?>
-<?php include __DIR__ . '/../../../app/helpers/tagText.php'; ?>
+<?php include __DIR__ . '/../../../app/helpers/basehelper.php'; ?>
 
 <script type="module" src="/js/animation/post.js"></script>
 <script type="importmap">
@@ -22,8 +22,9 @@
         <div class="md:pt-10 md:pr-10 md:pl-10 pb-7 pt-7 pr-7 pl-7 flex flex-col md:gap-3 gap-5">
             <div class="flex justify-between items-center">
                 <div class="flex gap-5 items-center">
-                    <img src="/assets/image/account/<?= htmlspecialchars($post['account_id']) ?>.jpg"
-                        class="w-15 h-15 object-cover rounded-full drop-shadow-lg">
+                    <img src="<?= getAvatarUrl($post['account_id'], $post['account_name']) ?>"
+                        class="w-15 h-15 object-cover rounded-full drop-shadow-lg"
+                        onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($post['account_name']) ?>&background=2C7CFF&color=fff&size=100&bold=true'">
                     <div>
                         <p class="text-3xl font-bold"><?= htmlspecialchars($post['account_name']) ?></p>
                         <p><?= htmlspecialchars($post['class_name']) ?></p>
@@ -178,8 +179,9 @@
                     data-comment-id="<?= $comment['id'] ?>">
                     <div class="flex items-center justify-between p-5 border-b-2 border-[#545F71]">
                         <div class="flex gap-5 items-center">
-                            <img src="/assets/image/account/<?= $comment['account_id'] ?>.jpg"
-                                class="w-10 h-10 object-cover rounded-full drop-shadow-lg">
+                            <img src="<?= getAvatarUrl($comment['account_id'], $comment['account_name']) ?>"
+                                class="w-15 h-15 object-cover rounded-full drop-shadow-lg"
+                                onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($comment['account_name']) ?>&background=2C7CFF&color=fff&size=100&bold=true'">
                             <div>
                                 <p class="text-2xl font-bold"><?= htmlspecialchars($comment['account_name']) ?></p>
                                 <p class="text-sm"><?= htmlspecialchars($comment['class_name']) ?></p>
@@ -252,8 +254,9 @@
                                 <div class="border-t-2 border-dashed">
                                     <div class="flex justify-between items-center p-5 border-b-2 border-[#545F71]">
                                         <div class="flex gap-5 items-center">
-                                            <img src="/assets/image/account/<?= $reply['account_id'] ?>.jpg"
-                                                class="w-10 h-10 object-cover rounded-full drop-shadow-lg">
+                                            <img src="<?= getAvatarUrl($reply['account_id'], $reply['account_name']) ?>"
+                                                class="w-15 h-15 object-cover rounded-full drop-shadow-lg"
+                                                onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($reply['account_name']) ?>&background=2C7CFF&color=fff&size=100&bold=true'">
                                             <div>
                                                 <p class="text-2xl font-bold"><?= htmlspecialchars($reply['account_name']) ?></p>
                                                 <p class="text-sm"><?= htmlspecialchars($reply['class_name']) ?></p>
@@ -312,8 +315,9 @@
                     <div class="p-5 border-b-2 border-[#545F71]">
                         <div class="flex gap-5 items-center justify-between w-full">
                             <div class="flex gap-5 items-center">
-                                <img src="/assets/image/account/<?= $comment['account_id'] ?>.jpg"
-                                    class="w-14 h-14 object-cover rounded-full drop-shadow-lg">
+                                <img src="<?= getAvatarUrl($comment['account_id'], $comment['account_name']) ?>"
+                                    class="w-15 h-15 object-cover rounded-full drop-shadow-lg"
+                                    onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($comment['account_name']) ?>&background=2C7CFF&color=fff&size=100&bold=true'">
                                 <div>
                                     <p class="text-2xl font-bold"><?= htmlspecialchars($comment['account_name']) ?></p>
                                     <p class="text-lg"><?= htmlspecialchars($comment['class_name']) ?></p>
@@ -386,8 +390,9 @@
                                     <div class="border-b-2 border-[#545F71]">
                                         <div class="p-5 flex gap-5 items-center justify-between">
                                             <div class="flex gap-5 items-center">
-                                                <img src="/assets/image/account/<?= $reply['account_id'] ?>.jpg"
-                                                    class="w-14 h-14 object-cover rounded-full drop-shadow-lg">
+                                                <img src="<?= getAvatarUrl($reply['account_id'], $reply['account_name']) ?>"
+                                                    class="w-15 h-15 object-cover rounded-full drop-shadow-lg"
+                                                    onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($reply['account_name']) ?>&background=2C7CFF&color=fff&size=100&bold=true'">
                                                 <div>
                                                     <p class="text-2xl font-bold"><?= htmlspecialchars($reply['account_name']) ?>
                                                     </p>

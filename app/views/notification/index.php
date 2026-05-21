@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="/css/responsive/main.css">
 
 <?php include __DIR__ . '/../../../app/views/layouts/partials/navbar.php'; ?>
+<?php include __DIR__ . '/../../../app/helpers/basehelper.php'; ?>
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
     <div

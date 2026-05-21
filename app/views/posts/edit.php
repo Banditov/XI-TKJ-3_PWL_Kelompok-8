@@ -5,7 +5,7 @@
 <script type="module" src="/js/animation/post.js"></script>
 
 <?php include __DIR__ . '/../../../app/views/layouts/partials/navbar.php'; ?>
-<?php include __DIR__ . '/../../../app/helpers/tagText.php'; ?>
+<?php include __DIR__ . '/../../../app/helpers/basehelper.php'; ?>
 
 <main class="md:right-0 md:top-0 md:absolute md:w-[calc(100%-16rem)] p-10 flex flex-col gap-10 grow md:mx-auto">
     <div class="w-full rounded-4xl bg-white text-[#545F71] drop-shadow-lg p-10 flex flex-col gap-5 create post">
@@ -26,24 +26,15 @@
                 <div class="flex flex-wrap gap-3 items-center">
                     <input type="text" id="tagName" placeholder="New Tag"
                         class="p-4 flex-1 min-w-30 text-gray-700 rounded-full border border-gray-500">
-                    <div class="flex items-center gap-2">
-                        <input type="text" id="colorTop" placeholder="Warna Atas"
-                            class="p-4 w-36 text-gray-700 rounded-full border border-gray-500">
-                        <div
-                            class="h-14 w-14 shrink-0 border border-gray-500 rounded-xl flex items-center justify-center">
-                            <div class="color-top w-12 h-12 rounded-xl"></div>
+                    <div class="flex items-center gap-4">
+                        <input type="color" id="colorTop" value="#CCCCCC"
+                            class="w-16 h-16 border-gray-500 cursor-pointer rounded-color-picker">
+                        <input type="color" id="colorBottom" value="#CCCCCC"
+                            class="w-16 h-16 border-gray-500 cursor-pointer rounded-color-picker">
+                        <div class="flex flex-col gap-2 ml-2">
+                            <div class="color-preview w-16 h-16 rounded-full border border-gray-500"
+                                style="background: linear-gradient(to bottom, #CCCCCC, #CCCCCC)"></div>
                         </div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <input type="text" id="colorBottom" placeholder="Warna Bawah"
-                            class="p-4 w-36 text-gray-700 rounded-full border border-gray-500">
-                        <div
-                            class="h-14 w-14 shrink-0 border border-gray-500 rounded-xl flex items-center justify-center">
-                            <div class="color-bottom w-12 h-12 rounded-xl"></div>
-                        </div>
-                    </div>
-                    <div class="h-14 w-14 shrink-0 border border-gray-500 rounded-xl flex items-center justify-center">
-                        <div class="color-preview w-12 h-12 rounded-xl"></div>
                     </div>
                     <div class="text-gray-700 border border-gray-500 rounded-xl flex items-center justify-center w-24 h-14 gap-2 shrink-0 cursor-pointer"
                         id="iconBtn">
