@@ -59,7 +59,7 @@
 3. Pindahkan folder yang telah diekstrak ke directory "C:\laragon\www\". Folder yang dipindahkan seharusnya dapat langsung melihat isi dari websitenya, apabila dalam folder yang dipindahkan terdapat sebuah folder lagi, keluarkan semua isi dari websitenya keluar dari foldernya.
       <details>
          <summary>Step 1A-3</summary>
-         <img src=".github/images/tutorial/B1A-3.png">
+         <img src=".github/images/tutorial/B1A-3--B-4.png">
       </details>
 4. Buka Laragon.
       <details>
@@ -109,7 +109,7 @@
 4. Pindahkan folder yang telah diekstrak ke directory "C:\laragon\www\". Folder yang dipindahkan seharusnya dapat langsung melihat isi dari websitenya, apabila dalam folder yang dipindahkan terdapat sebuah folder lagi, keluarkan semua isi dari websitenya keluar dari foldernya.
       <details>
          <summary>Step 1B-4</summary>
-         <img src=".github/images/tutorial/B1B-4.png">
+         <img src=".github/images/tutorial/B1A-3--B-4.png">
       </details>
 5. Buka Laragon.
       <details>
@@ -165,7 +165,7 @@
 </details>
 <br>
 <details>
-   <summary>Online (Tidak perlu install)</summary>
+   <summary>Hosted</summary>
 <a href="http://immaspark.page.gd">Tekan aku!</a><br>
 
 </details>
