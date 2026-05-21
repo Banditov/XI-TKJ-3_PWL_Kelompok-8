@@ -1,16 +1,14 @@
 <h1 align="center">ImmaSpark</h1>
-<!-- 
-<p align="center">Sebuah website untuk ATK sekolah khusus SMK Kristen Immanuel.</p> -->
 
-<img src=".github/image/banner/banner.png">
+<img src=".github/images/banner/banner.png">
 <br>
 <div align="center">
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
-      <img src="https://img.shields.io/badge/GitHub Version-wip--0.13.1-red">
+      <img src="https://img.shields.io/badge/GitHub Version-wip--1.0.1-red">
    </a>
-   <!-- <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
-      <img src="https://img.shields.io/badge/Latest Release-None-green">
-   </a><br> -->
+   <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
+      <img src="https://img.shields.io/badge/Latest Release-1.0.0-green">
+   </a><br>
    <a href="http://unlicense.org/">
       <img src="https://img.shields.io/badge/License-Unlicense-blue.svg">
    </a>
@@ -22,13 +20,13 @@
    </a>
 </div>
 
-
 ## Table of Contents
-<details>
-   <summary>Click to Expand</summary>
 
-<!--    
-- [Instalasi](#instalasi) -->
+<details>
+   <summary>Tekan untuk Buka</summary>
+
+- [Instalasi](#instalasi)
+- [Penggunaan](#penggunaan)
 - [Arsitektur](#arsitektur)
 - [Kontributor](#kontributor)
 - [Lisensi](#lisensi)
@@ -36,19 +34,13 @@
 - [Link](#link)
 </details>
 
-<!-- 
 ## Instalasi
-<details>
-   <summary>Instalasi</summary> -->
-
-<!-- Instalasi Baru -->
-<!-- <details>
-   <summary>Versi Beta & Release</summary> <br>
 
 <details>
-   <summary>Lokal</summary>
+   <summary>Instalasi</summary>
 
 ### Step 1
+
 <details>
    <summary>Pilih Versi</summary><br>
 
@@ -72,36 +64,34 @@
 4. Buka Laragon.
       <details>
          <summary>Step 1A-4</summary>
-         <img src=".github/images/tutorial/B1A-4.png">
+         <img src=".github/images/tutorial/B1A-4--B-5.png">
       </details>
 5. Tekan "Start All" dan tekan "Database".
       <details>
          <summary>Step 1A-5</summary>
-         <img src=".github/images/tutorial/B1A-5.png">
+         <img src=".github/images/tutorial/B1A-5--B-6.png">
       </details>
 6. Login ke phpMyAdmin menggunakan username "root" dan password kosong.
       <details>
          <summary>Step 1A-6</summary>
-         <img src=".github/images/tutorial/B1A-6.png">
+         <img src=".github/images/tutorial/B1A-6--B-7.png">
       </details>
-7. Buat database dengan nama "atkski".
+7. Buat database dengan nama "immaspark".
       <details>
          <summary>Step 1A-7</summary>
-         <img src=".github/images/tutorial/B1A-7.png">
+         <img src=".github/images/tutorial/B1A-7--B-8.png">
       </details>
-8. Import file "atkski.sql" yang terdapat di dalam folder yang telah dipindahkan.
+8. Import file "immaspark.sql" yang terdapat di dalam folder yang telah dipindahkan.
       <details>
          <summary>Step 1A-8</summary>
-         <img src=".github/images/tutorial/B1A-8-1.png">
-         <img src=".github/images/tutorial/B1A-8-2.png">
-         <img src=".github/images/tutorial/B1A-8-3.png">
+         <img src=".github/images/tutorial/B1A-8--B-9.png">
       </details>
 9. Lanjut ke Step 2.
    </details>
 <br>
    <details>
       <summary>Stable Version</summary>
-1. Buka page <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-5/releases">Releases</a> dari repository ini.
+1. Buka page <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8/releases">Releases</a> dari repository ini.
       <details>
          <summary>Step 1B-1</summary>
          <img src=".github/images/tutorial/A1B-1.png">
@@ -124,35 +114,34 @@
 5. Buka Laragon.
       <details>
          <summary>Step 1B-5</summary>
-         <img src=".github/images/tutorial/B1B-5.png">
+         <img src=".github/images/tutorial/B1A-4--B-5.png">
       </details>
 6. Tekan "Start All" dan tekan "Database".
       <details>
          <summary>Step 1B-6</summary>
-         <img src=".github/images/tutorial/B1B-6.png">
+         <img src=".github/images/tutorial/B1A-5--B-6.png">
       </details>
 7. Login ke phpMyAdmin menggunakan username "root" dan password kosong.
       <details>
          <summary>Step 1B-7</summary>
-         <img src=".github/images/tutorial/B1B-7.png">
+         <img src=".github/images/tutorial/B1A-6--B-7.png">
       </details>
-8. Buat database dengan nama "atkski".
+8. Buat database dengan nama "immaspark".
       <details>
          <summary>Step 1B-8</summary>
-         <img src=".github/images/tutorial/B1B-8.png">
+         <img src=".github/images/tutorial/B1A-7--B-8.png">
       </details>
-9. Import file "atkski.sql" yang terdapat di dalam folder yang telah dipindahkan.
+9. Import file "immaspark.sql" yang terdapat di dalam folder yang telah dipindahkan.
       <details>
          <summary>Step 1B-9</summary>
-         <img src=".github/images/tutorial/B1B-9-1.png">
-         <img src=".github/images/tutorial/B1B-9-2.png">
-         <img src=".github/images/tutorial/B1B-9-3.png">
+         <img src=".github/images/tutorial/B1A-8--B-9.png">
       </details>
 10. Lanjut ke Step 2.
    </details>
 </details>
 
 ### Step 2
+
 <details>
    <summary>Step 2</summary>
 1. Buka terminal di Laragon.
@@ -165,164 +154,29 @@
          <summary>Step 2-2</summary>
          <img src=".github/images/tutorial/B2-2.png">
       </details>
-3. Ketikkan "php -S localhost:5500" dan tekan link yang diberikan sambil menekan ctrl kiri.
+3. Ketikkan "php -S localhost:5500 -t public" dan tekan link yang diberikan sambil menekan ctrl kiri.
       <details>
          <summary>Step 2-3</summary>
          <img src=".github/images/tutorial/B2-3.png">
       </details>
    <h3 align="center">Selesai!</h3>
 </details>
-</details> <br>
-
-<details>
-   <summary>Online</summary>
-<a href="https://atkski.yzz.me">Tekan aku!</a><br>
-Note tambahan:<br>
-Website ini memiliki beberapa masalah dengan stylenya (css) yang tidak terlihat pada versi lokal. Selain itu, website ini berfungsi seperti lokal. :)
-
-</details>
-</details>
-
-<br><br> -->
-
-<!-- Instalasi Lama -->
-<!-- <details>
-   <summary>Versi Alpha</summary><br>
-<details>
-   <summary>Pilih antara instalasi secara lokal atau online</summary><br>
-<details>
-   <summary>Lokal</summary>
-   
-### Step 1
-<details>
-   <summary>Pilih Versi</summary><br>
-   
-<details>
-   <summary>Unstable Version</summary>
-1. Download repository ini (Cari tombol code warna hijau di bagian atas terus tekan "Download ZIP").
-   <details>
-      <summary>Step 1A-1</summary>
-      <img src=".github/images/tutorial/A1A-1.png">
-   </details>
-2. Unzip file tersebut.
-   <details>
-      <summary>Step 1A-2</summary>
-      <img src=".github/images/tutorial/A1A-2.png">
-   </details>
-3. Buka Visual Studio Code.
-   <details>
-      <summary>Step 1A-3</summary>
-      <img src=".github/images/tutorial/A1A-3.png">
-   </details>
-4. Lanjut ke Step 2.
-</details>
-<br>
-<details>
-   <summary>Stable Version</summary>
-1. Buka page <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-5/releases">Releases</a> dari repository ini.
-   <details>
-      <summary>Step 1B-1</summary>
-      <img src=".github/images/tutorial/A1B-1.png">
-   </details>
-2. Pilih salah satu release, tekan "Assets", dan tekan "Source code (zip)".
-   <details>
-      <summary>Step 1B-2</summary>
-      <img src=".github/images/tutorial/A1B-2.png">
-   </details>
-3. Unzip file tersebut.
-   <details>
-      <summary>Step 1B-3</summary>
-      <img src=".github/images/tutorial/A1B-3.png">
-   </details>
-4. Buka Visual Studio Code.
-   <details>
-      <summary>Step 1B-4</summary>
-      <img src=".github/images/tutorial/A1B-4.png">
-   </details>
-5. Lanjut ke Step 2.
-</details>
-</details>
-
-### Step 2 (Ikuti apabila belum memiliki extension Live Server dalam Visual Studio Code)
-<details>
-   <summary>Step 2</summary>
-1. Buka tab extension.
-   <details>
-      <summary>Step 2-1</summary>
-      <img src=".github/images/tutorial/A2-1.png">
-   </details>
-2. Cari extension "Live Server" dan tekan install terus tunggu sampai selesai.
-   <details>
-      <summary>Step 2-2</summary>
-      <img src=".github/images/tutorial/A2-2.png">
-   </details>
-3. Lanjut ke Step 3.
-</details>
-
-### Step 3
-<details>
-   <summary>Step 3</summary>
-1. Open folder dimana kamu mengekstrak file zip tersebut.
-   <details>
-      <summary>Step 3-1</summary>
-      <img src=".github/images/tutorial/A3-1-1.png">
-      <img src=".github/images/tutorial/A3-1-2.png">
-   </details>
-2. Buka file "start.html".
-   <details>
-      <summary>Step 3-2</summary>
-      <img src=".github/images/tutorial/A3-2.png">
-   </details>
-3. Tekan "Go Live" pada kanan bawah.
-   <details>
-      <summary>Step 3-3</summary>
-      <img src=".github/images/tutorial/A3-3.png">
-   </details>
-<h3 align="center">Selesai!</h3>
-</details>
-
-### Step 4 (Apabila ingin membuka website ini di HP)
-<details>
-   <summary>Step 4</summary>
-1. Cari private IPv4 komputer kamu (Dapat dicari di properties wifi)
-   <details>
-      <summary>Step 4-1</summary>
-      <img src=".github/images/tutorial/A4-1-1.png">
-      <img src=".github/images/tutorial/A4-1-2.png">
-   </details>
-2. Cari port dari server
-   <details>
-      <summary>Step 4-2</summary>
-      <img src=".github/images/tutorial/A4-2.png">
-   </details>
-3. Buka browser di HP kamu dan masukin informasi yang sudah didapati dengan format<br>
-   
-   `(IP Komputer):(Port Server)/start.html`
-   <details>
-      <summary>Contoh</summary>
-      <img src=".github/images/tutorial/A4-3.jpg">
-   </details>
-<h3 align="center">Selesai!</h3>
 </details>
 </details>
 <br>
 <details>
    <summary>Online (Tidak perlu install)</summary>
-<a href="https://atkski.netlify.app">Tekan aku!</a><br>
-Note tambahan:<br>
-Website lewat link ini mungkin tidak up-to-date dengan versi rilis dalam GitHub (Dapat cek badge versi Netlify pada bagian atas) dan juga ada kemungkinan website ini tidak online.
-   
+<a href="http://immaspark.page.gd">Tekan aku!</a><br>
+
 </details>
 </details>
 </details>
-</details> -->
 
-
-<!-- ## Penggunaan
-Website ATK SKI digunakan sebagai sarana pembelian alat tulis dan buku secara lebih praktis. Guru, siswa, maupun pihak sekolah dapat melihat daftar barang yang tersedia, lengkap dengan informasi harga dan kategori. Dengan adanya fitur keranjang, pengguna bisa memilih beberapa barang sekaligus sebelum melakukan pemesanan. Website ini membantu sekolah mengatur kebutuhan ATK secara lebih cepat, transparan, dan terorganisir tanpa harus melakukan pembelian manual. -->
-
+## Penggunaan
+ImmaSpark adalah sebuah website tempat siswa bisa menyimpan, membagikan, dan mengembangkan ide-ide kreatif mereka supaya tidak mudah lupa atau hilang begitu saja. Di website ini, siswa dapat membuat postingan ide, berdiskusi lewat komentar, serta memberi vote pada ide siswa lain. Jumlah vote yang didapat akan menunjukkan perkembangan dan ketertarikan pengguna terhadap ide tersebut, sehingga ide-ide yang menarik bisa lebih mudah berkembang dan dikenal banyak orang. Dengan adanya ImmaSpark, siswa memiliki wadah untuk lebih bebas berkreasi, berbagi pendapat, dan saling mendukung dalam mengembangkan ide baru.
 
 ## Arsitektur
+
 <b>-- Front-end Development --</b> <br>
 ![HTML](https://img.shields.io/badge/HTML-orange?logo=html5&logoColor=white)
 ![CSS](https://img.shields.io/badge/CSS-1572B6?logo=css&logoColor=white)
@@ -344,163 +198,177 @@ Website ATK SKI digunakan sebagai sarana pembelian alat tulis dan buku secara le
 <b>-- Hosting --</b> <br>
 ![InfinityFree](https://img.shields.io/badge/InfinityFree-6f42c1?style=flat&logo=data:image/png;base64,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)
 
-
 ## Kontributor
+
 <img src="https://avatars.githubusercontent.com/u/199484083" width="20"> [Christopher V. C. - "Banditov"](https://github.com/Banditov), sebagai ketua & full-stack developer.<br>
 <img src="https://avatars.githubusercontent.com/u/229849683" width="20"> [Justin S. - "Justin12-cmk"](https://github.com/Justin12-cmk), sebagai front-end developer.<br>
 <img src="https://avatars.githubusercontent.com/u/253169611" width="20"> [Michelle N. - "MN ( o v o )"](https://github.com/idunno2467), sebagai UI/UX designer.
 
-
 ## Lisensi
+
 Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for more information.
 
-
 ## Changelog
+
 <details>
-   <summary>Click to Expand</summary>
+   <summary>Tekan untuk Buka</summary>
 
 <details>
    <summary>May</summary>
 
+### 21/05/2026 - 1.0.0
 
-### 21/05/2026 - 0.13.1
 <details>
 
-   - Implement colour picker
+- Implement colour picker
+- Update README.md
 </details>
 
 ### 20/05/2026 - 0.13.0
+
 <details>
 
-   - Perbaiki reply yang baru dibuat tidak dapat divote
-   - Perbaiki pengguna dapat membuat tag tidak berwarna
-   - Membuat halaman register/edit akun untuk admin
+- Perbaiki reply yang baru dibuat tidak dapat divote
+- Perbaiki pengguna dapat membuat tag tidak berwarna
+- Membuat halaman register/edit akun untuk admin
 </details>
 
 ### 19/05/2026 - 0.12.2
+
 <details>
 
-   - Perbaiki icon logout lebih besar daripada halaman lainnya pada header mobile
-   - Membuat file controller kompatibel dengan hosting
-   - Memperbaiki file 3D tidak dapat terlihat pada post apabila tidak ada image
-   - Membuat limit deskripsi pada post halaman utama
+- Perbaiki icon logout lebih besar daripada halaman lainnya pada header mobile
+- Membuat file controller kompatibel dengan hosting
+- Memperbaiki file 3D tidak dapat terlihat pada post apabila tidak ada image
+- Membuat limit deskripsi pada post halaman utama
 </details>
 
 ### 19/05/2026 - 0.12.1
+
 <details>
 
-   - Perbaiki duplicate carousel script called dan import Three.js
-   - Perbaiki tombol share tidak berfungsi
-   - Perbaiki style TinyMCE saat ganti mode dark/light
-   - Reformat semua file
-   - Perbaiki masalah saat komen/reply tombol delete tidak terlihat
-   - Menambahkan animasi
-   - Perbaiki tombol carousel tidak terlihat pada screen mobile
-   - Perbaiki masalah case-sensitive pada saat hosting
+- Perbaiki duplicate carousel script called dan import Three.js
+- Perbaiki tombol share tidak berfungsi
+- Perbaiki style TinyMCE saat ganti mode dark/light
+- Reformat semua file
+- Perbaiki masalah saat komen/reply tombol delete tidak terlihat
+- Menambahkan animasi
+- Perbaiki tombol carousel tidak terlihat pada screen mobile
+- Perbaiki masalah case-sensitive pada saat hosting
 </details>
 
 ### 17/05/2026 - 0.12.0
+
 <details>
 
-   - Implement penghapus model tidak digunakan
-   - Integrasi style halaman show dengan 3D
-   - Menambahkan beberapa style hover
-   - Optimisasi kode
-   - Membuat limit upload model menjadi 1
-   - Memperbaiki model tidak dapat dihapus
-   - Integrasi fitur experimental 3D viewer
-   - Mulai hosting
+- Implement penghapus model tidak digunakan
+- Integrasi style halaman show dengan 3D
+- Menambahkan beberapa style hover
+- Optimisasi kode
+- Membuat limit upload model menjadi 1
+- Memperbaiki model tidak dapat dihapus
+- Integrasi fitur experimental 3D viewer
+- Mulai hosting
 </details>
 
 ### 16/05/2026 - 0.11.0
+
 <details>
 
-   - Perbaiki fitur di mobile yang hilang
-   - Ubah font untuk dyslexic mode dari comic sans jadi open dyslexic
-   - Implement mode dark
-   - Perbaiki load mode dyslexic
-   - Perbaiki otentikasi
-   - Implement halaman notifikasi beserta 
-   - Implement penghapus comment/reply
-   - Optimisasi kode
-   - Perbaiki bug
-   - Ubah style halaman 404
-   - Implement add dan viewer 3D model
+- Perbaiki fitur di mobile yang hilang
+- Ubah font untuk dyslexic mode dari comic sans jadi open dyslexic
+- Implement mode dark
+- Perbaiki load mode dyslexic
+- Perbaiki otentikasi
+- Implement halaman notifikasi beserta
+- Implement penghapus comment/reply
+- Optimisasi kode
+- Perbaiki bug
+- Ubah style halaman 404
+- Implement add dan viewer 3D model
 </details>
 
 ### 15/05/2026 - 0.10.0
+
 <details>
 
-   - Menambahkan animasi
-   - Implement loading screen
-   - Memperbaiki dan menambahkan style di berbagai halaman
-   - Implement preview untuk img pada halaman create dan edit
-   - Implement penghapus image tidak digunakan
-   - Perbaikan kecil
-   - Implement optimizer image
-   - Implement konfirmasi logout & hapus post
-   - Implement halaman my post, latest, pinned, & popular
-   - Implement mode dyslexic
+- Menambahkan animasi
+- Implement loading screen
+- Memperbaiki dan menambahkan style di berbagai halaman
+- Implement preview untuk img pada halaman create dan edit
+- Implement penghapus image tidak digunakan
+- Perbaikan kecil
+- Implement optimizer image
+- Implement konfirmasi logout & hapus post
+- Implement halaman my post, latest, pinned, & popular
+- Implement mode dyslexic
 </details>
 
 ### 14/05/2026 - 0.9.0
+
 <details>
 
-   - Menambahkan ikon
-   - Implement menambah img dan link
-   - Implement carousel dan preview image
-   - Implement AJAX untuk voting, filter, comment, reply dan search
-   - Implement halaman edit
+- Menambahkan ikon
+- Implement menambah img dan link
+- Implement carousel dan preview image
+- Implement AJAX untuk voting, filter, comment, reply dan search
+- Implement halaman edit
 </details>
 
 ### 13/05/2026 - 0.8.0
+
 <details>
 
-   - Menambahkan ikon
-   - Implement creation tag multiple
-   - Implement warna teks tag otomatis
+- Menambahkan ikon
+- Implement creation tag multiple
+- Implement warna teks tag otomatis
 </details>
 
 ### 12/05/2026 - 0.7.1
+
 <details>
 
-   - Menambahkan ikon
+- Menambahkan ikon
 </details>
 
 ### 09/05/2026 - 0.7.0
+
 <details>
 
-   - Implement function comment dan reply
-   - Implement function filter
-   - Implement function view post
-   - Implement function search
-   - Implement function voting
-   - Implement function share
+- Implement function comment dan reply
+- Implement function filter
+- Implement function view post
+- Implement function search
+- Implement function voting
+- Implement function share
 </details>
 
 ### 06/05/2026 - 0.6.0
+
 <details>
 
-   - Perbaiki teks TinyMCE
-   - Implement function login dan logout
+- Perbaiki teks TinyMCE
+- Implement function login dan logout
 </details>
 
 ### 04/05/2026 - 0.5.1
+
 <details>
 
-   - Perbaiki mismatch desain di halaman post
-   - Perbaiki responsivitas
-   - Implement view tags
-   - Implement function create
+- Perbaiki mismatch desain di halaman post
+- Perbaiki responsivitas
+- Implement view tags
+- Implement function create
 </details>
 
 ### 03/05/2026 - 0.5.0
+
 <details>
 
-   - Implementasi halaman create post
-   - Buat style navbar ikut page yang dikunjungi
-   - Penambahan TinyMCE
-   - Pembaruan database
+- Implementasi halaman create post
+- Buat style navbar ikut page yang dikunjungi
+- Penambahan TinyMCE
+- Pembaruan database
 </details>
 </details>
 <br>
@@ -508,38 +376,43 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
    <summary>April</summary>
 
 ### 28/04/2026 - 0.4.2
+
 <details>
 
-   - Implementasi library ikon SVG
+- Implementasi library ikon SVG
 </details>
 
 ### 23/04/2026 - 0.4.1
+
 <details>
 
-   - Implementasi view tag untuk post
+- Implementasi view tag untuk post
 </details>
 
 ### 22/04/2026 - 0.4.0
+
 <details>
 
-   - Database telah dibuat
-   - Database telah dikoneksikan dengan web
-   - View post telah diimplementasikan
+- Database telah dibuat
+- Database telah dikoneksikan dengan web
+- View post telah diimplementasikan
 </details>
 
 ### 11/04/2026 - 0.3.2
+
 <details>
 
-   - Perubahan struktur file
-   - Perbaikan nama
+- Perubahan struktur file
+- Perbaikan nama
 </details>
 
 ### 08/04/2026 - 0.3.1
+
 <details>
 
-   - Simplifikasi core dan cara merender suatu halaman
-   - Pembagian controller untuk fitur yang berbeda
-   - Mengubah beberapa penamaan URL
+- Simplifikasi core dan cara merender suatu halaman
+- Pembagian controller untuk fitur yang berbeda
+- Mengubah beberapa penamaan URL
 </details>
 </details>
 <br>
@@ -547,45 +420,51 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
    <summary>Maret</summary>
 
 ### 21/03/2026 - 0.3.0
+
 <details>
 
-   - Implementasi halaman post detail
-   - Perbaikan kecil
+- Implementasi halaman post detail
+- Perbaikan kecil
 </details>
 
 ### 20/03/2026 - 0.2.0
+
 <details>
 
-   - Implementasi halaman login
-   - Perbaikan kecil
-   - Menambahkan kontroler untuk halaman error
+- Implementasi halaman login
+- Perbaikan kecil
+- Menambahkan kontroler untuk halaman error
 </details>
 
 ### 19/03/2026 - 0.1.1
+
 <details>
 
-   - Membuat main page responsif 
+- Membuat main page responsif
 </details>
 
 ### 17/03/2026 - 0.1.0
+
 <details>
 
-   - Implementasi main page
-   - Pembuatan komponen sidebar
-   - Implement login page
+- Implementasi main page
+- Pembuatan komponen sidebar
+- Implement login page
 </details>
 
 ### 13/03/2026 - 0.0.0
+
 <details>
 
-   - Menambahkan banner di readme
+- Menambahkan banner di readme
 </details>
 
 ### 06/03/2026 - 0.0.0
+
 <details>
 
-   - Mengupdate style halaman intro
-   - Menambahkan file untuk redirect
+- Mengupdate style halaman intro
+- Menambahkan file untuk redirect
 </details>
 </details>
 <br>
@@ -593,31 +472,34 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
    <summary>Februari</summary>
 
 ### 26/02/2026 - 0.0.0
+
 <details>
 
-   - Implementasi intro screen
+- Implementasi intro screen
 </details>
 
 ### 24/02/2026 - 0.0.0
+
 <details>
 
-   - Menginstall TailwindCSS dan Anime.js
-   - Menambahkan TailwindCSS dan Anime.js ke arsitektur readme
+- Menginstall TailwindCSS dan Anime.js
+- Menambahkan TailwindCSS dan Anime.js ke arsitektur readme
 </details>
 </details>
 <br>
 <details>
    <summary>Januari</summary>
-      
+
 ### 29/01/2026 - 0.0.0 ( First Commit )
+
 <details>
 
-   - First Commit
+- First Commit
 </details>
 </details>
 
 </details>
-
 
 ## Link
+
 - [Figma](https://www.figma.com/design/qRoUgub5ugMGAe0cCFUxKy/PWL-TA?node-id=0-1&t=fkrFMpJrwCFkef9B-1)
