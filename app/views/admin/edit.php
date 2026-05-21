@@ -32,11 +32,12 @@
                     <button type="button" onclick="document.getElementById('avatarInput').click()"
                         class="absolute bottom-0 right-0 bg-white text-[#545F71] p-2 rounded-full">
                         <?= icon('pencil', 'w-4 h-4') ?>
+
                     </button>
                 </div>
                 <input type="file" id="avatarInput" name="avatar" accept="image/*" class="hidden"
                     onchange="previewAvatar(this)">
-                <p class="text-sm text-gray-500">Click the pencil icon to change avatar (Max 2MB)</p>
+                <p class="text-sm text-gray-500">Click the pencil icon to change avatar (Max 10MB)</p>
             </div>
 
             <div class="flex flex-col gap-2">

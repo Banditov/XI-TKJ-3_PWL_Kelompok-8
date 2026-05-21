@@ -221,6 +221,8 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 <details>
 
 - Perbaiki responsivitas halaman admin
+- Perbaiki typo pada halaman admin register/edit
+- Perbaiki halaman admin register tidak dapat mengupload pfp
 </details>
 
 ### 21/05/2026 - 1.0.0
