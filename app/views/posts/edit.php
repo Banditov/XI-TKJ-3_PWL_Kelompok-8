@@ -31,8 +31,8 @@
                             class="w-16 h-16 border-gray-500 cursor-pointer rounded-color-picker">
                         <input type="color" id="colorBottom" value="#CCCCCC"
                             class="w-16 h-16 border-gray-500 cursor-pointer rounded-color-picker">
-                        <div class="flex flex-col gap-2">
-                            <div class="color-preview w-14 h-14 rounded-xl border border-gray-500"
+                        <div class="flex flex-col gap-2 ml-2">
+                            <div class="color-preview w-16 h-16 rounded-full border border-gray-500"
                                 style="background: linear-gradient(to bottom, #CCCCCC, #CCCCCC)"></div>
                         </div>
                     </div>
