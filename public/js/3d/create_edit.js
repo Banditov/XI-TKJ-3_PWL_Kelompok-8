@@ -5,10 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return div.innerHTML;
     }
 
-    function isValidHex(hex) {
-        if (!hex) return true;
-        const cleaned = hex.replace('#', '');
-        return /^([0-9A-F]{3}|[0-9A-F]{6})$/i.test(cleaned);
+    function isValidHex(value) {
+        if (!value) return true;
+        let hex = value.replace('#', '');
+        return /^([0-9A-F]{3}|[0-9A-F]{6})$/i.test(hex);
     }
 
     function cleanColor(value) {
@@ -43,14 +43,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updatePreview() {
-        const topElement = document.getElementById('colorTop');
-        const bottomElement = document.getElementById('colorBottom');
+        const top = document.getElementById('colorTop')?.value || '#CCCCCC';
+        const bottom = document.getElementById('colorBottom')?.value || '#CCCCCC';
         const previewElement = document.querySelector('.color-preview');
-
-        if (topElement && bottomElement && previewElement) {
-            const top = cleanColor(topElement.value);
-            const bottom = cleanColor(bottomElement.value);
-            previewElement.style.background = `linear-gradient(to bottom, #${top}, #${bottom})`;
+        if (previewElement) {
+            previewElement.style.background = `linear-gradient(to bottom, ${top}, ${bottom})`;
         }
     }
 
@@ -63,37 +60,67 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Color inputs
-    const colorTopInput = document.getElementById('colorTop');
-    const colorBottomInput = document.getElementById('colorBottom');
+    // Color picker elements
+    const colorTopPicker = document.getElementById('colorTop');
+    const colorTopText = document.getElementById('colorTopText');
+    const colorBottomPicker = document.getElementById('colorBottom');
+    const colorBottomText = document.getElementById('colorBottomText');
     const colorTopDiv = document.querySelector('.color-top');
     const colorBottomDiv = document.querySelector('.color-bottom');
+    const colorPreviewDiv = document.querySelector('.color-preview');
 
-    if (colorTopInput) {
-        colorTopInput.addEventListener('input', function () {
-            const isValid = isValidHex(this.value);
-            showInputError(this, isValid);
+    function updateColorPreviews() {
+        const topColor = colorTopPicker?.value || '#CCCCCC';
+        const bottomColor = colorBottomPicker?.value || '#CCCCCC';
 
-            if (isValid && colorTopDiv) {
-                colorTopDiv.style.backgroundColor = '#' + cleanColor(this.value);
-            } else if (colorTopDiv && !this.value.trim()) {
-                colorTopDiv.style.backgroundColor = '#CCCCCC';
-            }
-            updatePreview();
+        if (colorTopDiv) colorTopDiv.style.backgroundColor = topColor;
+        if (colorBottomDiv) colorBottomDiv.style.backgroundColor = bottomColor;
+        if (colorPreviewDiv) {
+            colorPreviewDiv.style.background = `linear-gradient(to bottom, ${topColor}, ${bottomColor})`;
+        }
+    }
+
+    function cleanColorHex(value) {
+        let hex = value.replace('#', '');
+        if (hex.length === 3) {
+            hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+        }
+        return '#' + hex;
+    }
+
+    if (colorTopPicker) {
+        colorTopPicker.addEventListener('input', function () {
+            if (colorTopText) colorTopText.value = this.value.toUpperCase();
+            updateColorPreviews();
         });
     }
 
-    if (colorBottomInput) {
-        colorBottomInput.addEventListener('input', function () {
-            const isValid = isValidHex(this.value);
-            showInputError(this, isValid);
+    if (colorBottomPicker) {
+        colorBottomPicker.addEventListener('input', function () {
+            if (colorBottomText) colorBottomText.value = this.value.toUpperCase();
+            updateColorPreviews();
+        });
+    }
 
-            if (isValid && colorBottomDiv) {
-                colorBottomDiv.style.backgroundColor = '#' + cleanColor(this.value);
-            } else if (colorBottomDiv && !this.value.trim()) {
-                colorBottomDiv.style.backgroundColor = '#CCCCCC';
+    if (colorTopText) {
+        colorTopText.addEventListener('input', function () {
+            let value = this.value.trim();
+            if (!value.startsWith('#')) value = '#' + value;
+            if (/^#[0-9A-F]{6}$/i.test(value) || /^#[0-9A-F]{3}$/i.test(value)) {
+                if (colorTopPicker) colorTopPicker.value = cleanColorHex(value);
+                updateColorPreviews();
             }
-            updatePreview();
+        });
+    }
+
+    if (colorBottomText) {
+        colorBottomText.addEventListener('input', function () {
+            let value = this.value.trim();
+            if (!value.startsWith('#')) value = '#' + value;
+            if (/^#[0-9A-F]{6}$/i.test(value) || /^#[0-9A-F]{3}$/i.test(value)) {
+                if (colorBottomPicker) colorBottomPicker.value = cleanColorHex(value);
+                updateColorPreviews();
+            }
         });
     }
 
@@ -133,18 +160,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (addTagBtn) {
         addTagBtn.addEventListener('click', () => {
             const name = tagNameInput ? tagNameInput.value.trim() : '';
-            const rawColorTop = colorTopInput ? colorTopInput.value : '';
-            const rawColorBottom = colorBottomInput ? colorBottomInput.value : '';
+            const rawColorTop = colorTopPicker?.value || '';
+            const rawColorBottom = colorBottomPicker?.value || '';
 
             if (rawColorTop && !isValidHex(rawColorTop)) {
                 alert('Invalid color format for top color. Use hex format (e.g., FF0000 or F00)');
-                colorTopInput.focus();
+                colorTopPicker?.focus();
                 return;
             }
 
             if (rawColorBottom && !isValidHex(rawColorBottom)) {
                 alert('Invalid color format for bottom color. Use hex format (e.g., 00FF00 or 0F0)');
-                colorBottomInput.focus();
+                colorBottomPicker?.focus();
                 return;
             }
 
@@ -198,19 +225,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (tagNameInput) tagNameInput.value = '';
-            if (colorTopInput) colorTopInput.value = '';
-            if (colorBottomInput) colorBottomInput.value = '';
+            if (colorTopPicker) colorTopPicker.value = '#CCCCCC';
+            if (colorBottomPicker) colorBottomPicker.value = '#CCCCCC';
+            if (colorTopText) colorTopText.value = '#CCCCCC';
+            if (colorBottomText) colorBottomText.value = '#CCCCCC';
             if (colorTopDiv) colorTopDiv.style.backgroundColor = '';
             if (colorBottomDiv) colorBottomDiv.style.backgroundColor = '';
-
-            const colorPreview = document.querySelector('.color-preview');
-            if (colorPreview) colorPreview.style.background = '';
+            if (colorPreviewDiv) colorPreviewDiv.style.background = '';
 
             if (iconInput) iconInput.value = 'tag';
             if (iconPreview) iconPreview.innerHTML = defaultIconSvg;
 
-            colorTopInput?.classList.remove('border-red-500');
-            colorBottomInput?.classList.remove('border-red-500');
+            colorTopPicker?.classList.remove('border-red-500');
+            colorBottomPicker?.classList.remove('border-red-500');
         });
     }
 

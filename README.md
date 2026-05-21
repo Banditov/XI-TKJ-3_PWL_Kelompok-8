@@ -6,7 +6,7 @@
 <br>
 <div align="center">
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
-      <img src="https://img.shields.io/badge/GitHub Version-wip--0.13.0-red">
+      <img src="https://img.shields.io/badge/GitHub Version-wip--0.13.1-red">
    </a>
    <!-- <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
       <img src="https://img.shields.io/badge/Latest Release-None-green">
@@ -346,7 +346,7 @@ Website ATK SKI digunakan sebagai sarana pembelian alat tulis dan buku secara le
 
 
 ## Kontributor
-<img src="https://avatars.githubusercontent.com/u/199484083" width="20"> [Christopher V.C - "Banditov"](https://github.com/Banditov), sebagai ketua & full-stack developer.<br>
+<img src="https://avatars.githubusercontent.com/u/199484083" width="20"> [Christopher V. C. - "Banditov"](https://github.com/Banditov), sebagai ketua & full-stack developer.<br>
 <img src="https://avatars.githubusercontent.com/u/229849683" width="20"> [Justin S. - "Justin12-cmk"](https://github.com/Justin12-cmk), sebagai front-end developer.<br>
 <img src="https://avatars.githubusercontent.com/u/253169611" width="20"> [Michelle N. - "MN ( o v o )"](https://github.com/idunno2467), sebagai UI/UX designer.
 
@@ -362,7 +362,14 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 <details>
    <summary>May</summary>
 
-### 19/05/2026 - 0.13.0
+
+### 21/05/2026 - 0.13.1
+<details>
+
+   - Implement colour picker
+</details>
+
+### 20/05/2026 - 0.13.0
 <details>
 
    - Perbaiki reply yang baru dibuat tidak dapat divote
