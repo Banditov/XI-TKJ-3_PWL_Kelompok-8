@@ -39,6 +39,7 @@ $router = new router();
 $GLOBALS['tags'] = [];
 $GLOBALS['filters'] = [];
 
+<<<<<<< HEAD
 
 // Views
 // Intro
@@ -120,4 +121,9 @@ $router->add('POST', '/admin/users/{id}/update', 'authcontroller', 'updateUser')
 $router->add('POST', '/admin/users/{id}/delete', 'authcontroller', 'deleteUser');
 $router->add('POST', '/upload/avatar', 'uploadcontroller', 'avatar');
 
+=======
+$router->add('POST', '/posts', 'PostController', 'store');
+$router->add('GET','/notifications','NotificationController', 'notifications');
+$router->add('GET', '/admin', 'AdminController', 'admin');
+>>>>>>> 1949555 (feat:implement admin page)
 $router->run();
