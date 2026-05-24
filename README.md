@@ -208,8 +208,6 @@ ImmaSpark adalah sebuah website tempat siswa bisa menyimpan, membagikan, dan men
 - Class Agenda
 
   Pengguna yang berstatus sebagai pelajar dapat melihat dan membuat tugas untuk kelas mereka. Apabila pengguna adalah admin, maka pengguna dapat melihat dan menambahkan tugas pada semua kelas.
-
-   Class 
   
 - My Posts
 
