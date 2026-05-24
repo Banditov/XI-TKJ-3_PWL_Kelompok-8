@@ -61,17 +61,4 @@
     </div>
 </main>
 
-<script>
-    function deleteUser(userId) {
-        if (confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
-            fetch('/admin/users/' + userId + '/delete', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                }
-            }).then(response => {
-                window.location.reload();
-            });
-        }
-    }
-</script>
+<script src="/js/admin.js"></script>

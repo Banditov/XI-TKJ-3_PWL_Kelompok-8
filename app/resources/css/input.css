@@ -277,7 +277,7 @@ select::picker-icon {
     stroke: #FFFFFF !important;
 }
 
-.dark button:hover:not(.vote-btn):not(.remove-tag):not(.remove-media) {
+.dark button:hover:not(.vote-btn):not(.remove-tag):not(.remove-media):not(.text-red-500):not(.text-blue-500) {
     background-color: #2C2C2C !important;
     color: #FFFFFF !important;
 }
@@ -295,10 +295,6 @@ select::picker-icon {
 .dark #mobileApplyFilters:hover {
     background-color: #2C2C2C !important;
     color: #2C7CFF !important;
-}
-
-.dark button.hover\:bg-white:hover {
-    background-color: #2C2C2C !important;
 }
 
 .dark button.hover\:text-\[\#2C7CFF\]:hover {

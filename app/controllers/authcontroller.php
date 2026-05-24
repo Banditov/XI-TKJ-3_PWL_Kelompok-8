@@ -39,14 +39,19 @@ class authcontroller extends controller
 
         session_regenerate_id(true);
 
+        $classModel = new \app\models\classes();
+        $class = $classModel->getById($account['class_id']);
+
         $_SESSION['account_id'] = $account['id'];
         $_SESSION['account_name'] = $account['name'];
+        $_SESSION['class_id'] = $account['class_id'];
+        $_SESSION['class_name'] = $class ? $class['name'] : '';
         $_SESSION['is_admin'] = $account['is_admin'];
         $_SESSION['is_dark'] = $account['is_dark'] ?? 0;
         $_SESSION['is_dyslexic'] = $account['is_dyslexic'] ?? 0;
 
         if ($keep) {
-            $expiry = time() + (60 * 60 * 24 * 30); // 30 days
+            $expiry = time() + (60 * 60 * 24 * 30);
             setcookie(session_name(), session_id(), $expiry, '/');
         }
 
@@ -304,9 +309,9 @@ class authcontroller extends controller
 
     private function uploadAvatar($file, $accountId)
     {
-    error_log("=== uploadAvatar called ===");
-    error_log("File data: " . print_r($file, true));
-    error_log("Account ID: " . $accountId);
+        error_log("=== uploadAvatar called ===");
+        error_log("File data: " . print_r($file, true));
+        error_log("Account ID: " . $accountId);
         $allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
         $maxSize = 10 * 1024 * 1024;
 

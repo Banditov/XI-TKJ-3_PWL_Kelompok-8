@@ -43,7 +43,7 @@
                     <input id="password" name="password" type="password" class="rounded border p-2"
                         placeholder="Enter your password" required>
                 </div>
-                <div class="flex w-full justify-start">
+                <div class="flex w-full justify-start hidden">
                     <div class="flex items-center">
                         <input id="keep" name="keep" type="checkbox">
                         <label for="keep" class="select-none ms-2 text-sm font-medium text-heading">Keep me logged
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <button type="submit"
-                    class="mt-10 bg-linear-to-b from-[#1D7BC5] to-[#004881] w-50 p-3 rounded-full text-white! text-2xl font-bold drop-shadow-2xl">Login</button>
+                    class="mt-10 bg-[#2C7CFF] hover:bg-white hover:text-[#2C7CFF]! hover:ring-2 w-50 p-3 rounded-full text-white! text-2xl transition font-bold drop-shadow-2xl">Login</button>
             </form>
         </div>
         <p class="text-gray-500 text-sm text-center">© 2026 Copyright. All rights reserved.</p>

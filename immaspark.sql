@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 21, 2026 at 02:06 AM
+-- Generation Time: May 24, 2026 at 06:04 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -44,6 +44,23 @@ CREATE TABLE `accounts` (
 
 INSERT INTO `accounts` (`id`, `name`, `email`, `password`, `class_id`, `is_admin`, `is_dark`, `is_dyslexic`) VALUES
 (7, 'ADMIN', 'admin@ski.sch.id', 'MNHR', 17, 1, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `agenda`
+--
+
+CREATE TABLE `agenda` (
+  `id` int NOT NULL,
+  `class_id` int NOT NULL,
+  `account_id` int NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text,
+  `tags` varchar(255) DEFAULT NULL,
+  `due_date` date NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -245,6 +262,12 @@ ALTER TABLE `accounts`
   ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Indexes for table `agenda`
+--
+ALTER TABLE `agenda`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `classes`
 --
 ALTER TABLE `classes`
@@ -330,6 +353,12 @@ ALTER TABLE `tags`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `agenda`
+--
+ALTER TABLE `agenda`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --

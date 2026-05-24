@@ -13,4 +13,11 @@ class classes extends database
         $result = mysqli_query($this->connection, $query);
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
+
+    public function getById(int $id)
+    {
+        $query = "SELECT * FROM {$this->table} WHERE id = '$id'";
+        $result = mysqli_query($this->connection, $query);
+        return mysqli_fetch_assoc($result);
+    }
 }
