@@ -49,6 +49,12 @@ $showSearchBar = in_array($currentPath, $allowedSearchPages);
         <div class="w-full h-0.75 bg-[#545F71] rounded-full seperator"></div>
 
         <div class="flex flex-col gap-1 w-full">
+            <?= navLink('/agenda', 'Class Agenda', 'agenda') ?>
+        </div>
+
+        <div class="w-full h-0.75 bg-[#545F71] rounded-full seperator"></div>
+
+        <div class="flex flex-col gap-1 w-full">
             <?= navLink('/posts/create', 'Create a Post', 'create') ?>
             <?= navLink('/mypost', 'Your Posts', 'myPost') ?>
             <?= navLink('/notification', 'Notification', 'notif') ?>
@@ -214,6 +220,10 @@ $showSearchBar = in_array($currentPath, $allowedSearchPages);
             <?= navLink('/latest', 'Latest', 'latest') ?>
             <?= navLink('/pinned', 'Pinned', 'pinned') ?>
             <?= navLink('/popular', 'Popular', 'popular') ?>
+        </div>
+
+        <div class="flex flex-col gap-1 w-full">
+            <?= navLink('/agenda', 'Class Agenda', 'create') ?>
         </div>
 
         <div class="flex flex-col gap-1 w-full">

@@ -7,30 +7,34 @@ session_start();
 
 date_default_timezone_set('Asia/Jakarta');
 
-// SELF-HOSTING
-spl_autoload_register(function ($class) {
-    $class = str_replace('app\\', '', $class);
-    $class = str_replace('\\', '/', $class);
-    $file = __DIR__ . '/../app/' . strtolower($class) . '.php';
-    if (file_exists($file)) {
-        require_once $file;
-    }
-});
+$isLocal = strpos($_SERVER['SERVER_NAME'], 'localhost') !== false || 
+            strpos($_SERVER['SERVER_NAME'], '127.0.0.1') !== false ||
+            strpos($_SERVER['DOCUMENT_ROOT'], 'laragon') !== false;
 
-require_once __DIR__ . '/../app/resources/icons/icon.php';
-
-// HOSTING
-// spl_autoload_register(function ($class) {
-//     $class = str_replace('\\', '/', $class);
-//     $file = __DIR__ . '/' . $class . '.php';
-//     if (file_exists($file)) {
-//         require_once $file;
-//     } else {
-//         die("Missing: " . $file);
-//     }
-// });
-
-// require_once __DIR__ . '/app/resources/icons/icon.php';
+if ($isLocal) {
+    // Local
+    spl_autoload_register(function ($class) {
+        $class = str_replace('app\\', '', $class);
+        $class = str_replace('\\', '/', $class);
+        $file = __DIR__ . '/../app/' . strtolower($class) . '.php';
+        if (file_exists($file)) {
+            require_once $file;
+        }
+    });
+    require_once __DIR__ . '/../app/resources/icons/icon.php';
+} else {
+    // Hosting
+    spl_autoload_register(function ($class) {
+        $class = str_replace('\\', '/', $class);
+        $file = __DIR__ . '/' . $class . '.php';
+        if (file_exists($file)) {
+            require_once $file;
+        } else {
+            die("Missing: " . $file);
+        }
+    });
+    require_once __DIR__ . '/app/resources/icons/icon.php';
+}
 
 use app\core\router;
 
@@ -100,6 +104,13 @@ $router->add('POST', '/settings/dark', 'settingscontroller', 'toggleDark');
 $router->add('POST', '/notification/delete', 'notificationcontroller', 'delete');
 $router->add('POST', '/notification/clear-all', 'notificationcontroller', 'clearAll');
 
+// Agenda
+$router->add('GET', '/agenda', 'agendacontroller', 'index');
+$router->add('POST', '/agenda/store', 'agendacontroller', 'store');
+$router->add('GET', '/agenda/{id}/edit', 'agendacontroller', 'edit');
+$router->add('POST', '/agenda/{id}/update', 'agendacontroller', 'update');
+$router->add('POST', '/agenda/{id}/delete', 'agendacontroller', 'delete');
+$router->add('GET', '/agenda/{id}/data', 'agendacontroller', 'getTaskData');
 
 // Admin functions
 // Pin
