@@ -27,6 +27,8 @@
 
 - [Instalasi](#instalasi)
 - [Penggunaan](#penggunaan)
+- [Fitur Utama](#fitur-utama)
+- [Entitas](#entitas)
 - [Arsitektur](#arsitektur)
 - [Kontributor](#kontributor)
 - [Lisensi](#lisensi)
@@ -174,6 +176,261 @@
 
 ## Penggunaan
 ImmaSpark adalah sebuah website tempat siswa bisa menyimpan, membagikan, dan mengembangkan ide-ide kreatif mereka supaya tidak mudah lupa atau hilang begitu saja. Di website ini, siswa dapat membuat postingan ide, berdiskusi lewat komentar, serta memberi vote pada ide siswa lain. Jumlah vote yang didapat akan menunjukkan perkembangan dan ketertarikan pengguna terhadap ide tersebut, sehingga ide-ide yang menarik bisa lebih mudah berkembang dan dikenal banyak orang. Dengan adanya ImmaSpark, siswa memiliki wadah untuk lebih bebas berkreasi, berbagi pendapat, dan saling mendukung dalam mengembangkan ide baru.
+
+## Fitur Utama
+<details>
+   <summary>Berikut ini adalah fitur-fitur utama yang terdapat pada setiap page pada website ImmaSpark:</summary>
+
+- Login
+
+   Halaman digunakan untuk login ke dalam akun dan masuk ke dalam halaman utama.
+
+- Voting
+
+   Pengguna dapat menekan tombol panah ke atas atau ke bawah untuk menambah/mengurangi vote sebuah post.
+  
+- Explore
+
+   Pengguna dapat menggunakan halaman ini untuk mencari berbagai postingan ide yang telah dibuat pada website ini. Pengguna dapat menemukan settings dan filter pada bagian navbar kiri. Peletakan post-post pada halaman ini dibuat random.
+
+- Latest
+
+   Memiliki fungsi yang sama dengan halaman explore. Perbedaannya adalah peletakan post-postnya dimulai dari tanggal terbaru.
+  
+- Pinned
+
+   Halaman ini hanya menampilkan post-post yang telah dipin oleh admin.
+  
+- Popular
+
+   Memiliki fungsi yang sama dengan halaman explore. Perbedaannya adalah peletakan post-postnya dimulai dari views terbanyak.
+
+- Class Agenda
+
+  Pengguna yang berstatus sebagai pelajar dapat melihat dan membuat tugas untuk kelas mereka. Apabila pengguna adalah admin, maka pengguna dapat melihat dan menambahkan tugas pada semua kelas.
+
+   Class 
+  
+- My Posts
+
+   Halaman ini hanya menampilkan post-post yang telah dibuat oleh pengguna.
+  
+- Notifications
+
+   Halaman ini menampilkan notifikasi ketika seorang pengguna lain komentar/reply pada post/komen pengguna.
+  
+- Post Details
+
+   Pada post details, pengguna dapat melihat semua isi dari deskripsi dan komen pada post tersebut.
+  
+- Create Post
+
+   Memiliki fungsi untuk membuat sebuah post. Post dapat menampung: title, deskripsi, image, link, model 3D, dan tags.
+
+- Edit Post
+
+   Pemilik dari sebuah post dapat menekan tombol edit pada post mereka untuk mengakses halaman ini. Halaman ini digunakan untuk mengubah informasi pada post dan juga menghapus sebuah post.
+    
+- Filter
+
+   Fitur ini dapat ditemukan pada navbar kiri. Pengguna dapat menggunakan filter untuk mencari post dengan tag, views, atau vote tertentu.
+  
+- Settings
+
+   Pengguna dapat menemukan settings pada bagian navbar kiri yang memiliki fungsi dark mode dan mode dyslexic.
+
+- Logout
+
+   Pengguna dapat logout melalui navbar kiri.
+
+   <details>
+      <summary>Admin Pages</summary>
+
+  - Pinning
+ 
+    Admin dapat menekan tombol bintang pada post untuk pin sebuah post.
+
+  - Cleanup Assets
+ 
+    Digunakan untuk menghapus image dan models yang tidak digunakan pada suatu post dari database.
+
+  - Manage Users
+ 
+    Digunakan untuk melihat semua users yang ada. Edit users akan diakses melalui halaman ini.
+
+  - Register User
+ 
+    Digunakan untuk menambahkan akun.
+  
+  - Edit User
+ 
+    Digunakan untuk mengedit informasi sebuah akun.
+  
+   </details>
+  
+</details>
+
+## Entitas
+<details>
+   <summary>Entitas Database</summary>
+
+   <details>
+      <summary>accounts</summary>
+      Entitas ini digunakan untuk menyimpan akun-akun
+      
+      - id // Untuk mengidentifikasi sebuah akun
+      - name // Untuk menyimpan username akun
+      - email // Untuk menyimpan email akun
+      - password // Untuk menyimpan password akun
+      - class_id // Untuk menyimpan kelas dari pengguna akun
+      - is_admin // Untuk menentukan akun admin atau tidak
+      - is_dark // Untuk menentukan settings dark mode
+      - is_dyslexic // Untuk menentukan settings mode dyslexic
+      
+   </details>
+   <details>
+      <summary>agenda</summary>
+      Entitas ini digunakan untuk menyimpan tugas-tugas pada halaman agenda
+      
+      - id // Untuk mengidentifikasi sebuah tugas
+      - class_id // Untuk menentukan tugas dari kelas mana
+      - account_id // Untuk menentukan tugas dibuat oleh siapa
+      - title // Untuk menyimpan title tugas
+      - description // Untuk menyimpan deskripsi tugas
+      - tags // Untuk menyimpan tags tugas
+      - due_date // Untuk menyimpan kapan tugas berakhir
+      - created_at // Untuk menyimpan kapan tugas dibuat (REDUNDANT)
+      
+   </details>
+   <details>
+      <summary>classes</summary>
+      Entitas ini digunakan untuk menyimpan kelas-kelas
+      
+      - id // Untuk mengidentifikasi sebuah kelas
+      - name // Untuk menyimpan nama kelas
+      
+   </details>
+   <details>
+      <summary>comments</summary>
+      Entitas ini digunakan untuk menyimpan komen-komen
+      
+      - id // Untuk mengidentifikasi sebuah komen
+      - account_id // Untuk menentukan komen dibuat oleh siapa
+      - post_id // Untuk menentukan komen dari post mana
+      - description // Untuk menyimpan isi komen
+      - votes // Untuk menyimpan total votingan komen
+      - date // Untuk menyimpan kapan komen dibuat
+      
+   </details>   
+   <details>
+      <summary>comment_votes</summary>
+      Entitas ini digunakan untuk menyimpan votingan komen-komen agar pengguna hanya dapat komen sekali
+      
+      - id // Untuk mengidentifikasi sebuah votingan komen
+      - account_id // Untuk menentukan votingan oleh siapa
+      - comment_id // Untuk menentukan comment mana
+      - vote // Untuk menyimpan value vote
+      
+   </details>
+   <details>
+      <summary>notification</summary>
+      Entitas ini digunakan untuk menyimpan notifikasi
+      
+      - id // Untuk mengidentifikasi sebuah notifikasi
+      - account_id // Untuk menentukan notifikasi dibuat oleh siapa
+      - comment_id // Untuk menentukan dari comment mana
+      - reply_id // Untuk menentukan dari reply mana
+      - date // Untuk menentukan kapan notifikasi dibuat
+      
+   </details>
+   <details>
+      <summary>posts</summary>
+      Entitas ini digunakan untuk menyimpan postingan
+      
+      - id // Untuk mengidentifikasi sebuah post
+      - title // Untuk menyimpan title post
+      - account_id // Untuk menentukan post dibuat oleh siapa
+      - votes // Untuk menyimpan total votingan post
+      - description // Untuk menyimpan isi post
+      - model_3d // Untuk menyimpan nama dari model 3D yang pengguna tambahkan
+      - date // Untuk menyimpan kapan post dibuat
+      - views // Untuk menyimpan total views post
+      
+   </details>
+   <details>
+      <summary>post_imgs</summary>
+      Entitas ini digunakan untuk menyimpan image-image postingan
+      
+      - id // Untuk mengidentifikasi sebuah image post
+      - file_name // Untuk menyimpan nama file image
+      - post_id // Untuk menentukan image dari post mana
+      
+   </details>   
+   <details>
+      <summary>post_links</summary>
+      Entitas ini digunakan untuk menyimpan link-link postingan
+      
+      - id // Untuk mengidentifikasi sebuah link postingan
+      - link // Untuk menyimpan link
+      - link_text // Untuk menyimpan nama dari tampilan link
+      - post_id // Untuk menentukan link dari post mana
+      
+   </details>
+   <details>
+      <summary>post_views</summary>
+      Entitas ini digunakan untuk menyimpan informasi pengguna yang sudah pernah melihat post
+      
+      - id // Untuk identifikasi
+      - account_id // Untuk menentukan siapa yang melihat post
+      - post_id // Untuk menentukan post mana yang telah dilihat
+      
+   </details>
+   <details>
+      <summary>post_votes</summary>
+      Entitas ini digunakan untuk menyimpan votingan postingan agar pengguna hanya dapat komen sekali
+      
+      - id // Untuk mengidentifikasi sebuah votingan post
+      - account_id // Untuk menentukan votingan oleh siapa
+      - post_id // Untuk menentukan post mana
+      - vote // Untuk menyimpan value vote
+      
+   </details>
+   <details>
+      <summary>replies</summary>
+      Entitas ini digunakan untuk menyimpan reply-reply
+      
+      - id // Untuk mengidentifikasi sebuah reply
+      - account_id // Untuk menentukan reply dibuat oleh siapa
+      - post_id // Untuk menentukan comment dari post mana
+      - comment_id // Untuk menentukan reply dari komen mana
+      - description // Untuk menyimpan isi reply
+      - votes // Untuk menyimpan total votingan reply
+      - date // Untuk menyimpan kapan reply dibuat
+      
+   </details>  
+   <details>
+      <summary>reply_votes</summary>
+      Entitas ini digunakan untuk menyimpan votingan reply agar pengguna hanya dapat komen sekali
+      
+      - id // Untuk mengidentifikasi sebuah votingan reply
+      - account_id // Untuk menentukan votingan oleh siapa
+      - reply_id // Untuk menentukan reply mana
+      - vote // Untuk menyimpan value vote
+      
+   </details>
+   <details>
+      <summary>tags</summary>
+      Entitas ini digunakan untuk menyimpan tags yang para pengguna buat
+      
+      - id // Untuk mengidentifikasi sebuah tag
+      - name // Untuk menyimpan nama tag
+      - color_top // Untuk menyimpan warna hex bagian atas tag
+      - color_bottom // Untuk menyimpan warna hex bagian bawah tag
+      - icon // Untuk menyimpan ikon mana yang akan digunakan
+      - post_id // Menentukan dimana tag ini akan muncul
+      
+   </details>
+</details>
 
 ## Arsitektur
 
