@@ -20,7 +20,7 @@
         </div>
 
         <?php if (!empty($post['imgs'])): ?>
-            <div class="carousel-tab-content" data-tab="images" style="display: <?= empty($post['model_3d']) ? 'none' : 'block' ?>;">
+            <div class="carousel-tab-content" data-tab="images" style="display: 'block';">
                 <div class="h-75 max-h-75 relative overflow-hidden">
                     <div class="carousel-track flex h-full transition-transform duration-300 ease-in-out"
                         style="width: <?= count($post['imgs']) * 100 ?>%">

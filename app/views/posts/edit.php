@@ -111,6 +111,8 @@
                     <?php endif; ?>
                 </div>
             </div>
+            <input type="hidden" name="model_3d" id="modelFileName"
+                value="<?= htmlspecialchars($post['model_3d'] ?? '') ?>">
             <div class="flex gap-4 w-full flex-col">
                 <button type="submit"
                     class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full w-full cursor-pointer hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Update
@@ -160,10 +162,22 @@
                 <p>Add 3D Model (.glb, .gltf, .obj)</p>
                 <p class="text-xs text-gray-400">Max 10MB. Only one model allowed.</p>
             </div>
-            <?php if (!empty($post['model_3d'])): ?>
-                <input type="hidden" name="model_3d" value="<?= htmlspecialchars($post['model_3d']) ?>">
-            <?php endif; ?>
-            <div id="modelPreview" class="w-full text-sm text-gray-500"></div>
+            <input type="file" id="modelFileInput" accept=".glb,.gltf,.obj" class="hidden">
+
+            <div id="modelPreview" class="w-full text-sm text-gray-500">
+                <?php if (!empty($post['model_3d'])): ?>
+                    <div class="flex items-center justify-between bg-gray-100 p-3 rounded-lg mt-2">
+                        <div class="flex items-center gap-2">
+                            <?= icon('cube', 'w-5 h-5') ?>
+                            <span><?= htmlspecialchars($post['model_3d']) ?></span>
+                        </div>
+                        <button type="button"
+                            class="remove-model-btn text-red-500 hover:text-red-700 cursor-pointer px-2 py-1 rounded">
+                            Remove
+                        </button>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
 
         <!-- Link add -->

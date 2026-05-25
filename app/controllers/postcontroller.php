@@ -7,6 +7,7 @@ use app\models\tag;
 use app\models\comment;
 use app\models\reply;
 
+// 3 hosting code
 class postcontroller extends controller
 {
     public function index()
@@ -125,9 +126,7 @@ class postcontroller extends controller
         if (!empty($_FILES['images']['name'][0])) {
             $uploadDir = __DIR__ . '/../../public/assets/image/post/';
 
-            if (!is_dir($uploadDir) || !is_readable($uploadDir)) {
-                $uploadDir = __DIR__ . '/../../assets/image/post/';
-            }
+            // $uploadDir = __DIR__ . '/../../assets/image/post/';
 
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
@@ -259,9 +258,7 @@ class postcontroller extends controller
             if (!in_array($img['file_name'], $keepImages)) {
                 $filePath = __DIR__ . '/../../public/assets/image/post/' . $img['file_name'];
 
-                if (!is_dir($filePath) || !is_readable($filePath)) {
-                    $filePath = __DIR__ . '/../../assets/image/post/' . $img['file_name'];
-                }
+                // $filePath = __DIR__ . '/../../assets/image/post/' . $img['file_name'];
 
                 if (file_exists($filePath)) {
                     unlink($filePath);
@@ -305,9 +302,16 @@ class postcontroller extends controller
         if (!empty($_POST['model_3d'])) {
             $modelFilename = $_POST['model_3d'];
             $postModel->add3DModel(intval($id), $modelFilename);
-        }
+        } elseif (isset($_POST['remove_model']) && $_POST['remove_model'] == 1) {
+            $currentModel = $postModel->getPostById($id);
+            if ($currentModel && !empty($currentModel['model_3d'])) {
+                $filePath = __DIR__ . '/../../public/assets/models/' . $currentModel['model_3d'];
 
-        if (isset($_POST['remove_model']) && $_POST['remove_model'] == 1) {
+                // $filePath = __DIR__ . '/../../assets/models/' . $currentModel['model_3d'];
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+            }
             $postModel->remove3DModel(intval($id));
         }
 

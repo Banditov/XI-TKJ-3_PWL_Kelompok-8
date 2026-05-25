@@ -4,6 +4,7 @@ namespace app\controllers;
 use app\core\controller;
 use app\models\account;
 
+// 2 hosting code
 class authcontroller extends controller
 {
     public function login()
@@ -332,9 +333,7 @@ class authcontroller extends controller
 
         $uploadDir = __DIR__ . '/../../public/assets/image/account/';
 
-        if (!is_dir($uploadDir)) {
-            $uploadDir = __DIR__ . '/../../assets/image/account/';
-        }
+        // $uploadDir = __DIR__ . '/../../assets/image/account/';
 
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
@@ -357,9 +356,7 @@ class authcontroller extends controller
     {
         $uploadDir = __DIR__ . '/../../public/assets/image/account/';
 
-        if (!is_dir($uploadDir) || !is_readable($uploadDir)) {
-            $uploadDir = __DIR__ . '/../../assets/image/account/';
-        }
+        // $uploadDir = __DIR__ . '/../../assets/image/account/';
 
         $pattern = $uploadDir . $accountId . '.*';
         $files = glob($pattern);

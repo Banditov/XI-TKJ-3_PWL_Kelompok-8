@@ -51,15 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function showInputError(input, isValid) {
-        if (!input) return;
-        if (!isValid && input.value.trim()) {
-            input.classList.add('border-red-500');
-        } else {
-            input.classList.remove('border-red-500');
-        }
-    }
-
     // Color picker elements
     const colorTopPicker = document.getElementById('colorTop');
     const colorTopText = document.getElementById('colorTopText');
@@ -556,18 +547,12 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(mediaPreview, { childList: true, subtree: true });
     }
 
-    // 3D Model upload
+    // 3D Model
     const modelUploadArea = document.getElementById('modelUploadArea');
     const modelFileInput = document.getElementById('modelFileInput');
     const modelPreview = document.getElementById('modelPreview');
     let currentModelFile = null;
-
-    const existingModel = document.querySelector('input[name="model_3d"]');
-    if (existingModel && existingModel.value) {
-        currentModelFile = existingModel.value;
-        showModelInfo(currentModelFile);
-        if (modelUploadArea) modelUploadArea.style.display = 'none';
-    }
+    let isUploading = false;
 
     function showModelInfo(filename) {
         if (modelPreview) {
@@ -599,26 +584,91 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function removeModel() {
-        const hiddenModel = document.querySelector('input[name="model_3d"]');
-        if (hiddenModel) hiddenModel.remove();
-        if (modelPreview) modelPreview.innerHTML = '';
-        if (modelUploadArea) modelUploadArea.style.display = 'flex';
-        currentModelFile = null;
-        if (modelFileInput) modelFileInput.value = '';
+        if (!currentModelFile) return;
+
+        const removeBtn = document.querySelector('.remove-model-btn');
+        if (removeBtn) {
+            removeBtn.textContent = 'Removing...';
+            removeBtn.disabled = true;
+        }
+
+        fetch('/upload/model/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'filename=' + encodeURIComponent(currentModelFile)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const hiddenModel = document.querySelector('input[name="model_3d"]');
+                    if (hiddenModel) {
+                        hiddenModel.value = '';
+                    }
+                    let removeFlag = document.querySelector('input[name="remove_model"]');
+                    if (!removeFlag) {
+                        removeFlag = document.createElement('input');
+                        removeFlag.type = 'hidden';
+                        removeFlag.name = 'remove_model';
+                        removeFlag.value = '1';
+                        if (postForm) postForm.appendChild(removeFlag);
+                    } else {
+                        removeFlag.value = '1';
+                    }
+
+                    if (modelPreview) modelPreview.innerHTML = '';
+                    if (modelUploadArea) modelUploadArea.style.display = 'flex';
+                    if (modelFileInput) modelFileInput.value = '';
+                    currentModelFile = null;
+                } else {
+                    alert('Failed to remove model: ' + (data.error || 'Unknown error'));
+                    if (removeBtn) {
+                        removeBtn.textContent = 'Remove Model';
+                        removeBtn.disabled = false;
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error removing model:', error);
+                alert('Failed to remove model');
+                if (removeBtn) {
+                    removeBtn.textContent = 'Remove Model';
+                    removeBtn.disabled = false;
+                }
+            });
+    }
+
+    const existingModelInput = document.querySelector('input[name="model_3d"]');
+    if (existingModelInput && existingModelInput.value) {
+        currentModelFile = existingModelInput.value;
+        showModelInfo(currentModelFile);
+        if (modelUploadArea) modelUploadArea.style.display = 'none';
     }
 
     if (modelUploadArea) {
-        modelUploadArea.addEventListener('click', () => {
+        modelUploadArea.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             if (currentModelFile) {
                 alert('You already have a 3D model. Remove it first to upload a new one.');
                 return;
             }
-            if (modelFileInput) modelFileInput.click();
+            if (modelFileInput) {
+                modelFileInput.click();
+            }
         });
     }
 
     if (modelFileInput) {
-        modelFileInput.addEventListener('change', async function () {
+        modelFileInput.addEventListener('change', async function (e) {
+            e.preventDefault();
+
+            if (isUploading) {
+                alert('Upload already in progress');
+                return;
+            }
+
             if (currentModelFile) {
                 alert('You already have a 3D model. Remove it first to upload a new one.');
                 this.value = '';
@@ -643,6 +693,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            isUploading = true;
+
             if (modelPreview) {
                 modelPreview.innerHTML = `
                     <div class="flex items-center gap-2 p-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg">
@@ -656,7 +708,10 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('model_3d', file);
 
             try {
-                const res = await fetch('/upload/model', { method: 'POST', body: formData });
+                const res = await fetch('/upload/model', {
+                    method: 'POST',
+                    body: formData
+                });
                 const data = await res.json();
 
                 if (data.error) {
@@ -666,11 +721,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                const hiddenModel = document.createElement('input');
-                hiddenModel.type = 'hidden';
-                hiddenModel.name = 'model_3d';
+                let hiddenModel = document.querySelector('input[name="model_3d"]');
+                if (!hiddenModel) {
+                    hiddenModel = document.createElement('input');
+                    hiddenModel.type = 'hidden';
+                    hiddenModel.name = 'model_3d';
+                    if (postForm) postForm.appendChild(hiddenModel);
+                }
                 hiddenModel.value = data.filename;
-                if (postForm) postForm.appendChild(hiddenModel);
+
+                let removeFlag = document.querySelector('input[name="remove_model"]');
+                if (removeFlag) {
+                    removeFlag.remove();
+                }
 
                 currentModelFile = data.filename;
 
@@ -682,22 +745,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Failed to upload 3D model');
                 if (modelPreview) modelPreview.innerHTML = '';
                 modelFileInput.value = '';
+            } finally {
+                isUploading = false;
             }
         });
-    }
-
-    function initExistingModel() {
-        const existingModelInput = document.querySelector('input[name="model_3d"]');
-        if (existingModelInput && existingModelInput.value) {
-            currentModelFile = existingModelInput.value;
-            showModelInfo(currentModelFile);
-            if (modelUploadArea) modelUploadArea.style.display = 'none';
-        }
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initExistingModel);
-    } else {
-        initExistingModel();
     }
 });
