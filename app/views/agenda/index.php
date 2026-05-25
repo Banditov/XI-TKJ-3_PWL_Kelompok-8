@@ -22,7 +22,7 @@
                     </select>
                 <?php endif; ?>
                 <button onclick="openAddModal()"
-                    class="px-5 py-2 bg-[#2C7CFF] text-white rounded-xl hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition-all duration-300 flex items-center gap-2">
+                    class="px-5 py-2 bg-[#2C7CFF] text-white rounded-xl hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition-all duration-300 flex items-center gap-2 cursor-pointer">
                     <?= essIcon('x', 'w-6 h-6 transform rotate-45') ?>
                     Add Task
                 </button>
@@ -80,7 +80,7 @@
 
         <!-- Current Tasks -->
         <div class="mb-6">
-            <button onclick="toggleSection('currentTasks')" class="flex items-center w-full group mb-5 gap-5 hover:bg-transparent!">
+            <button onclick="toggleSection('currentTasks')" class="flex items-center w-full group mb-5 gap-5 hover:bg-transparent! cursor-pointer">
                 <div class="flex items-center gap-3">
                     <div class="w-2 h-8 bg-[#2C7CFF] rounded-full"></div>
                     <h2 class="text-2xl font-bold">Current Tasks</h2>

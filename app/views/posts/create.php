@@ -69,6 +69,7 @@
                 </div>
                 <div id="mediaPreview" class="flex flex-col gap-2 mt-1"></div>
             </div>
+            <input type="hidden" name="model_3d" id="modelFileName" value="">
             <button type="submit"
                 class="px-6 py-3 bg-[#2C7CFF] text-white rounded-full w-full cursor-pointer hover:bg-white hover:text-[#2C7CFF] hover:ring-2 transition">Post</button>
         </form>

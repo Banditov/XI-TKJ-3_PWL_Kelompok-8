@@ -3,6 +3,7 @@ namespace app\controllers;
 
 use app\core\controller;
 
+// 3 hosting code
 class uploadcontroller extends controller
 {
     public function image()
@@ -77,9 +78,7 @@ class uploadcontroller extends controller
         $filename = 'post_' . uniqid() . '.webp';
         $dest = __DIR__ . '/../../public/assets/image/post/' . $filename;
 
-        if (!is_dir($dest) || !is_readable($dest)) {
-            $dest = __DIR__ . '/../../assets/image/post/' . $filename;
-        }
+        // $dest = __DIR__ . '/../../assets/image/post/' . $filename;
 
         $dir = dirname($dest);
         if (!is_dir($dir)) {
@@ -199,9 +198,7 @@ class uploadcontroller extends controller
         $filename = 'model_' . uniqid() . '.' . $ext;
         $uploadDir = __DIR__ . '/../../public/assets/models/';
 
-        if (!is_dir($uploadDir) || !is_readable($uploadDir)) {
-            $uploadDir = __DIR__ . '/../../assets/models/';
-        }
+        // $uploadDir = __DIR__ . '/../../assets/models/';
 
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
@@ -219,6 +216,39 @@ class uploadcontroller extends controller
             'filename' => $filename,
             'size' => $file['size']
         ]);
+        exit;
+    }
+
+    public function deleteModel()
+    {
+        header('Content-Type: application/json');
+
+        if (!isset($_SESSION['account_id'])) {
+            echo json_encode(['error' => 'Unauthorized']);
+            exit;
+        }
+
+        $filename = $_POST['filename'] ?? '';
+
+        if (empty($filename)) {
+            echo json_encode(['error' => 'No filename provided']);
+            exit;
+        }
+
+        $filename = basename($filename);
+        $filePath = __DIR__ . '/../../public/assets/models/' . $filename;
+
+        // $filePath = __DIR__ . '/../../assets/models/' . $filename;
+
+        $fileDeleted = false;
+        if (file_exists($filePath)) {
+            $fileDeleted = unlink($filePath);
+            error_log("Delete model - File deleted: " . ($fileDeleted ? 'Yes' : 'No') . " - " . $filePath);
+        } else {
+            error_log("Delete model - File not found: " . $filePath);
+        }
+
+        echo json_encode(['success' => true, 'file_deleted' => $fileDeleted]);
         exit;
     }
 }

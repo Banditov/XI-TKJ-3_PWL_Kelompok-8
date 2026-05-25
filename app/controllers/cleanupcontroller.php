@@ -4,6 +4,7 @@ namespace app\controllers;
 use app\core\controller;
 use app\models\post;
 
+// 4 hosting code
 class cleanupcontroller extends controller
 {
     public function removeUnusedImages()
@@ -14,9 +15,7 @@ class cleanupcontroller extends controller
         $usedImages = $postModel->getAllUsedImages();
         $uploadDir = __DIR__ . '/../../public/assets/image/post/';
 
-        if (!is_dir($uploadDir) || !is_readable($uploadDir)) {
-            $uploadDir = __DIR__ . '/../../assets/image/post/';
-        }
+        // $uploadDir = __DIR__ . '/../../assets/image/post/';
 
         $allFiles = scandir($uploadDir);
 
@@ -46,9 +45,7 @@ class cleanupcontroller extends controller
         $usedModels = $postModel->getAllUsedModels();
         $modelDir = __DIR__ . '/../../public/assets/models/';
 
-        if (!is_dir($modelDir) || !is_readable($modelDir)) {
-            $modelDir = __DIR__ . '/../../assets/models/';
-        }
+        // $modelDir = __DIR__ . '/../../assets/models/';
 
         if (!is_dir($modelDir)) {
             $_SESSION['error'] = "Models directory not found";
@@ -83,9 +80,7 @@ class cleanupcontroller extends controller
 
         $uploadDir = __DIR__ . '/../../public/assets/image/post/';
 
-        if (!is_dir($uploadDir) || !is_readable($uploadDir)) {
-            $uploadDir = __DIR__ . '/../../assets/image/post/';
-        }
+        // $uploadDir = __DIR__ . '/../../assets/image/post/';
 
         $allImageFiles = is_dir($uploadDir) ? scandir($uploadDir) : [];
         $usedImages = $postModel->getAllUsedImages();
@@ -104,9 +99,7 @@ class cleanupcontroller extends controller
 
         $modelDir = __DIR__ . '/../../public/assets/models/';
 
-        if (!is_dir($modelDir) || !is_readable($modelDir)) {
-            $modelDir = __DIR__ . '/../../assets/models/';
-        }
+        // $modelDir = __DIR__ . '/../../assets/models/';
 
         $allModelFiles = is_dir($modelDir) ? scandir($modelDir) : [];
         $usedModels = $postModel->getAllUsedModels();

@@ -4,10 +4,10 @@
 <br>
 <div align="center">
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
-      <img src="https://img.shields.io/badge/GitHub Version-wip--1.1.0-red">
+      <img src="https://img.shields.io/badge/GitHub Version-wip--1.1.1-red">
    </a>
    <a href="https://github.com/Banditov/XI-TKJ-3_PWL_Kelompok-8?tab=readme-ov-file#changelog">
-      <img src="https://img.shields.io/badge/Latest Release-1.1.0-green">
+      <img src="https://img.shields.io/badge/Latest Release-1.1.1-green">
    </a><br>
    <a href="http://unlicense.org/">
       <img src="https://img.shields.io/badge/License-Unlicense-blue.svg">
@@ -16,7 +16,7 @@
       <img src="https://img.shields.io/badge/Contributor-3-yellow">
    </a><br>
    <a href="http://immaspark.page.gd">
-      <img src="https://img.shields.io/badge/Hosted Version-1.1.0-11164b">
+      <img src="https://img.shields.io/badge/Hosted Version-1.1.1-11164b">
    </a>
 </div>
 
@@ -471,6 +471,13 @@ Distributed under the Unlicense License. See [`LICENSE.txt`](./LICENSE.txt) for 
 <details>
    <summary>May</summary>
 
+### 25/05/2026 - 1.1.1
+
+<details>
+
+- Perbaiki fungsi upload/delete model
+- Mengubah file directory pada controller menjadi manual untuk hosting
+</details>
 
 ### 24/05/2026 - 1.1.0
 

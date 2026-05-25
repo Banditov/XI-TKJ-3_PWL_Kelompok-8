@@ -1,3 +1,4 @@
+<!-- 2 hosting code -->
 <title>Cleanup | Admin Panel</title>
 <link rel="stylesheet" href="/css/responsive/main.css">
 
